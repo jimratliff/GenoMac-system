@@ -11,12 +11,14 @@ git pull origin main
 To update all apps (and install/remove apps as required by any changes in the Brewfile):
 ```bash
 cd ~/.genomac-system
+git pull origin main
 make install-via-homebrew
 ```
 
 To reassert the systemwide settings (in response to any changes in them):
 ```bash
 cd ~/.genomac-system
+git pull origin main
 make system-wide-prefs
 ```
 
@@ -58,7 +60,7 @@ GenoMac-system is responsible for configurations at the system level, i.e., that
 - installing all CLI and GUI apps (both on or off the Mac App Store)
 
 ### Preview of process
-- Establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
+- In Safari, establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
 - Give Terminal full-disk access
 - Install Homebrew (and therefore also Git)
 - Modify PATH to add Homebrew
@@ -84,8 +86,8 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
       - Scroll down and click Full Disk Access
         - Enable for Terminal
 
-### Manually install Homebrew and update PATH
-#### Install Homebrew
+### Install Homebrew and update PATH
+#### Manually install Homebrew
 Installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
 installation of which will install a version of Git, which will permit cloning this repo.
 
@@ -117,7 +119,19 @@ cd ~/.genomac-system
 make install-via-homebrew
 ```
 
+### Implement systemwide settings
+```bash
+cd ~/.genomac-system
+git pull origin main
+make system-wide-prefs
+```
+
 ### Conclusion
-At this point, all systemwide settings have been configured. There is no need to use this repo again until (a) a new Mac needs to be configured or (b) a change or addition in systemwide settings needs to be propagated across Macs.
+At this point, all apps have been installed and all systemwide settings have been configured. There is no need to use this repo again until any of the following occurs:
+- the passage of time indicates that apps should be upgraded
+- changes in Brewfile demands that apps/fonts should be added or removed from the Homebrew installation
+- changes in systemwide settings need to be propagated across Macs
+- a new Mac needs to be configured
+
 
 Next up: USER_CONFIGURER uses the [GenoMac-user](https://github.com/jimratliff/GenoMac-user) repository to implement generic user-scope settings for USER_CONFIGURER.
