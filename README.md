@@ -2,12 +2,14 @@
 ## Quick-reference Cheat sheet
 (First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
 
+### Refresh local clone
 After initial cloning, to pull down subsequent changes to this repository
 ```bash
 cd ~/.genomac-system
 git pull origin main
 ```
 
+### Update app and font installation
 To update all apps (and install/remove apps as required by any changes in the Brewfile):
 ```bash
 cd ~/.genomac-system
@@ -15,6 +17,7 @@ git pull origin main
 make install-via-homebrew
 ```
 
+### Reassert systemwide settings
 To reassert the systemwide settings (in response to any changes in them):
 ```bash
 cd ~/.genomac-system
