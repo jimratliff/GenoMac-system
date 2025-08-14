@@ -132,9 +132,13 @@ make system-wide-prefs
 ### Conclusion
 At this point, all apps have been installed and all systemwide settings have been configured. There is no need to use this repo again until any of the following occurs:
 - the passage of time indicates that apps should be upgraded
+  - see [Update app and font installation](#update-app-and-font-installation)
 - changes in Brewfile demands that apps/fonts should be added or removed from the Homebrew installation
+  - see [Update app and font installation](#update-app-and-font-installation)
 - changes in systemwide settings need to be propagated across Macs
+  - See [Reassert systemwide settings](#reassert-systemwide-settings)
 - a new Mac needs to be configured
+  - Go to the top of this repo and start from scratch
 
 
 Next up: USER_CONFIGURER uses the [GenoMac-user](https://github.com/jimratliff/GenoMac-user) repository to implement generic user-scope settings for USER_CONFIGURER.
