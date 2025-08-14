@@ -1,8 +1,29 @@
 # GenoMac-system
+## Quick-reference Cheat sheet
+(First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
+
+After initial cloning, to pull down subsequent changes to this repository
+```bash
+cd ~/.genomac-system
+git pull origin main
+```
+
+To update all apps (and install/remove apps as required by any changes in the Brewfile):
+```bash
+cd ~/.genomac-system
+make install-via-homebrew
+```
+
+To reassert the systemwide settings (in response to any changes in them):
+```bash
+cd ~/.genomac-system
+make system-wide-prefs
+```
+
 ## Overview of the entire GenoMac process
 Project GenoMac is an implementation of automated setup of multiple Macs, each with multiple users.
 
-At this point, we assume the following:
+We now focus on a particular Mac. At this point, we assume the following:
 - An essentially pristine Mac:
   - Fresh install of macOS
   - Only two users are defined:
@@ -12,12 +33,16 @@ At this point, we assume the following:
 - USER_CONFIGURER is signed into its account
 
 At a high level, for a particular new Mac, Project GenoMac involves the following steps:
-- USER_CONFIGURER clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) and implements systemwide settings and installs apps
-- USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to implement the generic user-scope settings for USER_CONFIGURER
-- USER_CONFIGURER clones the [GenoMac-spawn repo](https://github.com/jimratliff/GenoMac-spawn) to create each of the additional users.
+- USER_CONFIGURER performs a bootstrapping step and a repeatable/idempotent configuration task:
+  - Bootstrapping
+    - USER_CONFIGURER manually installs Homebrew (which necessarily installs Git)
+    - USER_CONFIGURER manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system)
+  - Repeatable/idempotent task
+    - USER_CONFIGURER executes scripts to implement systemwide settings and installs apps
+- USER_CONFIGURER clones and then uses the [GenoMac-spawn repo](https://github.com/jimratliff/GenoMac-spawn) to create each of the additional users.
 - Loop over each USER_j of the newly created users
   - USER_j logs into the USER_j account for the first time
-  - USER_j clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to implement the generic user-scope settings for USER_CONFIGURER
+  - USER_j clones and uses the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to implement the generic user-scope settings for USER_j
 
 ## Overview of the GenoMac-system step
 ### Context
@@ -37,15 +62,16 @@ GenoMac-system is responsible for configurations at the system level, i.e., that
 - Give Terminal full-disk access
 - Install Homebrew (and therefore also Git)
 - Modify PATH to add Homebrew
-- Clone this public repo to `~/genomac-system`
-- Use Homebrew to install applications and fonts
-- Implement systemwide settings
+- Clone this public repo to `~/.genomac-system`
+- Run a script for Homebrew to install applications and fonts
+- Run a script to implement systemwide settings
 
 ## Implementation
 ### Establish real-time connection to communicate text back and forth
 Open a Google Docs document to be used as/if needed for real-time exchange of text, error messages, etc., between the target Mac and other devices.
-- In Safari, open “Project GenoMac: Text-exchange Document” 
-  - In Safari, sign into my standard Google account:
+- In Safari
+  - open “Project GenoMac: Text-exchange Document” 
+  - sign into my standard Google account:
     - Go to google.com and click “Log in”
     - Enter the username of my Google account
     - A QR code will appear. Scan it with my iPhone and complete the authentication.
@@ -58,7 +84,7 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
       - Scroll down and click Full Disk Access
         - Enable for Terminal
 
-### Install Homebrew and update PATH
+### Manually install Homebrew and update PATH
 #### Install Homebrew
 Installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
 installation of which will install a version of Git, which will permit cloning this repo.
@@ -75,22 +101,23 @@ echo >> /Users/configger/.zprofile
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/configger/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
-### Clone this repo to `~/genomac-system`
+
+### Clone this repo to `~/.genomac-system`
 In Terminal:
 ```shell
-mkdir -p ~/genomac-system
-cd ~/genomac-system
+mkdir -p ~/.genomac-system
+cd ~/.genomac-system
 git clone https://github.com/jimratliff/GenoMac-system.git .
 ```
 **Note the trailing “.” at the end of the `git clone` command.**
 
 ### Use Homebrew to install applications and fonts
 ```shell
-cd ~/genomac-system
+cd ~/.genomac-system
 make install-via-homebrew
 ```
 
 ### Conclusion
 At this point, all systemwide settings have been configured. There is no need to use this repo again until (a) a new Mac needs to be configured or (b) a change or addition in systemwide settings needs to be propagated across Macs.
 
-Next up: For each user, USER_CONFIGURER included, use the [GenoMac-user](https://github.com/jimratliff/GenoMac-user) repository to implement generic user-scope settings for that user.
+Next up: USER_CONFIGURER uses the [GenoMac-user](https://github.com/jimratliff/GenoMac-user) repository to implement generic user-scope settings for USER_CONFIGURER.
