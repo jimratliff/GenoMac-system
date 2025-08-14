@@ -1,0 +1,10 @@
+install-via-homebrew:
+	zsh scripts/install_via_homebrew.sh
+
+system-wide-prefs:
+	zsh scripts/implement_systemwide_prefs.sh
+
+clone-genomac:
+	zsh scripts/clone_genomac_repo.sh
+	
+

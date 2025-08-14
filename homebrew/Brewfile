@@ -1,0 +1,17 @@
+# Brewfile that aggregates sub-Brewfile files
+
+# It is assumed that each of the below-referenced Brewfile.xxx files resides in the same
+# directory as this Brewfile.
+
+# BASE is absolute dir of THIS Brewfile
+BASE = __dir__
+
+# Reads each sub-Brewfile in order
+
+# Use instance_eval so sub-files execute in Brewfile DSL context.
+# The second arg sets the "filename" shown in errors for nicer debugging.
+
+instance_eval File.read(File.join(BASE, "Brewfile.formulae")), "Brewfile.formulae"
+instance_eval File.read(File.join(BASE, "Brewfile.casks")),    "Brewfile.casks"
+instance_eval File.read(File.join(BASE, "Brewfile.mas")),      "Brewfile.mas"
+instance_eval File.read(File.join(BASE, "Brewfile.fonts")),    "Brewfile.fonts"
