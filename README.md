@@ -2,19 +2,6 @@
 ## Overview of the entire GenoMac process
 Project GenoMac is an implementation of automated setup of multiple Macs, each with multiple users.
 
-At a high level, for a particular new Mac, Project GenoMac involves the following steps:
-- USER_CONFIGURER clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) and implements systemwide settings and installs apps
-- USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to implement the generic user-scope settings for USER_CONFIGURER
-- USER_CONFIGURER clones the [GenoMac-spawn repo](https://github.com/jimratliff/GenoMac-spawn) to create each of the additional users.
-- Loop over each USER_j of the newly created users
-  - USER_j logs into the USER_j account for the first time
-  - USER_j clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to implement the generic user-scope settings for USER_CONFIGURER
-
-
-## Overview
-### Context
-This GenoMac-system repository is the first stop in Project GenoMac to setup any of several Macs, each of which has several users.
-
 At this point, we assume the following:
 - An essentially pristine Mac:
   - Fresh install of macOS
@@ -24,6 +11,18 @@ At this point, we assume the following:
   - ***No other configurations or installations have been performed***
 - USER_CONFIGURER is signed into its account
 
+At a high level, for a particular new Mac, Project GenoMac involves the following steps:
+- USER_CONFIGURER clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) and implements systemwide settings and installs apps
+- USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to implement the generic user-scope settings for USER_CONFIGURER
+- USER_CONFIGURER clones the [GenoMac-spawn repo](https://github.com/jimratliff/GenoMac-spawn) to create each of the additional users.
+- Loop over each USER_j of the newly created users
+  - USER_j logs into the USER_j account for the first time
+  - USER_j clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to implement the generic user-scope settings for USER_CONFIGURER
+
+## Overview of the GenoMac-system step
+### Context
+This GenoMac-system repository is the first stop in Project GenoMac to setup any of several Macs, each of which has several users.
+
 The GenoMac-system repo is used and cloned exclusively by USER_CONFIGURER. 
 
 GenoMac-system is responsible for configurations at the system level, i.e., that affect all users. This responsibility includes:
@@ -32,8 +31,6 @@ GenoMac-system is responsible for configurations at the system level, i.e., that
 - configuring the firewall
 - specifying policies regarding software-update behavior
 - installing all CLI and GUI apps (both on or off the Mac App Store)
-
-Following the implementation of system-level settings by this repository, each user (USER_CONFIGURER and all other users) then clones and uses the [GenoMac-user](https://github.com/jimratliff/GenoMac-user) repository, which is focused on generic user-specific settings.
 
 ### Preview of process
 - Establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
