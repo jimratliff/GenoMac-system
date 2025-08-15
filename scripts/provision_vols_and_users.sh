@@ -117,8 +117,8 @@ USERS_JSON=("${(@f)$(jq -c '.users[]' <<<"$CONFIG_JSON")}")
 #   $1 = apfs_container (e.g., /dev/disk3s2)
 #   $2 = volume_name    (e.g., Volume2)
 #   $3 = passphrase     (plaintext; fed via stdin to diskutil)
-# Behavior:
-#   - If volume exists, no-op (idempotent)
+# Behavior (strict):
+#   - Hard-fail if a volume with the same name already exists in the container
 #   - Otherwise, creates encrypted APFS volume with provided passphrase
 create_encrypted_apfs_volume() {
   emulate -L zsh
@@ -128,13 +128,14 @@ create_encrypted_apfs_volume() {
   local vol_name="$2"
   local passphrase="$3"
 
-  report_action_taken "Ensuring APFS volume '$vol_name' exists and is encrypted"
+  report_action_taken "Creating encrypted APFS volume '$vol_name'"
 
   if diskutil apfs list | grep -q "Name: ${vol_name} "; then
-    report "  - '$vol_name' already exists; leaving as-is"
-    return 0
+    report "ERROR: APFS volume '$vol_name' already exists on this container; refusing to proceed"
+    exit 1
   fi
 
+  # Feed passphrase via stdin; keep it off argv and off disk
   local cmd="printf %s \"\${passphrase}\" | diskutil apfs addVolume \"${apfs_container}\" APFS \"${vol_name}\" -passphrase"
   run "$cmd"; success_or_not
 }
