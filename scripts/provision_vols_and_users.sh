@@ -80,13 +80,13 @@ run() {
   if (( DRY_RUN )); then
     log "DRY: $*"
   else
-    # Use 'eval' sparingly; here it's helpful for quoted here-strings
     eval "$@"
   fi
 }
 
 # ------------------------------- Parse config --------------------------------
 container="$(jq -r '.apfs_container' <<<"$CONFIG_JSON")"
+
 typeset -a VOLUMES
 typeset -a PASSES
 VOLUMES=("${(@f)$(jq -r '.volumes_ordered[]' <<<"$CONFIG_JSON")}")
@@ -97,10 +97,8 @@ if (( ${#VOLUMES[@]} != ${#PASSES[@]} )); then
   exit 2
 fi
 
-# Build associative maps (zsh style)
 typeset -A VOL_PASS
 for i in {1..${#VOLUMES[@]}}; do
-  # zsh arrays are 1-based when expanded via brace notation above
   VOL_PASS["${VOLUMES[$i]}"]="${PASSES[$i]}"
 done
 
@@ -109,7 +107,6 @@ while IFS=$'\t' read -r k v; do
   VOC_VOL["$k"]="$v"
 done < <(jq -r '.vocation_to_volume | to_entries[] | "\(.key)\t\(.value)"' <<<"$CONFIG_JSON")
 
-# Flatten users JSON array to one-per-line compact JSON strings
 typeset -a USERS_JSON
 USERS_JSON=("${(@f)$(jq -c '.users[]' <<<"$CONFIG_JSON")}")
 
@@ -138,8 +135,6 @@ create_encrypted_apfs_volume() {
     return 0
   fi
 
-  # Feed passphrase via stdin; keep it off argv and off disk
-  # Using printf (not echo) to avoid trailing newline surprises
   local cmd="printf %s \"\${passphrase}\" | diskutil apfs addVolume \"${apfs_container}\" APFS \"${vol_name}\" -passphrase"
   run "$cmd"; success_or_not
 }
@@ -152,10 +147,12 @@ create_encrypted_apfs_volume() {
 #   $4 = avatar_path (optional but recommended)
 # Globals used:
 #   VOC_VOL[] map, VOL_PASS[] map
-# Behavior:
-#   - Creates/updates local account with given UID and home on /Volumes/<Vol>/Users/<Name>
-#   - Sets password via stdin (kept off argv)
-#   - Sets avatar if file exists
+# Behavior (pristine init):
+#   - Hard-fail if shortname exists
+#   - Hard-fail if UID exists
+#   - Create account with home on /Volumes/<Vol>/Users/<Name>
+#   - Set password via stdin (kept off argv)
+#   - Set avatar if file exists
 create_local_user_account() {
   emulate -L zsh
   set -euo pipefail
@@ -166,45 +163,38 @@ create_local_user_account() {
   local avatar="$4"
 
   local vol="${VOC_VOL[$vocation]:-}"
-  if [[ -z "$vol" ]]; then
-    report "  - ERROR: vocation '$vocation' has no mapped volume"
-    return 1
-  fi
+  [[ -n "$vol" ]] || { report "ERROR: vocation '$vocation' has no mapped volume"; exit 1; }
 
   local pass="${VOL_PASS[$vol]:-}"
-  if [[ -z "$pass" ]]; then
-    report "  - ERROR: volume '$vol' has no passphrase provided"
-    return 1
-  fi
+  [[ -n "$pass" ]] || { report "ERROR: volume '$vol' has no passphrase provided"; exit 1; }
 
   local shortname="$name"   # per your spec
   local home="/Volumes/${vol}/Users/${name}"
 
-  report_action_taken "Provisioning user '$name' (uid=$uid, vocation=$vocation, volume=$vol)"
-
-  # Ensure home path exists before account points to it
-  run "mkdir -p '$home'"; success_or_not
-
+  # ---- Strict guards for pristine setups ----
   if id -u "$shortname" >/dev/null 2>&1; then
-    report "  - User exists; verifying/setting attributes"
-  else
-    # Create with UID & home, password via stdin (kept off argv)
-    local add_cmd="printf %s \"\${pass}\" | sysadminctl -addUser \"$shortname\" \
-      -fullName \"$name\" -UID \"$uid\" -home \"$home\" -password -"
-    run "$add_cmd"; success_or_not
+    report "ERROR: user '$shortname' already exists; refusing to modify on pristine init"
+    exit 1
   fi
 
-  # Reassert home path (covers existing users that need relocation)
-  run "dscl . -create /Users/'$shortname' NFSHomeDirectory '$home'"; success_or_not
+  # UID collision check
+  if dscacheutil -q user | awk -v target="$uid" '$1=="uid:" && $2==target {found=1} END{exit(found?0:1)}'; then
+    report "ERROR: UID '$uid' is already in use; refusing to proceed"
+    exit 1
+  fi
+  # -------------------------------------------
 
-  # Ensure password (also safe/idempotent for existing users)
-  local pw_cmd="printf %s \"\${pass}\" | sysadminctl -resetPasswordFor \"$shortname\" -newPassword -"
-  run "$pw_cmd"; success_or_not
+  report_action_taken "Creating user '$name' (uid=$uid, vocation=$vocation, volume=$vol)"
 
-  # Ownership of home (create skeleton if desired; here we just set ownership)
+  run "mkdir -p '$home'"; success_or_not
+
+  # Create user with UID & home; password via stdin (kept off argv)
+  local add_cmd="printf %s \"\${pass}\" | sysadminctl -addUser \"$shortname\" \
+    -fullName \"$name\" -UID \"$uid\" -home \"$home\" -password -"
+  run "$add_cmd"; success_or_not
+
   run "chown -R '$shortname':staff '$home'"; success_or_not
 
-  # Set avatar if present
   if [[ -n "$avatar" && -f "$avatar" ]]; then
     run "dscl . -create /Users/'$shortname' Picture '$avatar'"; success_or_not
   else
@@ -219,7 +209,6 @@ report_start_phase 'Begin volume-and-user provisioning'
 # - Volume1 is the startup (FileVault) volume; we skip creating/encrypting it.
 if (( ${#VOLUMES[@]} )); then
   report_action_taken "Creating encrypted APFS volumes (skipping Volume1 if present)"
-  # start from index 2 (zsh arrays are 1-based): Volume2..N
   for idx in {2..${#VOLUMES[@]}}; do
     vol="${VOLUMES[$idx]}"
     pass="${PASSES[$idx]}"
@@ -228,7 +217,7 @@ if (( ${#VOLUMES[@]} )); then
 fi
 
 # Users:
-report_action_taken "Creating/ensuring local user accounts"
+report_action_taken "Creating local user accounts (hard-fail on conflicts)"
 for uj in "${USERS_JSON[@]}"; do
   name="$(jq -r '.name' <<<"$uj")"
   uid="$(jq -r '.uid' <<<"$uj")"
