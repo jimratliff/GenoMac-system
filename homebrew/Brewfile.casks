@@ -26,6 +26,7 @@ cask "graphicconverter"       # Graphic Converter image viewer, editor, and slid
 cask "insta360-link-controller" # Controller for Insta360 webcams
 cask "iterm2"                 # Terminal emulator; alternative to Apple’s Terminal
 cask "keyboard-maestro"       # Automation software (version 11)
+cask "microsoft-edge"         # Microsoft’s web browser
 cask "microsoft-teams"        # Microsoft version of Zoom
 cask "notion"                 # Knowledge base using proprietary files
 cask "obsidian"               # Knowledge base using local folder of Markdown files
