@@ -1,6 +1,8 @@
 #!/bin/zsh
 
-# Clone GenoMac-dotfiles repo to GENOMAC_DOTFILES_LOCAL_STOW_DIRECTORY
+###### IN PROGRESS: INCOMPLETE!!!
+
+# Clone GenoMac-user repo to GENOMAC_USER_LOCAL_DIRECTORY
 
 # Fail early on unset variables or command failure
 set -euo pipefail
@@ -9,20 +11,20 @@ set -euo pipefail
 this_script_path="${0:A}"
 this_script_dir="${this_script_path:h}"
 
-# Assign environment variables (including GENOMAC_HELPER_DIR, GENOMAC_DOTFILES_REPO_URL, 
-# and GENOMAC_DOTFILES_LOCAL_STOW_DIRECTORY)
+# Assign environment variables (including GENOMAC_HELPER_DIR, GENOMAC_USER_REPO_URL, 
+# and GENOMAC_USER_LOCAL_DIRECTORY)
 # Assumes that assign_environment_variables.sh is in same directory as this script.
 source "${this_script_dir}/assign_environment_variables.sh"
 
 # Source helpers
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
-############################## BEGIN SCRIPT PROPER ##############################
-function clone_genomac_dotfiles_repo() {
+############################## BEGIN SCRIPT PROPER #############################
+function clone_genomac_user_repo() {
   report_start_phase_standard
 
-  local local_cloning_dir="$GENOMAC_DOTFILES_LOCAL_STOW_DIRECTORY"
-  local repo_url="$GENOMAC_DOTFILES_REPO_URL"
+  local local_cloning_dir="$GENOMAC_USER_LOCAL_DIRECTORY"
+  local repo_url="$GENOMAC_USER_REPO_URL"
 
   report_action_taken "Ensuring target directory exists: $local_cloning_dir"
   mkdir -p "$local_cloning_dir"; success_or_not
@@ -37,7 +39,7 @@ function clone_genomac_dotfiles_repo() {
 }
 
 function main() {
-  clone_genomac_dotfiles_repo
+  clone_genomac_user_repo
 }
 
 main

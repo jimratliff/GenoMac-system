@@ -129,6 +129,12 @@ git pull origin main
 make system-wide-prefs
 ```
 
+## Clone the GenoMac-user repo for the next step in Project GenoMac
+In Terminal:
+```shell
+make clone-genomac-user
+```
+
 ### Conclusion
 At this point, all apps have been installed and all systemwide settings have been configured. There is no need to use this repo again until any of the following occurs:
 - the passage of time indicates that apps should be upgraded

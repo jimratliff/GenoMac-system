@@ -4,7 +4,7 @@ install-via-homebrew:
 system-wide-prefs:
 	zsh scripts/implement_systemwide_prefs.sh
 
-clone-genomac:
-	zsh scripts/clone_genomac_repo.sh
+clone-genomac-user:
+	zsh scripts/clone_genomac_user_repo.sh
 	
 

@@ -1,10 +1,11 @@
 # A sub-Brewfile that is aggregated into the main Brewfile.
 # It is assumed this sub-Brewfile resides in the same directory as the main Brewfile.
 
-# This sub-Brewfile is dedicated to Homebrew Formulae = Homebrew packages (CLI tools, libs, daemons) 
-# installed in the Cellar.
+# This sub-Brewfile is dedicated to Homebrew Formulae = Homebrew packages 
+# (CLI tools, libs, daemons) installed in the Cellar.
 
 brew "bash"                    # Bourne-Again SHell, a UNIX command interpreter
+
 brew "bat"                     # Clone of cat(1) with syntax highlighting and Git integration
 brew "cmatrix"                 # Terminal screensaver from "The Matrix," text raining down.
 brew "coreutils"               # basic file, shell and text manipulation utilities
@@ -12,14 +13,25 @@ brew "eza"                     # Modern alternative to `ls`
 brew "fzf"                     # Command-line fuzzy finder
 brew "git"                     # Distributed revision-control system
 brew "graphviz"                # Graph visualization software from AT&T and Bell Labs
+
+brew "jq"                      # Lightweight and flexible command-line JSON processor
+                               # REQUIRED: Used by GenoMac to create volumes and user accounts
+
 brew "mas"                     # Mac App Store command-line interface
+                               # REQUIRED: Used by GenoMac (via Homebrew) to install MAS apps
+
 brew "starship"                # Configures prompt for Zsh and other shells
 brew "stockfish"               # Strong open-source chess engine
-brew "stow"                    # Symlink-farm manager, used for deploying symlinks of dotfiles to $HOME
+
+brew "stow"                    # Symlink-farm manager, used for deploying symlinks of 
+                               # dotfiles to $HOME
+                               # REQUIRED: Manages dotfiles for Project GenoMac
+
 brew "tlrc"                    # tldr (alternative to man pages) client written in Rust
 brew "trash"                   # CLI tool that moves files or folders to the trash
 brew "uv"                      # Python package and project manager
 brew "zoxide"                  # A smarter `cd` command
+brew "zsh"                     # Default UNIX shell (command interpreter)
 brew "zsh-autocomplete"        # Real-time type-ahead completion for Zsh
-brew "zsh-autosuggestions"     # ish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"     # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-syntax-highlighting" # Fish-shell-like syntax highlighting for zsh
