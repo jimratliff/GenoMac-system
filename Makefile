@@ -7,4 +7,5 @@ system-wide-prefs:
 clone-genomac-user:
 	zsh scripts/clone_genomac_user_repo.sh
 	
-
+provision-volumes-and-users:
+	zsh scripts/provision_vols_and_users.sh
