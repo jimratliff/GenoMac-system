@@ -254,4 +254,7 @@ function main() {
   report_end_phase 'Completed: volume-and-user provisioning'
 }
 
-main
+# Only run main() if this script is executed directly, not sourced
+if [[ "${(%):-%N}" == "$0" ]]; then
+  main "$@"
+fi
