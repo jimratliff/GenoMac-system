@@ -55,14 +55,6 @@ function run() {
 }
 
 # ------------------------- Unit-testable functions ----------------------------
-# create_encrypted_apfs_volume
-# Args:
-#   $1 = apfs_container (e.g., /dev/disk3s2)
-#   $2 = volume_name    (e.g., Volume2)
-#   $3 = passphrase     (plaintext; fed via stdin to diskutil)
-# Behavior (idempotent):
-#   - If a volume with the same name already exists in the container: no-op (reports skip)
-#   - Otherwise, create encrypted APFS volume with provided passphrase (reports creation)
 function create_encrypted_apfs_volume() {
   emulate -L zsh
   set -euo pipefail
@@ -78,26 +70,11 @@ function create_encrypted_apfs_volume() {
     return 0
   fi
 
-  # Feed passphrase via stdin; keep it off argv and off disk
   local cmd="printf %s \"\${passphrase}\" | diskutil apfs addVolume \"${apfs_container}\" APFS \"${vol_name}\" -passphrase"
   run "$cmd"; success_or_not
   report "  - Created encrypted APFS volume '$vol_name'"
 }
 
-# create_local_user_account
-# Args:
-#   $1 = name        (long+short per your spec)
-#   $2 = uid         (numeric)
-#   $3 = vocation    (used to resolve target volume and passphrase)
-#   $4 = avatar_path relative to GENOMAC_USER_LOGIN_PICTURES_DIRECTORY (optional but recommended)
-# Globals used:
-#   VOC_VOL[] map, VOL_PASS[] map, GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
-# Behavior (pristine init):
-#   - Hard-fail if shortname exists
-#   - Hard-fail if UID exists
-#   - Create account with home on /Volumes/<Vol>/Users/<Name>
-#   - Set password via stdin (kept off argv)
-#   - Set avatar if filename exists under GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
 function create_local_user_account() {
   emulate -L zsh
   set -euo pipefail
@@ -113,34 +90,29 @@ function create_local_user_account() {
   local pass="${VOL_PASS[$vol]:-}"
   [[ -n "$pass" ]] || { report "ERROR: volume '$vol' has no passphrase provided"; exit 1; }
 
-  local shortname="$name"   # per your spec
+  local shortname="$name"
   local home="/Volumes/${vol}/Users/${name}"
 
-  # ---- Strict guards for pristine setups ----
   if id -u "$shortname" >/dev/null 2>&1; then
     report "ERROR: user '$shortname' already exists; refusing to modify on pristine init"
     exit 1
   fi
 
-  # UID collision check
   if dscacheutil -q user | awk -v target="$uid" '$1=="uid:" && $2==target {found=1} END{exit(found?0:1)}'; then
     report "ERROR: UID '$uid' is already in use; refusing to proceed"
     exit 1
   fi
-  # -------------------------------------------
 
   report_action_taken "Creating user '$name' (uid=$uid, vocation=$vocation, volume=$vol)"
 
   run "mkdir -p '$home'"; success_or_not
 
-  # Create user with UID & home; password via stdin (kept off argv)
   local add_cmd="printf %s \"\${pass}\" | sysadminctl -addUser \"$shortname\" \
     -fullName \"$name\" -UID \"$uid\" -home \"$home\" -password -"
   run "$add_cmd"; success_or_not
 
   run "chown -R '$shortname':staff '$home'"; success_or_not
 
-  # Resolve avatar path relative to GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
   local avatar_abs=""
   if [[ -n "${avatar_rel}" ]]; then
     avatar_abs="${GENOMAC_USER_LOGIN_PICTURES_DIRECTORY%/}/${avatar_rel}"
@@ -156,13 +128,11 @@ function create_local_user_account() {
 
 # ------------------------------ Main wrapper ---------------------------------
 function main() {
-  # Diagnostics
   printf "\n📂 Path diagnostics:\n"
   printf "this_script_dir:                       %s\n" "$this_script_dir"
   printf "GENOMAC_HELPER_DIR:                    %s\n" "$GENOMAC_HELPER_DIR"
   printf "GENOMAC_USER_LOGIN_PICTURES_DIRECTORY: %s\n\n" "${GENOMAC_USER_LOGIN_PICTURES_DIRECTORY:-<unset>}"
 
-  # ------------------------------ CLI parsing --------------------------------
   DRY_RUN=0
   READ_FROM_STDIN=0
   CONFIG_JSON=""
@@ -192,22 +162,17 @@ function main() {
     exit 2
   fi
 
-  # ------------------------------ Dependencies -------------------------------
   if ! command -v jq >/dev/null 2>&1; then
     echo "This script requires 'jq'." >&2
     exit 2
   fi
 
-  # Optional courtesy warning: if using --stdin-json and likely expecting 1Password
   if (( READ_FROM_STDIN )) && ! command -v op >/dev/null 2>&1; then
     report "Note: 'op' (1Password CLI) not found in PATH. That's fine if you're piping JSON from elsewhere; if you intended to use 1Password CLI, install it first."
   fi
 
-  # ------------------------------- Parse config ------------------------------
   container="$(jq -r '.apfs_container' <<<"$CONFIG_JSON")"
-
-  typeset -a VOLUMES
-  typeset -a PASSES
+  typeset -a VOLUMES PASSES
   VOLUMES=("${(@f)$(jq -r '.volumes_ordered[]' <<<"$CONFIG_JSON")}")
   PASSES=("${(@f)$(jq -r '.passphrases_ordered[]' <<<"$CONFIG_JSON")}")
 
@@ -216,12 +181,10 @@ function main() {
     exit 2
   fi
 
-  typeset -A VOL_PASS
+  typeset -A VOL_PASS VOC_VOL
   for i in {1..${#VOLUMES[@]}}; do
     VOL_PASS["${VOLUMES[$i]}"]="${PASSES[$i]}"
   done
-
-  typeset -A VOC_VOL
   while IFS=$'\t' read -r k v; do
     VOC_VOL["$k"]="$v"
   done < <(jq -r '.vocation_to_volume | to_entries[] | "\(.key)\t\(.value)"' <<<"$CONFIG_JSON")
@@ -231,7 +194,6 @@ function main() {
 
   report_start_phase 'Begin volume-and-user provisioning'
 
-  # Volumes: idempotent across ALL declared volumes
   if (( ${#VOLUMES[@]} )); then
     report_action_taken "Ensuring declared encrypted APFS volumes exist"
     for idx in {1..${#VOLUMES[@]}}; do
@@ -241,20 +203,19 @@ function main() {
     done
   fi
 
-  # Users: strict, fail-fast on conflicts
   report_action_taken "Creating local user accounts (hard-fail on conflicts)"
   for uj in "${USERS_JSON[@]}"; do
     name="$(jq -r '.name' <<<"$uj")"
     uid="$(jq -r '.uid' <<<"$uj")"
     vocation="$(jq -r '.vocation' <<<"$uj")"
-    avatar_rel="$(jq -r '.avatar' <<<"$uj")"   # filename only
+    avatar_rel="$(jq -r '.avatar' <<<"$uj")"
     create_local_user_account "$name" "$uid" "$vocation" "$avatar_rel"
   done
 
   report_end_phase 'Completed: volume-and-user provisioning'
 }
 
-# Only run main() if this script is executed directly, not sourced
+# Only run main() if executed directly, not sourced (like Python’s if __name__ == "__main__")
 if [[ "${(%):-%N}" == "$0" ]]; then
   main "$@"
 fi
