@@ -8,14 +8,17 @@ brew "bash"                    # Bourne-Again SHell, a UNIX command interpreter
 brew "bat"                     # Clone of cat(1) with syntax highlighting and Git integration
 brew "cmatrix"                 # Terminal screensaver from "The Matrix," text raining down.
 brew "coreutils"               # basic file, shell and text manipulation utilities
+brew "dockutil"                # Tool for configuring the items in a macOS Dock
 brew "eza"                     # Modern alternative to `ls`
 brew "fzf"                     # Command-line fuzzy finder
+brew "gh"                      # GitHub command-line tool
 brew "git"                     # Distributed revision-control system
-brew "graphviz"                # Graph visualization software from AT&T and Bell Labs
+# brew "graphviz"                # Graph visualization software from AT&T and Bell Labs
 brew "jq"                      # Lightweight and flexible command-line JSON processor
                                # REQUIRED: Used by GenoMac to create volumes and user accounts
 brew "mas"                     # Mac App Store command-line interface
                                # REQUIRED: Used by GenoMac (via Homebrew) to install MAS apps
+brew "ripgrep"                 # Search tool like, but better than, grep and the Silver Searcher
 brew "starship"                # Configures prompt for Zsh and other shells
 brew "stockfish"               # Strong open-source chess engine
 brew "stow"                    # Symlink-farm manager, used for deploying symlinks of 
