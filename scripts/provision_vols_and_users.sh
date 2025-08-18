@@ -93,11 +93,12 @@ function create_local_user_account() {
   local shortname="$name"
   local home="/Volumes/${vol}/Users/${name}"
 
+  # Strict guards (initialize-only)
   if id -u "$shortname" >/dev/null 2>&1; then
     report "ERROR: user '$shortname' already exists; refusing to modify on pristine init"
     exit 1
   fi
-
+  
   if dscacheutil -q user | awk -v target="$uid" '$1=="uid:" && $2==target {found=1} END{exit(found?0:1)}'; then
     report "ERROR: UID '$uid' is already in use; refusing to proceed"
     exit 1
@@ -107,23 +108,32 @@ function create_local_user_account() {
 
   run "mkdir -p '$home'"; success_or_not
 
-  local add_cmd="printf %s \"\${pass}\" | sysadminctl -addUser \"$shortname\" \
-    -fullName \"$name\" -UID \"$uid\" -home \"$home\" -password -"
-  run "$add_cmd"; success_or_not
-
-  run "chown -R '$shortname':staff '$home'"; success_or_not
-
+  # Resolve avatar path relative to GENOMAC_USER_LOGIN_PICTURES_DIRECTORY (optional)
   local avatar_abs=""
+  local picture_flag=""
   if [[ -n "${avatar_rel}" ]]; then
     avatar_abs="${GENOMAC_USER_LOGIN_PICTURES_DIRECTORY%/}/${avatar_rel}"
     if [[ -f "$avatar_abs" ]]; then
-      run "dscl . -create /Users/'$shortname' Picture '$avatar_abs'"; success_or_not
+      picture_flag="-picture \"$avatar_abs\""
     else
       report "  - Avatar file not found at '$avatar_abs'; user will have the default picture"
     fi
   else
     report "  - No avatar filename provided; user will have the default picture"
   fi
+
+  # Create user with UID, home, shell, picture; feed password via stdin (kept off argv)
+  # Note: many systems accept `-password -` to read from stdin; we keep that pattern.
+  local add_cmd="printf %s \"\${pass}\" | sysadminctl -addUser \"$shortname\" \
+    -fullName \"$name\" \
+    -UID \"$uid\" \
+    -home \"$home\" \
+    ${picture_flag} \
+    -password -"
+  run "$add_cmd"; success_or_not
+
+  # Ensure ownership of the home directory
+  run "chown -R '$shortname':staff '$home'"; success_or_not
 }
 
 # ------------------------------ Main wrapper ---------------------------------
