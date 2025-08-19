@@ -85,9 +85,8 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
 ### Grant Terminal full-disk access
 - System Settings
   - Privacy & Security
-    - Select the Privacy tab
-      - Scroll down and click Full Disk Access
-        - Enable for Terminal
+    - Scroll down and click Full Disk Access
+      - Enable for Terminal
 
 ### Install Homebrew and update PATH
 #### Manually install Homebrew
