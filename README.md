@@ -99,7 +99,7 @@ To install Homebrew, launch Terminal:
 ```
 (This is the same command as going to [brew.sh](https://brew.sh/) and copying the command from near the top of the page under “Install Homebrew.”)
 #### Add Homebrew to PATH
-In Terminal, sequentially execute each of the following three commands (it’s supposed to work to copy the entire block and paste as a block into Terminal):
+In Terminal, sequentially execute each of the following three commands (it works to copy the entire block and paste as a block into Terminal):
 ```shell
 echo >> /Users/configger/.zprofile
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/configger/.zprofile
