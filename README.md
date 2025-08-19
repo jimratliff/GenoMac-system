@@ -68,6 +68,7 @@ GenoMac-system is responsible for configurations at the system level, i.e., that
 - Install Homebrew (and therefore also Git)
 - Modify PATH to add Homebrew
 - Clone this public repo to `~/.genomac-system`
+- Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
 - Run a script for Homebrew to install applications and fonts
 - Run a script to implement systemwide settings
 
@@ -114,6 +115,10 @@ cd ~/.genomac-system
 git clone https://github.com/jimratliff/GenoMac-system.git .
 ```
 **Note the trailing “.” at the end of the `git clone` command.**
+
+### Log into the Mac App Store
+- Launch the Mac App Store
+- Log in, using the Apple Account that purchased the MAS apps to be installed by Homebrew
 
 ### Use Homebrew to install applications and fonts
 ```shell
