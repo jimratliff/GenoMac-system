@@ -44,7 +44,7 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
     - USER_CONFIGURER manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system)
   - Repeatable/idempotent task
     - USER_CONFIGURER executes scripts to implement systemwide settings and installs apps
-- USER_CONFIGURER clones and then uses the [GenoMac-spawn repo](https://github.com/jimratliff/GenoMac-spawn) to create each of the additional users.
+- USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
 - Loop over each USER_j of the newly created users
   - USER_j logs into the USER_j account for the first time
   - USER_j clones and uses the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to implement the generic user-scope settings for USER_j
