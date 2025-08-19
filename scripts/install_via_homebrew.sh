@@ -20,6 +20,13 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 function install_via_homebrew() {
   report_start_phase_standard
 
+  # Says: don’t quarantine installed apps
+  # This duplicates the effect of `HOMEBREW_CASK_OPTS=--no-quarantine` in `.config/homebrew/brew.env`
+  # but this dotfile hasn’t been established by the time this script runs the first time when 
+  # bootstrapping a Mac.
+  report_action_taken "Suppressing quarantine flag on to-be-installed apps"
+  export HOMEBREW_CASK_OPTS=--no-quarantine
+
   # Assumes Brewfile is in homebrew/, which is parallel to scripts/
   brewfile_path="${this_script_dir}/../homebrew/Brewfile"
 
