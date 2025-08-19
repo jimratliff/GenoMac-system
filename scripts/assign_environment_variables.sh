@@ -33,7 +33,7 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 GENOMAC_SYSTEM_REPO_URL="https://github.com/jimratliff/GenoMac-system.git"
 
 # Specify URL for cloning the public GenoMac-user repository using HTTPS
-GENOMAC_USER_REPO_URL="https://github.comjimratliff/GenoMac-user.git"
+GENOMAC_USER_REPO_URL="https://github.com/jimratliff/GenoMac-user.git"
 
 # Specify local directory into which the GenoMac-system repository will be 
 # cloned
