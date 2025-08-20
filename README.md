@@ -103,32 +103,30 @@ To install Homebrew, launch Terminal:
 ##### New-and-improved to make Homebrew and man pages available to other users without any other user-specific configurations
 In Terminal, copy the entire below code block and paste into Terminal (**your password will be required**):
 ```shell
-setopt interactivecomments 2>/dev/null
-# --- System-wide Homebrew environment for all zsh login shells ---
-# Adds to /etc/zprofile only if not already present.
 if [ -x /opt/homebrew/bin/brew ]; then
-  if ! sudo grep -q 'BEGIN HOMEBREW shellenv' /etc/zprofile 2>/dev/null; then
-    sudo bash -c 'cat >>/etc/zprofile' <<'EOF'
+  # Append Homebrew shellenv to /etc/zprofile once (system-wide)
+  sudo /bin/sh -c 'grep -q "BEGIN HOMEBREW shellenv" /etc/zprofile 2>/dev/null || cat >>/etc/zprofile <<'"'"'EOF'"'"'
 # --- BEGIN HOMEBREW shellenv (system-wide) ---
 if [ -x /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 # --- END HOMEBREW shellenv (system-wide) ---
-EOF
-  fi
-
-  # Make Homebrew man pages available to everyone (idempotent)
-  # Creates /etc/manpaths.d/homebrew with one line: /opt/homebrew/share/man
-  if [ ! -f /etc/manpaths.d/homebrew ] || ! grep -q '^/opt/homebrew/share/man$' /etc/manpaths.d/homebrew 2>/dev/null; then
-    printf '/opt/homebrew/share/man\n' | sudo tee /etc/manpaths.d/homebrew >/dev/null
-  fi
-
-  # Prime the CURRENT shell session so subsequent commands work now
+EOF'
+  # Ensure man pages for all users
+  sudo mkdir -p /etc/manpaths.d
+  printf '/opt/homebrew/share/man\n' | sudo tee /etc/manpaths.d/homebrew >/dev/null
+  # Prime the CURRENT shell so the rest of your bootstrap works now
   eval "$(/opt/homebrew/bin/brew shellenv)"
 else
   echo "Homebrew not found at /opt/homebrew. Install it first, then re-run this block." >&2
 fi
 ```
+
+Explanations for the above code block:
+- Adds a text block to /etc/zprofile (the systemwide PATH) only if not already present
+- Makes Homebrew man pages available to everyone (idempotent)
+- Primes the *current* shell session so subsequent commands work now without logging out and logging back in (or otherwise creating a new login shell)
+
 ##### Original (per Homebrew itself) but DEPRECATED because it doesn’t put Homebrew in PATH for *other* users
 In Terminal, sequentially execute each of the following three commands (it works to copy the entire block and paste as a block into Terminal):
 ```shell
