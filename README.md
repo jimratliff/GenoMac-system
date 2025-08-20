@@ -103,6 +103,7 @@ To install Homebrew, launch Terminal:
 ##### New-and-improved to make Homebrew and man pages available to other users without any other user-specific configurations
 In Terminal, copy the entire below code block and paste into Terminal (**your password will be required**):
 ```shell
+setopt interactivecomments 2>/dev/null
 # --- System-wide Homebrew environment for all zsh login shells ---
 # Adds to /etc/zprofile only if not already present.
 if [ -x /opt/homebrew/bin/brew ]; then
