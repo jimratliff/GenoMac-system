@@ -22,6 +22,8 @@ COLOR_REPORT="$COLOR_BLUE"
 COLOR_ADJUST_SETTING="$COLOR_CYAN"
 COLOR_ACTION_TAKEN="$COLOR_GREEN"
 COLOR_WARNING="$COLOR_YELLOW"
+COLOR_ERROR="$COLOR_RED"
+COLOR_SUCCESS="$COLOR_GREEN"
 COLOR_KILLED="$COLOR_RED"
 
 SYMBOL_SUCCESS="✅ "
@@ -50,6 +52,7 @@ function keep_sudo_alive() {
 }
 
 function success_or_not() {
+  # Print SYMBOL_SUCCESS if success (based on error code); otherwise SYMBOL_FAILURE
   if [[ $? -eq 0 ]]; then
     printf " ${SYMBOL_SUCCESS}\n"
   else
@@ -60,6 +63,16 @@ function success_or_not() {
 function report() {
   # Output supplied line of text in a distinctive color.
   printf "%b%s%b\n" "$COLOR_REPORT" "$1" "$COLOR_RESET"
+}
+
+function report_fail() {
+  # Output supplied line of text in a distinctive color prefaced by SYMBOL_FAILURE.
+  printf "%b%s%s%b\n" "$COLOR_ERROR" "$SYMBOL_FAILURE" "$1" "$COLOR_RESET"
+}
+
+function report_success() {
+  # Output supplied line of text in a distinctive color prefaced by SYMBOL_SUCCESS.
+  printf "%b%s%s%b\n" "$COLOR_SUCCESS" "$SYMBOL_SUCCESS" "$1" "$COLOR_RESET"
 }
 
 function report_adjust_setting() {
