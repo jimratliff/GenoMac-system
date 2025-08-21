@@ -41,6 +41,7 @@ report_start_phase 'Begin the systemwide-settings phase'
 set_initial_systemwide_settings
 
 # Kill each app affected by `defaults` commands in the prior functions
+# In this case, none of these might be necessary, but killing these two won’t hurt.
 # (App-killing deferred here to avoid redundantly killing the same app multiple times.)
 report_action_taken "Force quit all apps/processes whose settings we just changed"
 apps_to_kill=(
