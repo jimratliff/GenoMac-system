@@ -39,7 +39,7 @@ BREW_ZSH="$HOMEBREW_PREFIX/bin/zsh"
 SHELLS_FILE="/etc/shells"
 
 if [[ ! -x "$BREW_ZSH" ]]; then
-  report_fail "$BREW_ZSH not found. Did 'brew bundle' install zsh yet?" >&2
+  report_fail "$BREW_ZSH not found. Did 'brew bundle' install zsh yet?"
   exit 1
 fi
 
