@@ -10,6 +10,9 @@ git pull origin main
 ```
 
 ### Update app and font installation
+
+NOTE: If revisions to the Brewfile imply installing *new* apps from Mac App Store, you must sign in to the App Store before executing the below steps.
+
 To update all apps (and install/remove apps as required by any changes in the Brewfile):
 ```bash
 cd ~/.genomac-system
@@ -145,6 +148,8 @@ git clone https://github.com/jimratliff/GenoMac-system.git .
 **Note the trailing “.” at the end of the `git clone` command.**
 
 ### Log into the Mac App Store
+(Note: Needs checking, but presumably the following steps are required only if you’ll be *installing* (rather than merely updating) new apps from the Mac App Store.)
+
 - Launch the Mac App Store
 - Log in, using the Apple Account that purchased the MAS apps to be installed by Homebrew
 
