@@ -27,7 +27,6 @@ cd ~/.genomac-system
 git pull origin main
 make system-wide-prefs
 ```
-
 ## Overview of the entire GenoMac process
 Project GenoMac is an implementation of automated setup of multiple Macs, each with multiple users.
 
