@@ -21,7 +21,7 @@ make install-via-homebrew
 ```
 
 ### Reassert systemwide settings
-To reassert the systemwide settings (in response to any changes in them):
+To reassert the systemwide settings (in response to (a) any changes in them in this repo or (b) unwanted changes by users that should be reverted):
 ```bash
 cd ~/.genomac-system
 git pull origin main
@@ -41,13 +41,15 @@ We now focus on a particular Mac. At this point, we assume the following:
 - USER_CONFIGURER is signed into its account
 
 At a high level, for a particular new Mac, Project GenoMac involves the following steps:
-- USER_CONFIGURER performs a bootstrapping step and a repeatable/idempotent configuration task:
-  - Bootstrapping
-    - USER_CONFIGURER manually installs Homebrew (which necessarily installs Git)
-    - USER_CONFIGURER manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system)
-  - Repeatable/idempotent task
-    - USER_CONFIGURER executes scripts to implement systemwide settings and installs apps
-- USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
+- USER_CONFIGURER performs the following:
+  - USER_CONFIGURER manually installs Homebrew (which necessarily installs Git)
+  - USER_CONFIGURER manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
+  - Using the GenoMac-system repo:
+    - USER_CONFIGURER executes scripts to (a) implement systemwide settings and (b) install apps
+  - USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
+  - Using the GenoMac-user repo:
+    - USER_CONFIGURER executes scripts to implement generic user-scoped settings
+  - USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
 - Loop over each USER_j of the newly created users
   - USER_j logs into the USER_j account for the first time
   - USER_j clones and uses the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to implement the generic user-scope settings for USER_j
