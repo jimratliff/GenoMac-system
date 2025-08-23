@@ -155,6 +155,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
 
 ### Clone this repo to `~/.genomac-system`
+This public GenoMac-user repo is meant to be cloned locally (using https) to USER_CONFIGURER’s home directory. More specifically, the local directory to which this repo is to be cloned is the hidden directory `~/.genomac-system`, specified by the environment variable $GENOMAC_SYSTEM_LOCAL_DIRECTORY (which is exported by the script `assign_environment_variables.sh`).
+
 Copy the following code block and paste into Terminal:
 ```shell
 mkdir -p ~/.genomac-system
