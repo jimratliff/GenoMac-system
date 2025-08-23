@@ -72,7 +72,7 @@ GenoMac-system supports implementing configurations at the system level, i.e., s
 In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
 
 ### Preview of process
-- In Safari, establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
+- In Safari, access a pre-defined Google Doc to establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
 - Give Terminal full-disk access
 - Install Homebrew (and therefore also Git)
 - Modify PATH to add Homebrew
