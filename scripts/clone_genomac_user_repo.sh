@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-###### IN PROGRESS: INCOMPLETE!!!
-
 # Clone GenoMac-user repo to GENOMAC_USER_LOCAL_DIRECTORY
 
 # Fail early on unset variables or command failure
@@ -34,6 +32,8 @@ function clone_genomac_user_repo() {
 
   report_action_taken "Cloning repo: $repo_url"
   git clone "$repo_url" .; success_or_not
+
+  report_action_taken "The repo has been cloned to $repo_url and you are now in that local directory."
 
   report_end_phase_standard
 }
