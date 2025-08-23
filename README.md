@@ -63,12 +63,14 @@ This GenoMac-system repository is the first stop in Project GenoMac to setup any
 
 The GenoMac-system repo is used and cloned exclusively by USER_CONFIGURER. 
 
-GenoMac-system is responsible for configurations at the system level, i.e., that affect all users. This responsibility includes:
+GenoMac-system supports implementing configurations at the system level, i.e., settings that affect all users. These settings includes:
 - setting the ComputerName and LocalHostName
 - setting a login-window message
 - configuring the firewall
 - specifying policies regarding software-update behavior
 - installing all CLI and GUI apps (both on or off the Mac App Store)
+
+In addition, GenoMac-system is used by USER_CONFIGURER to *create* new users and, when a user’s home directory will reside on a volume that does not exist, to create that volume.
 
 ### Preview of process
 - In Safari, establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
