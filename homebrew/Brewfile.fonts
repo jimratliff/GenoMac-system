@@ -1,4 +1,7 @@
 # A sub-Brewfile that is aggregated into the main Brewfile.
 # It is assumed this sub-Brewfile resides in the same directory as the main Brewfile.
 
+# This Brewfile.fonts file is now DEPRECATED because Homebrew installs fonts *only*
+# for the Homebrew user, not for other users, and the old workaround no longer works.
+
 cask "font-fira-code-nerd-font" # The Nerd Font version of Fira Code
