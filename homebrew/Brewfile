@@ -14,4 +14,4 @@ BASE = __dir__
 instance_eval File.read(File.join(BASE, "Brewfile.formulae")), "Brewfile.formulae"
 instance_eval File.read(File.join(BASE, "Brewfile.casks")),    "Brewfile.casks"
 instance_eval File.read(File.join(BASE, "Brewfile.mas")),      "Brewfile.mas"
-instance_eval File.read(File.join(BASE, "Brewfile.fonts")),    "Brewfile.fonts"
+# instance_eval File.read(File.join(BASE, "Brewfile.fonts")),    "Brewfile.fonts"
