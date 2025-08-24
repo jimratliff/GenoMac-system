@@ -43,18 +43,23 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
 - USER_CONFIGURER performs the following:
   - USER_CONFIGURER manually installs Homebrew (which necessarily installs Git)
   - USER_CONFIGURER manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
-  - Using the GenoMac-system repo:
-    - USER_CONFIGURER executes scripts to (a) implement systemwide settings and (b) install apps
-  - USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
-  - Using the GenoMac-user repo:
-    - USER_CONFIGURER executes scripts to implement generic user-scoped settings
+  - Using the GenoMac-system repo, USER_CONFIGURER executes scripts to:
+    - install apps
+    - install font(s)
+    - implement systemwide settings
+  - Using a script (from GenoMac-system), USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
+  - Using the GenoMac-user repo, USER_CONFIGURER executes scripts to:
+    - “stow” dotfiles
+    - implement generic user-scoped settings
+    - configure 1Password for authentication with GitHub
   - USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
-- Loop over each USER_j of the newly created users
-  - USER_j performs the following:
-    - USER_j logs into the USER_j account for the first time
-    - USER_j the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
-    - Using the GenoMac-user repo:
-      - USER_j executes scripts to implement generic user-scoped settings
+- Loop over each USER_j of the newly created users, USER_j performs the following:
+  - USER_j logs into the USER_j account for the first time
+  - USER_j clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
+  - Using the GenoMac-user repo, USER_j executes scripts to::
+    - “stow” dotfiles
+    - implement generic user-scoped settings
+    - configure 1Password for authentication with GitHub
 
 ## Overview of the GenoMac-system step
 ### Context
@@ -63,11 +68,14 @@ This GenoMac-system repository is the first stop in Project GenoMac to setup any
 The GenoMac-system repo is used and cloned exclusively by USER_CONFIGURER. 
 
 GenoMac-system supports implementing configurations at the system level, i.e., settings that affect all users. These settings includes:
-- setting the ComputerName and LocalHostName
-- setting a login-window message
-- configuring the firewall
-- specifying policies regarding software-update behavior
+- installing Homebrew (and thereby git)
 - installing all CLI and GUI apps (both on or off the Mac App Store)
+- installing font(s)
+- adjusting systemwide settings
+  - setting the ComputerName and LocalHostName
+  - setting a login-window message
+  - configuring the firewall
+  - specifying policies regarding software-update behavior
 
 In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
 
@@ -79,13 +87,16 @@ In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users
 - Modify PATH to add Homebrew
 - Clone this public repo to `~/.genomac-system`
 - Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
-- Run a script for Homebrew to install applications and fonts
+- Run a script for Homebrew to install applications
+- Run a script to install font(s)
 - Run a script to implement systemwide settings
 #### Phase 2
 - Clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
 - Follow the instructions at GenoMac-user to configure the user-scoped settings for USER_CONFIGURER
 #### Phase 3
 - Return to GenoMac-system to create the additional users and, when necessary, additional volumes to house the user directories for newly created users
+#### Phase 4
+- Loop over newly created users… performing the steps in the GenoMac-user repo
 
 ## Implementation
 ### Establish real-time connection to communicate text back and forth
@@ -171,11 +182,18 @@ git clone https://github.com/jimratliff/GenoMac-system.git .
 - Launch the Mac App Store
 - Log in, using the Apple Account that purchased the MAS apps to be installed by Homebrew
 
-### Use Homebrew to install applications and fonts
+### Use Homebrew to install applications
 Copy the following code block and paste into Terminal:
 ```shell
 cd ~/.genomac-system
 make install-via-homebrew
+```
+
+### Install font(s)
+Copy the following code block and paste into Terminal:
+```shell
+cd ~/.genomac-system
+make font-installation
 ```
 
 ### Implement systemwide settings
