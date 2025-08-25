@@ -43,6 +43,11 @@ function install_matrix_screensaver_systemwide() {
     return 1
   fi
 
+  report_action_taken "Dump full Info.plist to inspect available keys"
+  report "📋 Available keys in Info.plist:"
+  /usr/libexec/PlistBuddy -c "Print" "$plist_path" 2>&1 | while IFS= read -r line; do report "  $line"
+  done
+
   report_action_taken "Read version from downloaded .saver Info.plist"
   local downloaded_version
   local _raw_version
