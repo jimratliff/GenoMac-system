@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# Installsfonts.
+# Installs fonts.
 
 # Fail early on unset variables or command failure
 set -euo pipefail
@@ -15,6 +15,8 @@ source "${this_script_dir}/assign_environment_variables.sh"
 
 # Source helpers
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
+
+# Font-related scripts should be placed in 
 
 # Specify the directory in which the file(s) containing the font-related 
 # functions called by this script lives.
