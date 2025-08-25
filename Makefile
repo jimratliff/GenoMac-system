@@ -4,8 +4,11 @@
 # Phony targets (not real files)
 # --------------------------------------------------------------------
 .PHONY: \
-    install-via-homebrew \
-    system-wide-prefs \
+    app-install-via-homebrew \
+	font-install \
+	screensaver-install \
+	resources-install \
+    prefs-systemwide \
     clone-genomac-user \
     provision-volumes-and-users \
     test_user_creation \
@@ -15,16 +18,19 @@
 # Targets
 # --------------------------------------------------------------------
 
-install-via-homebrew:
+app-install-via-homebrew:
 	zsh scripts/install_via_homebrew.sh
 
-font-installation:
+font-install:
 	zsh scripts/install_fonts.sh
 
-screensaver-installation:
+resources-install:
+	zsh scripts/install_resources.sh
+
+screensaver-install:
 	zsh scripts/install_screensavers.sh
 
-system-wide-prefs:
+prefs-systemwide:
 	zsh scripts/implement_systemwide_prefs.sh
 
 clone-genomac-user:
