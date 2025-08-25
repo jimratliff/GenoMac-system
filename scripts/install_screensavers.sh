@@ -16,7 +16,7 @@ source "${this_script_dir}/assign_environment_variables.sh"
 # Source helpers
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
-# Screensaver-related scripts should be placed in GenoMac-system/scripts/screensaver-scripts
+# Screensaver-related scripts should be placed in GenoMac-system/scripts/screensaver_scripts
 
 # Currently only MatrixDownload is installed. To add additional screensavers would require
 # some refactoring; it’s not as simple as adding a line to a Brewfile. 😉
@@ -27,7 +27,7 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 # `install_matrix_screensaver_systemwide.sh`. Assuming `install_matrix_screensaver_systemwide.sh` 
 # resides at the same level as this script:
 # PREFS_SCREENSAVER_FUNCTIONS_DIR="${this_script_dir}"
-PREFS_SCREENSAVER_FUNCTIONS_DIR="${this_script_dir}/font_scripts"
+PREFS_SCREENSAVER_FUNCTIONS_DIR="${this_script_dir}/screensaver_scripts"
 
 # Print assigned paths for diagnostic purposes
 printf "\n📂 Path diagnostics:\n"
