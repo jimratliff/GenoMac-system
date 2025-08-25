@@ -48,7 +48,7 @@ function install_matrix_screensaver_systemwide() {
   local _raw_version
   set +e # Turning on for diagnostic purposes
   report "Visiting PlistBuddy: Wish me luck!"
-  _raw_version="$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$plist_path" 2>/dev/null)"
+  _raw_version="$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$plist_path" 2>&1)"
   local plist_status=$?
   set -e # Turning off special diagnostic stuff
   success_or_not "$plist_status"
