@@ -21,14 +21,17 @@
 app-install-via-homebrew:
 	zsh scripts/install_via_homebrew.sh
 
-font-install:
-	zsh scripts/install_fonts.sh
-
 resources-install:
 	zsh scripts/install_resources.sh
 
+font-install:
+	zsh scripts/install_fonts.sh
+
 screensaver-install:
 	zsh scripts/install_screensavers.sh
+
+sound-install:
+	zsh scripts/install_sounds.sh
 
 prefs-systemwide:
 	zsh scripts/implement_systemwide_prefs.sh
