@@ -16,7 +16,10 @@ source "${this_script_dir}/assign_environment_variables.sh"
 # Source helpers
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
-# Font-related scripts should be placed in 
+# Font-related scripts should be placed in GenoMac-system/scripts/font-scripts
+
+# Currently only Fira Code Nerdfont is installed. To add additional fonts would require
+# some refactoring; it’s not as simple as adding a line to a Brewfile. 😉
 
 # Specify the directory in which the file(s) containing the font-related 
 # functions called by this script lives.
