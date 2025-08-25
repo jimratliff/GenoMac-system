@@ -35,8 +35,11 @@ printf "this_script_dir:              %s\n" "$this_script_dir"
 printf "GENOMAC_HELPER_DIR: %s\n" "$GENOMAC_HELPER_DIR"
 printf "PREFS_FONT_FUNCTIONS_DIR:  %s\n\n" "$PREFS_FONT_FUNCTIONS_DIR"
 
+# Source function(s)
+source "${PREFS_FONT_FUNCTIONS_DIR}/install_fira_code_nerd_font_systemwide.sh"
+
 ############################## BEGIN SCRIPT PROPER ##############################
-function install_via_homebrew() {
+function install_fonts() {
   report_start_phase_standard
 
   # Installs Fira Code Nerdfont
@@ -47,7 +50,7 @@ function install_via_homebrew() {
 }
 
 function main() {
-  install_via_homebrew
+  install_fonts
 }
 
 main
