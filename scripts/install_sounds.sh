@@ -35,7 +35,7 @@ printf "GENOMAC_HELPER_DIR: %s\n" "$GENOMAC_HELPER_DIR"
 printf "SOUNDS_FUNCTIONS_DIR:  %s\n\n" "$SOUNDS_FUNCTIONS_DIR"
 
 # Source function(s)
-source "${SOUNDS_FUNCTIONS_DIR}/install_sounds.sh"
+source "${SOUNDS_FUNCTIONS_DIR}/install_uh_oh_sound_systemwide.sh"
 
 ############################## BEGIN SCRIPT PROPER ##############################
 function install_sounds() {
