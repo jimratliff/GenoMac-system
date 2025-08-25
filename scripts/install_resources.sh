@@ -33,7 +33,8 @@ printf "GENOMAC_HELPER_DIR: %s\n" "$GENOMAC_HELPER_DIR"
 printf "PREFS_RESOURCES_FUNCTIONS_DIR:  %s\n\n" "$PREFS_RESOURCES_FUNCTIONS_DIR"
 
 # Source function(s)
-source "${PREFS_RESOURCES_FUNCTIONS_DIR}/install_resources_systemwide.sh"
+source "${PREFS_RESOURCES_FUNCTIONS_DIR}/install_fira_code_nerd_font_systemwide.sh"
+source "${PREFS_RESOURCES_FUNCTIONS_DIR}/install_matrix_screensaver_systemwide.sh"
 
 ############################## BEGIN SCRIPT PROPER ##############################
 function install_resources_systemwide() {
