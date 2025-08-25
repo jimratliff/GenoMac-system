@@ -5,14 +5,15 @@
 # --------------------------------------------------------------------
 .PHONY: \
     app-install-via-homebrew \
-	font-install \
-	screensaver-install \
-	resources-install \
-    prefs-systemwide \
     clone-genomac-user \
+	font-install \
+    prefs-systemwide \
     provision-volumes-and-users \
+	resources-install \
+	screensaver-install \
+	sound-install \
     test_user_creation \
-    test_volume_creation
+    test_volume_creation \
 
 # --------------------------------------------------------------------
 # Targets
