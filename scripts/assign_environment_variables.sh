@@ -50,6 +50,10 @@ GENOMAC_USER_LOCAL_DIRECTORY="$HOME/.genomac-user"
 # $HOME directory.
 GENOMAC_USER_LOCAL_STOW_DIRECTORY="$GENOMAC_USER_LOCAL_DIRECTORY/stow_directory"
 
+# Specify the local directory into which the diff results of defaults_detective
+# investigations will be saved.
+GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS="$HOME/genomac-detective"
+
 # Specify the local directory in which user login pictures are stored to be
 # accessed during user-account creation.
 GENOMAC_USER_LOGIN_PICTURES_DIRECTORY="$HOME/.genomac-user-login-pictures"
@@ -69,5 +73,5 @@ export_and_report GENOMAC_USER_REPO_URL
 export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_STOW_DIRECTORY
+export_and_report GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS
 export_and_report GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
-
