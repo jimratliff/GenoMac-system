@@ -60,6 +60,15 @@ function success_or_not() {
   fi
 }
 
+function success_or_not() {
+  # Now has an optional argument
+  if [[ "${1:-$?}" -eq 0 ]]; then
+    printf " ${SYMBOL_SUCCESS}\n"
+  else
+    printf "\n${SYMBOL_FAILURE}\n"
+  fi
+}
+
 function report() {
   # Output supplied line of text in a distinctive color.
   printf "%b%s%b\n" "$COLOR_REPORT" "$1" "$COLOR_RESET"
