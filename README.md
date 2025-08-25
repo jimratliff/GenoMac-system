@@ -9,9 +9,9 @@ cd ~/.genomac-system
 git pull origin main
 ```
 
-### Update app and font installation
+### Update apps
 
-NOTE: If revisions to the Brewfile imply installing *new* apps from Mac App Store, you must sign in to the App Store before executing the below steps.
+NOTE: If revisions to the Brewfile imply installing *new* apps from the Mac App Store, you must sign in to the App Store before executing the below steps.
 
 To update all apps (and install/remove apps as required by any changes in the Brewfile):
 ```bash
@@ -27,6 +27,14 @@ cd ~/.genomac-system
 git pull origin main
 make prefs-systemwide
 ```
+
+### Resources (fonts, screensavers, and sounds) are not routinely updated
+The installation of resources (fonts, screensaver, and sounds) are considered one-time installs at the time a new Mac is initially configured. Unlike (a) apps and (b) systemwide preferences, resources are assumed to rarely change. Therefore, `make resources-install` is not designed to be executed routinely but only in response to a known change in an existing deployed resource or a desire to add an additional deployed resource.
+
+If existing resources are updated or new resources are chosen to be added, the corresponding scripts would be modified and re-run for each Mac.
+
+If existing resources are marked for deletion, this would require an appropriate `sudo rm -rf path/to/some_resource` to be deployed and executed on each Mac.
+
 ## Overview of the entire GenoMac process
 Project GenoMac is an implementation of automated setup of multiple Macs, each with multiple users.
 
@@ -45,7 +53,10 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
   - USER_CONFIGURER manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
   - Using the GenoMac-system repo, USER_CONFIGURER executes scripts to:
     - install apps
-    - install font(s)
+    - install resources
+      - font(s)
+      - screensaver(s)
+      - sound(s)
     - implement systemwide settings
   - Using a script (from GenoMac-system), USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
   - Using the GenoMac-user repo, USER_CONFIGURER executes scripts to:
@@ -67,10 +78,13 @@ This GenoMac-system repository is the first stop in Project GenoMac to setup any
 
 The GenoMac-system repo is used and cloned exclusively by USER_CONFIGURER. 
 
-GenoMac-system supports implementing configurations at the system level, i.e., settings that affect all users. These settings includes:
+GenoMac-system supports implementing configurations at the system level, i.e., configurations that affect all users. These configurations include:
 - installing Homebrew (and thereby git)
 - installing all CLI and GUI apps (both on or off the Mac App Store)
-- installing font(s)
+- installing resources
+  - font(s)
+  - screensaver(s)
+  - sound(s)
 - adjusting systemwide settings
   - setting the ComputerName and LocalHostName
   - setting a login-window message
@@ -88,8 +102,8 @@ In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users
 - Clone this public repo to `~/.genomac-system`
 - Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
 - Run a script for Homebrew to install applications
-- Run a script to install font(s)
-- Run a script to implement systemwide settings
+- Run a script to install certain resources (font(s), screensaver(s), and sound(s))
+- Run a script to implement certain systemwide settings
 #### Phase 2
 - Clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
 - Follow the instructions at GenoMac-user to configure the user-scoped settings for USER_CONFIGURER
@@ -189,12 +203,13 @@ cd ~/.genomac-system
 make app-install-via-homebrew
 ```
 
-### Install font(s)
+### Install resources (font(s), screensaver(s), and sound(s))
 Copy the following code block and paste into Terminal:
 ```shell
 cd ~/.genomac-system
-make font-install
+make resources-install
 ```
+This Makefile item combines `make font-install`, `make screensaver-install`, and `sound-install`, which can alternatively be run selectively and separately.
 
 ### Implement systemwide settings
 Copy the following code block and paste into Terminal:
