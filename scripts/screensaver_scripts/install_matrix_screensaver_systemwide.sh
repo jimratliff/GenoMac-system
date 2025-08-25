@@ -37,10 +37,11 @@ function install_matrix_screensaver_systemwide() {
 
   report_action_taken "Read version from downloaded .saver Info.plist"
   local downloaded_version
-  /usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" \
-    "$temp_dir/$screensaver_name/Contents/Info.plist" 2>/dev/null
+  local _raw_version
+  _raw_version="$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$temp_dir/$screensaver_name/Contents/Info.plist" 2>/dev/null)"
   success_or_not
-  downloaded_version="$REPLY"
+  downloaded_version="$_raw_version"
+  report "Downloaded version: $downloaded_version"
 
   if [[ -f "$destination_path/Contents/Info.plist" ]]; then
     report_action_taken "Check installed version of Matrix.saver"
