@@ -21,6 +21,9 @@ install-via-homebrew:
 font-installation:
 	zsh scripts/install_fonts.sh
 
+screensaver-installation:
+	zsh scripts/install_screensavers.sh
+
 system-wide-prefs:
 	zsh scripts/implement_systemwide_prefs.sh
 
