@@ -33,7 +33,7 @@ PREFS_FONT_FUNCTIONS_DIR="${this_script_dir}/font_scripts"
 printf "\n📂 Path diagnostics:\n"
 printf "this_script_dir:              %s\n" "$this_script_dir"
 printf "GENOMAC_HELPER_DIR: %s\n" "$GENOMAC_HELPER_DIR"
-printf "PREFS_FUNCTIONS_DIR:  %s\n\n" "$PREFS_FUNCTIONS_DIR"
+printf "PREFS_FONT_FUNCTIONS_DIR:  %s\n\n" "$PREFS_FONT_FUNCTIONS_DIR"
 
 ############################## BEGIN SCRIPT PROPER ##############################
 function install_via_homebrew() {
