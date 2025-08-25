@@ -16,8 +16,7 @@ source "${this_script_dir}/assign_environment_variables.sh"
 # Source helpers
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
-# Font-related scripts should be placed in GenoMac-system/scripts/font-scripts
-
+# Font-related scripts should be placed in GenoMac-system/scripts/resource_installation
 # Currently only Fira Code Nerdfont is installed. To add additional fonts would require
 # some refactoring; it’s not as simple as adding a line to a Brewfile. 😉
 
@@ -27,7 +26,7 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 # `install_fira_code_nerd_font_systemwide.sh`. Assuming `install_fira_code_nerd_font_systemwide.sh` 
 # resides at the same level as this script:
 # PREFS_FONT_FUNCTIONS_DIR="${this_script_dir}"
-PREFS_FONT_FUNCTIONS_DIR="${this_script_dir}/font_scripts"
+PREFS_FONT_FUNCTIONS_DIR="${this_script_dir}/resource_installation"
 
 # Print assigned paths for diagnostic purposes
 printf "\n📂 Path diagnostics:\n"
