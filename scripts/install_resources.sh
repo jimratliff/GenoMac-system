@@ -35,6 +35,7 @@ printf "PREFS_RESOURCES_FUNCTIONS_DIR:  %s\n\n" "$PREFS_RESOURCES_FUNCTIONS_DIR"
 # Source function(s)
 source "${PREFS_RESOURCES_FUNCTIONS_DIR}/install_fira_code_nerd_font_systemwide.sh"
 source "${PREFS_RESOURCES_FUNCTIONS_DIR}/install_matrix_screensaver_systemwide.sh"
+source "${PREFS_RESOURCES_FUNCTIONS_DIR}/install_uh_oh_sound_systemwide.sh"
 
 ############################## BEGIN SCRIPT PROPER ##############################
 function install_resources_systemwide() {
@@ -45,6 +46,9 @@ function install_resources_systemwide() {
 
   # Installs MatrixDownload screensaver
   install_matrix_screensaver_systemwide
+
+  # Installs Uh_oh alert sound
+  install_uh_oh_sound_systemwide
 
   report_end_phase_standard
 
