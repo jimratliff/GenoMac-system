@@ -66,13 +66,18 @@ function report() {
 }
 
 function report_fail() {
-  # Output supplied line of text in a distinctive color prefaced by SYMBOL_FAILURE.
+  # Output supplied line of text in a distinctive color (COLOR_ERROR) prefaced by SYMBOL_FAILURE.
   printf "%b%s%s%b\n" "$COLOR_ERROR" "$SYMBOL_FAILURE" "$1" "$COLOR_RESET"
 }
 
 function report_success() {
   # Output supplied line of text in a distinctive color prefaced by SYMBOL_SUCCESS.
   printf "%b%s%s%b\n" "$COLOR_SUCCESS" "$SYMBOL_SUCCESS" "$1" "$COLOR_RESET"
+}
+
+function report_warning() {
+  # Output supplied line of text in a distinctive color (COLOR_WARNING) prefaced by SYMBOL_WARNING.
+  printf "%b%s%s%b\n" "$COLOR_WARNING" "$SYMBOL_WARNING" "$1" "$COLOR_RESET"
 }
 
 function report_adjust_setting() {
