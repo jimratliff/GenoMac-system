@@ -25,7 +25,7 @@ function install_matrix_screensaver_systemwide() {
   local destination_path="${system_screensaver_dir}/${screensaver_name}"
 
   local temp_dir
-  # temp_dir="$(mktemp -d)"
+  temp_dir="$(mktemp -d)"
   trap '[[ -n "${temp_dir:-}" ]] && rm -rf "$temp_dir"' EXIT
 
   report_action_taken "Downloading MatrixDownload v$pinned_version from GitHub"
