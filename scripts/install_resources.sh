@@ -51,7 +51,7 @@ function install_resources_systemwide() {
 }
 
 function main() {
-  install_screensavers
+  install_resources_systemwide
 }
 
 main
