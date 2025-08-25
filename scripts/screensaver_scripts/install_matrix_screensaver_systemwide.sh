@@ -35,6 +35,13 @@ function install_matrix_screensaver_systemwide() {
   report_action_taken "Unzip ${zip_filename}"
   unzip -q "$temp_dir/$zip_filename" -d "$temp_dir" ; success_or_not
 
+  local plist_path="$temp_dir/$screensaver_name/Contents/Info.plist"
+  report_action_taken "Testing for existence of screensaver’s plist."
+  if [[ ! -f "$plist_path" ]]; then
+    report_failure "Missing Info.plist at expected location: $plist_path"
+    return 1
+  fi
+
   report_action_taken "Read version from downloaded .saver Info.plist"
   local downloaded_version
   local _raw_version
