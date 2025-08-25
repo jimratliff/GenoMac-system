@@ -43,6 +43,9 @@ function install_fira_code_nerd_font_systemwide() {
   fi
 
   report_action_taken "Ensure destination folder exists: $font_dir"
+  
+  keep_sudo_alive
+  
   if sudo mkdir -p "$font_dir"; then
     report_success "Created destination directory (if missing)"
   else
@@ -53,8 +56,6 @@ function install_fira_code_nerd_font_systemwide() {
   fi
 
   report_action_taken "Copy .ttf font files to $font_dir (idempotent)"
-
-  keep_sudo_alive
 
   local copied=0
   local font_file
