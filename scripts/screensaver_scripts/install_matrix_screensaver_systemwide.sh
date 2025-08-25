@@ -12,6 +12,11 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 ############################## BEGIN SCRIPT PROPER ##############################
 
 function install_matrix_screensaver_systemwide() {
+  # Installs Monroe Williams’ “MatrixDownload” screensaver systemwide
+
+  # 🗑️ To uninstall:
+  # sudo rm -rf "/Library/Screen Savers/Matrix.saver"
+  
   report_start_phase_standard
 
   local screensaver_name="Matrix.saver"
@@ -25,52 +30,49 @@ function install_matrix_screensaver_systemwide() {
   trap 'rm -rf "$temp_dir"' EXIT
 
   report_action_taken "Download MatrixDownload v$pinned_version from GitHub"
-  curl -fsSL "$zip_url" -o "$temp_dir/$zip_filename"
-  success_or_not $? "Downloaded ${zip_filename}"
+  curl -fsSL "$zip_url" -o "$temp_dir/$zip_filename" ; success_or_not
 
   report_action_taken "Unzip ${zip_filename}"
-  unzip -q "$temp_dir/$zip_filename" -d "$temp_dir"
-  success_or_not $? "Unzipped to temporary directory"
+  unzip -q "$temp_dir/$zip_filename" -d "$temp_dir" ; success_or_not
 
   report_action_taken "Read version from downloaded .saver Info.plist"
   local downloaded_version
   downloaded_version="$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$temp_dir/$screensaver_name/Contents/Info.plist" 2>/dev/null)"
-  success_or_not $? "Downloaded screensaver reports version: ${downloaded_version}"
+  success_or_not
 
   if [[ -f "$destination_path/Contents/Info.plist" ]]; then
-    report_action_taken "Check if screensaver is already installed"
+    report_action_taken "Check installed version of Matrix.saver"
     local installed_version
     installed_version="$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$destination_path/Contents/Info.plist" 2>/dev/null)"
-    success_or_not $? "Installed screensaver reports version: ${installed_version}"
+    success_or_not
 
     if [[ "$installed_version" == "$downloaded_version" ]]; then
-      report_success "Screensaver is already up-to-date (v${installed_version})"
+      report_success "Screensaver already up-to-date (v${installed_version})"
       report_end_phase_standard
       return 0
     fi
   fi
 
-  report_action_taken "Install or replace screensaver at: $destination_path"
-  sudo rm -rf "$destination_path"
-  sudo cp -R "$temp_dir/$screensaver_name" "$destination_path"
-  success_or_not $? "Installed or replaced Matrix.saver in $system_screensaver_dir"
+  report_action_taken "Begin: Install or replace screensaver at: $destination_path"
+  report_action_taken "Delete any existing file at $destination_path"
+  sudo rm -rf "$destination_path" ; success_or_not
+  report_action_taken "Install new screensaver at $destination_path"
+  sudo cp -R "$temp_dir/$screensaver_name" "$destination_path" ; success_or_not
 
   report_action_taken "Set permissions and ownership"
-  sudo chown -R root:wheel "$destination_path"
-  sudo chmod -R go-w "$destination_path"
-  success_or_not $? "Ownership and permissions set"
+  sudo chown -R root:wheel "$destination_path" ; success_or_not
+  sudo chmod -R go-w "$destination_path" ; success_or_not
 
-  report_action_taken "Check for newer version of MatrixDownload"
+  report_action_taken "Check for newer version on GitHub"
   local latest_version
   latest_version="$(gh release view --repo monroewilliams/MatrixDownload --json tagName -q .tagName 2>/dev/null || true)"
+  success_or_not
+
   if [[ -n "$latest_version" && "$latest_version" != "$pinned_version" ]]; then
     report_warning "A newer version of MatrixDownload is available: v${latest_version}"
   fi
 
   report_end_phase_standard
-
   return 0
 
-  # 🗑️ To uninstall:
-  # sudo rm -rf "/Library/Screen Savers/Matrix.saver"
 }
