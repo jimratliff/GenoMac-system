@@ -17,7 +17,7 @@ To update all apps (and install/remove apps as required by any changes in the Br
 ```bash
 cd ~/.genomac-system
 git pull origin main
-make install-via-homebrew
+make app-install-via-homebrew
 ```
 
 ### Reassert systemwide settings
@@ -25,7 +25,7 @@ To reassert the systemwide settings (in response to (a) any changes in them in t
 ```bash
 cd ~/.genomac-system
 git pull origin main
-make system-wide-prefs
+make prefs-systemwide
 ```
 ## Overview of the entire GenoMac process
 Project GenoMac is an implementation of automated setup of multiple Macs, each with multiple users.
@@ -186,14 +186,14 @@ git clone https://github.com/jimratliff/GenoMac-system.git .
 Copy the following code block and paste into Terminal:
 ```shell
 cd ~/.genomac-system
-make install-via-homebrew
+make app-install-via-homebrew
 ```
 
 ### Install font(s)
 Copy the following code block and paste into Terminal:
 ```shell
 cd ~/.genomac-system
-make font-installation
+make font-install
 ```
 
 ### Implement systemwide settings
@@ -201,7 +201,7 @@ Copy the following code block and paste into Terminal:
 ```bash
 cd ~/.genomac-system
 git pull origin main
-make system-wide-prefs
+make prefs-systemwide
 ```
 
 ## Clone the GenoMac-user repo for the next step in Project GenoMac
