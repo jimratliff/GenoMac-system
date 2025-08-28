@@ -36,6 +36,9 @@ cask "textexpander"           # Insert pre-made snippets of text anywhere
 cask "tower"                  # Git client GUI
 cask "visual-studio-code"     # Microsoft open-source code editor
 cask "vlc"                    # Multimedia player
-cask "warp"                   # Rust-based terminal emulator
+# cask "warp"                   # Rust-based terminal emulator
+                              # Excluded from Project GenoMac because it can’t be reliably configured 
+                              # via `defaults write` commands or by dotfiles. See Issue: 
+                              # https://github.com/warpdotdev/Warp/issues/7220
 cask "zoom"                   # Virtual meeting platform
 cask "zotero"                 # Bibliographic-reference manager
