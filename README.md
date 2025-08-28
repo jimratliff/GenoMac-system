@@ -86,6 +86,7 @@ GenoMac-system supports implementing configurations at the system level, i.e., c
   - screensaver(s)
   - sound(s)
 - adjusting systemwide settings
+  - giving Terminal and iTerm full-disk access
   - setting the ComputerName and LocalHostName
   - setting a login-window message
   - configuring the firewall
@@ -217,6 +218,12 @@ cd ~/.genomac-system
 git pull origin main
 make prefs-systemwide
 ```
+
+### Grant iTerm full-disk access
+- System Settings
+  - Privacy & Security
+    - Scroll down and click Full Disk Access
+      - Enable for iTerm
 
 ## Clone the GenoMac-user repo for the next step in Project GenoMac
 Copy the following command and paste into Terminal:
