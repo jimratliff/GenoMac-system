@@ -116,7 +116,6 @@ In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users
 ### Establish real-time connection to communicate text back and forth
 Open a Google Docs document to be used as/if needed for real-time exchange of text, error messages, etc., between the target Mac and other devices.
 - In Safari
-  - open “Project GenoMac: Text-exchange Document” 
   - sign into my standard Google account:
     - Go to google.com and click “Log in”
     - Enter the username of my Google account
