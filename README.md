@@ -53,6 +53,8 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
   - USER_CONFIGURER manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
   - Using the GenoMac-system repo, USER_CONFIGURER executes scripts to:
     - install apps
+      - make system-level changes to PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions,
+        and man pages available to all users without user-specific modifications
     - install resources
       - font(s)
       - screensaver(s)
@@ -99,10 +101,12 @@ In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users
 - In Safari, access a pre-defined Google Doc to establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
 - Give Terminal full-disk access
 - Install Homebrew (and therefore also Git)
-- Modify PATH to add Homebrew
+  - Do *not* at this modify PATH to add Homebrew (despite the instructions from the Homebrew installer)
 - Clone this public repo to `~/.genomac-system`
 - Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
 - Run a script for Homebrew to install applications
+- Run a script to modify PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions,
+  and man pages available to all users without user-specific modifications
 - Run a script to install certain resources (font(s), screensaver(s), and sound(s))
 - Run a script to implement certain systemwide settings
 #### Phase 2
@@ -129,8 +133,7 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
     - Scroll down and click Full Disk Access
       - Enable for Terminal
 
-### Install Homebrew and update PATH
-#### Manually install Homebrew
+### Manually install Homebrew
 Installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
 installation of which will install, among other things, a version of Git, which will permit cloning this repo.
 
@@ -139,7 +142,7 @@ To install Homebrew, launch Terminal:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 (This is the same command as going to [brew.sh](https://brew.sh/) and copying the command from near the top of the page under “Install Homebrew.”)
-#### Add Homebrew to PATH
+#### DEPRECATED: SUBSUMED BY LATER SCRIPT Add Homebrew to PATH
 ##### New-and-improved to make Homebrew and man pages available to other users without any other user-specific configurations
 [The following adds Homebrew to the *systemwide* path, so that all users will be able to run applications installed by Homebrew without individually adding Homebrew to each user’s path.)
 
@@ -207,6 +210,15 @@ Copy the following code block and paste into Terminal:
 ```shell
 cd ~/.genomac-system
 make app-install-via-homebrew
+```
+
+### Modify PATH and fpath
+Modify PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions, and man pages available to all users without user-specific modifications.
+        
+Copy the following code block and paste into Terminal:
+```shell
+cd ~/.genomac-system
+make adjust-paths
 ```
 
 ### Install resources (font(s), screensaver(s), and sound(s))
