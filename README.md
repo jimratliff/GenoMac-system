@@ -145,19 +145,26 @@ To install Homebrew, launch Terminal:
 
 In Terminal, copy the entire below code block and paste into Terminal (**your password will be required**):
 ```shell
+# Ensure zsh treats inline '#' as comments while we paste
+setopt interactivecomments 2>/dev/null || true
+
 if [ -x /opt/homebrew/bin/brew ]; then
-  # Append Homebrew shellenv to /etc/zprofile once (system-wide)
-  sudo /bin/sh -c 'grep -q "BEGIN HOMEBREW shellenv" /etc/zprofile 2>/dev/null || cat >>/etc/zprofile <<'"'"'EOF'"'"'
+  # Add Homebrew shellenv to /etc/zprofile once (system-wide)
+  if ! sudo grep -q 'BEGIN HOMEBREW shellenv' /etc/zprofile 2>/dev/null; then
+    sudo sh -c 'cat >>/etc/zprofile <<\EOF
 # --- BEGIN HOMEBREW shellenv (system-wide) ---
 if [ -x /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 # --- END HOMEBREW shellenv (system-wide) ---
 EOF'
-  # Ensure man pages for all users
+  fi
+
+  # Ensure man pages for all users (idempotent)
   sudo mkdir -p /etc/manpaths.d
   printf '/opt/homebrew/share/man\n' | sudo tee /etc/manpaths.d/homebrew >/dev/null
-  # Prime the CURRENT shell so the rest of your bootstrap works now
+
+  # Prime THIS shell so the rest of your bootstrap works now
   eval "$(/opt/homebrew/bin/brew shellenv)"
 else
   echo "Homebrew not found at /opt/homebrew. Install it first, then re-run this block." >&2
