@@ -145,8 +145,7 @@ To install Homebrew, launch Terminal:
 
 In Terminal, copy the entire below code block and paste into Terminal (**your password will be required**):
 ```shell
-# Ensure zsh treats inline '#' as comments while we paste
-setopt interactivecomments 2>/dev/null || true
+setopt interactivecomments 2>/dev/null || true # Ensure zsh treats inline '#' as comments while we paste
 
 if [ -x /opt/homebrew/bin/brew ]; then
   # Add Homebrew shellenv to /etc/zprofile once (system-wide)
