@@ -24,7 +24,7 @@ function adjust_path_fpath_for_homebrew_and_its_zsh() {
   # Guard clause: Fail fast if Homebrew not installed
   if [ ! -x /opt/homebrew/bin/brew ]; then
     report_fail "ERROR: Homebrew not found at /opt/homebrew/bin/brew; Install Homebrew first!"
-    exit 1
+    return 1
   fi
   
   # Main logic - we know Homebrew exists from here on
