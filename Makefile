@@ -22,6 +22,9 @@
 app-install-via-homebrew:
 	zsh scripts/install_via_homebrew.sh
 
+adjust-paths:
+	zsh scripts/adjust_path_fpath_for_homebrew_and_its_zsh.sh
+
 resources-install:
 	zsh scripts/install_resources.sh
 
