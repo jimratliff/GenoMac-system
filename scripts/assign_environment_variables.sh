@@ -76,6 +76,7 @@ function export_and_report() {
   export "$var_name"
 }
 
+export_and_report HOMEBREW_PREFIX
 export_and_report GENOMAC_HELPER_DIR
 export_and_report GENOMAC_SYSTEM_REPO_URL
 export_and_report GENOMAC_USER_REPO_URL
