@@ -207,6 +207,8 @@ cd ~/.genomac-system
 make adjust-paths
 ```
 
+**You will be automatically logged out, in order that the new PATH be available for what follows.**
+
 ### Log into the Mac App Store
 (Note: Needs checking, but presumably the following steps are required only if you’ll be *installing* (rather than merely updating) new apps from the Mac App Store.)
 
