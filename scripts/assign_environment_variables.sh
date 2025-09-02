@@ -14,7 +14,7 @@ set -euo pipefail
 
 # --- Homebrew: hard dependency ------------------------------------------------
 if ! command -v brew >/dev/null 2>&1; then
-  echo "❌ Homebrew is required but not installed. Aborting."; success_or_not 1
+  echo "❌ Homebrew is required but not installed. Aborting."
   exit 1
 fi
 
@@ -73,7 +73,7 @@ echo "Exporting environment variables to be consistently available."
 function export_and_report() {
   local var_name="$1"
   report "export $var_name: '${(P)var_name}'"
-  export "$var_name";success_or_not
+  export "$var_name"
 }
 
 export_and_report GENOMAC_HELPER_DIR
