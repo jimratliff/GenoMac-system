@@ -232,7 +232,6 @@ This Makefile item combines `make font-install`, `make screensaver-install`, and
 Copy the following code block and paste into Terminal:
 ```bash
 cd ~/.genomac-system
-git pull origin main
 make prefs-systemwide
 ```
 
