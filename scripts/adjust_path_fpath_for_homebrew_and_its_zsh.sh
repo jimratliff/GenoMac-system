@@ -68,6 +68,16 @@ fi ; success_or_not
   report_action_taken "Systemwide adjustments have been completed to make important functionalities available to all users"
 
   report_end_phase_standard
+
+  report_action_taken "PATH/fpath changes complete. Logging out to apply system-wide changes..."
+  echo ""
+  echo "ℹ️  You will be logged out automatically to apply the new PATH settings."
+  echo "   After logging back in, continue with the next bootstrap step."
+  echo ""
+  sleep 3  # Give user time to read the message
+
+  # Graceful logout using familiar system behavior
+  osascript -e 'tell application "System Events" to log out'
 }
 
 function main() {
