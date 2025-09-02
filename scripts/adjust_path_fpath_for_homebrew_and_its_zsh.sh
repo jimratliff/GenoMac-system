@@ -74,6 +74,10 @@ fi ; success_or_not
   echo "ℹ️  You will be logged out automatically to apply the new PATH settings."
   echo "   After logging back in, continue with the next bootstrap step."
   echo ""
+  echo "ℹ️  As part of that process, you will see a permission dialog asking if Terminal can control System Events."
+  echo "   Click 'OK' to allow the automatic logout to proceed."
+  echo "   This permission is only needed during initial bootstrap."
+  echo ""
   sleep 3  # Give user time to read the message
 
   # Graceful logout using familiar system behavior
