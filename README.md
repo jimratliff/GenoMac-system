@@ -49,12 +49,11 @@ We now focus on a particular Mac. At this point, we assume the following:
 
 At a high level, for a particular new Mac, Project GenoMac involves the following steps:
 - USER_CONFIGURER performs the following:
-  - USER_CONFIGURER manually installs Homebrew (which necessarily installs Git)
-  - USER_CONFIGURER manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
-  - Using the GenoMac-system repo, USER_CONFIGURER executes scripts to:
+  - manually installs Homebrew (which necessarily installs Git)
+  - manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
+  - Using the GenoMac-system repo, executes scripts to:
+    - make system-level changes to PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions, and man pages available to all users without user-specific modifications
     - install apps
-      - make system-level changes to PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions,
-        and man pages available to all users without user-specific modifications
     - install resources
       - font(s)
       - screensaver(s)
@@ -103,10 +102,10 @@ In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users
 - Install Homebrew (and therefore also Git)
   - Do *not* at this modify PATH to add Homebrew (despite the instructions from the Homebrew installer)
 - Clone this public repo to `~/.genomac-system`
-- Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
-- Run a script for Homebrew to install applications
 - Run a script to modify PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions,
   and man pages available to all users without user-specific modifications
+- Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
+- Run a script for Homebrew to install applications
 - Run a script to install certain resources (font(s), screensaver(s), and sound(s))
 - Run a script to implement certain systemwide settings
 #### Phase 2
@@ -199,6 +198,15 @@ git clone https://github.com/jimratliff/GenoMac-system.git .
 ```
 **Note the trailing “.” at the end of the `git clone` command.**
 
+### Modify PATH and fpath
+Modify PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions, and man pages available to all users without user-specific modifications.
+        
+Copy the following code block and paste into Terminal:
+```shell
+cd ~/.genomac-system
+make adjust-paths
+```
+
 ### Log into the Mac App Store
 (Note: Needs checking, but presumably the following steps are required only if you’ll be *installing* (rather than merely updating) new apps from the Mac App Store.)
 
@@ -210,15 +218,6 @@ Copy the following code block and paste into Terminal:
 ```shell
 cd ~/.genomac-system
 make app-install-via-homebrew
-```
-
-### Modify PATH and fpath
-Modify PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions, and man pages available to all users without user-specific modifications.
-        
-Copy the following code block and paste into Terminal:
-```shell
-cd ~/.genomac-system
-make adjust-paths
 ```
 
 ### Install resources (font(s), screensaver(s), and sound(s))
