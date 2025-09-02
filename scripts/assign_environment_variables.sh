@@ -14,8 +14,18 @@ set -euo pipefail
 
 # --- Homebrew: hard dependency ------------------------------------------------
 if ! command -v brew >/dev/null 2>&1; then
-  echo "❌ Homebrew is required but not installed. Aborting."
-  exit 1
+  # First attempt failed - try adding Homebrew to PATH and retry
+  if [ -x /opt/homebrew/bin/brew ]; then
+    # Homebrew exists but isn't in PATH - fix temporarily
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    if ! command -v brew >/dev/null 2>&1; then
+      echo "❌ Homebrew installation appears corrupted. Aborting."
+      exit 1
+    fi
+  else
+    echo "❌ Homebrew is required but not installed. Aborting."
+    exit 1
+  fi
 fi
 
 # Resolve once (don’t recompute if already set by the environment)
