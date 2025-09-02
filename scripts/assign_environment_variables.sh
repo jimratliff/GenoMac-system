@@ -12,6 +12,15 @@
 
 set -euo pipefail
 
+# --- Homebrew: hard dependency ------------------------------------------------
+if ! command -v brew >/dev/null 2>&1; then
+  report "❌ Homebrew is required but not installed. Aborting."; success_or_not 1
+  exit 1
+fi
+
+# Resolve once (don’t recompute if already set by the environment)
+HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-$(/usr/bin/env brew --prefix)}"
+
 # Resolve directory of the current script
 this_script_path="${0:A}"
 this_script_dir="${this_script_path:h}"
