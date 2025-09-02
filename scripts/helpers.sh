@@ -150,6 +150,11 @@ function report_success() {
   printf "%b%s%s%b\n" "$COLOR_SUCCESS" "$SYMBOL_SUCCESS" "$1" "$COLOR_RESET"
 }
 
+function report_warning() {
+  # Output supplied line of text in a distinctive color prefaced by SYMBOL_WARNING.
+  printf "%b%s%s%b\n" "$COLOR_WARNING" "$SYMBOL_WARNING" "$1" "$COLOR_RESET"
+}
+
 function report_adjust_setting() {
   # Output supplied line of text in a distinctive color, prefaced by "$SYMBOL_ADJUST_SETTING.
   # It is intentional to NOT have a newline. This will be supplied by success().
