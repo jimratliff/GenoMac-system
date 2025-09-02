@@ -23,6 +23,10 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 function install_via_homebrew() {
   report_start_phase_standard
 
+  # For nonobvious reasons, brew install requires a password to install some casks
+  # Preemptively head that off by getting the password early and keep it alive
+  keep_sudo_alive
+
   # Says: don’t quarantine installed apps
   # This duplicates the effect of `HOMEBREW_CASK_OPTS=--no-quarantine` in `.config/homebrew/brew.env`
   # but this dotfile hasn’t been established by the time this script runs the first time when 
