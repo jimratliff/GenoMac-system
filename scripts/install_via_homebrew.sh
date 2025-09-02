@@ -25,8 +25,7 @@ function install_via_homebrew() {
   report_start_phase_standard
 
   # For nonobvious reasons, brew install requires a password to install some casks
-  # Preemptively head that off by getting the password early and keep it alive
-  keep_sudo_alive
+  # Preemptively calling `keep_sudo_alive` doesn’t prevent this
 
   # Says: don’t quarantine installed apps
   # This duplicates the effect of `HOMEBREW_CASK_OPTS=--no-quarantine` in `.config/homebrew/brew.env`
@@ -45,6 +44,7 @@ function install_via_homebrew() {
   # Installs packages, etc. from Brewfile
   # --cleanup removes installed packages no longer called for by the Brewfile
   report_action_taken "Install new packages and remove no-longer-desired ones"
+  report_warning "Don’t walk away! You’ll be required to enter your password for some apps."
   brew bundle install --cleanup --file="${brewfile_path}"; success_or_not
 
   # Upgrades, as necessary, installed packages
