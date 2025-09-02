@@ -10,7 +10,8 @@ this_script_path="${0:A}"
 this_script_dir="${this_script_path:h}"
 
 # Ensure Homebrew is in PATH for this script
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# The following shouldn't be necessary, so I'm commenting it out
+# eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Assign environment variables (including GENOMAC_HELPER_DIR).
 # Assumes that assign_environment_variables.sh is in same directory as the
