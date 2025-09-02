@@ -28,6 +28,9 @@ function adjust_path_fpath_for_homebrew_and_its_zsh() {
   fi
   
 # Main logic - we know Homebrew exists from here on
+
+keep_sudo_alive
+
 # Add Homebrew shellenv to /etc/zprofile (PATH, etc.)
 report_action_taken "Modifying global PATH to allow access to Homebrew-installed apps by all users"
 if ! sudo grep -q 'BEGIN HOMEBREW shellenv' /etc/zprofile 2>/dev/null; then
