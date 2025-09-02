@@ -14,7 +14,7 @@ set -euo pipefail
 
 # --- Homebrew: hard dependency ------------------------------------------------
 if ! command -v brew >/dev/null 2>&1; then
-  report "❌ Homebrew is required but not installed. Aborting."; success_or_not 1
+  echo "❌ Homebrew is required but not installed. Aborting."; success_or_not 1
   exit 1
 fi
 
@@ -68,7 +68,7 @@ GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS="$HOME/genomac-detective"
 GENOMAC_USER_LOGIN_PICTURES_DIRECTORY="$HOME/.genomac-user-login-pictures"
 
 # Export environment variables to be available in all subsequent shells
-report_action_taken "Exporting environment variables to be consistently available."
+echo "Exporting environment variables to be consistently available."
 
 function export_and_report() {
   local var_name="$1"
