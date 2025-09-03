@@ -129,7 +129,6 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
 ### Grant Terminal full-disk access
 - System Settings
   - Privacy & Security
-    - [com.apple.settings.PrivacySecurity.extension](com.apple.settings.PrivacySecurity.extension)
     - Scroll down and click Full Disk Access
       - Enable for Terminal
 
