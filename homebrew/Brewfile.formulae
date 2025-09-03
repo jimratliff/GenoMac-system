@@ -31,7 +31,9 @@ brew "tlrc"                    # tldr (alternative to man pages) client written 
 brew "trash"                   # CLI tool that moves files or folders to the trash
 brew "uv"                      # Python package and project manager
 brew "zoxide"                  # A smarter `cd` command
-brew "zsh"                     # Default UNIX shell (command interpreter)
+# brew "zsh"                     # Default UNIX shell (command interpreter)
+                                 # Homebrew’s Zsh appears to cause trouble for non–Homebrew installer users
+
 # brew "zsh-autocomplete"        # Real-time type-ahead completion for Zsh
                                  # Not loading this not.
 
