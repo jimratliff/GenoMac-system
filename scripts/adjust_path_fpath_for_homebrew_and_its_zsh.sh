@@ -31,30 +31,30 @@ function adjust_path_fpath_for_homebrew_and_its_zsh() {
 
 keep_sudo_alive
 
-# # Add Homebrew shellenv to /etc/zprofile (PATH, etc.)
-# report_action_taken "Modifying global PATH to allow access to Homebrew-installed apps by all users"
-# if ! sudo grep -q 'BEGIN HOMEBREW shellenv' /etc/zprofile 2>/dev/null; then
-# sudo sh -c 'cat >>/etc/zprofile <<\EOF
-# # --- BEGIN HOMEBREW shellenv (system-wide) ---
-# if [ -x /opt/homebrew/bin/brew ]; then
-# eval "$(/opt/homebrew/bin/brew shellenv)"
-# fi
-# # --- END HOMEBREW shellenv (system-wide) ---
-# EOF'
-# fi ; success_or_not
+# Add Homebrew shellenv to /etc/zprofile (PATH, etc.)
+report_action_taken "Modifying global PATH to allow access to Homebrew-installed apps by all users"
+if ! sudo grep -q 'BEGIN HOMEBREW shellenv' /etc/zprofile 2>/dev/null; then
+sudo sh -c 'cat >>/etc/zprofile <<\EOF
+# --- BEGIN HOMEBREW shellenv (system-wide) ---
+if [ -x /opt/homebrew/bin/brew ]; then
+eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+# --- END HOMEBREW shellenv (system-wide) ---
+EOF'
+fi ; success_or_not
   
-# # Add Homebrew fpath setup to /etc/zshenv (completions)
-# report_action_taken "Modifying global fpath to allow access to Homebrew’s Zsh’s completions by all users"
-# if ! sudo grep -q 'BEGIN HOMEBREW fpath' /etc/zshenv 2>/dev/null; then
-# sudo sh -c 'cat >>/etc/zshenv <<\EOF
-# # --- BEGIN HOMEBREW fpath (system-wide) ---
-# if [ -x /opt/homebrew/bin/brew ]; then
-# typeset -U fpath
-# fpath=(/opt/homebrew/opt/zsh/share/zsh/functions /opt/homebrew/share/zsh/site-functions $fpath)
-# fi
-# # --- END HOMEBREW fpath (system-wide) ---
-# EOF'
-# fi ; success_or_not
+# Add Homebrew fpath setup to /etc/zshenv (completions)
+report_action_taken "Modifying global fpath to allow access to Homebrew’s Zsh’s completions by all users"
+if ! sudo grep -q 'BEGIN HOMEBREW fpath' /etc/zshenv 2>/dev/null; then
+sudo sh -c 'cat >>/etc/zshenv <<\EOF
+# --- BEGIN HOMEBREW fpath (system-wide) ---
+if [ -x /opt/homebrew/bin/brew ]; then
+typeset -U fpath
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+fi
+# --- END HOMEBREW fpath (system-wide) ---
+EOF'
+fi ; success_or_not
   
   # Ensure man pages for all users (idempotent)
   report_action_taken "Making man pages available to all users"
