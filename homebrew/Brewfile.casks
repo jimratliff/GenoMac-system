@@ -20,6 +20,7 @@ cask "docker-desktop"         # App to build and share containerized application
 cask "downie"                 # Downloader of videos from various web sites
 cask "dropbox"                # Cloud storage service. (Kernel extension?)
 cask "firefox"                # Web browser
+cask "ghostty"                # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "google-chrome"          # Web browser
 cask "google-drive"           # Desktop client for Google Drive storage service
 cask "graphicconverter"       # Graphic Converter image viewer, editor, and slideshow presenter
