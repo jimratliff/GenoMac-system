@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# (a) Modify PATH for Homebrew and (b) modify fpath for Homebrew’s Zsh
+# (a) Modify systemwide PATH for Homebrew and (b) make man pages available to all users
 
 # Fail early on unset variables or command failure
 set -euo pipefail
