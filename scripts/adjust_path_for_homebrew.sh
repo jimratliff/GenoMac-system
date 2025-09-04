@@ -18,7 +18,7 @@ source "${this_script_dir}/assign_environment_variables.sh"
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
 ############################## BEGIN SCRIPT PROPER #############################
-function adjust_path_fpath_for_homebrew_and_its_zsh() {
+function adjust_path_for_homebrew() {
   report_start_phase_standard
 
   # Guard clause: Fail fast if Homebrew not installed
@@ -85,7 +85,7 @@ fi ; success_or_not
 }
 
 function main() {
-  adjust_path_fpath_for_homebrew_and_its_zsh
+  adjust_path_for_homebrew
 }
 
 main
