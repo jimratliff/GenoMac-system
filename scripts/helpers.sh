@@ -136,7 +136,7 @@ function get_yes_no_answer_to_question() {
 }
 
 function force_user_logout(){
-  report_action_taken $"\n\nYou are about to be logged out…"
+  report_action_taken '\n\nYou are about to be logged out…'
   sleep 3  # Give user time to read the message
 
   # Graceful logout using familiar system behavior
