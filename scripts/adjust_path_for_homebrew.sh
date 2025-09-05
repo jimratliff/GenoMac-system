@@ -78,10 +78,8 @@ fi ; success_or_not
   echo "   Click 'OK' to allow the automatic logout to proceed."
   echo "   This permission is only needed during initial bootstrap."
   echo ""
-  sleep 3  # Give user time to read the message
 
-  # Graceful logout using familiar system behavior
-  osascript -e 'tell application "System Events" to log out'
+  force_user_logout
 }
 
 function main() {
