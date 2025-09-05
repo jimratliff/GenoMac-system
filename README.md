@@ -21,7 +21,7 @@ make app-install-via-homebrew
 ```
 
 ### Reassert systemwide settings
-To reassert the systemwide settings (in response to (a) any changes in them in this repo or (b) unwanted changes by users that should be reverted):
+To reassert the systemwide settings (in response to any changes in them in this repo):
 ```bash
 cd ~/.genomac-system
 git pull origin main
@@ -29,16 +29,16 @@ make prefs-systemwide
 ```
 
 ### Resources (fonts, screensavers, and sounds) are not routinely updated
-The installation of resources (fonts, screensaver, and sounds) are considered one-time installs at the time a new Mac is initially configured. Unlike (a) apps and (b) systemwide preferences, resources are assumed to rarely change. Therefore, `make resources-install` is not designed to be executed routinely but only in response to a known change in an existing deployed resource or a desire to add an additional deployed resource.
+The systemwide installation of resources (fonts, screensaver, and sounds) is considered a one-time install at the time a new Mac is initially configured. Unlike (a) apps and (b) systemwide preferences, resources are assumed to rarely change. Therefore, `make resources-install` is not designed to be executed routinely but only in response to a known change in an existing deployed resource or a desire to add an additional deployed resource.
 
-If existing resources are updated or new resources are chosen to be added, the corresponding scripts would be modified and re-run for each Mac.
+If existing resources are updated or new resources are chosen to be added, the corresponding scripts would be modified and re-run for each Mac. (That might imply corresponding changes in user-scoped scripts to point at the new resources.)
 
 If existing resources are marked for deletion, this would require an appropriate `sudo rm -rf path/to/some_resource` to be deployed and executed on each Mac.
 
 ## Overview of the entire GenoMac process
 Project GenoMac is an implementation of automated setup of multiple Macs, each with multiple users.
 
-We now focus on a particular Mac. At this point, we assume the following:
+We now focus on a particular Mac (rinse and repeat for each Mac). At this point, we assume the following:
 - An essentially pristine Mac:
   - Fresh install of macOS
   - Only two users are defined:
