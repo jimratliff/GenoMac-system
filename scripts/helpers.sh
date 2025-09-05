@@ -135,6 +135,14 @@ function get_yes_no_answer_to_question() {
   done
 }
 
+function force_user_logout(){
+  report_action_taken $"\n\nYou are about to be logged out…"
+  sleep 3  # Give user time to read the message
+
+  # Graceful logout using familiar system behavior
+  osascript -e 'tell application "System Events" to log out'
+}
+
 function report() {
   # Output supplied line of text in a distinctive color.
   printf "%b%s%b\n" "$COLOR_REPORT" "$1" "$COLOR_RESET"
