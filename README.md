@@ -52,14 +52,14 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
   - manually installs Homebrew (which necessarily installs Git)
   - manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
   - Using the GenoMac-system repo, executes scripts to:
-    - make system-level changes to PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions, and man pages available to all users without user-specific modifications
-    - install apps
+    - make system-level changes to PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications
+    - install apps using Homebrew
     - install resources
       - font(s)
       - screensaver(s)
       - sound(s)
     - implement systemwide settings
-  - Using a script (from GenoMac-system), USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
+  - Preparing for the next phase, in which USER_CONFIGURER implements its user-scoped settings, using a script from GenoMac-system, USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
   - Using the GenoMac-user repo, USER_CONFIGURER executes scripts to:
     - “stow” dotfiles
     - implement generic user-scoped settings
@@ -88,6 +88,7 @@ GenoMac-system supports implementing configurations at the system level, i.e., c
   - sound(s)
 - adjusting systemwide settings
   - giving Terminal and iTerm full-disk access
+  - modifying systemwide the PATH to give all users access to apps installed by Homebrew
   - setting the ComputerName and LocalHostName
   - setting a login-window message
   - configuring the firewall
@@ -102,8 +103,7 @@ In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users
 - Install Homebrew (and therefore also Git)
   - Do *not* at this modify PATH to add Homebrew (despite the instructions from the Homebrew installer)
 - Clone this public repo to `~/.genomac-system`
-- Run a script to modify PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions,
-  and man pages available to all users without user-specific modifications
+- Run a script to modify PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications to the user’s PATH
 - Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
 - Run a script for Homebrew to install applications
 - Run a script to install certain resources (font(s), screensaver(s), and sound(s))
@@ -143,51 +143,8 @@ To install Homebrew, launch Terminal:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 (This is the same command as going to [brew.sh](https://brew.sh/) and copying the command from near the top of the page under “Install Homebrew.”)
-#### DEPRECATED: SUBSUMED BY LATER SCRIPT Add Homebrew to PATH
-##### New-and-improved to make Homebrew and man pages available to other users without any other user-specific configurations
-[The following adds Homebrew to the *systemwide* path, so that all users will be able to run applications installed by Homebrew without individually adding Homebrew to each user’s path.)
 
-In Terminal, copy the entire below code block and paste into Terminal (**your password will be required**):
-```shell
-setopt interactivecomments 2>/dev/null || true # Ensure zsh treats inline '#' as comments while we paste
-
-if [ -x /opt/homebrew/bin/brew ]; then
-  # Add Homebrew shellenv to /etc/zprofile once (system-wide)
-  if ! sudo grep -q 'BEGIN HOMEBREW shellenv' /etc/zprofile 2>/dev/null; then
-    sudo sh -c 'cat >>/etc/zprofile <<\EOF
-# --- BEGIN HOMEBREW shellenv (system-wide) ---
-if [ -x /opt/homebrew/bin/brew ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-# --- END HOMEBREW shellenv (system-wide) ---
-EOF'
-  fi
-
-  # Ensure man pages for all users (idempotent)
-  sudo mkdir -p /etc/manpaths.d
-  printf '/opt/homebrew/share/man\n' | sudo tee /etc/manpaths.d/homebrew >/dev/null
-
-  # Prime THIS shell so the rest of your bootstrap works now
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-  echo "Homebrew not found at /opt/homebrew. Install it first, then re-run this block." >&2
-fi
-```
-
-Explanations for the above code block:
-- Adds a text block to /etc/zprofile (the systemwide PATH) only if not already present
-- Makes Homebrew man pages available to everyone (idempotent)
-- Primes the *current* shell session so subsequent commands work now without logging out and logging back in (or otherwise creating a new login shell)
-
-##### Original (per Homebrew itself) but DEPRECATED because it doesn’t put Homebrew in PATH for *other* users
-[This DEPRECATED block can be deleted once the above systemwide PATH adjustment is fully tested.]
-
-In Terminal, sequentially execute each of the following three commands (it works to copy the entire block and paste as a block into Terminal):
-```shell
-echo >> /Users/configger/.zprofile
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/configger/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
-```
+**Do *not* follow Homebrew’s instructions to modify the PATH. This will be dealt with systemwide later.**
 
 ### Clone this repo to `~/.genomac-system`
 This public GenoMac-user repo is meant to be cloned locally (using https) to USER_CONFIGURER’s home directory. More specifically, the local directory to which this repo is to be cloned is the hidden directory `~/.genomac-system`, specified by the environment variable $GENOMAC_SYSTEM_LOCAL_DIRECTORY (which is exported by the script `assign_environment_variables.sh`).
@@ -200,13 +157,13 @@ git clone https://github.com/jimratliff/GenoMac-system.git .
 ```
 **Note the trailing “.” at the end of the `git clone` command.**
 
-### Modify PATH and fpath
-Modify PATH and fpath to make Homebrew-installed apps, Homebrew’s Zsh’s completions, and man pages available to all users without user-specific modifications.
+### Modify PATH
+Modify systemwide PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications.
         
 Copy the following code block and paste into Terminal:
 ```shell
 cd ~/.genomac-system
-make adjust-paths
+make adjust-path
 ```
 
 **You will be automatically logged out, in order that the new PATH be available for what follows.**
