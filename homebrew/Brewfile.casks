@@ -6,6 +6,7 @@
 cask "1password-cli"          # Command-line interface for 1password
 cask "1password"              # Password manager that keeps all passwords secure behind one password
 # cask "aerial"                 # Apple TV aerial screen saver
+
 cask "airtable"               # Spreadsheet-database hybrid cloud collaboration
 cask "alfred"                 # User-interface utility: app launcher, hotkeys, etc.
 cask "bbedit"                 # Text editor
@@ -32,7 +33,8 @@ cask "microsoft-edge"         # Microsoft’s web browser
 cask "microsoft-teams"        # Microsoft version of Zoom
 cask "notion"                 # Knowledge base using proprietary files
 cask "obsidian"               # Knowledge base using local folder of Markdown files
-cask "orion"                  # Orion Browser web browser
+# cask "orion"                  # Orion Browser web browser
+
 cask "raindropio"             # Bookmarking manager
 cask "textexpander"           # Insert pre-made snippets of text anywhere
 cask "tower"                  # Git client GUI
