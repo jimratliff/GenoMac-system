@@ -1,4 +1,7 @@
 # GenoMac-system
+- [Quick-reference Cheat sheet](#quick-reference-cheat-sheet)
+- [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
+- [Overview of the GenoMac-system step](#overview-of-the-genomac-system-step)
 ## Quick-reference Cheat sheet
 (First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
 
@@ -116,7 +119,7 @@ In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users
 #### Phase 4
 - Loop over newly created users… performing the steps in the GenoMac-user repo
 
-## Implementation
+## Step-by-step implementation
 ### Make sure you’re logged into the USER_CONFIGURER account
 Make sure you’re logged into the USER_CONFIGURER account, *not* into the USER_VANILLA account.
 ### Establish real-time connection to communicate text back and forth
