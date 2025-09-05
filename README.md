@@ -2,6 +2,7 @@
 - [Quick-reference Cheat sheet](#quick-reference-cheat-sheet)
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
 - [Overview of the GenoMac-system step](#overview-of-the-genomac-system-step)
+- [Step-by-step implementation](#step-by-step-implementation)
 ## Quick-reference Cheat sheet
 (First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
 
