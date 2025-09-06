@@ -1,10 +1,10 @@
 # GenoMac-system
-- [Quick-reference Cheat sheet](#quick-reference-cheat-sheet)
+- [Quick-reference cheat sheet for occasional maintenance](#quick-reference-cheat-sheet-for-occasional-maintenance)
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
 - [The four phases of the entire two-repo process](#the-four-phases-of-the-entire-two-repo-process)
 - [Overview of the role of the GenoMac-system repository](#overview-of-the-role-of-the-genomac-system-repository)
 - [Step-by-step implementation](#step-by-step-implementation)
-## Quick-reference Cheat sheet
+## Quick-reference cheat sheet for occasional maintenance
 (First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
 
 ### Refresh local clone
