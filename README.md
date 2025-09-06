@@ -1,6 +1,7 @@
 # GenoMac-system
 - [Quick-reference Cheat sheet](#quick-reference-cheat-sheet)
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
+- [The four phases of the entire two-repo process]
 - [Overview of the role of the GenoMac-system repository](#overview-of-the-role-of-the-genomac-system-repository)
 - [Step-by-step implementation](#step-by-step-implementation)
 ## Quick-reference Cheat sheet
@@ -78,7 +79,7 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
     - implement generic user-scoped settings
     - configure 1Password for authentication with GitHub
    
-## Preview of process
+## The four phases of the entire two-repo process
 ### Phase 1
 - In Safari, access a pre-defined Google Doc to establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
 - Give Terminal full-disk access
