@@ -18,7 +18,7 @@ git pull origin main
 
 NOTE: If revisions to the Brewfile imply installing *new* apps from the Mac App Store, you must sign in to the App Store before executing the below steps.
 
-To update all apps (and install/remove apps as required by any changes in the Brewfile):
+To update all apps (and install/remove apps as required by any changes in the Brewfile) after refreshing the local clone:
 ```bash
 cd ~/.genomac-system
 git pull origin main
@@ -26,7 +26,7 @@ make app-install-via-homebrew
 ```
 
 ### Reassert systemwide settings
-To reassert the systemwide settings (in response to any changes in them in this repo):
+To reassert the systemwide settings (in response to any changes in them in this repo) after refreshing the local clone:
 ```bash
 cd ~/.genomac-system
 git pull origin main
