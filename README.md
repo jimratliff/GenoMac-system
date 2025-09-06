@@ -52,10 +52,10 @@ We now focus on a particular Mac (rinse and repeat for each Mac). At this point,
 - USER_CONFIGURER is signed into its account
 
 At a high level, for a particular new Mac, Project GenoMac involves the following steps:
-- USER_CONFIGURER performs the following:
-  - manually installs Homebrew (which necessarily installs Git)
-  - manually clones the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
-  - Using the GenoMac-system repo, executes scripts to:
+- Systemwide settings, performed by USER_CONFIGURER
+  - manually install Homebrew (which necessarily installs Git)
+  - manually clone the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
+  - using the GenoMac-system repo, execute scripts to:
     - make system-level changes to PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications
     - install apps using Homebrew
     - install resources
@@ -63,16 +63,17 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
       - screensaver(s)
       - sound(s)
     - implement systemwide settings
-  - Preparing for the next phase, in which USER_CONFIGURER implements its user-scoped settings, using a script from GenoMac-system, USER_CONFIGURER clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
-  - Using the GenoMac-user repo, USER_CONFIGURER executes scripts to:
+- User-scoped settings for USER_CONFIGURER performed by USER_CONFIGURER
+  - using a script from GenoMac-system, clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
+  - using the GenoMac-user repo, USER_CONFIGURER executes scripts to:
     - “stow” dotfiles
     - implement generic user-scoped settings
     - configure 1Password for authentication with GitHub
-  - USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
+- USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
 - Loop over each USER_j of the newly created users, USER_j performs the following:
   - USER_j logs into the USER_j account for the first time
   - USER_j clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
-  - Using the GenoMac-user repo, USER_j executes scripts to::
+  - using the GenoMac-user repo, USER_j executes scripts to::
     - “stow” dotfiles
     - implement generic user-scoped settings
     - configure 1Password for authentication with GitHub
