@@ -78,7 +78,7 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
     - implement generic user-scoped settings
     - configure 1Password for authentication with GitHub
 
-## Overview of the GenoMac-system step
+## Overview of the role of the GenoMac-system repository
 ### Context
 This GenoMac-system repository is the first stop in Project GenoMac to setup any of several Macs, each of which has several users.
 
@@ -99,7 +99,7 @@ GenoMac-system supports implementing configurations at the system level, i.e., c
   - configuring the firewall
   - specifying policies regarding software-update behavior
 
-In addition, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
+In addition, in a separate, later step, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
 
 ### Preview of process
 #### Phase 1
