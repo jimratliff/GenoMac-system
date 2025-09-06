@@ -77,6 +77,26 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
     - “stow” dotfiles
     - implement generic user-scoped settings
     - configure 1Password for authentication with GitHub
+   
+## Preview of process
+### Phase 1
+- In Safari, access a pre-defined Google Doc to establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
+- Give Terminal full-disk access
+- Install Homebrew (and therefore also Git)
+  - Do *not* at this modify PATH to add Homebrew (despite the instructions from the Homebrew installer)
+- Clone this public repo to `~/.genomac-system`
+- Run a script to modify PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications to the user’s PATH
+- Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
+- Run a script for Homebrew to install applications
+- Run a script to install certain resources (font(s), screensaver(s), and sound(s))
+- Run a script to implement certain systemwide settings
+### Phase 2
+- Clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
+- Follow the instructions at GenoMac-user to configure the user-scoped settings for USER_CONFIGURER
+### Phase 3
+- Return to GenoMac-system to create the additional users and, when necessary, additional volumes to house the user directories for newly created users
+### Phase 4
+- Loop over newly created users… performing the steps in the GenoMac-user repo
 
 ## Overview of the role of the GenoMac-system repository
 ### Context
@@ -99,27 +119,7 @@ GenoMac-system supports implementing configurations at the system level, i.e., c
   - configuring the firewall
   - specifying policies regarding software-update behavior
 
-In addition, in a separate, later step, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
-
-### Preview of process
-#### Phase 1
-- In Safari, access a pre-defined Google Doc to establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
-- Give Terminal full-disk access
-- Install Homebrew (and therefore also Git)
-  - Do *not* at this modify PATH to add Homebrew (despite the instructions from the Homebrew installer)
-- Clone this public repo to `~/.genomac-system`
-- Run a script to modify PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications to the user’s PATH
-- Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
-- Run a script for Homebrew to install applications
-- Run a script to install certain resources (font(s), screensaver(s), and sound(s))
-- Run a script to implement certain systemwide settings
-#### Phase 2
-- Clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
-- Follow the instructions at GenoMac-user to configure the user-scoped settings for USER_CONFIGURER
-#### Phase 3
-- Return to GenoMac-system to create the additional users and, when necessary, additional volumes to house the user directories for newly created users
-#### Phase 4
-- Loop over newly created users… performing the steps in the GenoMac-user repo
+In addition—in a separate, later step—GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
 
 ## Step-by-step implementation
 ### Make sure you’re logged into the USER_CONFIGURER account
