@@ -122,6 +122,10 @@ GenoMac-system supports implementing configurations at the system level, i.e., c
 
 In addition—in a separate, later step—GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
 
+### The Makefile is the user’s interface with the functionality of this repo
+
+The `Makefile` provides the interface for the user to effect the functionalities of this repo, such as commanding the execution of (a) installing apps via Homebrew and (b) changing certain systemwide macOS settings using `defaults write` commands.
+
 ## Step-by-step implementation
 ### Make sure you’re logged into the USER_CONFIGURER account
 Make sure you’re logged into the USER_CONFIGURER account, *not* into the USER_VANILLA account.
