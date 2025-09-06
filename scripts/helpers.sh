@@ -53,6 +53,21 @@ function keep_sudo_alive() {
   done 2>/dev/null &  # background process, silence errors
 }
 
+function launch_and_quit_app() {
+  # Launches and then quits an app identified by its bundle ID
+  # Examples:
+  #   launch_and_quit_app "com.apple.DiskUtility"
+  #   launch_and_quit_app "com.googlecode.iterm2"
+  
+  local bundle_id="$1"
+  report_action_taken "Launch and quit app {$bundle_id} in order that it will have preferences to modify"
+  report_action_taken "Launching app {$bundle_id}"
+  open -b "$bundle_id" ; success_or_not
+  sleep 2
+  report_action_taken "Quitting app {$bundle_id}"
+  osascript -e "tell application id \"$bundle_id\" to quit" ; success_or_not
+}
+
 function success_or_not() {
   # Print SYMBOL_SUCCESS if success (based on error code); otherwise SYMBOL_FAILURE
   if [[ $? -eq 0 ]]; then
