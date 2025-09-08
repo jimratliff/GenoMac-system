@@ -48,6 +48,9 @@ printf "GENOMAC_HELPER_DIR:               %s\n" "$GENOMAC_HELPER_DIR"
 # Source the helpers script
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
+# Specify location of PlistBuddy
+PLISTBUDDY_PATH='/usr/libexec/PlistBuddy'
+
 # Specify URL for cloning the public GenoMac-system repository using HTTPS
 GENOMAC_SYSTEM_REPO_URL="https://github.com/jimratliff/GenoMac-system.git"
 
@@ -86,6 +89,7 @@ function export_and_report() {
   export "$var_name"
 }
 
+export_and_report PLISTBUDDY_PATH
 export_and_report HOMEBREW_PREFIX
 export_and_report GENOMAC_HELPER_DIR
 export_and_report GENOMAC_SYSTEM_REPO_URL
