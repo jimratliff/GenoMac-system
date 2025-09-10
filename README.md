@@ -161,7 +161,7 @@ This public GenoMac-user repo is meant to be cloned locally (using https) to USE
 More specifically, the local directory to which this repo is to be cloned is the hidden directory `~/.genomac-system`, specified by the environment variable $GENOMAC_SYSTEM_LOCAL_DIRECTORY (which is exported by the script `assign_environment_variables.sh`).
 
 [^https]: After having cloned the repository via https, GitHub will not let you edit the repo from the CLI (but will from the browser). In order to edit
-the repo from the CLI, you will need to change the repo from https to SSH, which can be done via 
+the repo from the CLI, you would need to change the repo from https to SSH, which can be done via 
 `git remote set-url origin git@github.com:OWNER/REPOSITORY.git`. (Use `git remote -v` to clarify the syntax for your repo.)
 
 Copy the following code block and paste into Terminal:
