@@ -196,6 +196,15 @@ cd ~/.genomac-system
 make app-install-via-homebrew
 ```
 
+Note: There are some items whose installation will ask for your sudo password. This occurs for, and only for, some of the casks (but not the formulae nor the Mac App Store apps), in particular:
+- docker-desktop
+- google-drive
+- insta360-link-controller
+- microsoft-teams
+- zoom
+
+This password-querying behavior is usually, if not always, associated with casks that are accompanied by some kind of background process, such as an auto-updater.
+
 ### Install resources (font(s), screensaver(s), and sound(s))
 Copy the following code block and paste into Terminal:
 ```shell
