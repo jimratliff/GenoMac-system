@@ -113,7 +113,8 @@ GenoMac-system supports implementing configurations at the system level, i.e., c
   - screensaver(s)
   - sound(s)
 - adjusting systemwide settings
-  - giving Terminal and iTerm full-disk access
+  - giving Terminal and iTerm full-disk access;
+  - giving iTerm ability to control System Events (in order to run AppleScript)
   - modifying systemwide the PATH to give all users access to apps installed by Homebrew
   - setting the ComputerName and LocalHostName
   - setting a login-window message
