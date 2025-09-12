@@ -220,11 +220,15 @@ cd ~/.genomac-system
 make prefs-systemwide
 ```
 
-### Grant iTerm full-disk access
+### Grant iTerm (a) full-disk access and (c) ability to control computer
 - System Settings
   - Privacy & Security
-    - Scroll down and click Full Disk Access
+    - Accessibility
+      - Add for iTerm
+    - Full Disk Access
       - Enable for iTerm
+
+Note: The Accessibility setting is meant to address the dialog box that can pop up: “‘iTerm.app’ wants access to control ‘System Events.app’,’ which arises because the scripts I run want to use AppleScript.
 
 ## Clone the GenoMac-user repo for the next step in Project GenoMac
 Copy the following command and paste into Terminal:
