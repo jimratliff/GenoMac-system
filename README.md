@@ -255,5 +255,10 @@ At this point, all apps have been installed and all systemwide settings have bee
   - See [Reassert systemwide settings](#reassert-systemwide-settings)
 - a new Mac needs to be configured
   - Go to the top of this repo and start from scratch
+ 
+## Remaining configuration steps that have not been (cannot be) automated
+### Apps to install manually
+- Howard Oakley’s [Podofyllin: lightweight PDF viewer and analysis](https://eclecticlight.co/delighted-podofyllin/)
+  - [version 1.4](https://eclecticlight.co/wp-content/uploads/2025/06/podofyllin14.zip)
 
 
