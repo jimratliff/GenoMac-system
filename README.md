@@ -4,6 +4,7 @@
 - [The four phases of the entire two-repo process](#the-four-phases-of-the-entire-two-repo-process)
 - [Overview of the role of the GenoMac-system repository](#overview-of-the-role-of-the-genomac-system-repository)
 - [Step-by-step implementation](#step-by-step-implementation)
+- [Remaining configuration steps that have not been (cannot be) automated](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#remaining-configuration-steps-that-have-not-been-cannot-be-automated)
 ## Quick-reference cheat sheet for occasional maintenance
 (First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
 
