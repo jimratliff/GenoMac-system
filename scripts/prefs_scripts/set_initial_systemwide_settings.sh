@@ -32,6 +32,12 @@ get_Mac_names
 # Get login-window message
 get_loginwindow_message
 
+# Disable auto-boot when opening the lid or connecting to power on Apple Silicon laptop
+# Howard Oakley, “How to change lid behaviour on MacBook Air and Pro,” Eclectic Light Company, February 3, 2025
+# https://eclecticlight.co/2025/02/03/how-to-change-lid-behaviour-on-macbook-air-and-pro/
+report_action_taken "Disable auto-boot when opening the lid or connecting to power on Apple Silicon laptop"
+sudo nvram BootPreference=%00 ; success_or_not
+
 # # Make Homebrew’s zsh an allowable shell
 # report_action_taken "Add Homebrew’s flavor of Zsh as allowable shell if possible/necessary"
 # HOMEBREW_PREFIX="$(/usr/bin/env brew --prefix)"   # e.g., /opt/homebrew
