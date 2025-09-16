@@ -56,6 +56,7 @@ SHIFT_CHAR=$'\u21e7'     # ⇧
 CONTROL_CHAR=$'\u2303'   # ⌃  
 OPTION_CHAR=$'\u2325'    # ⌥
 COMMAND_CHAR=$'\u2318'   # ⌘
+META_MODIFIER_CHARS="${CONTROL_CHAR}${OPTION_CHAR}${COMMAND_CHAR}"
 
 # Specify URL for cloning the public GenoMac-system repository using HTTPS
 GENOMAC_SYSTEM_REPO_URL="https://github.com/jimratliff/GenoMac-system.git"
@@ -100,6 +101,7 @@ export_and_report SHIFT_CHAR
 export_and_report CONTROL_CHAR
 export_and_report OPTION_CHAR
 export_and_report COMMAND_CHAR
+export_and_report META_MODIFIER_CHARS
 export_and_report HOMEBREW_PREFIX
 export_and_report GENOMAC_HELPER_DIR
 export_and_report GENOMAC_SYSTEM_REPO_URL
