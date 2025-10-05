@@ -41,7 +41,7 @@ source "${SOUNDS_FUNCTIONS_DIR}/install_uh_oh_sound_systemwide.sh"
 function install_sounds() {
   report_start_phase_standard
 
-  # Installs Fira Code Nerdfont
+  # Installs Uh Oh alert sound systemwide
   install_uh_oh_sound_systemwide
 
   report_end_phase_standard
