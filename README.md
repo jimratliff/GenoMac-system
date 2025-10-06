@@ -154,7 +154,7 @@ To install Homebrew, launch Terminal:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-(This is the same command as going to [brew.sh](https://brew.sh/) and copying the command from near the top of the page under “Install Homebrew.”)
+(This is the same command as you would get by going to [brew.sh](https://brew.sh/) and copying the command from near the top of the page under “Install Homebrew.”)
 
 **Do *not* follow Homebrew’s instructions to modify the PATH. This will be dealt with systemwide later.**
 
