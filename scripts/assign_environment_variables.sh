@@ -57,6 +57,7 @@ CONTROL_CHAR=$'\u2303'   # ⌃
 OPTION_CHAR=$'\u2325'    # ⌥
 COMMAND_CHAR=$'\u2318'   # ⌘
 META_MODIFIER_CHARS="${CONTROL_CHAR}${OPTION_CHAR}${COMMAND_CHAR}"
+MODIFIERS_KEYBOARD_NAVIGATION="${SHIFT_CHAR}${OPTION_CHAR}${COMMAND_CHAR}"
 
 # Specify URL for cloning the public GenoMac-system repository using HTTPS
 GENOMAC_SYSTEM_REPO_URL="https://github.com/jimratliff/GenoMac-system.git"
@@ -87,6 +88,11 @@ GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS="$HOME/genomac-detective"
 # accessed during user-account creation.
 GENOMAC_USER_LOGIN_PICTURES_DIRECTORY="$HOME/.genomac-user-login-pictures"
 
+# Specify the local directory in which preferences and other files shared across users are stored
+# These may contain secrets, so this directory is NOT within a repo
+# E.g., this would be within each user’s Dropbox directory.
+GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="$HOME/Dropbox/Share_prefs"
+
 # Export environment variables to be available in all subsequent shells
 echo "Exporting environment variables to be consistently available."
 
@@ -102,6 +108,7 @@ export_and_report CONTROL_CHAR
 export_and_report OPTION_CHAR
 export_and_report COMMAND_CHAR
 export_and_report META_MODIFIER_CHARS
+export_and_report MODIFIERS_KEYBOARD_NAVIGATION
 export_and_report HOMEBREW_PREFIX
 export_and_report GENOMAC_HELPER_DIR
 export_and_report GENOMAC_SYSTEM_REPO_URL
@@ -111,3 +118,4 @@ export_and_report GENOMAC_USER_LOCAL_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_STOW_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS
 export_and_report GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
+export_and_report GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY
