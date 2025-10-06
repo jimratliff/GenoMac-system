@@ -88,7 +88,7 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
   - Do *not* at this modify PATH to add Homebrew (despite the instructions from the Homebrew installer)
 - Clone this public repo to `~/.genomac-system`
 - Run a script to modify PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications to the user’s PATH
-- Log in to the Mac Apple Store with the Apple Account that purchased the MAS apps to be installed
+- Log in to the Mac Apple Store (MAS) with the Apple Account that purchased the MAS apps to be installed
 - Run a script for Homebrew to install applications
 - Run a script to install certain resources (font(s), screensaver(s), and sound(s))
 - Run a script to implement certain systemwide settings
