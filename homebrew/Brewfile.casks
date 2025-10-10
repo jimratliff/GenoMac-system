@@ -44,5 +44,6 @@ cask "vlc"                    # Multimedia player
                                 # Excluded from Project GenoMac because it can’t be reliably configured 
                                 # via `defaults write` commands or by dotfiles. See Issue: 
                                 # https://github.com/warpdotdev/Warp/issues/7220
+cask "zen"                    # Gecko based web browser
 cask "zoom"                   # Virtual meeting platform
 cask "zotero"                 # Bibliographic-reference manager
