@@ -40,9 +40,6 @@ cask "obsidian"                 # Knowledge base using local folder of Markdown 
 # cask "orion"                    # Orion Browser web browser
 
 cask "raindropio"               # Bookmarking manager
-cask "suspicious-package"       # QuickLook plugin for inspecting installer packages
-                                # See https://www.mothersruin.com/software/SuspiciousPackage/
-
 cask "textexpander"             # Insert pre-made snippets of text anywhere
 cask "tower"                    # Git client GUI
 cask "visual-studio-code"       # Microsoft open-source code editor
