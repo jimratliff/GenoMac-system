@@ -5,6 +5,8 @@
 - [Overview of the role of the GenoMac-system repository](#overview-of-the-role-of-the-genomac-system-repository)
 - [Step-by-step implementation](#step-by-step-implementation)
 - [Remaining configuration steps that have not been (cannot be) automated](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#remaining-configuration-steps-that-have-not-been-cannot-be-automated)
+- [Apps to install manually](#apps-to-install-manually)
+- [Known issues](#known-issues)
 ## Quick-reference cheat sheet for occasional maintenance
 (First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
 
@@ -259,13 +261,12 @@ At this point, all apps have been installed and all systemwide settings have bee
  
 ## Remaining configuration steps that have not been (cannot be) automated
 
+### Apps to install manually
+- Howard Oakley’s [Podofyllin: lightweight PDF viewer and analysis](https://eclecticlight.co/delighted-podofyllin/)
+  - [version 1.4](https://eclecticlight.co/wp-content/uploads/2025/06/podofyllin14.zip)
+
 ## Known issues
 - Defining a separate lockscreen.png (i.e., separate from a user’s wallpaper) is not working.
   - The previously known technique is given by Sodiq Olanrewaju, “[How to Change Your Mac’s Lock Screen Background Image](https://www.switchingtomac.com/how-to-change-your-macs-lock-screen-background-image/),” Switching2Mac.com, February 14, 2024.
   - Anticipating being able to implement this in macOS 26 Tahoe, I added to this repo: resources/images/lockedscreen.png
     - If an until this is resolved, this file is vestigial.
-### Apps to install manually
-- Howard Oakley’s [Podofyllin: lightweight PDF viewer and analysis](https://eclecticlight.co/delighted-podofyllin/)
-  - [version 1.4](https://eclecticlight.co/wp-content/uploads/2025/06/podofyllin14.zip)
-
-
