@@ -269,4 +269,4 @@ At this point, all apps have been installed and all systemwide settings have bee
 - Defining a separate lockscreen.png (i.e., separate from a user’s wallpaper) is not working.
   - The previously known technique is given by Sodiq Olanrewaju, “[How to Change Your Mac’s Lock Screen Background Image](https://www.switchingtomac.com/how-to-change-your-macs-lock-screen-background-image/),” Switching2Mac.com, February 14, 2024.
   - Anticipating being able to implement this in macOS 26 Tahoe, I added to this repo: resources/images/lockedscreen.png
-    - If an until this is resolved, this file is vestigial.
+    - If and until this is resolved, this file is vestigial.
