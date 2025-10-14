@@ -5,6 +5,7 @@
 
 cask "1password-cli"            # Command-line interface for 1password
 cask "1password"                # Password manager that keeps all passwords secure behind one password
+
 # cask "aerial"                   # Apple TV aerial screen saver
 
 cask "airtable"                 # Spreadsheet-database hybrid cloud collaboration
@@ -21,8 +22,10 @@ cask "docker-desktop"           # App to build and share containerized applicati
 cask "downie"                   # Downloader of videos from various web sites
 cask "dropbox"                  # Cloud storage service. (Kernel extension?)
 cask "firefox"                  # Web browser
+
 # cask "ghostty"                  # Terminal emulator that uses platform-native UI and GPU acceleration
                                   # Not installed because no scrollbar (as of 9/4/2025)
+
 cask "google-chrome"            # Web browser
 cask "google-drive"             # Desktop client for Google Drive storage service
 cask "graphicconverter"         # Graphic Converter image viewer, editor, and slideshow presenter
@@ -33,17 +36,23 @@ cask "microsoft-edge"           # Microsoft’s web browser
 cask "microsoft-teams"          # Microsoft version of Zoom
 cask "notion"                   # Knowledge base using proprietary files
 cask "obsidian"                 # Knowledge base using local folder of Markdown files
+
 # cask "orion"                    # Orion Browser web browser
 
 cask "raindropio"               # Bookmarking manager
+cask "suspicious-package"       # QuickLook plugin for inspecting installer packages
+                                # See https://www.mothersruin.com/software/SuspiciousPackage/
+
 cask "textexpander"             # Insert pre-made snippets of text anywhere
 cask "tower"                    # Git client GUI
 cask "visual-studio-code"       # Microsoft open-source code editor
 cask "vlc"                      # Multimedia player
+
 # cask "warp"                     # Rust-based terminal emulator
                                   # Excluded from Project GenoMac because it can’t be reliably configured 
                                   # via `defaults write` commands or by dotfiles. See Issue: 
                                   # https://github.com/warpdotdev/Warp/issues/7220
+
 cask "witch"                    # Switch apps, windows, or tabs
 cask "zen"                      # Gecko based web browser
 cask "zoom"                     # Virtual meeting platform
