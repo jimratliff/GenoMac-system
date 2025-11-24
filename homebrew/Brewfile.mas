@@ -27,7 +27,7 @@ mas "Plain Text Editor",              id: 1572202501
 mas "ReadKit - Reading Hub",          id: 1615798039
 mas "Screen Ruler - A Desktop Ruler", id: 1352308362
 mas "Slack for Desktop",              id: 803453959
-# mas "Smart Converter",                id: 447513724  # Failed to install via mas
+mas "Smart Converter",                id: 447513724  # Failed to install via mas
 mas "Soulver 3",                      id: 1508732804
 mas "The Unarchiver",                 id: 425424353
 mas "WordService",                   id: 899972312
