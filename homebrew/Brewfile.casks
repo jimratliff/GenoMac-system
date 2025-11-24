@@ -26,6 +26,7 @@ cask "firefox"                  # Web browser
 # cask "ghostty"                  # Terminal emulator that uses platform-native UI and GPU acceleration
                                   # Not installed because no scrollbar (as of 9/4/2025)
 
+cask "glance-chamburr"          # All-in-one Quick Look previews.
 cask "google-chrome"            # Web browser
 cask "google-drive"             # Desktop client for Google Drive storage service
 cask "graphicconverter"         # Graphic Converter image viewer, editor, and slideshow presenter
