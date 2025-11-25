@@ -27,6 +27,10 @@ cask "firefox"                  # Web browser
                                   # Not installed because no scrollbar (as of 9/4/2025)
 
 cask "glance-chamburr"          # All-in-one Quick Look previews.
+                                # Modern fork of glance that works post-Catalina’s deprecation of legacy
+                                # framework.
+                                # You must start $APPDIR/Glance.app once manually to setup the Quick Look plugin.
+
 cask "google-chrome"            # Web browser
 cask "google-drive"             # Desktop client for Google Drive storage service
 cask "graphicconverter"         # Graphic Converter image viewer, editor, and slideshow presenter
