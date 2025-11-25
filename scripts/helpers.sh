@@ -74,7 +74,7 @@ function launch_and_quit_app() {
   #   launch_and_quit_app "com.googlecode.iterm2"
   
   local bundle_id="$1"
-  report_action_taken "Launch and quit app $bundle_id in order that it will have preferences to modify"
+  report_action_taken "Launch and quit app $bundle_id"
   report_action_taken "Launching app $bundle_id"
   open -b "$bundle_id" ; success_or_not
   sleep 2
