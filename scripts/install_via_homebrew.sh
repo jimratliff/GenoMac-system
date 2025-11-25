@@ -68,8 +68,30 @@ function post_homebrew_installs_initialization() {
 }
 
 function main() {
-  install_via_homebrew
-  post_homebrew_installs_initialization
+  # Installs apps, etc. via Homebrew and runs post-Homebrew initializations.
+  #
+  # For idiosyncratic reasons, one or more apps may fail to install/update, but Homebrew keeps chugging along,
+  # trying to install subsequent apps.
+  #
+  # Therefore, I still want to run the post-Homebrew initializations even if install_via_homebrew returns a
+  # nonzero error code.
+  #
+  # But nevertheless, I want main() to return a nonzero error code if either of these two functions returns
+  # a nonzero error code.
+
+  local rc_install=0 rc_post=0
+
+  install_via_homebrew || {
+    rc_install=$?
+    report_fail "⚠️ install_via_homebrew failed with $rc_install; continuing"
+  }
+
+  post_homebrew_installs_initialization || {
+    rc_post=$?
+    report_fail "⚠️ post_homebrew_installs_initialization failed with $rc_post"
+  }
+
+  (( rc_install || rc_post )) && return 1
 }
 
 main
