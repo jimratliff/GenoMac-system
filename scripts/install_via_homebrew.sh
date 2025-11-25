@@ -64,7 +64,7 @@ function post_homebrew_installs_initialization() {
   report_start_phase_standard
 
   # The glance-chamburr app must be launched once in order to set up its QuickLook plugin
-  launch_and_quit "com.chamburr.Glance"
+  launch_and_quit_app "com.chamburr.Glance"
 }
 
 function main() {
