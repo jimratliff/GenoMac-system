@@ -83,7 +83,8 @@ function main() {
 
   install_via_homebrew || {
     rc_install=$?
-    report_fail "⚠️ install_via_homebrew failed with $rc_install; continuing"
+    # report_fail "⚠️ install_via_homebrew failed with $rc_install; continuing"
+    echo "⚠️ install_via_homebrew failed with $rc_install; continuing"
   }
 
   post_homebrew_installs_initialization || {
