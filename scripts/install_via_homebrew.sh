@@ -60,8 +60,16 @@ function install_via_homebrew() {
 
 }
 
+function post_homebrew_installs_initialization() {
+  report_start_phase_standard
+
+  # The glance-chamburr app must be launched once in order to set up its QuickLook plugin
+  launch_and_quit "com.chamburr.Glance"
+}
+
 function main() {
   install_via_homebrew
+  post_homebrew_installs_initialization
 }
 
 main
