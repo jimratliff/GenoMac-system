@@ -81,15 +81,9 @@ function main() {
 
   local rc_install=0 rc_post=0
 
-  if ! install_via_homebrew; then
-    rc_install=$?
-    echo "⚠️ install_via_homebrew failed with $rc_install; continuing" >&2
-  fi
+  install_via_homebrew || rc_install=$?
 
-  if ! post_homebrew_installs_initialization; then
-    rc_post=$?
-    report_fail "⚠️ post_homebrew_installs_initialization failed with $rc_post"
-  fi
+  post_homebrew_installs_initialization || rc_post=$?
 
   (( rc_install || rc_post )) && return 1
 }
