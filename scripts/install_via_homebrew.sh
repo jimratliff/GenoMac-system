@@ -61,6 +61,11 @@ function install_via_homebrew() {
 }
 
 function post_homebrew_installs_initialization() {
+  # NOTE: The existence of this function was premised on an erroneous belief that Glance must be launched
+  # only once per system in order to be registered as a QuickLook plugin for all users.
+  # Empirically, it is clear that Glance needs to be launched once *per user*.
+  # After I add that step to GenoMac-user, I need to return here and clean up this code.
+
   report_start_phase_standard
 
   # The glance-chamburr app must be launched once in order to set up its QuickLook plugin
