@@ -3,7 +3,7 @@
 # That variable must be defined before this file is sourced.
 
 if [[ -z "${GENOMAC_HELPER_DIR:-}" ]]; then
-  echo "❌ GENOMAC_HELPER_DIR is not set. Please source install_uh_oh_sound_systemwide.sh from an initialized environment."
+  echo "❌ GENOMAC_HELPER_DIR is not set. Please source install_resources.sh first."
   return 1
 fi
 
