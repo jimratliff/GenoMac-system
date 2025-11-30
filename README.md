@@ -62,6 +62,7 @@ At a high level, for a particular new Mac, Project GenoMac involves the followin
   - using the GenoMac-system repo, execute scripts to:
     - make system-level changes to PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications
     - install apps using Homebrew
+    - install non-Homebrew apps (e.g., that can be downloaded from a GitHub repository)
     - install resources
       - font(s)
       - screensaver(s)
@@ -111,6 +112,7 @@ The GenoMac-system repo is used and cloned exclusively by USER_CONFIGURER.
 GenoMac-system supports implementing configurations at the system level, i.e., configurations that affect all users. These configurations include:
 - installing Homebrew (and thereby git)
 - installing all CLI and GUI apps (both on or off the Mac App Store)
+- install non-Homebrew apps (e.g., that can be downloaded from a GitHub repository)
 - installing resources
   - font(s)
   - screensaver(s)
@@ -208,6 +210,13 @@ Note: There are some items whose installation will ask for your sudo password. T
 - zoom
 
 This password-querying behavior is usually, if not always, associated with casks that are accompanied by some kind of background process, such as an auto-updater.
+
+### Install app(s) not in Homebrew (e.g., from a GitHub repo)
+Copy the following code block and paste into Terminal:
+```shell
+cd ~/.genomac-system
+make app-install-other-than-homebrew
+```
 
 ### Install resources (font(s), screensaver(s), and sound(s))
 Copy the following code block and paste into Terminal:
