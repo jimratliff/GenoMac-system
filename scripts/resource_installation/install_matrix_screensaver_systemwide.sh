@@ -14,6 +14,10 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 function install_matrix_screensaver_systemwide() {
   # Installs Monroe Williams’ “MatrixDownload” screensaver systemwide.
   # 🗑️ To uninstall: sudo rm -rf "/Library/Screen Savers/Matrix.saver"
+  #
+  # 🚨 Warning: As of 11/29/2025, this Matrix screensaver isn’t reliable on macOS 26 Tahoe.
+  # “Doesn't work with macOS Tahoe 26 RC (release candidate) #24,” 
+  # https://github.com/monroewilliams/MatrixDownload/issues/24
 
   report_start_phase_standard
 
