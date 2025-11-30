@@ -3,7 +3,7 @@
 # That variable must be defined before this file is sourced.
 
 if [[ -z "${GENOMAC_HELPER_DIR:-}" ]]; then
-  echo "❌ GENOMAC_HELPER_DIR is not set. Please source install_fira_code_nerd_font_systemwide.sh first."
+  echo "❌ GENOMAC_HELPER_DIR is not set. Please source install_resources.sh first."
   return 1
 fi
 
