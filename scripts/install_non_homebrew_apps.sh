@@ -18,7 +18,7 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
 # Non-Homebrew app–related scripts live here:
 #   scripts/non-Homebrew_installation/
-NON_HOMEBREW_APPS_FUNCTIONS_DIR="${this_script_dir}/scripts/non-Homebrew_installation"
+NON_HOMEBREW_APPS_FUNCTIONS_DIR="${this_script_dir}/non-Homebrew_installation"
 
 # Print assigned paths for diagnostic purposes
 printf "\n📂 Path diagnostics:\n"
