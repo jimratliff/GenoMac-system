@@ -42,7 +42,7 @@ cask "microsoft-teams"          # Microsoft version of Zoom
 cask "notion"                   # Knowledge base using proprietary files
 cask "obsidian"                 # Knowledge base using local folder of Markdown files
 
-# cask "orion"                    # Orion Browser web browser
+cask "orion"                    # Orion Browser web browser
 
 cask "raindropio"               # Bookmarking manager
 cask "textexpander"             # Insert pre-made snippets of text anywhere
