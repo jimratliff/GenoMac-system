@@ -30,6 +30,7 @@ brew "stow"                    # Symlink-farm manager, used for deploying symlin
                                  # REQUIRED: Manages dotfiles for Project GenoMac
 brew "tlrc"                    # tldr (alternative to man pages) client written in Rust
 brew "trash"                   # CLI tool that moves files or folders to the trash
+brew "typst"                   # Markup-based typesetting system
 brew "uv"                      # Python package and project manager
 brew "zoxide"                  # A smarter `cd` command
 # brew "zsh"                     # Default UNIX shell (command interpreter)
