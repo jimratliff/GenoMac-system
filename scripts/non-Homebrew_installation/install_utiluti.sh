@@ -25,9 +25,9 @@ function install_utiluti() {
   local tool_name="utiluti"
   local repo_slug="scriptingosx/utiluti"
   local pinned_version="v1.3"
-  local pkg_filename="utiluti-1.3.pkg"              # <-- adjust to the real filename
+  local pkg_filename="utiluti-1.3.pkg"
   local pkg_id="com.scriptingosx.utiluti"
-  local binary_path="/usr/local/bin/utiluti"        # <-- adjust if the pkg installs elsewhere
+  local binary_path="/usr/local/bin/utiluti"
 
   install_github_pkg_tool \
     "$tool_name" \
