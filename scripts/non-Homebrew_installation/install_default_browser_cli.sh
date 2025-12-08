@@ -28,7 +28,7 @@ function install_default_browser_cli() {
   local tool_name="default-browser"
   local repo_slug="macadmins/default-browser"
   local pinned_version="v1.0.18"
-  local pkg_filename="default-browser-1.0.18.pkg"   # <-- adjust to the real filename
+  local pkg_filename="default-browser.pkg"
   local pkg_id="com.github.macadmins.default-browser"
   local binary_path="/opt/macadmins/bin/default-browser"
 
