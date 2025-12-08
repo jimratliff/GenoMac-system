@@ -48,6 +48,9 @@ printf "GENOMAC_HELPER_DIR:               %s\n" "$GENOMAC_HELPER_DIR"
 # Source the helpers script
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
+# Environment variables related to default-browser
+GENOMAC_INSTALLATION_PATH_DEFAULT-BROWSER="/opt/macadmins/bin/default-browser"
+
 ############### CONJECTURE: The following is used only by GenoMac-system
 
 # Specify URL for cloning the public GenoMac-system repository using HTTPS
