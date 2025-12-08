@@ -39,6 +39,12 @@ function install_non_homebrew_apps() {
   # Installs Alan.app into /Applications
   install_alan_app
 
+  # Install utiluti utility to set the default app associated with document types, etc.
+  install_utiluti
+
+  # Install default-browser utility to set the default browser
+  install_default_browser_cli
+
   report_end_phase_standard
 }
 
