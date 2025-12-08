@@ -14,6 +14,11 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 # Fail early on unset variables or command failure
 set -euo pipefail
 
+# is-at-least tests whether the semantic version in the first argument is at least the semantic version
+# in the second string.
+# is-at-least is builtin to zsh but must be explicitly loaded before called.
+autoload -Uz is-at-least
+
 ############################## GENERIC HELPER ##############################
 
 # Downloads a macOS package installer from a GitHub repo and installs the package’s payload.
