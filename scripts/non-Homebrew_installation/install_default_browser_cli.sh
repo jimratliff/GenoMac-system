@@ -32,7 +32,7 @@ function install_default_browser_cli() {
   local pkg_id="com.github.macadmins.default-browser"
   local binary_path="/opt/macadmins/bin/default-browser"
 
-  install_github_pkg_tool \
+  install_package_from_github \
     "$tool_name" \
     "$repo_slug" \
     "$pinned_version" \
