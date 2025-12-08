@@ -38,3 +38,5 @@ function install_utiluti() {
     "$binary_path"
 
   report_end_phase_standard
+
+}
