@@ -292,9 +292,9 @@ function ensure_plist_exists() {
   return 64  # EX_USAGE-style to force refactor
 }
 
-############### Helpers related to accumulating warning/failure message for later regurgitation
-
-genomac_print_alert_summary() {
+dump_accumulated_warnings_failures() {
+  # Prints all assumulated warnings and/or failures from GENOMAC_ALERT_LOG
+  
   # If we somehow never initialized, bail quietly.
   [[ -z "${GENOMAC_ALERT_LOG-}" ]] && return 0
   [[ ! -e "$GENOMAC_ALERT_LOG" ]] && return 0
@@ -311,22 +311,6 @@ genomac_print_alert_summary() {
 
   rm -f -- "$GENOMAC_ALERT_LOG"
 }
-
-genomac_set_alert_trap() {
-  [[ -z "${GENOMAC_ALERT_LOG-}" ]] && return 0
-  [[ -n "${GENOMAC_ALERT_TRAP_SET-}" ]] && return 0
-
-  # Only set the trap in the top-level shell
-  if (( ${ZSH_SUBSHELL:-0} != 0 )); then
-    return 0
-  fi
-
-  trap 'genomac_print_alert_summary' EXIT
-  GENOMAC_ALERT_TRAP_SET=1
-  export GENOMAC_ALERT_TRAP_SET
-}
-
-genomac_set_alert_trap   # executed when helpers are sourced
 
 ################################################################################
 # PHASE REPORTING HELPERS
