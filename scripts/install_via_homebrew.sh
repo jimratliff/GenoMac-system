@@ -24,6 +24,9 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 function install_via_homebrew() {
   report_start_phase_standard
 
+  report_fail "Test of report_fail"
+  report_warning "Test of report_warning"
+
   # For nonobvious reasons, brew install requires a password to install some casks
   # Preemptively calling `keep_sudo_alive` doesn’t prevent this
 
