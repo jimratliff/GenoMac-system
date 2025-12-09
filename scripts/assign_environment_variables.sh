@@ -51,8 +51,6 @@ printf "GENOMAC_HELPER_DIR:               %s\n" "$GENOMAC_HELPER_DIR"
 if [[ -z "${GENOMAC_ALERT_LOG-}" ]]; then
   local tmpdir="${TMPDIR:-/tmp}"
   GENOMAC_ALERT_LOG="$(mktemp "${tmpdir}/genomac_alerts.XXXXXX")"
-  # Truncate log file to ensure emptiness
-  : >"$GENOMAC_ALERT_LOG"
 fi
 
 # Source the helpers script
