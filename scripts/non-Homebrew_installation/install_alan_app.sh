@@ -22,7 +22,7 @@ function install_alan_app() {
   local pinned_version="v1.0"
   local zip_filename="Alan.zip"
   local applications_dir="/Applications"
-  local bundle_id="com.tylerhall.Alan"
+  local bundle_id="studio.retina.Alan"
 
   install_app_from_github_zip \
     "$app_name" \
