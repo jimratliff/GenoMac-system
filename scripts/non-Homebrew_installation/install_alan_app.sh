@@ -18,7 +18,7 @@ function install_alan_app() {
   report_start_phase_standard
 
   local app_name="Alan.app"
-  local repo_slug="tylerhall/Alan" \
+  local repo_slug="tylerhall/Alan"
   local pinned_version="v1.0"
   local zip_filename="Alan.zip"
   local applications_dir="/Applications"
