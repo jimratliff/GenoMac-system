@@ -45,6 +45,16 @@ printf "\n📂 Path diagnostics:\n"
 printf "this_script_dir:                  %s\n" "$this_script_dir"
 printf "GENOMAC_HELPER_DIR:               %s\n" "$GENOMAC_HELPER_DIR"
 
+# Specify name of temporary file to accumulate warning/failure messages for
+#   later regurgitation at the end of a main script.
+# Only create if not already defined (e.g. nested/nested sourcing)
+if [[ -z "${GENOMAC_ALERT_LOG-}" ]]; then
+  local tmpdir="${TMPDIR:-/tmp}"
+  GENOMAC_ALERT_LOG="$(mktemp "${tmpdir}/genomac_alerts.XXXXXX")"
+  # Truncate log file to ensure emptiness
+  : >"$GENOMAC_ALERT_LOG"
+fi
+
 # Source the helpers script
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
@@ -111,23 +121,24 @@ function export_and_report() {
   export "$var_name"
 }
 
-export_and_report PLISTBUDDY_PATH
-export_and_report SHIFT_CHAR
-export_and_report CONTROL_CHAR
-export_and_report OPTION_CHAR
 export_and_report COMMAND_CHAR
-export_and_report META_MODIFIER_CHARS
-export_and_report MODIFIERS_KEYBOARD_NAVIGATION
-export_and_report HOMEBREW_PREFIX
+export_and_report CONTROL_CHAR
+export_and_report GENOMAC_ALERT_LOG
 export_and_report GENOMAC_HELPER_DIR
-export_and_report GENOMAC_SYSTEM_REPO_URL
-export_and_report GENOMAC_USER_REPO_URL
 export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
+export_and_report GENOMAC_SYSTEM_REPO_URL
+export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_DIRECTORY
+export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_FILENAME
+export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_PATH
+export_and_report GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS
 export_and_report GENOMAC_USER_LOCAL_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_STOW_DIRECTORY
-export_and_report GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS
 export_and_report GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
+export_and_report GENOMAC_USER_REPO_URL
 export_and_report GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY
-export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_FILENAME
-export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_DIRECTORY
-export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_PATH
+export_and_report HOMEBREW_PREFIX
+export_and_report META_MODIFIER_CHARS
+export_and_report MODIFIERS_KEYBOARD_NAVIGATION
+export_and_report OPTION_CHAR
+export_and_report PLISTBUDDY_PATH
+export_and_report SHIFT_CHAR
