@@ -28,6 +28,7 @@ printf "NON_HOMEBREW_APPS_FUNCTIONS_DIR:    %s\n\n" "$NON_HOMEBREW_APPS_FUNCTION
 
 # Source the function file(s)
 source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_alan_app.sh"
+source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_app_from_github_zip.sh"
 source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_tool_via_package_from_github.sh"
 source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_default_browser_cli.sh"
 source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_utiluti.sh"
