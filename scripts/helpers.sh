@@ -239,7 +239,13 @@ function report() {
 
 function report_fail() {
   # Output supplied line of text in a distinctive color prefaced by SYMBOL_FAILURE.
-  printf "%b%s%s%b\n" "$COLOR_ERROR" "$SYMBOL_FAILURE" "$1" "$COLOR_RESET"
+  local message="$1"
+  printf "%b%s%s%b\n" "$COLOR_ERROR" "$SYMBOL_FAILURE" "$message" "$COLOR_RESET"
+  
+  # Also append a plain-text version to the alert log, if it's set.
+  if [[ -n "${GENOMAC_ALERT_LOG-}" ]]; then
+    printf 'FAIL: %s\n' "$message" >>"$GENOMAC_ALERT_LOG"
+  fi
 }
 
 function report_success() {
@@ -249,7 +255,13 @@ function report_success() {
 
 function report_warning() {
   # Output supplied line of text in a distinctive color prefaced by SYMBOL_WARNING.
-  printf "%b%s%s%b\n" "$COLOR_WARNING" "$SYMBOL_WARNING" "$1" "$COLOR_RESET"
+  local message="$1"
+  printf "%b%s%s%b\n" "$COLOR_WARNING" "$SYMBOL_WARNING" "$message" "$COLOR_RESET"
+
+  # Also append a plain-text version to the alert log, if it's set.
+  if [[ -n "${GENOMAC_ALERT_LOG-}" ]]; then
+    printf 'WARN: %s\n' "$msg" >>"$GENOMAC_ALERT_LOG"
+  fi
 }
 
 function report_adjust_setting() {
@@ -278,6 +290,37 @@ function ensure_plist_exists() {
   report_fail "‘ensure_plist_exists()’ is deprecated. Use ensure_plist_path_exists() instead"
   return 64  # EX_USAGE-style to force refactor
 }
+
+############### Helpers related to accumulating warning/failure message for later regurgitation
+
+genomac_print_alert_summary() {
+  # If we somehow never initialized, bail quietly.
+  [[ -z "${GENOMAC_ALERT_LOG-}" ]] && return 0
+  [[ ! -e "$GENOMAC_ALERT_LOG" ]] && return 0
+
+  if [[ ! -s "$GENOMAC_ALERT_LOG" ]]; then
+    echo "✅ No GenoMac warnings or failures detected in this run." >&2
+  else
+    echo >&2
+    echo "═════════ GenoMac warnings / failures (summary) ═════════" >&2
+    cat "$GENOMAC_ALERT_LOG" >&2
+    echo "════════════════════════ end summary ════════════════════" >&2
+    echo "↑ Scroll back in the log to see these in context." >&2
+  fi
+
+  rm -f -- "$GENOMAC_ALERT_LOG"
+}
+
+genomac_set_alert_trap() {
+  [[ -z "${GENOMAC_ALERT_LOG-}" ]] && return 0
+  [[ -n "${GENOMAC_ALERT_TRAP_SET-}" ]] && return 0
+
+  trap 'genomac_print_alert_summary' EXIT
+  GENOMAC_ALERT_TRAP_SET=1
+  export GENOMAC_ALERT_TRAP_SET
+}
+
+genomac_set_alert_trap   # executed when helpers are sourced
 
 ################################################################################
 # PHASE REPORTING HELPERS
