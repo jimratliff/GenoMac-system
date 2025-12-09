@@ -260,7 +260,7 @@ function report_warning() {
 
   # Also append a plain-text version to the alert log, if it's set.
   if [[ -n "${GENOMAC_ALERT_LOG-}" ]]; then
-    printf 'WARN: %s\n' "$msg" >>"$GENOMAC_ALERT_LOG"
+    printf 'WARN: %s\n' "$message" >>"$GENOMAC_ALERT_LOG"
   fi
 }
 
