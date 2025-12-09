@@ -316,6 +316,11 @@ genomac_set_alert_trap() {
   [[ -z "${GENOMAC_ALERT_LOG-}" ]] && return 0
   [[ -n "${GENOMAC_ALERT_TRAP_SET-}" ]] && return 0
 
+  # Only set the trap in the top-level shell
+  if (( ${ZSH_SUBSHELL:-0} != 0 )); then
+    return 0
+  fi
+
   trap 'genomac_print_alert_summary' EXIT
   GENOMAC_ALERT_TRAP_SET=1
   export GENOMAC_ALERT_TRAP_SET
