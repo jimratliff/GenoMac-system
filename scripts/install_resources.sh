@@ -56,6 +56,7 @@ function install_resources_systemwide() {
 
 function main() {
   install_resources_systemwide
+  dump_accumulated_warnings_failures
 }
 
 main
