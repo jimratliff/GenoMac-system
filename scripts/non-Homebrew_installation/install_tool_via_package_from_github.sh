@@ -29,7 +29,7 @@ function version_ge() {
 
 # Downloads a macOS package installer from a GitHub repo and installs the package’s payload.
 #
-# install_package_from_github
+# install_tool_via_package_from_github
 #
 # Arguments:
 #   1: tool_name       – human-readable name, e.g. "default-browser"
@@ -49,7 +49,7 @@ function version_ge() {
 #       • if installed > pinned  → warn and skip (no downgrade)
 #   - Else, if binary_path exists and is executable, skip.
 #
-function install_package_from_github() {
+function install_tool_via_package_from_github() {
 
   report_start_phase_standard
 
