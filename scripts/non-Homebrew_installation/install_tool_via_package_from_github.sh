@@ -89,26 +89,40 @@ function install_tool_via_package_from_github() {
         | awk -F': ' '/^version:/ {print $2}'
     )"
 
-    if [[ -n "$installed_version" ]]; then
-      if [[ "$installed_version" == "$pinned_pkg_version" ]]; then
+  if [[ -n "$installed_version" ]]; then
+    if [[ "$installed_version" == "$pinned_pkg_version" ]]; then
+      if [[ -n "$binary_path" ]]; then
+        if [[ -x "$binary_path" ]]; then
+          report_action_taken "${tool_name} already at version ${installed_version}; binary present at ${binary_path}; skipping re-install"
+          success_or_not
+          report_end_phase_standard
+          return 0
+        else
+          report_warning "${tool_name} receipt at version ${installed_version} exists, but binary is missing at ${binary_path}; reinstalling"
+          success_or_not
+          # fall through to download + install
+        fi
+      else
+        # No binary_path to verify – trust pkgutil
         report_action_taken "${tool_name} already at version ${installed_version}; skipping re-install"
         success_or_not
         report_end_phase_standard
         return 0
       fi
-
-      if version_ge "$pinned_pkg_version" "$installed_version"; then
-        # installed_version < pinned_pkg_version → upgrade
-        report_action_taken "Upgrading ${tool_name} from ${installed_version} to ${pinned_pkg_version}"
-        success_or_not
-        # fall through to download + install
-      else
-        # installed_version > pinned_pkg_version → do not downgrade
-        report_warning "${tool_name} installed version ${installed_version} is newer than pinned ${pinned_pkg_version}; not downgrading"
-        report_end_phase_standard
-        return 0
-      fi
     fi
+  
+    if version_ge "$pinned_pkg_version" "$installed_version"; then
+      # installed_version < pinned_pkg_version → upgrade
+      report_action_taken "Upgrading ${tool_name} from ${installed_version} to ${pinned_pkg_version}"
+      success_or_not
+      # fall through to download + install
+    else
+      # installed_version > pinned_pkg_version → do not downgrade
+      report_warning "${tool_name} installed version ${installed_version} is newer than pinned ${pinned_pkg_version}; not downgrading"
+      report_end_phase_standard
+      return 0
+    fi
+  fi
 
   # Fallback idempotence when pkg_id is unknown but a binary_path is provided
   elif [[ -z "$pkg_id" && -n "$binary_path" && -x "$binary_path" ]]; then
