@@ -5,7 +5,7 @@
 # That variable must be defined before this file is sourced.
 
 if [[ -z "${GENOMAC_HELPER_DIR:-}" ]]; then
-  echo "❌ GENOMAC_HELPER_DIR is not set. Please ensure helpers.sh has been loaded before sourcing helper_install_package_from_github.sh."
+  echo "❌ GENOMAC_HELPER_DIR is not set. Please ensure helpers.sh has been loaded before sourcing install_tool_via_package_from_github.sh."
   return 1
 fi
 
