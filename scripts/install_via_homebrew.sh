@@ -92,8 +92,8 @@ function main() {
   local rc_install=0 rc_post=0
 
   install_via_homebrew || rc_install=$?
-
   post_homebrew_installs_initialization || rc_post=$?
+  dump_accumulated_warnings_failures
 
   # rc_install || rc_post is 0 if both are 0, else non-zero.
   # Wrap in $(( ... )) to turn it into an integer for return.
