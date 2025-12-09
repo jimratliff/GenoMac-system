@@ -95,6 +95,8 @@ function main() {
 
   post_homebrew_installs_initialization || rc_post=$?
 
+  printf 'DEBUG: rc_install=%d rc_post=%d\n' "$rc_install" "$rc_post" >&2
+
   (( rc_install || rc_post )) && return 1
 }
 
