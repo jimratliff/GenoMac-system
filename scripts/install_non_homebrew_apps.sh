@@ -51,6 +51,7 @@ function install_non_homebrew_apps() {
 
 function main() {
   install_non_homebrew_apps
+  dump_accumulated_warnings_failures
 }
 
 main
