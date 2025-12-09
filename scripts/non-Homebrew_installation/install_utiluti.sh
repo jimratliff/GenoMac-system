@@ -29,7 +29,7 @@ function install_utiluti() {
   local pkg_id="com.scriptingosx.utiluti"
   local binary_path="/usr/local/bin/utiluti"
 
-  install_package_from_github \
+  install_tool_via_package_from_github \
     "$tool_name" \
     "$repo_slug" \
     "$pinned_version" \
