@@ -27,9 +27,24 @@ function version_ge() {
 
 ############################## GENERIC HELPER ##############################
 
-# Downloads a macOS package installer from a GitHub repo and installs the package’s payload.
-#
 # install_tool_via_package_from_github
+#
+# Download and install a GitHub-hosted macOS installer package (.pkg) whose
+# payload is a *command-line tool or utility*, not an .app bundle, and manage
+# versioning via pkgutil.
+#
+# This helper is intended for packages like:
+#   • macadmins/default-browser
+#   • scriptingosx/utiluti
+#
+# These packages:
+#   • install binaries or lightweight utilities
+#   • do NOT install .app bundles
+#   • expose their semantic version *solely* through pkgutil
+#
+# This is NOT a general-purpose .pkg installer for arbitrary software.
+# It should not be used for packages that deliver .app bundles or for payloads
+# whose version metadata does not correspond to the pkgutil-reported version.
 #
 # Arguments:
 #   1: tool_name       – human-readable name, e.g. "default-browser"
