@@ -66,7 +66,7 @@ safe_source() {
 }
 
 function launch_and_quit_app() {
-  # Launches and then quits an app identified by its bundle ID
+  # Launches (in background if possible) and then quits an app identified by its bundle ID
   # Required in some cases, e.g., iTerm2, where a sufficiently populated plist isn’t available to modify
   #   until the app has been launched once. (I.e., it is not enough simply to have created an empty
   #   plist file, as can be done with the function ensure_plist_exists().
@@ -76,8 +76,8 @@ function launch_and_quit_app() {
   
   local bundle_id="$1"
   report_action_taken "Launch and quit app $bundle_id"
-  report_action_taken "Launching app $bundle_id"
-  open -b "$bundle_id" ; success_or_not
+  report_action_taken "Launching app $bundle_id (in the background, if possible)"
+  open -gj -b "$bundle_id" 2>/dev/null || open -g -b "$bundle_id" ; success_or_not
   sleep 2
   report_action_taken "Quitting app $bundle_id"
   osascript -e "tell application id \"$bundle_id\" to quit" ; success_or_not
