@@ -28,6 +28,15 @@ git pull origin main
 make app-install-via-homebrew
 ```
 
+### Install apps/tools not available in Homebrew
+Some apps are not available in Homebrew but are available as downloads from GitHub repositories (e.g., Alan.app and the CLI tools `default-browser` and `utiluti`.
+
+Unlike Homebrew installations, upgrading to new versions is not automatic. Instead, each app is “pinned” to a particular version. This script will detect when the GitHub repo has a newer version available (relative to the pinned version), but it requires a manual change in the corresponding script to update the pinned version. In this sense, this script is intended to be run only (a) on a new system or (b) after one or more the apps/tools has been updated. That said, running this script is idempotent; there is no harm in running it repeatedly.
+```shell
+cd ~/.genomac-system
+make app-install-other-than-homebrew
+```
+
 ### Reassert systemwide settings
 To reassert the systemwide settings (in response to any changes in them in this repo) after refreshing the local clone:
 ```bash
