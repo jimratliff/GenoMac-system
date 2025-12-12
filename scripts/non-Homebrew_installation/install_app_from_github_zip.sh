@@ -106,6 +106,9 @@ function install_app_from_github_zip() {
   report_action_taken "Unzipping ${zip_filename}"
   unzip -q "$temp_dir/$zip_filename" -d "$temp_dir" ; success_or_not
 
+  report_action_taken "If running, I will quit app $bundle_id"
+  quit_app_by_bundle_id_if_running $bundle_id
+  
   report_action_taken "Removing any existing ${app_name} at ${destination_path}"
   sudo rm -rf "$destination_path" ; success_or_not
 
