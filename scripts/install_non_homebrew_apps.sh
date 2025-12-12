@@ -32,12 +32,13 @@ source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_app_from_github_zip.sh"
 source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_tool_via_package_from_github.sh"
 source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_default_browser_cli.sh"
 source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_utiluti.sh"
+source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_visualdiffer.sh"
 
 ############################## BEGIN SCRIPT PROPER ##############################
 function install_non_homebrew_apps() {
   report_start_phase_standard
 
-  # Installs Alan.app into /Applications
+  # Installs Alan.app to highlight prominently the active window
   install_alan_app
 
   # Install utiluti utility to set the default app associated with document types, etc.
@@ -45,6 +46,9 @@ function install_non_homebrew_apps() {
 
   # Install default-browser utility to set the default browser
   install_default_browser_cli
+
+  # Install VisualDiffer.app to diff two text files
+  install_visualdiffer
 
   report_end_phase_standard
 }
