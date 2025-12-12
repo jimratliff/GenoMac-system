@@ -11,7 +11,7 @@ source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
 ############################## BEGIN SCRIPT PROPER ##############################
 
-function install_alan_app() {
+function install_visualdiffer() {
   # Installs VisualDiffer macOS app, by Davide Ficano, et al., into /Applications.
   # Release page: https://github.com/Visualdiffer/visualdiffer/releases
   # 🗑️ To uninstall: sudo rm -rf "/Applications/VisualDiffer.app"
