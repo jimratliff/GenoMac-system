@@ -53,6 +53,8 @@ if [[ -z "${GENOMAC_ALERT_LOG-}" ]]; then
   GENOMAC_ALERT_LOG="$(mktemp "${tmpdir}/genomac_alerts.XXXXXX")"
 fi
 
+GENOMAC_NAMESPACE="com.virtualperfection.genomac"
+
 # Source the helpers script
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
@@ -123,6 +125,7 @@ export_and_report COMMAND_CHAR
 export_and_report CONTROL_CHAR
 export_and_report GENOMAC_ALERT_LOG
 export_and_report GENOMAC_HELPER_DIR
+export_and_report GENOMAC_NAMESPACE
 export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
 export_and_report GENOMAC_SYSTEM_REPO_URL
 export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_DIRECTORY
