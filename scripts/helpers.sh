@@ -83,7 +83,7 @@ function launch_and_quit_app() {
   osascript -e "tell application id \"$bundle_id\" to quit" ; success_or_not
 }
 
-quit_app_by_bundle_id_if_running() {
+function quit_app_by_bundle_id_if_running() {
   # Quit the app identified by its bundle ID if (and only if) it is running.
   # - bundle_id: e.g., "com.tylerhall.Alan"
   #
