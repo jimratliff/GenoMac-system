@@ -400,6 +400,132 @@ is_semantic_version_arg1_at_least_arg2() {
   is-at-least "$arg2" "$arg1"
 }
 
+function copy_resource_between_local_directories() {
+	# Helper function to copy a resource between two local directories.
+  # Usage: copy_resource_between_local_directories <source_path> <destination_path> [options]
+  #
+  # Arguments:
+  #   source_path         Full path to the resource in a local directory
+  #   destination_path    Full path where the resource should be copied
+  #
+  # Options:
+  #   --systemwide        Deploy systemwide (use sudo, set owner to root:wheel)
+  #                       Default: false (deploy for current user)
+  #   --mode <mode>       Set file permissions (default: 644)
+  #   --no-create-parent  Don't create parent directories (default: create them)
+  #
+  # Returns: 0 on success, 1 on failure
+  
+  local source_path=""
+  local destination_path=""
+  local systemwide=false
+  local mode="644"  # Sensible default for both systemwide and user deployments
+  local create_parent=true  # Default to true - usually what we want
+
+  report_start_phase_standard
+  
+  # Parse arguments
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      --systemwide)
+        systemwide=true
+        shift
+        ;;
+      --mode)
+        mode="$2"
+        shift 2
+        ;;
+      --no-create-parent)
+        create_parent=false
+        shift
+        ;;
+      *)
+        if [[ -z "$source_path" ]]; then
+          source_path="$1"
+        elif [[ -z "$destination_path" ]]; then
+          destination_path="$1"
+        else
+          report_fail "Too many arguments provided to copy_resource_between_local_directories"
+          return 1
+        fi
+        shift
+        ;;
+    esac
+  done
+  
+  # Validate required arguments
+  if [[ -z "$source_path" ]] || [[ -z "$destination_path" ]]; then
+    report_fail "Usage: copy_resource_between_local_directories <source_path> <destination_path> [options]"
+    return 1
+  fi
+  
+  # Verify source exists
+  report_action_taken "Verify that source resource exists"
+  if [[ ! -f "$source_path" ]]; then
+    report_fail "Source resource not found at: $source_path"
+    return 1
+  fi
+  report_success "Source file verified: $source_path"
+  
+  # Create parent directory if requested
+  if [[ "$create_parent" == true ]]; then
+    local parent_dir
+    parent_dir=$(dirname "$destination_path")
+    report_action_taken "Ensure destination folder exists: $parent_dir"
+    if [[ "$systemwide" == true ]]; then
+      sudo mkdir -p "$parent_dir" ; success_or_not
+    else
+      mkdir -p "$parent_dir" ; success_or_not
+    fi
+  fi
+  
+  # Copy the file (idempotent - only copy if different or missing)
+  local resource_name
+  resource_name=$(basename "$destination_path")
+  report_action_taken "Copy ${resource_name} to $(dirname "$destination_path") (idempotent)"
+  
+  local needs_copy=false
+  if [[ ! -e "$destination_path" ]]; then
+    needs_copy=true
+  elif ! cmp -s "$source_path" "$destination_path" 2>/dev/null; then
+    needs_copy=true
+  fi
+  
+  if [[ "$needs_copy" == true ]]; then
+    if [[ "$systemwide" == true ]]; then
+      sudo cp -f "$source_path" "$destination_path" ; success_or_not
+    else
+      cp -f "$source_path" "$destination_path" ; success_or_not
+    fi
+    report_success "Installed or updated ${resource_name}"
+  else
+    report_success "${resource_name} already up to date"
+  fi
+  
+  # Set ownership based on deployment type
+  if [[ "$systemwide" == true ]]; then
+    report_action_taken "Set ownership to root:wheel on ${destination_path}"
+    sudo chown root:wheel "$destination_path" ; success_or_not
+  else
+    # For user deployment, ensure current user owns the file
+    # This is usually already the case, but let's be explicit
+    report_action_taken "Set ownership to ${USER} on ${destination_path}"
+    chown "${USER}:$(id -gn)" "$destination_path" ; success_or_not
+  fi
+  
+  # Set permissions (we always have a mode now, either default or specified)
+  report_action_taken "Set permissions to ${mode} on ${destination_path}"
+  if [[ "$systemwide" == true ]]; then
+    sudo chmod "$mode" "$destination_path" ; success_or_not
+  else
+    chmod "$mode" "$destination_path" ; success_or_not
+  fi
+
+  report_end_phase_standard
+  
+  return 0
+}
+
 ################################################################################
 # PHASE REPORTING HELPERS
 #
