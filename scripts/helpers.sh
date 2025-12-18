@@ -401,7 +401,8 @@ is_semantic_version_arg1_at_least_arg2() {
 }
 
 function copy_resource_between_local_directories() {
-	# Helper function to copy a resource between two local directories.
+  # Helper function to copy a resource between two local directories.
+  # The source resource may be either a file or a directory (e.g., application bundle).
   # Usage: copy_resource_between_local_directories <source_path> <destination_path> [options]
   #
   # Arguments:
@@ -461,7 +462,7 @@ function copy_resource_between_local_directories() {
   
   # Verify source exists
   report_action_taken "Verify that source resource exists"
-  if [[ ! -f "$source_path" ]]; then
+  if [[ ! -e "$source_path" ]]; then
     report_fail "Source resource not found at: $source_path"
     return 1
   fi
@@ -492,10 +493,11 @@ function copy_resource_between_local_directories() {
   fi
   
   if [[ "$needs_copy" == true ]]; then
+  	# Use -R flag to handle both files and directories/bundles
     if [[ "$systemwide" == true ]]; then
-      sudo cp -f "$source_path" "$destination_path" ; success_or_not
+      sudo cp -Rf "$source_path" "$destination_path" ; success_or_not
     else
-      cp -f "$source_path" "$destination_path" ; success_or_not
+      cp -Rf "$source_path" "$destination_path" ; success_or_not
     fi
     report_success "Installed or updated ${resource_name}"
   else
