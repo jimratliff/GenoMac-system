@@ -402,8 +402,8 @@ is_semantic_version_arg1_at_least_arg2() {
 
 function copy_resource_between_local_directories() {
   # Helper function to copy a resource between two local directories.
-  # The source resource may be either a file or a directory (e.g., application bundle).
-  # Usage: copy_resource_between_local_directories <source_path> <destination_path> [options]
+  # The source resource may be either a file or a directory (e.g.,package).
+  # Usage: copy_resource_between_local_directories <source_path> <destination_path> [--systemwide]
   #
   # Arguments:
   #   source_path         Full path to the resource in a local directory
@@ -412,16 +412,12 @@ function copy_resource_between_local_directories() {
   # Options:
   #   --systemwide        Deploy systemwide (use sudo, set owner to root:wheel)
   #                       Default: false (deploy for current user)
-  #   --mode <mode>       Set file permissions (default: 644)
-  #   --no-create-parent  Don't create parent directories (default: create them)
   #
   # Returns: 0 on success, 1 on failure
   
   local source_path=""
   local destination_path=""
   local systemwide=false
-  local mode="644"  # Sensible default for both systemwide and user deployments
-  local create_parent=true  # Default to true - usually what we want
 
   report_start_phase_standard
   
@@ -432,14 +428,6 @@ function copy_resource_between_local_directories() {
         systemwide=true
         shift
         ;;
-      --mode)
-        mode="$2"
-        shift 2
-        ;;
-      --no-create-parent)
-        create_parent=false
-        shift
-        ;;
       *)
         if [[ -z "$source_path" ]]; then
           source_path="$1"
@@ -447,6 +435,7 @@ function copy_resource_between_local_directories() {
           destination_path="$1"
         else
           report_fail "Too many arguments provided to copy_resource_between_local_directories"
+          report_end_phase_standard
           return 1
         fi
         shift
@@ -456,7 +445,7 @@ function copy_resource_between_local_directories() {
   
   # Validate required arguments
   if [[ -z "$source_path" ]] || [[ -z "$destination_path" ]]; then
-    report_fail "Usage: copy_resource_between_local_directories <source_path> <destination_path> [options]"
+    report_fail "Usage: copy_resource_between_local_directories <source_path> <destination_path> [--systemwide]"
     return 1
   fi
   
@@ -466,21 +455,44 @@ function copy_resource_between_local_directories() {
     report_fail "Source resource not found at: $source_path"
     return 1
   fi
-  report_success "Source file verified: $source_path"
   
-  # Create parent directory if requested
-  if [[ "$create_parent" == true ]]; then
-    local parent_dir
-    parent_dir=$(dirname "$destination_path")
-    report_action_taken "Ensure destination folder exists: $parent_dir"
-    if [[ "$systemwide" == true ]]; then
-      sudo mkdir -p "$parent_dir" ; success_or_not
-    else
-      mkdir -p "$parent_dir" ; success_or_not
-    fi
+  # Determine if source is a file or directory and set appropriate flags/permissions
+  local is_directory
+  local mode
+  local cp_flags
+  local chown_flags
+  if [[ -d "$source_path" ]]; then
+    is_directory=true
+    mode="755"  # Directories need execute permission for traversal
+    cp_flags="-R"  # Recursive copy for directories
+    chown_flags="-R"  # Recursive ownership for directories
+    report "Source is a directory/package."
+  else
+    is_directory=false
+    mode="644"  # Files: owner read/write, others read-only
+    cp_flags="-f"  # Force copy for files
+    chown_flags=""
+    report "Source is a regular file, not a directory/package."
   fi
   
-  # Copy the file (idempotent - only copy if different or missing)
+  # Set sudo prefix and owner based on deployment type
+  local sudo_prefix
+  local owner
+  if [[ "$systemwide" == true ]]; then
+    sudo_prefix="sudo"
+    owner="root:wheel"
+  else
+    sudo_prefix=""
+    owner="${USER}:$(id -gn)"
+  fi
+  
+  # Create parent directory
+  local parent_dir
+  parent_dir=$(dirname "$destination_path")
+  report_action_taken "Ensure destination folder exists: $parent_dir"
+  $sudo_prefix mkdir -p "$parent_dir" ; success_or_not
+  
+  # Determine whether we need to copy
   local resource_name
   resource_name=$(basename "$destination_path")
   report_action_taken "Copy ${resource_name} to $(dirname "$destination_path") (idempotent)"
@@ -488,39 +500,46 @@ function copy_resource_between_local_directories() {
   local needs_copy=false
   if [[ ! -e "$destination_path" ]]; then
     needs_copy=true
-  elif ! cmp -s "$source_path" "$destination_path" 2>/dev/null; then
-    needs_copy=true
+    report_info "Resource doesn’t exist at destination, will copy"
+  elif [[ "$is_directory" == true ]]; then
+    # For directories, use rsync dry-run to check if content differs
+    if ! rsync -aqn "$source_path/" "$destination_path/" >/dev/null 2>&1; then
+      needs_copy=true
+      report_info "Directory contents differ, will update"
+    fi
+  else
+    # For files, use cmp
+    if ! cmp -s "$source_path" "$destination_path" 2>/dev/null; then
+      needs_copy=true
+      report_info "File contents differ, will update"
+    fi
   fi
   
   if [[ "$needs_copy" == true ]]; then
-  	# Use -R flag to handle both files and directories/bundles
-    if [[ "$systemwide" == true ]]; then
-      sudo cp -Rf "$source_path" "$destination_path" ; success_or_not
-    else
-      cp -Rf "$source_path" "$destination_path" ; success_or_not
+    # Remove existing destination if it exists and we're updating
+    if [[ -e "$destination_path" ]]; then
+      report_action_taken "Remove existing resource before copying"
+      $sudo_prefix rm -rf "$destination_path" ; success_or_not
     fi
+    
+    # Copy the resource
+    $sudo_prefix cp $cp_flags "$source_path" "$destination_path" ; success_or_not
     report_success "Installed or updated ${resource_name}"
   else
     report_success "${resource_name} already up to date"
   fi
   
-  # Set ownership based on deployment type
-  if [[ "$systemwide" == true ]]; then
-    report_action_taken "Set ownership to root:wheel on ${destination_path}"
-    sudo chown root:wheel "$destination_path" ; success_or_not
-  else
-    # For user deployment, ensure current user owns the file
-    # This is usually already the case, but let's be explicit
-    report_action_taken "Set ownership to ${USER} on ${destination_path}"
-    chown "${USER}:$(id -gn)" "$destination_path" ; success_or_not
-  fi
+  # Set ownership
+  report_action_taken "Set ownership to ${owner} on ${destination_path}"
+  $sudo_prefix chown $chown_flags "${owner}" "$destination_path" ; success_or_not
   
-  # Set permissions (we always have a mode now, either default or specified)
+  # Set permissions (644 for files, 755 for directories)
   report_action_taken "Set permissions to ${mode} on ${destination_path}"
-  if [[ "$systemwide" == true ]]; then
-    sudo chmod "$mode" "$destination_path" ; success_or_not
-  else
-    chmod "$mode" "$destination_path" ; success_or_not
+  $sudo_prefix chmod "$mode" "$destination_path" ; success_or_not
+  
+  # For directories, ensure all subdirectories have proper execute permissions
+  if [[ "$is_directory" == true ]]; then
+    $sudo_prefix find "$destination_path" -type d -exec chmod 755 {} \; 2>/dev/null
   fi
 
   report_end_phase_standard
