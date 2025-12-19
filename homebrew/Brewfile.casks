@@ -56,6 +56,7 @@ cask "vlc"                      # Multimedia player
                                   # https://github.com/warpdotdev/Warp/issues/7220
 
 cask "witch"                    # Switch apps, windows, or tabs
+cask "zed"                      # Multiplayer code editor (VS Code challenger)
 cask "zen"                      # Gecko based web browser
 cask "zoom"                     # Virtual meeting platform
 cask "zotero"                   # Bibliographic-reference manager
