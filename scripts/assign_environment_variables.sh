@@ -88,14 +88,14 @@ GENOMAC_USER_REPO_URL="https://github.com/jimratliff/GenoMac-user.git"
 # Note: This repo is cloned by each user.
 GENOMAC_USER_LOCAL_DIRECTORY="$HOME/.genomac-user"
 
-# Specify the local directory that holds resources (files or folders) to be copied elsewhere
-GENOMAC_USER_LOCAL_STOW_DIRECTORY="$GENOMAC_USER_LOCAL_DIRECTORY/resources"
-
 # Specify the local directory that is the “stow directory” that GNU Stow uses as
 # both (a) the raw dotfiles representing various configurations and (b) the
 # structural template defining where each symlink should reside in the user’s
 # $HOME directory.
-GENOMAC_USER_RESOURCE_DIRECTORY="$GENOMAC_USER_LOCAL_DIRECTORY/stow_directory"
+GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY="$GENOMAC_USER_LOCAL_DIRECTORY/stow_directory"
+
+# Specify the local directory that holds resources (files or folders) to be copied elsewhere
+GENOMAC_USER_LOCAL_STOW_DIRECTORY="$GENOMAC_USER_LOCAL_DIRECTORY/resources"
 
 # Specify the local directory into which the diff results of defaults_detective
 # investigations will be saved.
@@ -136,6 +136,7 @@ export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_FILENAME
 export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_PATH
 export_and_report GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS
 export_and_report GENOMAC_USER_LOCAL_DIRECTORY
+export_and_report GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_STOW_DIRECTORY
 export_and_report GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
 export_and_report GENOMAC_USER_REPO_URL
