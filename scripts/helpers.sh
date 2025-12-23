@@ -143,6 +143,10 @@ function quit_app_by_bundle_id_if_running() {
   return 0
 }
 
+function create_genomac_temp_dir_if_necessary() {
+  mkdir -p "$GENOMAC_LOCAL_TEMP_DIR"
+}
+
 function success_or_not() {
   # Print SYMBOL_SUCCESS if success (based on error code); otherwise SYMBOL_FAILURE
   if [[ $? -eq 0 ]]; then
@@ -500,18 +504,18 @@ function copy_resource_between_local_directories() {
   local needs_copy=false
   if [[ ! -e "$destination_path" ]]; then
     needs_copy=true
-    report_info "Resource doesn’t exist at destination, will copy"
+    report "Resource doesn’t exist at destination, will copy"
   elif [[ "$is_directory" == true ]]; then
     # For directories, use rsync dry-run to check if content differs
     if ! rsync -aqn "$source_path/" "$destination_path/" >/dev/null 2>&1; then
       needs_copy=true
-      report_info "Directory contents differ, will update"
+      report "Directory contents differ, will update"
     fi
   else
     # For files, use cmp
     if ! cmp -s "$source_path" "$destination_path" 2>/dev/null; then
       needs_copy=true
-      report_info "File contents differ, will update"
+      report "File contents differ, will update"
     fi
   fi
   
