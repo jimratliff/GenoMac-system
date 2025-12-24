@@ -55,8 +55,6 @@ fi
 
 GENOMAC_NAMESPACE="com.virtualperfection.genomac"
 
-GENOMAC_LOCAL_TEMP_DIR="$HOME/.genomac-temp"
-
 # Source the helpers script
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
@@ -131,7 +129,6 @@ export_and_report COMMAND_CHAR
 export_and_report CONTROL_CHAR
 export_and_report GENOMAC_ALERT_LOG
 export_and_report GENOMAC_HELPER_DIR
-export_and_report GENOMAC_LOCAL_TEMP_DIR
 export_and_report GENOMAC_NAMESPACE
 export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
 export_and_report GENOMAC_SYSTEM_REPO_URL
