@@ -143,10 +143,6 @@ function quit_app_by_bundle_id_if_running() {
   return 0
 }
 
-function create_genomac_temp_dir_if_necessary() {
-  mkdir -p "$GENOMAC_LOCAL_TEMP_DIR"
-}
-
 function success_or_not() {
   # Print SYMBOL_SUCCESS if success (based on error code); otherwise SYMBOL_FAILURE
   if [[ $? -eq 0 ]]; then
