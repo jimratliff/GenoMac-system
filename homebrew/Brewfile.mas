@@ -5,7 +5,7 @@
 mas "1Password for Safari",           id: 1569813296
 mas "Amadine: Vector Design and Art", id: 1339198386
 mas "Amazon Kindle",                  id: 302584613
-mas "Antnotes",                       id: 808734429
+# mas "Antnotes",                       id: 808734429
 mas "Boxy SVG",                       id: 611658502
 # mas "Duplicate File Finder",          id: 512883891
 mas "Duplicate File Finder Remover",  id: 1032755628
