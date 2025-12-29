@@ -90,13 +90,13 @@ GENOMAC_USER_LOCAL_DIRECTORY="$HOME/.genomac-user"
 
 # Specify the local directory that holds resources (files or folders) needed for particular
 # operations
-GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY="$GENOMAC_USER_LOCAL_DIRECTORY/resources"
+GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY="${GENOMAC_USER_LOCAL_DIRECTORY}/resources"
 
 # Specify the local directory that is the “stow directory” that GNU Stow uses as
 # both (a) the raw dotfiles representing various configurations and (b) the
 # structural template defining where each symlink should reside in the user’s
 # $HOME directory.
-GENOMAC_USER_LOCAL_STOW_DIRECTORY="$GENOMAC_USER_LOCAL_DIRECTORY/stow_directory"
+GENOMAC_USER_LOCAL_STOW_DIRECTORY="${GENOMAC_USER_LOCAL_DIRECTORY}/stow_directory"
 
 # Specify the local directory into which the diff results of defaults_detective
 # investigations will be saved.
@@ -106,10 +106,13 @@ GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS="$HOME/genomac-detective"
 # accessed during user-account creation.
 GENOMAC_USER_LOGIN_PICTURES_DIRECTORY="$HOME/.genomac-user-login-pictures"
 
+# Specify the location of the user’s `Dropbox` directory
+GENOMAC_USER_DROPBOX_DIRECTORY="$HOME/Library/CloudStorage/Dropbox"
+
 # Specify the local directory in which preferences and other files shared across users are stored
 # These may contain secrets, so this directory is NOT within a repo
 # E.g., this would be within each user’s Dropbox directory.
-GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="$HOME/Library/CloudStorage/Dropbox/Share_prefs"
+GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="${GENOMAC_USER_DROPBOX_DIRECTORY}/Share_prefs"
 
 # Specify the file name of the BetterTouchTool (BTT) preset to be auto-loaded at BTT startup
 GENOMAC_USER_BTT_AUTOLOAD_PRESET_FILENAME="Default_preset.json"
@@ -135,6 +138,7 @@ export_and_report GENOMAC_SYSTEM_REPO_URL
 export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_DIRECTORY
 export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_FILENAME
 export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_PATH
+export_and_report GENOMAC_USER_DROPBOX_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS
 export_and_report GENOMAC_USER_LOCAL_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY
