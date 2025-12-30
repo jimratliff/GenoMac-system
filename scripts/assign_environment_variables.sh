@@ -112,7 +112,7 @@ GENOMAC_USER_DROPBOX_DIRECTORY="$HOME/Library/CloudStorage/Dropbox"
 # Specify the local directory in which preferences and other files shared across users are stored
 # These may contain secrets, so this directory is NOT within a repo
 # E.g., this would be within each user’s Dropbox directory.
-GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="${GENOMAC_USER_DROPBOX_DIRECTORY}/Share_prefs"
+GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="${GENOMAC_USER_DROPBOX_DIRECTORY}/Preferences_common"
 
 # Specify the file name of the BetterTouchTool (BTT) preset to be auto-loaded at BTT startup
 GENOMAC_USER_BTT_AUTOLOAD_PRESET_FILENAME="Default_preset.json"
