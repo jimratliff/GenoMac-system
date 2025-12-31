@@ -143,6 +143,41 @@ function quit_app_by_bundle_id_if_running() {
   return 0
 }
 
+function launch_and_prompt_user_to_authenticate() {
+  # Launches an app, prompts the user to sign in or complete a task, waits for acknowledgment,
+  # then quits the app if it's still running.
+  # Examples:
+  #   launch_and_prompt_user_to_authenticate "com.apple.AppStore" "sign in to your Apple ID"
+  #   launch_and_prompt_user_to_authenticate "com.dropbox.client" "complete Dropbox setup"
+  
+  local bundle_id="$1"
+  local task_description="${2:-sign in or complete the required task}"
+  local confirmation_word="done"
+  
+  report_action_taken "Launch app $bundle_id for user authentication/setup"
+  
+  # Launch app in foreground so user can interact with it
+  report_action_taken "Launching app $bundle_id"
+  open -b "$bundle_id" ; success_or_not
+  
+  # Prompt user to complete the task
+  echo ""
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo "  ACTION REQUIRED: Please $task_description"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  echo ""
+  
+  # Wait for explicit user confirmation
+  local user_response=""
+  while [[ "${user_response:l}" != "$confirmation_word" ]]; do
+    read -r "user_response?Type '$confirmation_word' to confirm task completion: "
+  done
+  
+  report_action_taken "User confirmed task completion for $bundle_id"
+  
+  quit_app_by_bundle_id_if_running "$bundle_id"
+}
+
 function success_or_not() {
   # Print SYMBOL_SUCCESS if success (based on error code); otherwise SYMBOL_FAILURE
   if [[ $? -eq 0 ]]; then
