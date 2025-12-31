@@ -2,6 +2,8 @@
 # It is assumed this sub-Brewfile resides in the same directory as the main Brewfile.
 # This sub-Brewfile is dedicated to Mac App Store apps via mas-cli (name + numeric ID).
 
+mas uninstall "Antnotes"
+
 mas "1Password for Safari",           id: 1569813296
 mas "Amadine: Vector Design and Art", id: 1339198386
 mas "Amazon Kindle",                  id: 302584613
