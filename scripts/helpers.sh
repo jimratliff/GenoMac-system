@@ -320,6 +320,67 @@ function get_yes_no_answer_to_question() {
   done
 }
 
+# local state_file_extension="state" # DEPRECATED
+
+function _state_file_path() {
+    # Internal helper: returns the path of the state file corresponding to a given state string
+    echo "${GENOMAC_USER_LOCAL_STATE_DIRECTORY}/${1}.${GENOMAC_STATE_FILE_EXTENSION}"
+}
+
+function test_state() {
+	# Test if the state represented by the state-key string in $1 exists.
+	# Returns 0 if the state exists (operation was performed), 1 otherwise.
+	# Usage: test_state "launch-and-sign-in-to-microsoft-word"
+	#
+	# NOTE: Currently, a state’s existence is equivalent to the existence of a corresponding
+	#		.state (more generally .GENOMAC_STATE_FILE_EXTENSION) file.
+	#		This is an implementation detail. The test_state() API does not rely upon or
+	#		expose this implementation detail.
+	#
+	#	Example:
+    #    if ! test_state "launch-and-sign-in-to-microsoft-word"; then
+    #        # Perform the one-time operation
+    #        open -a "Microsoft Word"
+    #        echo "Please sign in to Microsoft Word, then press Enter..."
+    #        read
+    #        set_state "launch-and-sign-in-to-microsoft-word"
+    #    fi
+	local state_string="$1"
+	if [[ -f "$(_state_file_path "$state_string")" ]]; then
+		report "State detected: ${state_string}.state in ${GENOMAC_USER_LOCAL_STATE_DIRECTORY}"
+		return 0
+	else
+		report "State not present: ${state_string}.state in ${GENOMAC_USER_LOCAL_STATE_DIRECTORY}"
+		return 1
+	fi
+}
+}
+
+function set_state() {
+	# Mark a run-only-once operation as performed by creating its state file.
+	# Creates the state directory if it doesn't exist.
+	# Usage: set_state "launch-and-sign-in-to-microsoft-word"
+	#
+	# The same mechanism can, more generally, also be used to store any binary-state 
+	# preference, where the presence of the corresponding .state file is an affirmation 
+	# of that state and the absence of that .state file implies the falsity of that state.
+	
+	local state_string="$1"
+	mkdir -p "${GENOMAC_USER_LOCAL_STATE_DIRECTORY}"
+	report_action_taken "Setting state: ${state_string}.state in ${GENOMAC_USER_LOCAL_STATE_DIRECTORY}"
+	touch "$(_state_file_path "$state_string")"
+}
+
+function reset_state() {
+    # Resets all state by deleting all .state files, but leaving the state directory intact
+    [[ -n "${GENOMAC_USER_LOCAL_STATE_DIRECTORY:-}" ]] || {
+        report_fail "Error: GENOMAC_USER_LOCAL_STATE_DIRECTORY is not set"
+        return 1
+    }
+    [[ -d "${GENOMAC_USER_LOCAL_STATE_DIRECTORY}" ]] || return 0
+    rm -f "${GENOMAC_USER_LOCAL_STATE_DIRECTORY}"/*."${GENOMAC_STATE_FILE_EXTENSION}"
+}
+
 function force_user_logout(){
   report_action_taken $'\n\nYou are about to be logged out…'
   sleep 3  # Give user time to read the message
