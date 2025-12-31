@@ -45,6 +45,9 @@ printf "\n📂 Path diagnostics:\n"
 printf "this_script_dir:                  %s\n" "$this_script_dir"
 printf "GENOMAC_HELPER_DIR:               %s\n" "$GENOMAC_HELPER_DIR"
 
+# Source the helpers script
+source "${GENOMAC_HELPER_DIR}/helpers.sh"
+
 # Specify name of temporary file to accumulate warning/failure messages for
 #   later regurgitation at the end of a main script.
 # Only create if not already defined (e.g. nested/nested sourcing)
@@ -55,8 +58,12 @@ fi
 
 GENOMAC_NAMESPACE="com.virtualperfection.genomac"
 
-# Source the helpers script
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
+GENOMAC_STATE_FILE_EXTENSION="state"
+
+# Specify local directory in which machine-level state can be stored
+# The following environment variable, despite its name being specific to -system, is used
+# by BOTH GenoMac-system and GenoMac-user
+GENOMAC_SYSTEM_LOCAL_STATE_DIRECTORY="/etc/genomac/state"
 
 ############### CONJECTURE: The following is used only by GenoMac-system
 
@@ -87,6 +94,9 @@ GENOMAC_USER_REPO_URL="https://github.com/jimratliff/GenoMac-user.git"
 # Specify local directory into which the GenoMac-user repository will be cloned
 # Note: This repo is cloned by each user.
 GENOMAC_USER_LOCAL_DIRECTORY="$HOME/.genomac-user"
+
+# Specify local directory that will retain state information about run-only-once operations
+GENOMAC_USER_LOCAL_STATE_DIRECTORY="${GENOMAC_USER_LOCAL_DIRECTORY}-state"
 
 # Specify the local directory that holds resources (files or folders) needed for particular
 # operations
@@ -120,7 +130,7 @@ GENOMAC_USER_BTT_AUTOLOAD_PRESET_DIRECTORY="$HOME/.config/BetterTouchTool"
 GENOMAC_USER_BTT_AUTOLOAD_PRESET_PATH="${GENOMAC_USER_BTT_AUTOLOAD_PRESET_DIRECTORY}/${GENOMAC_USER_BTT_AUTOLOAD_PRESET_FILENAME}"
 
 # Export environment variables to be available in all subsequent shells
-echo "Exporting environment variables to be consistently available."
+report_action_taken "Exporting environment variables to be consistently available."
 
 function export_and_report() {
   local var_name="$1"
@@ -133,6 +143,7 @@ export_and_report CONTROL_CHAR
 export_and_report GENOMAC_ALERT_LOG
 export_and_report GENOMAC_HELPER_DIR
 export_and_report GENOMAC_NAMESPACE
+export_and_report GENOMAC_STATE_FILE_EXTENSION
 export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
 export_and_report GENOMAC_SYSTEM_REPO_URL
 export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_DIRECTORY
@@ -142,6 +153,7 @@ export_and_report GENOMAC_USER_DROPBOX_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS
 export_and_report GENOMAC_USER_LOCAL_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY
+export_and_report GENOMAC_USER_LOCAL_STATE_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_STOW_DIRECTORY
 export_and_report GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
 export_and_report GENOMAC_USER_REPO_URL
