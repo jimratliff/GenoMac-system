@@ -12,24 +12,7 @@
 
 set -euo pipefail
 
-# --- Homebrew: hard dependency ------------------------------------------------
-if ! command -v brew >/dev/null 2>&1; then
-  # First attempt failed - try adding Homebrew to PATH and retry
-  if [ -x /opt/homebrew/bin/brew ]; then
-    # Homebrew exists but isn't in PATH - fix temporarily
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-    if ! command -v brew >/dev/null 2>&1; then
-      echo "❌ Homebrew installation appears corrupted. Aborting."
-      exit 1
-    fi
-  else
-    echo "❌ Homebrew is required but not installed. Aborting."
-    exit 1
-  fi
-fi
 
-# Resolve once (don’t recompute if already set by the environment)
-HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-$(/usr/bin/env brew --prefix)}"
 
 # Resolve directory of the current script
 this_script_path="${0:A}"
@@ -48,22 +31,9 @@ printf "GENOMAC_HELPER_DIR:               %s\n" "$GENOMAC_HELPER_DIR"
 # Source the helpers script
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
-# Specify name of temporary file to accumulate warning/failure messages for
-#   later regurgitation at the end of a main script.
-# Only create if not already defined (e.g. nested/nested sourcing)
-if [[ -z "${GENOMAC_ALERT_LOG-}" ]]; then
-  local tmpdir="${TMPDIR:-/tmp}"
-  GENOMAC_ALERT_LOG="$(mktemp "${tmpdir}/genomac_alerts.XXXXXX")"
-fi
-
-GENOMAC_NAMESPACE="com.virtualperfection.genomac"
-
-GENOMAC_STATE_FILE_EXTENSION="state"
-
-# Specify local directory in which machine-level state can be stored
-# The following environment variable, despite its name being specific to -system, is used
-# by BOTH GenoMac-system and GenoMac-user
-GENOMAC_SYSTEM_LOCAL_STATE_DIRECTORY="/etc/genomac/state"
+# Specify the local directory in which user login pictures are stored to be
+# accessed during user-account creation.
+GENOMAC_USER_LOGIN_PICTURES_DIRECTORY="$HOME/.genomac-user-login-pictures"
 
 ############### CONJECTURE: The following is used only by GenoMac-system
 
@@ -76,45 +46,6 @@ GENOMAC_SYSTEM_REPO_URL="https://github.com/jimratliff/GenoMac-system.git"
 GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
 
 ############### CONJECTURE: The following is used only by GenoMac-user
-
-# Specify location of PlistBuddy
-PLISTBUDDY_PATH='/usr/libexec/PlistBuddy'
-
-# Establish symbolic names for modifier keys
-SHIFT_CHAR=$'\u21e7'     # ⇧
-CONTROL_CHAR=$'\u2303'   # ⌃  
-OPTION_CHAR=$'\u2325'    # ⌥
-COMMAND_CHAR=$'\u2318'   # ⌘
-META_MODIFIER_CHARS="${CONTROL_CHAR}${OPTION_CHAR}${COMMAND_CHAR}"
-MODIFIERS_KEYBOARD_NAVIGATION="${SHIFT_CHAR}${OPTION_CHAR}${COMMAND_CHAR}"
-
-# Specify URL for cloning the public GenoMac-user repository using HTTPS
-GENOMAC_USER_REPO_URL="https://github.com/jimratliff/GenoMac-user.git"
-
-# Specify local directory into which the GenoMac-user repository will be cloned
-# Note: This repo is cloned by each user.
-GENOMAC_USER_LOCAL_DIRECTORY="$HOME/.genomac-user"
-
-# Specify local directory that will retain state information about run-only-once operations
-GENOMAC_USER_LOCAL_STATE_DIRECTORY="${GENOMAC_USER_LOCAL_DIRECTORY}-state"
-
-# Specify the local directory that holds resources (files or folders) needed for particular
-# operations
-GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY="${GENOMAC_USER_LOCAL_DIRECTORY}/resources"
-
-# Specify the local directory that is the “stow directory” that GNU Stow uses as
-# both (a) the raw dotfiles representing various configurations and (b) the
-# structural template defining where each symlink should reside in the user’s
-# $HOME directory.
-GENOMAC_USER_LOCAL_STOW_DIRECTORY="${GENOMAC_USER_LOCAL_DIRECTORY}/stow_directory"
-
-# Specify the local directory into which the diff results of defaults_detective
-# investigations will be saved.
-GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS="$HOME/genomac-detective"
-
-# Specify the local directory in which user login pictures are stored to be
-# accessed during user-account creation.
-GENOMAC_USER_LOGIN_PICTURES_DIRECTORY="$HOME/.genomac-user-login-pictures"
 
 # Specify the location of the user’s `Dropbox` directory
 GENOMAC_USER_DROPBOX_DIRECTORY="$HOME/Library/CloudStorage/Dropbox"
@@ -138,29 +69,18 @@ function export_and_report() {
   export "$var_name"
 }
 
-export_and_report COMMAND_CHAR
-export_and_report CONTROL_CHAR
+
 export_and_report GENOMAC_ALERT_LOG
 export_and_report GENOMAC_HELPER_DIR
 export_and_report GENOMAC_NAMESPACE
 export_and_report GENOMAC_STATE_FILE_EXTENSION
 export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
 export_and_report GENOMAC_SYSTEM_REPO_URL
-export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_DIRECTORY
-export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_FILENAME
-export_and_report GENOMAC_USER_BTT_AUTOLOAD_PRESET_PATH
 export_and_report GENOMAC_USER_DROPBOX_DIRECTORY
-export_and_report GENOMAC_USER_LOCAL_DEFAULTS_DETECTIVE_RESULTS
 export_and_report GENOMAC_USER_LOCAL_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY
 export_and_report GENOMAC_USER_LOCAL_STATE_DIRECTORY
-export_and_report GENOMAC_USER_LOCAL_STOW_DIRECTORY
 export_and_report GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
 export_and_report GENOMAC_USER_REPO_URL
 export_and_report GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY
-export_and_report HOMEBREW_PREFIX
-export_and_report META_MODIFIER_CHARS
-export_and_report MODIFIERS_KEYBOARD_NAVIGATION
-export_and_report OPTION_CHAR
-export_and_report PLISTBUDDY_PATH
-export_and_report SHIFT_CHAR
+
