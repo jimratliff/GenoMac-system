@@ -137,6 +137,9 @@ GenoMac-system supports implementing configurations at the system level, i.e., c
 
 In addition—in a separate, later step—GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
 
+The current repo is used in conjunction with the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-system), which (a) is cloned by each user (including USER_CONFIGURER) and (b) is responsible for configurations at the user level.
+
+GenoMac-system also relies (as does GenoMac-user) on the [GenoMac-shared repository](https://github.com/jimratliff/GenoMac-shared). GenoMac-shared is an externally defined set of common code that specifies some environment variables and defines some helper functions. This common code is incorporated into each of GenoMac-system and GenoMac-user as a submodule located at `external/genomac-shared` of each of the two container repositories. (See GenoMac-shared’s [README](https://github.com/jimratliff/GenoMac-shared/blob/main/README.md) for information on how that affects/complicates work flows, particularly when there is a change to GenoMac-shared’s code.)
 ### The Makefile is the user’s interface with the functionality of this repo
 
 The `Makefile` provides the interface for the user to effect the functionalities of this repo, such as commanding the execution of (a) installing apps via Homebrew and (b) changing certain systemwide macOS settings using `defaults write` commands.
