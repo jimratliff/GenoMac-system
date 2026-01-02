@@ -14,12 +14,12 @@
 After initial cloning, to pull down subsequent changes to this repository
 ```bash
 cd ~/.genomac-system
-git pull origin main
+git pull --recurse-submodules origin main
 ```
-
+(The `--recurse-submodules` ensures that the local version of submodule GenoMac-shared is updated to the commit specified by the GenoMac-user origin repository.)
 ### Update apps
 
-NOTE: If revisions to the Brewfile imply installing *new* apps from the Mac App Store, you must sign in to the App Store before executing the below steps.
+NOTE: If revisions to the Brewfile imply installing *new* apps from the Mac App Store, you need to be signed in to the App Store before executing the below steps.
 
 To update all apps (and install/remove apps as required by any changes in the Brewfile) after refreshing the local clone:
 ```bash
@@ -31,7 +31,7 @@ make app-install-via-homebrew
 ### Install apps/tools not available in Homebrew
 Some apps are not available in Homebrew but are available as downloads from GitHub repositories (e.g., Alan.app and the CLI tools `default-browser` and `utiluti`.
 
-Unlike Homebrew installations, upgrading to new versions is not automatic. Instead, each app is “pinned” to a particular version. This script will detect when the GitHub repo has a newer version available (relative to the pinned version), but it requires a manual change in the corresponding script to update the pinned version. In this sense, this script is intended to be run only (a) on a new system or (b) after one or more the apps/tools has been updated. That said, running this script is idempotent; there is no harm in running it repeatedly.
+Unlike Homebrew installations, upgrading to new versions is not automatic. Instead, each app is “pinned” to a particular version. This script will detect, and report, when the GitHub repo has a newer version available (relative to the pinned version), but it requires a manual change in the corresponding script to update the pinned version. In this sense, this script is intended to be run only (a) on a new system or (b) after one or more the apps/tools has been updated. That said, running this script is idempotent; there is no harm in running it repeatedly.
 ```shell
 cd ~/.genomac-system
 make app-install-other-than-homebrew
@@ -135,7 +135,7 @@ GenoMac-system supports implementing configurations at the system level, i.e., c
   - configuring the firewall
   - specifying policies regarding software-update behavior
 
-In addition—in a separate, later step—GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
+In addition—in a separate, later step, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
 
 The current repo is used in conjunction with the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-system), which (a) is cloned by each user (including USER_CONFIGURER) and (b) is responsible for configurations at the user level.
 
@@ -186,9 +186,11 @@ Copy the following code block and paste into Terminal:
 ```shell
 mkdir -p ~/.genomac-system
 cd ~/.genomac-system
-git clone https://github.com/jimratliff/GenoMac-system.git .
+git clone --recurse-submodules https://github.com/jimratliff/GenoMac-system.git .
 ```
 **Note the trailing “.” at the end of the `git clone` command.**
+
+(The `--recurse-submodules` flag exists because this repo has a submodule ([GenoMac-shared](https://github.com/jimratliff/GenoMac-shared). The `--recurse-submodules` ensures that the submodule’s code is also cloned, not just a pointer to it.)
 
 ### Modify PATH
 Modify systemwide PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications.
