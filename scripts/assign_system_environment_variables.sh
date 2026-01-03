@@ -2,13 +2,6 @@
 
 # Establishes values for certain environment variables to ensure compatibility 
 # across scripts.
-#
-# This script is assumed to reside in the same directory as the helpers.sh 
-# script of helper functions.
-#
-# This script is applicable to at least the GenoMac-system and GenoMac-user 
-# repositories. Because this script is used in multiple repos, ultimately this 
-# script, along with helpers.sh, might be relocated into a git submodule.
 
 set -euo pipefail
 
