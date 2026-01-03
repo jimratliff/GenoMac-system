@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 
-# Establishes values for certain environment variables to ensure compatibility 
-# across scripts.
+# Establishes values for environment variables used exclusively by GenoMac-system
 
 set -euo pipefail
 
