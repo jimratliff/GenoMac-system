@@ -30,6 +30,10 @@ GENOMAC_USER_LOGIN_PICTURES_DIRECTORY="$HOME/.genomac-user-login-pictures"
 # Note: This repo is cloned only by USER_CONFIGURER.
 GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
 
+# Specify the local directory that holds resources (files or folders) needed for particular
+# operations by GenoMac-system
+GENOMAC_SYSTEM_LOCAL_RESOURCE_DIRECTORY="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
+
 # Export environment variables to be available in all subsequent shells
 report_action_taken "Exporting environment variables to be consistently available."
 
@@ -41,4 +45,5 @@ function export_and_report() {
 
 export_and_report GENOMAC_HELPER_DIR
 export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
+export_and_report GENOMAC_SYSTEM_LOCAL_RESOURCE_DIRECTORY
 export_and_report GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
