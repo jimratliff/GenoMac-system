@@ -11,6 +11,7 @@ brew "dockutil"                # Tool for configuring the items in a macOS Dock
 brew "eza"                     # Modern alternative to `ls`
 brew "fastfetch"               # Displays system information (replacement for neofetch)
 brew "fd"                      # Simple, fast, and user-friendly alternative to find
+brew "figlet"                  # Banner-like program prints strings as ASCII art
 brew "fresh-editor"            # Rust-based text editor
 brew "fzf"                     # Command-line fuzzy finder
 brew "gh"                      # GitHub command-line tool
