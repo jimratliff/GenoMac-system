@@ -14,8 +14,8 @@ this_script_dir="${this_script_path:h}"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Assign environment variables (including GENOMAC_HELPER_DIR).
-# Assumes that assign_environment_variables.sh is in same directory as this script.
-source "${this_script_dir}/assign_environment_variables.sh"
+# Assumes that assign_system_environment_variables.sh is in same directory as this script.
+source "${this_script_dir}/assign_system_environment_variables.sh"
 
 # Source helpers
 source "${GENOMAC_HELPER_DIR}/helpers.sh"
