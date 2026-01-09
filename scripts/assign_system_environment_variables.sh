@@ -19,14 +19,16 @@ GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
 GENOMAC_SYSTEM_LOCAL_RESOURCE_DIRECTORY="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
 
 # Export environment variables to be available in all subsequent shells
-report_action_taken "Exporting environment variables to be consistently available."
+# TODO: Revisit below commented-out line after refactoring (to use GenoMac-shared)
+# report_action_taken "Exporting environment variables to be consistently available."
+echo "Exporting environment variables to be consistently available."
 
 # TODO: After refactoring is completed (viz., to reply on GenoMac-shared), this function definition can be deleted
-function export_and_report() {
-  local var_name="$1"
-  report "export $var_name: '${(P)var_name}'"
-  export "$var_name"
-}
+# function export_and_report() {
+#   local var_name="$1"
+#   report "export $var_name: '${(P)var_name}'"
+#   export "$var_name"
+# }
 
 export_and_report GENOMAC_HELPER_DIR
 export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
