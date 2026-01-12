@@ -18,6 +18,8 @@ function install_matrix_screensaver_systemwide() {
   # 🚨 Warning: As of 11/29/2025, this Matrix screensaver isn’t reliable on macOS 26 Tahoe.
   # “Doesn't work with macOS Tahoe 26 RC (release candidate) #24,” 
   # https://github.com/monroewilliams/MatrixDownload/issues/24
+  #
+  # NOTE: On 1/11/2026, it seemed to be working well on macOS 26. Let’s watch to see how long it lasts.
 
   report_start_phase_standard
 
