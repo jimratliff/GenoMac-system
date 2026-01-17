@@ -1,0 +1,3 @@
+[submodule "external/genomac-shared"]
+	path = external/genomac-shared
+	url = https://github.com/jimratliff/genomac-shared.git
