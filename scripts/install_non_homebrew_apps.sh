@@ -1,20 +1,11 @@
-#!/bin/zsh
-
-# Installs non-Homebrew apps (direct downloads such as Alan.app).
+#!/usr/bin/env zs
 
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-# Resolve this script's directory (even if sourced)
-this_script_path="${0:A}"
-this_script_dir="${this_script_path:h}"
+source "${HOME}/.genomac-user/scripts/0_initialize_me.sh"
 
-# Assign environment variables (including GENOMAC_HELPER_DIR).
-# Assumes that assign_environment_variables.sh is in same directory as this script.
-source "${this_script_dir}/assign_environment_variables.sh"
-
-# Source helpers
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
+# Installs non-Homebrew apps (direct downloads such as Alan.app).
 
 # Non-Homebrew app–related scripts live here:
 #   scripts/non-Homebrew_installation/
