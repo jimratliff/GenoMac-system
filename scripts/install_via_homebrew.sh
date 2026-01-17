@@ -1,27 +1,12 @@
-#!/bin/zsh
-
-# Installs, upgrades, and (when necessary) removes no-longer-desired Homebrew packages.
+#!/usr/bin/env zs
 
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-# Resolve this script's directory (even if sourced)
-this_script_path="${0:A}"
-this_script_dir="${this_script_path:h}"
+source "${HOME}/.genomac-user/scripts/0_initialize_me.sh"
 
-# Ensure Homebrew is in PATH for this script
-# Should be unnecessary, so I'm commenting it out
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-# Assign environment variables (including GENOMAC_HELPER_DIR).
-# Assumes that assign_system_environment_variables.sh is in same directory as this script.
-source "${this_script_dir}/assign_system_environment_variables.sh"
-
-# Source helpers
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
-
-############################## BEGIN SCRIPT PROPER ##############################
 function install_via_homebrew() {
+  # Installs, upgrades, and (when necessary) removes no-longer-desired Homebrew packages.
   report_start_phase_standard
 
   # For nonobvious reasons, brew install requires a password to install some casks
@@ -35,7 +20,7 @@ function install_via_homebrew() {
   export HOMEBREW_CASK_OPTS=--no-quarantine
 
   # Assumes Brewfile is in homebrew/, which is parallel to scripts/
-  brewfile_path="${this_script_dir}/../homebrew/Brewfile"
+  brewfile_path="${GMU_SCRIPTS_DIR:h}/homebrew/Brewfile"
 
   # Updates Homebrew itself and its package definitions (formulae and casks) from the remote repository
   report_action_taken "Updating Homebrew itself"
@@ -60,20 +45,6 @@ function install_via_homebrew() {
 
 }
 
-function post_homebrew_installs_initialization() {
-  # NOTE: The existence of this function was premised on an erroneous belief that Glance must be launched
-  # only once per system in order to be registered as a QuickLook plugin for all users.
-  # Empirically, it is clear that Glance needs to be launched once *per user*.
-  # After I add that step to GenoMac-user, I need to return here and clean up this code.
-
-  report_start_phase_standard
-
-  # The glance-chamburr app must be launched once in order to set up its QuickLook plugin
-  launch_and_quit_app "com.chamburr.Glance"
-
-  report_end_phase_standard
-}
-
 function main() {
   # Installs apps, etc. via Homebrew and runs post-Homebrew initializations.
   #
@@ -88,13 +59,8 @@ function main() {
 
   local rc_install=0 rc_post=0
 
-  install_via_homebrew || rc_install=$?
-  post_homebrew_installs_initialization || rc_post=$?
+  install_via_homebrew
   dump_accumulated_warnings_failures
-
-  # rc_install || rc_post is 0 if both are 0, else non-zero.
-  # Wrap in $(( ... )) to turn it into an integer for return.
-  return $(( rc_install || rc_post ))
 }
 
 main
