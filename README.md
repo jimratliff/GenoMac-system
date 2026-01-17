@@ -7,6 +7,7 @@
 - [Remaining configuration steps that have not been (cannot be) automated](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#remaining-configuration-steps-that-have-not-been-cannot-be-automated)
 - [Apps to install manually](#apps-to-install-manually)
 - [Known issues](#known-issues)
+- [Dev issues](#appendix-dev-issues)
 ## Quick-reference cheat sheet for occasional maintenance
 (First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
 
