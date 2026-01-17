@@ -9,21 +9,14 @@ source "${HOME}/.genomac-user/scripts/0_initialize_me.sh"
 
 # Non-Homebrew app–related scripts live here:
 #   scripts/non-Homebrew_installation/
-NON_HOMEBREW_APPS_FUNCTIONS_DIR="${this_script_dir}/non-Homebrew_installation"
-
-# Print assigned paths for diagnostic purposes
-printf "\n📂 Path diagnostics:\n"
-printf "this_script_dir:                    %s\n" "$this_script_dir"
-printf "GENOMAC_HELPER_DIR:                 %s\n" "$GENOMAC_HELPER_DIR"
-printf "NON_HOMEBREW_APPS_FUNCTIONS_DIR:    %s\n\n" "$NON_HOMEBREW_APPS_FUNCTIONS_DIR"
 
 # Source the function file(s)
-source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_alan_app.sh"
-source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_app_from_github_zip.sh"
-source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_tool_via_package_from_github.sh"
-source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_default_browser_cli.sh"
-source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_utiluti.sh"
-source "${NON_HOMEBREW_APPS_FUNCTIONS_DIR}/install_visualdiffer.sh"
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_alan_app.sh"
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_app_from_github_zip.sh"
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_tool_via_package_from_github.sh"
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_default_browser_cli.sh"
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_utiluti.sh"
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_visualdiffer.sh"
 
 ############################## BEGIN SCRIPT PROPER ##############################
 function install_non_homebrew_apps() {
