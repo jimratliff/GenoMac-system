@@ -26,29 +26,29 @@ function set_initial_systemwide_settings() {
   # Configure application firewall
   report_action_taken "Configure application firewall"
   report_adjust_setting "1 of 2: Enable application firewall"
-  sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on;success_or_not
+  sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on ; success_or_not
   report_adjust_setting "2 of 2: Enable Stealth Mode"
-  sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on;success_or_not
+  sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on ; success_or_not
   
   # Configure system-wide settings controlling software-update behavior
   report_action_taken "Implement system-wide settings controlling how macOS and MAS-app software updates occur"
   
-  report_adjust_setting "Automatically check for updates (both macOS and MAS apps)"
-  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true;success_or_not
+  report_adjust_setting "Do automatically check for updates (both macOS and MAS apps)"
+  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true ; success_or_not
   
   report_adjust_setting "Download updates when available"
-  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticDownload -bool true;success_or_not
+  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticDownload -bool true ; success_or_not
   
   report_adjust_setting "Do NOT automatically update macOS"
-  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticallyInstallMacOSUpdates -bool false;success_or_not
+  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticallyInstallMacOSUpdates -bool false ; success_or_not
   
-  report_adjust_setting "Automatically update applications from Mac App Store"
-  sudo defaults write /Library/Preferences/com.apple.commerce AutoUpdate -bool true;success_or_not
+  report_adjust_setting "Do automatically update applications from Mac App Store"
+  sudo defaults write /Library/Preferences/com.apple.commerce AutoUpdate -bool true ; success_or_not
   
   # Display additional information on login window
   report_adjust_setting "Display additional info (IP address, hostname, OS version) when clicking on the clock digits of the login window"
   # Requires restart.
-  sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName;success_or_not
+  sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName ; success_or_not
 
   # Enable Touch ID authentication for sudo
   # See https://dev.to/siddhantkcode/enable-touch-id-authentication-for-sudo-on-macos-sonoma-14x-4d28
