@@ -36,11 +36,11 @@ function get_Mac_names() {
   fi
   
   # Ask whether to change the ComputerName
-if get_yes_no_answer_to_question "Would you like to change the ComputerName?"; then
+  if get_yes_no_answer_to_question "Would you like to change the ComputerName?"; then
     final_name=$(get_confirmed_answer_to_question "Enter desired ComputerName:")
     final_name_is_dirty=true
   else
-  	final_name="$current_name"
+    final_name="$current_name"
     report_action_taken "Keeping existing ComputerName."
   fi
   
