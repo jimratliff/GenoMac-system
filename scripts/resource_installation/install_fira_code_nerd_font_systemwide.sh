@@ -1,15 +1,4 @@
-# This file assumes GENOMAC_HELPER_DIR is already set in the current shell
-# to the absolute path of the directory containing helpers.sh.
-# That variable must be defined before this file is sourced.
-
-if [[ -z "${GENOMAC_HELPER_DIR:-}" ]]; then
-  echo "❌ GENOMAC_HELPER_DIR is not set. Please source install_resources.sh first."
-  return 1
-fi
-
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
-
-############################## BEGIN SCRIPT PROPER ##############################
+#!/usr/bin/env zs
 
 function install_fira_code_nerd_font_systemwide() {
   # Installs the Fira Code Nerdfont for all users (i.e., systemwide)
