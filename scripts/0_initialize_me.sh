@@ -39,15 +39,19 @@ echo "Inside /scripts/0_initialize_me.sh"
 
 # Resolve directory of the current script
 this_script_path="${0:A}"
-
 GMS_SCRIPTS_DIR="${this_script_path:h}"                                         # scripts
-GMS_PREFS_SCRIPTS="${GMS_SCRIPTS_DIR}/prefs_scripts"                            # scripts/prefs_scripts
+
 GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_SCRIPTS_DIR}/non-Homebrew_installation" # scripts/non-Homebrew_installation
+GMS_PREFS_SCRIPTS="${GMS_SCRIPTS_DIR}/prefs_scripts"                            # scripts/prefs_scripts
+GMS_RESOURCE_INSTALLATION_SCRIPTS="${GMS_SCRIPTS_DIR}/resource_installation"    # scripts/resource_installation
+
+
+# Helpers are sourced from the GenoMac-shared repo, which appears as a submodule
 GMS_HELPERS_DIR="${GMS_SCRIPTS_DIR:h}/external/genomac-shared/scripts"          # external/genomac-shared/scripts
 
-master_common_helpers_script="${GMS_HELPERS_DIR}/helpers.sh"
-repo_specific_environment_variables_script="${GMS_SCRIPTS_DIR}/assign_system_environment_variables.sh"
-environment_variables_for_state_enums_script="${GMS_SCRIPTS_DIR}/assign_enum_env_vars_for_states.sh"
+local master_common_helpers_script="${GMS_HELPERS_DIR}/helpers.sh"
+local repo_specific_environment_variables_script="${GMS_SCRIPTS_DIR}/assign_system_environment_variables.sh"
+local environment_variables_for_state_enums_script="${GMS_SCRIPTS_DIR}/assign_enum_env_vars_for_states.sh"
 
 function source_with_report() {
   # Ensures that an error is raised if a `source` of the file in the supplied argument fails.
@@ -74,5 +78,6 @@ export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_SCRIPTS_DIR
 export_and_report GMS_PREFS_SCRIPTS
 export_and_report GMS_HELPERS_DIR
+export_and_report MS_RESOURCE_INSTALLATION_SCRIPTS
 
 echo "Leaving /scripts/0_initialize_me.sh"
