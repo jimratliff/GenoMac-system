@@ -1,22 +1,7 @@
-# This file assumes GENOMAC_HELPER_DIR is already set in the current shell
-# to the absolute path of the directory containing helpers.sh.
-# That variable must be defined before this file is sourced.
+#!/usr/bin/env zsh
 
-if [[ -z "${GENOMAC_HELPER_DIR:-}" ]]; then
-  echo "❌ GENOMAC_HELPER_DIR is not set. Please source `initial_prefs.sh` first."
-  return 1
-fi
-
-if [[ -z "${PREFS_FUNCTIONS_DIR:-}" ]]; then
-  echo "❌ PREFS_FUNCTIONS_DIR is not set. Please source `initial_prefs.sh` first."
-  return 1
-fi
-
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
-source "${PREFS_FUNCTIONS_DIR}/get_Mac_names.sh"
-source "${PREFS_FUNCTIONS_DIR}/get_loginwindow_message.sh"
-
-############################## BEGIN SCRIPT PROPER #############################
+safe_source "${GMS_PREFS_SCRIPTS_DIR}/get_Mac_names.sh"
+safe_source "${GMS_PREFS_SCRIPTS_DIR}/get_loginwindow_message.sh"
 
 function set_initial_systemwide_settings() {
 # Makes system-wide settings, requiring sudo, to be run from USER_CONFIGURER.
