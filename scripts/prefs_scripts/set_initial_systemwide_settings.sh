@@ -23,24 +23,6 @@ function set_initial_systemwide_settings() {
   report_action_taken "Disable auto-boot when opening the lid or connecting to power on Apple Silicon laptop"
   sudo nvram BootPreference=%00 ; success_or_not
   
-  # # Make Homebrew’s zsh an allowable shell
-  # report_action_taken "Add Homebrew’s flavor of Zsh as allowable shell if possible/necessary"
-  # HOMEBREW_PREFIX="$(/usr/bin/env brew --prefix)"   # e.g., /opt/homebrew
-  # BREW_ZSH="$HOMEBREW_PREFIX/bin/zsh"
-  # SHELLS_FILE="/etc/shells"
-  # 
-  # if [[ ! -x "$BREW_ZSH" ]]; then
-  #   report_fail "$BREW_ZSH not found. Did 'brew bundle' install zsh yet?"
-  #   exit 1
-  # fi
-  # 
-  # if ! grep -qx "$BREW_ZSH" "$SHELLS_FILE" 2>/dev/null; then
-  #   report_adjust_setting "Adding $BREW_ZSH to $SHELLS_FILE"
-  #   echo "$BREW_ZSH" | sudo tee -a "$SHELLS_FILE" >/dev/null ; success_or_not
-  # else
-  #   report_success "$BREW_ZSH already present in $SHELLS_FILE"
-  # fi
-  
   # Configure application firewall
   report_action_taken "Configure application firewall"
   report_adjust_setting "1 of 2: Enable application firewall"
