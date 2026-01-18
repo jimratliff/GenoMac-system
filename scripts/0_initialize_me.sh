@@ -45,7 +45,6 @@ GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_SCRIPTS_DIR}/non-Homebrew_installation" 
 GMS_PREFS_SCRIPTS="${GMS_SCRIPTS_DIR}/prefs_scripts"                            # scripts/prefs_scripts
 GMS_RESOURCE_INSTALLATION_SCRIPTS="${GMS_SCRIPTS_DIR}/resource_installation"    # scripts/resource_installation
 
-
 # Helpers are sourced from the GenoMac-shared repo, which appears as a submodule
 GMS_HELPERS_DIR="${GMS_SCRIPTS_DIR:h}/external/genomac-shared/scripts"          # external/genomac-shared/scripts
 
