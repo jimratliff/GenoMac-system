@@ -1,10 +1,8 @@
 #!/usr/bin/env zsh
 
 function get_Mac_names() {
-  ############### Get and optionally set Mac computer names
-  report_start_phase_standard
-  report_action_taken "Get and optionally set Mac ComputerName and LocalHostName"
-  
+  # Get and optionally set Mac computer names
+  #
   # - Display current ComputerName to user, offering opportunity to change it.
   #   - If ComputerName has been “mangled” with a ' (nnn)' suffix (e.g., 'MyComputerName (5)'), strip that
   #     ' (nnn)' suffix, and alert user that this has occurred.
@@ -20,9 +18,12 @@ function get_Mac_names() {
   #     - strip all leading/trailing hyphens (which removes all original characters that were leading/trailing whitespace)
   # - Do not assign any value to HostName
   
+  report_start_phase_standard
+  report_action_taken "Get and optionally set Mac ComputerName and LocalHostName"
+  
   # Get current ComputerName
   current_name=$(sudo systemsetup -getcomputername 2>/dev/null | sed 's/^Computer Name: //')
-  echo "Current ComputerName: \"$current_name\""
+  report "Current ComputerName: \"$current_name\""
   
   # Assume name is clean unless proven otherwise
   final_name_is_dirty=false
@@ -30,42 +31,17 @@ function get_Mac_names() {
   # If current_name ends with ' (###)', clean it
   if echo "$current_name" | grep -qE ' \([0-9]+\)$'; then
     final_name=$(echo "$current_name" | sed -E 's/ \([0-9]+\)$//')
-    report_action_taken "ComputerName appears to have been auto-mangled. I have unmangled it: \"$final_name\""
+    report_warning "ComputerName appears to have been auto-mangled. I have unmangled it: \"$final_name\""
     final_name_is_dirty=true
   fi
   
   # Ask whether to change the ComputerName
-  while true; do
-    echo -n "Would you like to change the ComputerName? (y/n): "
-    read choice
-    if [[ "$choice" =~ ^[YyNn]$ ]]; then
-      break
-    else
-      echo "Invalid response. Please enter \"y\" or \"n\"."
-    fi
-  done
-  
-  if [[ "$choice" =~ ^[Yy]$ ]]; then
-    while true; do
-      echo -n "Enter desired ComputerName: "
-      read new_name_raw
-  
-      # Strip leading/trailing whitespace
-      new_name=$(echo "$new_name_raw" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-  
-      echo "You entered: \"$new_name\""
-      echo -n "Is this what you want? (y/n): "
-      read confirmation
-  
-      if [[ "$confirmation" =~ ^[Yy]$ ]]; then
-        final_name="$new_name"
-        final_name_is_dirty=true
-        break
-      fi
-    done
+if get_yes_no_answer_to_question "Would you like to change the ComputerName?"; then
+    final_name=$(get_confirmed_answer_to_question "Enter desired ComputerName:")
+    final_name_is_dirty=true
   else
-    final_name="$current_name"
-    echo "Keeping existing ComputerName."
+  	final_name="$current_name"
+    report_action_taken "Keeping existing ComputerName."
   fi
   
   # Final assignment, if needed
@@ -78,13 +54,12 @@ function get_Mac_names() {
   # - Replace all whitespace with hyphens
   # - Remove all but alphanumerics and hyphens
   # - Remove leading/trailing hyphens (which also removes any originally leading/trailing whitespace)
-  
   sanitized_name=$(echo "$final_name" \
     | tr '[:space:]' '-' \
     | tr -cd '[:alnum:]-' \
     | sed 's/^-*//;s/-*$//')
   
-  echo "Sanitized LocalHostName: \"$sanitized_name\""
+  report_action_taken "Sanitized LocalHostName: \"$sanitized_name\""
   sudo scutil --set LocalHostName "$sanitized_name"; success_or_not
   
   # Display final names
@@ -95,5 +70,4 @@ function get_Mac_names() {
   printf "HostName:       %s\n" "$(sudo scutil --get HostName 2>/dev/null || echo "(not set)")"
   
   report_end_phase_standard
-
 }
