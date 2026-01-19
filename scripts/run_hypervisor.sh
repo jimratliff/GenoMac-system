@@ -36,7 +36,7 @@ function run_hypervisor() {
   report "$GMU_HYPERVISOR_HOW_TO_RESTART_STRING"
 
   ############### Test for Full Disk Access for the currently running terminal application
-  ensure_terminal_has_fda
+  interactive_ensure_terminal_has_fda
   
   ############### PERM: Ask initial questions
   run_if_system_has_not_done \
