@@ -18,8 +18,12 @@ GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
 # operations by GenoMac-system
 GENOMAC_SYSTEM_LOCAL_RESOURCE_DIRECTORY="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
 
+# Specify the local directory that holds documentation files to display to the executing user
+GENOMAC_SYSTEM_LOCAL_DOCUMENTATION_DIRECTORY="${GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY}/docs_to_display_to_user"
+
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
 export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
+export_and_report GENOMAC_SYSTEM_LOCAL_DOCUMENTATION_DIRECTORY
 export_and_report GENOMAC_SYSTEM_LOCAL_RESOURCE_DIRECTORY
 export_and_report GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
