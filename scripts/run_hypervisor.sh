@@ -11,6 +11,17 @@ source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/interactive_ask_initial_questions.sh" # INCORRECT, for example only
 safe_source "${GMS_PREFS_SCRIPTS}/get_full_disk_access_for_terminals.sh"
 
+############### Context
+# It is assumed that, prior to running this script:
+# - Homebrew has been installed
+#   - This process also installs Xcode Developer Tools, which itself installs git
+# - The GenoMac-system repo has been closed to ~/.genomac-system directory within USER_CONFIGURER’s
+#   home directory.
+#
+# This script can then be executed by:
+#   cd ~/.genomac-system
+#   make run-hypervisor
+
 function run_hypervisor() {
 
   report_start_phase_standard
