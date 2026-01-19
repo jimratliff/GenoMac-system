@@ -9,6 +9,7 @@ source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
 
 # Source required files
 safe_source "${GMS_PREFS_SCRIPTS}/interactive_ask_initial_questions.sh" # INCORRECT, for example only
+safe_source "${GMS_PREFS_SCRIPTS}/get_full_disk_access_for_terminals.sh"
 
 function run_hypervisor() {
 
@@ -33,6 +34,9 @@ function run_hypervisor() {
   
   report "${welcome_message} to the GenoMac-system Hypervisor!"
   report "$GMU_HYPERVISOR_HOW_TO_RESTART_STRING"
+
+  ############### Test for Full Disk Access for the currently running terminal application
+  ensure_terminal_has_fda
   
   ############### PERM: Ask initial questions
   run_if_system_has_not_done \
