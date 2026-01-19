@@ -18,7 +18,7 @@ safe_source "${GMS_PREFS_SCRIPTS}/get_full_disk_access_for_terminals.sh"
 # - The GenoMac-system repo has been closed to ~/.genomac-system directory within USER_CONFIGURER’s
 #   home directory.
 #
-# This script can then be executed by:
+# This script can then be executed by launching Terminal and then typing:
 #   cd ~/.genomac-system
 #   make run-hypervisor
 
