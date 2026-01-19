@@ -55,6 +55,12 @@ function run_hypervisor() {
     "$PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED" \
     adjust_path_for_homebrew \
     "Skipping adjusting PATH for Homebrew, because this was done in the past."
+
+  ############### Prompt user to sign into Mac App Store
+  run_if_system_has_not_done \
+    "$PERM_MAC_APP_STORE_IS_SIGNED_INTO" \
+    interactive_sign_into_MAS \
+    "Skipping signing into Mac App Store, because user has done this in the past."
   
   ############### PERM: Ask initial questions
   run_if_system_has_not_done \
