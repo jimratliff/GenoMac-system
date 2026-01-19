@@ -15,7 +15,7 @@ safe_source "${GMS_PREFS_SCRIPTS}/get_full_disk_access_for_terminals.sh"
 # It is assumed that, prior to running this script:
 # - Homebrew has been installed
 #   - This process also installs Xcode Developer Tools, which itself installs git
-# - The GenoMac-system repo has been closed to ~/.genomac-system directory within USER_CONFIGURER’s
+# - The GenoMac-system repo has been cloned to ~/.genomac-system directory within USER_CONFIGURER’s
 #   home directory.
 #
 # This script can then be executed by launching Terminal and then typing:
@@ -48,6 +48,13 @@ function run_hypervisor() {
 
   ############### Test for Full Disk Access for the currently running terminal application
   interactive_ensure_terminal_has_fda
+
+  ############### Adjust PATH for Homebrew
+  run_if_system_has_not_done \
+    --force-logout \
+    "$PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED" \
+    adjust_path_for_homebrew \
+    "Skipping adjusting PATH for Homebrew, because this was done in the past."
   
   ############### PERM: Ask initial questions
   run_if_system_has_not_done \
