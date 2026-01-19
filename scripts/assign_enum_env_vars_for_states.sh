@@ -62,6 +62,7 @@ set -euo pipefail
 # PERM_1PASSWORD_HAS_BEEN_AUTHENTICATED="PERM_1password_has_been_authenticated"
 
 PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED="PERM_homebrew_path_has_been_adjusted"
+PERM_MAC_APP_STORE_IS_SIGNED_INTO="PERM_mac_app_store_is_signed_into"
 
 # SESH_BASIC_IDEMPOTENT_SETTINGS_HAVE_BEEN_IMPLEMENTED="SESH_basic_idempotent_settings_have_been_implemented"
 # SESH_REACHED_FINALITY="SESH_reached_finality"
@@ -72,6 +73,7 @@ report_action_taken "Exporting environment variables corresponding to states."
 
 # export_and_report PERM_1PASSWORD_HAS_BEEN_AUTHENTICATED
 export_and_report PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED
+export_and_report PERM_MAC_APP_STORE_IS_SIGNED_INTO
 
 # export_and_report SESH_BASIC_IDEMPOTENT_SETTINGS_HAVE_BEEN_IMPLEMENTED
 # export_and_report SESH_REACHED_FINALITY
