@@ -19,7 +19,11 @@ GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
 GENOMAC_SYSTEM_LOCAL_RESOURCE_DIRECTORY="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
 
 # Specify the local directory that holds documentation files to display to the executing user
-GENOMAC_SYSTEM_LOCAL_DOCUMENTATION_DIRECTORY="${GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY}/docs_to_display_to_user"
+GENOMAC_SHARED_DOCS_TO_DISPLAY="${GENOMAC_USER_LOCAL_RESOURCE_DIRECTORY}/docs_to_display_to_user"
+
+# Environment variables to support the Hypervisor
+GMS_HYPERVISOR_MAKE_COMMAND_STRING="make run-hypervisor"
+GMS_HYPERVISOR_HOW_TO_RESTART_STRING="To get back into the groove at any time, just re-execute ${GMS_HYPERVISOR_MAKE_COMMAND_STRING}${NEWLINE}and we’ll pick up where we left off."
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
