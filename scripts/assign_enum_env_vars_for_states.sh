@@ -65,7 +65,7 @@ PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED="PERM_homebrew_path_has_been_adjusted"
 
 # SESH_BASIC_IDEMPOTENT_SETTINGS_HAVE_BEEN_IMPLEMENTED="SESH_basic_idempotent_settings_have_been_implemented"
 # SESH_REACHED_FINALITY="SESH_reached_finality"
-# SESH_SESSION_HAS_STARTED="SESH_session_has_started"
+SESH_SESSION_HAS_STARTED="SESH_session_has_started"
 
 # Export environment variables to be available in all subsequent shells
 report_action_taken "Exporting environment variables corresponding to states."
@@ -75,4 +75,4 @@ export_and_report PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED
 
 # export_and_report SESH_BASIC_IDEMPOTENT_SETTINGS_HAVE_BEEN_IMPLEMENTED
 # export_and_report SESH_REACHED_FINALITY
-# export_and_report SESH_SESSION_HAS_STARTED
+export_and_report SESH_SESSION_HAS_STARTED
