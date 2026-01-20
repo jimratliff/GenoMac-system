@@ -68,6 +68,7 @@ PERM_MAC_APP_STORE_IS_SIGNED_INTO="PERM_mac_app_store_is_signed_into"
 # SESH_REACHED_FINALITY="SESH_reached_finality"
 SESH_SESSION_HAS_STARTED="SESH_session_has_started"
 SESH_HOMEBREW_APPS_HAVE_BEEN_INSTALLED="SESH_homebrew_apps_have_been_installed"
+SESH_NON_HOMEBREW_APPS_HAVE_BEEN_INSTALLED="SESH_non_homebrew_apps_have_been_installed"
 
 # Export environment variables to be available in all subsequent shells
 report_action_taken "Exporting environment variables corresponding to states."
@@ -79,4 +80,5 @@ export_and_report PERM_MAC_APP_STORE_IS_SIGNED_INTO
 # export_and_report SESH_BASIC_IDEMPOTENT_SETTINGS_HAVE_BEEN_IMPLEMENTED
 # export_and_report SESH_REACHED_FINALITY
 export_and_report SESH_HOMEBREW_APPS_HAVE_BEEN_INSTALLED
+export_and_report SESH_NON_HOMEBREW_APPS_HAVE_BEEN_INSTALLED
 export_and_report SESH_SESSION_HAS_STARTED
