@@ -41,10 +41,3 @@ function install_non_homebrew_apps() {
 
   report_end_phase_standard
 }
-
-function main() {
-  install_non_homebrew_apps
-  dump_accumulated_warnings_failures
-}
-
-main
