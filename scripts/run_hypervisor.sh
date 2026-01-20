@@ -49,18 +49,15 @@ function run_hypervisor() {
   ############### Test for Full Disk Access for the currently running terminal application
   interactive_ensure_terminal_has_fda
 
+  # Guard clause: Fail fast if Homebrew not installed
+  ensure_homebrew_is_installed
+
   ############### Adjust PATH for Homebrew
-  run_if_system_has_not_done \
-    --force-logout \
-    "$PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED" \
-    adjust_path_for_homebrew \
-    "Skipping adjusting PATH for Homebrew, because this was done in the past."
+  conditionally_adjust_path_for_homebrew
 
   ############### Prompt user to sign into Mac App Store
-  run_if_system_has_not_done \
-    "$PERM_MAC_APP_STORE_IS_SIGNED_INTO" \
-    interactive_sign_into_MAS \
-    "Skipping signing into Mac App Store, because user has done this in the past."
+  conditionally_interactive_sign_into_MAS
+
   
   ############### PERM: Ask initial questions
   run_if_system_has_not_done \
