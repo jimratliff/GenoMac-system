@@ -15,7 +15,7 @@ function interactive_ask_Mac_names_and_login_window_message() {
   report_start_phase_standard
   
   interactive_get_Mac_names
-  interactive_ask_login_window_message
+  interactive_get_loginwindow_message
 
   report_end_phase_standard
 }
