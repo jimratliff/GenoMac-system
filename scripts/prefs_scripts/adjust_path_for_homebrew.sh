@@ -1,14 +1,20 @@
 #!/usr/bin/env zs
 
+function conditionally_adjust_path_for_homebrew() {
+  report_start_phase_standard
+  
+  run_if_system_has_not_done \
+    --force-logout \
+    "$PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED" \
+    adjust_path_for_homebrew \
+    "Skipping adjusting PATH for Homebrew, because this was done in the past."
+
+  report_end_phase_standard
+}
+
 function adjust_path_for_homebrew() {
   # (a) Modify systemwide PATH for Homebrew and (b) make man pages available to all users
-  
   report_start_phase_standard
-
-  # Guard clause: Fail fast if Homebrew not installed
-  ensure_homebrew_is_installed
-  
-  # Main logic - we know Homebrew exists from here on
 
   keep_sudo_alive
 
@@ -36,5 +42,4 @@ EOF'
   report_action_taken "Systemwide adjustments have been completed to make important functionalities available to all users"
 
   report_end_phase_standard
-
 }
