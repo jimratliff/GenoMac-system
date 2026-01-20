@@ -61,6 +61,9 @@ function run_hypervisor() {
   ############### Install apps via Homebrew
   conditionally_install_via_homebrew
 
+  ############### Install apps via non-Homebrew methods
+  conditionally_install_non_homebrew_apps
+
   
   ############### PERM: Ask initial questions
   run_if_system_has_not_done \
