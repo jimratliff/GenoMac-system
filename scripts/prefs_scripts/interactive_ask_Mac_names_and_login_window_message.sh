@@ -11,6 +11,15 @@ conditionally_ask_Mac_names_and_login_window_message() {
   report_end_phase_standard
 }
 
+function interactive_ask_Mac_names_and_login_window_message() {
+  report_start_phase_standard
+  
+  interactive_get_Mac_names
+  interactive_ask_login_window_message
+
+  report_end_phase_standard
+}
+
 function interactive_get_Mac_names() {
   # Get and optionally set Mac computer names
   #
@@ -79,6 +88,48 @@ function interactive_get_Mac_names() {
   printf "ComputerName:   %s\n" "$(sudo scutil --get ComputerName 2>/dev/null || echo "(not set)")"
   printf "LocalHostName:  %s\n" "$(sudo scutil --get LocalHostName 2>/dev/null || echo "(not set)")"
   printf "HostName:       %s\n" "$(sudo scutil --get HostName 2>/dev/null || echo "(not set)")"
+  
+  report_end_phase_standard
+}
+
+function interactive_get_loginwindow_message() {
+  # Get login-window message
+  # Displays any preexisting login-window message
+  # Asks user to supply new text, keep existing, or clear it.
+  
+  report_start_phase_standard
+  report_action_taken "Set login-window message"
+
+  local question
+  local domain="/Library/Preferences/com.apple.loginwindow"
+  local key="LoginwindowText"
+  
+  # Check for existing login text
+  preexisting_text=$(defaults read "${domain}" "${key}" 2>/dev/null || true)
+  
+  if [[ -n "$preexisting_text" ]]; then
+    report "Preexisting login-window text: \"$preexisting_text\""
+    question="Enter (a) new login-window text, (b) 'keep' to retain existing text, or (c) 'none' for no login-window text:"
+  else
+    report "No existing login-window text."
+    question="Enter (a) login-window text or (b) 'none' or 'keep' for no message:"
+  fi
+
+  user_input=$(get_confirmed_answer_to_question "${question}")
+  
+  case "${user_input:l}" in  # :l lowercases in Zsh
+    keep)
+      report "No changes made to login-window text."
+      ;;
+    none)
+      report_action_taken "Login-window message deleted"
+      sudo defaults delete "${domain}" "${key}" 2>/dev/null; success_or_not
+      ;;
+    *)
+      report_action_taken "New login-window message: ${user_input}"
+      sudo defaults write "${domain}" "${key}" -string "$user_input"; success_or_not
+      ;;
+  esac
   
   report_end_phase_standard
 }
