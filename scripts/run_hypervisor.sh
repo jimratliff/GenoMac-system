@@ -58,6 +58,9 @@ function run_hypervisor() {
   ############### Prompt user to sign into Mac App Store
   conditionally_interactive_sign_into_MAS
 
+  ############### Install apps via Homebrew
+  conditionally_install_via_homebrew
+
   
   ############### PERM: Ask initial questions
   run_if_system_has_not_done \
