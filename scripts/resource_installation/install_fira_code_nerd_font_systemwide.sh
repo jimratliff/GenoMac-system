@@ -1,7 +1,7 @@
 #!/usr/bin/env zs
 
 function install_fira_code_nerd_font_systemwide() {
-  # Installs the Fira Code Nerdfont for all users (i.e., systemwide)
+  # Installs the latest version Fira Code Nerdfont for all users (i.e., systemwide) if missing or changed
 
   report_start_phase_standard
 
@@ -22,7 +22,7 @@ function install_fira_code_nerd_font_systemwide() {
   keep_sudo_alive
   sudo mkdir -p "$font_dir" ; success_or_not
 
-  report_action_taken "Copy .ttf font files to $font_dir (idempotent)"
+  report_action_taken "Copy .ttf font files to $font_dir if missing or changed"
   local copied=0
   local font_file
   for font_file in "$temp_dir/unzipped"/*.ttf; do
