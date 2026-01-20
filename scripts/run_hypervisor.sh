@@ -47,6 +47,9 @@ function run_hypervisor() {
   report "$GMU_HYPERVISOR_HOW_TO_RESTART_STRING"
 
   ############### Test for Full Disk Access for the currently running terminal application
+  # NOTE: This is *not* conditioned on a PERM state variable, because there are multiple possible
+  #       terminal apps. Each would need to tracked separately, requiring the script to interrogate
+  #       what terminal app was running for that shell session. Too complicated!
   interactive_ensure_terminal_has_fda
 
   # Guard clause: Fail fast if Homebrew not installed
