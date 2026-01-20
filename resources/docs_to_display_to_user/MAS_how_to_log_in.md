@@ -6,6 +6,5 @@ to be signed in to the Mac App Store (using the Apple Account that purchased the
 It’s not clear how long being signed in to the Mac App Store lasts. At this point, GenoMac-system 
 treats signing in to the Mac App Store as a one-time bootstrap step.
 
-(If at some point it becomes clear that re-signing in periodically is necessary, the Hypervisor can be
-refined to test the last time it asked for USER_CONFIGURER to sign into the Mac App Store, and test that
-against a threshold period.)
+(If at some point it becomes clear that it is necessary to periodically sign-in again, the Hypervisor can be
+refined to use the time it last asked for USER_CONFIGURER to sign into the Mac App Store to determine whether to ask again, or skip.)
