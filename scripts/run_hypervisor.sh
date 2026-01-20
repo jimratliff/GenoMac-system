@@ -9,6 +9,10 @@ source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
 
 # Source required files
 safe_source "${GMS_PREFS_SCRIPTS}/interactive_ask_initial_questions.sh" # INCORRECT, for example only
+safe_source "${GMS_PREFS_SCRIPTS}/adjust_path_for_homebrew.sh"
+safe_source "${GMS_PREFS_SCRIPTS}/interactive_sign_into_MAS.sh"
+safe_source "${GMS_PREFS_SCRIPTS}/install_via_homebrew.sh"
+safe_source "${GMS_PREFS_SCRIPTS}/install_non_homebrew_apps.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/get_full_disk_access_for_terminals.sh"
 
 ############### Context
@@ -63,6 +67,9 @@ function run_hypervisor() {
 
   ############### Install apps via Homebrew
   conditionally_install_via_homebrew
+
+  ############### Install apps via non-Homebrew methods
+  conditionally_install_non_homebrew_apps
 
   ############### Install apps via non-Homebrew methods
   conditionally_install_non_homebrew_apps
