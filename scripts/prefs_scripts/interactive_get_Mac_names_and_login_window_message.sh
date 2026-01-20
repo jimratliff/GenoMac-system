@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-conditionally_ask_Mac_names_and_login_window_message() {
+conditionally_get_Mac_names_and_login_window_message() {
   report_start_phase_standard
 
   run_if_system_has_not_done \
@@ -11,7 +11,7 @@ conditionally_ask_Mac_names_and_login_window_message() {
   report_end_phase_standard
 }
 
-function interactive_ask_Mac_names_and_login_window_message() {
+function interactive_get_Mac_names_and_login_window_message() {
   report_start_phase_standard
   
   interactive_get_Mac_names
