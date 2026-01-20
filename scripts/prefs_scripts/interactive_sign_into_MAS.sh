@@ -1,5 +1,16 @@
 #!/usr/bin/env zs
 
+function conditionally_interactive_sign_into_MAS() {
+  report_start_phase_standard
+  
+  run_if_system_has_not_done \
+    "$PERM_MAC_APP_STORE_IS_SIGNED_INTO" \
+    interactive_sign_into_MAS \
+    "Skipping signing into Mac App Store, because user has done this in the past."
+    
+  report_end_phase_standard
+}
+
 function interactive_sign_into_MAS() {
   report_start_phase_standard
   
