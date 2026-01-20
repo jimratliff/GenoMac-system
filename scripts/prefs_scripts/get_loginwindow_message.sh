@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-function get_loginwindow_message() {
+function interactive_get_loginwindow_message() {
   # Get login-window message
   # Displays any preexisting login-window message
   # Asks user whether they want to supply new text. - I.e., if not, existing text 
