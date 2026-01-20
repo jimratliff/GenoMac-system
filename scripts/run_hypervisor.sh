@@ -8,12 +8,11 @@ source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
 ############### TODO WIP! Being refactored from GenoMac-user to GenoMac-system
 
 # Source required files
-safe_source "${GMS_PREFS_SCRIPTS}/interactive_ask_initial_questions.sh" # INCORRECT, for example only
 safe_source "${GMS_PREFS_SCRIPTS}/adjust_path_for_homebrew.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/interactive_sign_into_MAS.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/install_via_homebrew.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/install_non_homebrew_apps.sh"
-safe_source "${GMS_PREFS_SCRIPTS}/get_full_disk_access_for_terminals.sh"
+safe_source "${GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR}/install_resources.sh"
 
 ############### Context
 # It is assumed that, prior to running this script:
