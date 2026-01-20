@@ -9,6 +9,7 @@ function install_matrix_screensaver_systemwide() {
   # https://github.com/monroewilliams/MatrixDownload/issues/24
   #
   # NOTE: On 1/11/2026, it seemed to be working well on macOS 26. Let’s watch to see how long it lasts.
+  # NOTE: On 1/20/2026, it works when triggered by elapsed time, but not when attempting to trigger via hot corner.
 
   report_start_phase_standard
 
@@ -28,6 +29,13 @@ function install_matrix_screensaver_systemwide() {
 
   report_action_taken "Unzipping ${zip_filename}"
   unzip -q "$temp_dir/$zip_filename" -d "$temp_dir" ; success_or_not
+
+  # Skip installation if already installed and identical
+  if [[ -d "$destination_path" ]] && diff -rq "$temp_dir/$screensaver_name" "$destination_path" &>/dev/null; then
+    report_action_taken "MatrixDownload v$pinned_version already installed and unchanged — skipping"
+    report_end_phase_standard
+    return 0
+  fi
 
   report_action_taken "Installing $screensaver_name (overwrite if necessary) at: $destination_path"
   report_action_taken "Removing any existing $screensaver_name at $destination_path"
