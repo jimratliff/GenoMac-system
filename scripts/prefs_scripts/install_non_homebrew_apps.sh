@@ -1,6 +1,5 @@
 #!/usr/bin/env zs
 
-
 # Installs non-Homebrew apps (direct downloads such as Alan.app).
 
 # Non-Homebrew app–related scripts live here:
@@ -24,8 +23,6 @@ function conditionally_install_non_homebrew_apps() {
 
   report_end_phase_standard
 }
-
-
 
 function install_non_homebrew_apps() {
   report_start_phase_standard
