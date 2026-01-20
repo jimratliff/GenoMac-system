@@ -1,10 +1,5 @@
 #!/usr/bin/env zs
 
-# Fail early on unset variables or command failure
-set -euo pipefail
-
-source "${HOME}/.genomac-user/scripts/0_initialize_me.sh"
-
 function install_via_homebrew() {
   # Installs, upgrades, and (when necessary) removes no-longer-desired Homebrew packages.
   report_start_phase_standard
