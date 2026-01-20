@@ -3,7 +3,18 @@
 safe_source "${GMS_PREFS_SCRIPTS_DIR}/get_Mac_names.sh"
 safe_source "${GMS_PREFS_SCRIPTS_DIR}/get_loginwindow_message.sh"
 
-function set_initial_systemwide_settings() {
+function conditionally_implement_systemwide_settings() {
+  report_start_phase_standard
+
+  run_if_system_has_not_done \
+    "$SESH_SYSTEMWIDE_SETTINGS_HAVE_BEEN_IMPLEMENTED" \
+    implement_systemwide_settings \
+    "Skipping implementation of system-wide settings, because these were implemented earlier this session."
+  
+  report_end_phase_standard
+}
+
+function implement_systemwide_settings() {
   # Makes system-wide settings, requiring sudo, to be run from USER_CONFIGURER.
   
   report_start_phase_standard
