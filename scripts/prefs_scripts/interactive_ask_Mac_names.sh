@@ -1,6 +1,17 @@
 #!/usr/bin/env zsh
 
-function get_Mac_names() {
+conditionally_ask_Mac_names_and_login_window_message() {
+  report_start_phase_standard
+
+  run_if_system_has_not_done \
+    "$PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED" \
+    implement_systemwide_settings \
+    "Skipping implementation of system-wide settings, because these were implemented earlier this session."
+  
+  report_end_phase_standard
+}
+
+function interactive_get_Mac_names() {
   # Get and optionally set Mac computer names
   #
   # - Display current ComputerName to user, offering opportunity to change it.
