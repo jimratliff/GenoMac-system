@@ -9,9 +9,10 @@ source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
 
 # Source required files
 safe_source "${GMS_PREFS_SCRIPTS}/adjust_path_for_homebrew.sh"
-safe_source "${GMS_PREFS_SCRIPTS}/interactive_sign_into_MAS.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/install_via_homebrew.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/install_non_homebrew_apps.sh"
+safe_source "${GMS_PREFS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
+safe_source "${GMS_PREFS_SCRIPTS}/interactive_sign_into_MAS.sh"
 safe_source "${GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR}/install_resources.sh"
 
 ############### Context
@@ -58,45 +59,12 @@ function run_hypervisor() {
   # Guard clause: Fail fast if Homebrew not installed
   ensure_homebrew_is_installed
 
-  ############### Adjust PATH for Homebrew
+  conditionally_get_Mac_names_and_login_window_message
   conditionally_adjust_path_for_homebrew
-
-  ############### Prompt user to sign into Mac App Store
   conditionally_interactive_sign_into_MAS
-
-  ############### Install apps via Homebrew
   conditionally_install_via_homebrew
-
-  ############### Install apps via non-Homebrew methods
   conditionally_install_non_homebrew_apps
-
-  ############### Install apps via non-Homebrew methods
   conditionally_install_non_homebrew_apps
-
-  
-  ############### PERM: Ask initial questions
-  run_if_system_has_not_done \
-    "$PERM_INTRO_QUESTIONS_ASKED_AND_ANSWERED" \
-    interactive_ask_initial_questions \
-    "Skipping introductory questions, because you've answered them in the past."
-  
-  ############### SESH: Stow dotfiles
-  run_if_system_has_not_done \
-    --force-logout \
-    "$SESH_DOTFILES_HAVE_BEEN_STOWED" \
-    stow_dotfiles \
-    "Skipping stowing dotfiles, because you've already stowed them during this session."
-
-  ############### SESH: Configure primary programmatically implemented settings
-  run_if_system_has_not_done \
-    --force-logout \
-    "$SESH_BASIC_IDEMPOTENT_SETTINGS_HAVE_BEEN_IMPLEMENTED" \
-    perform_basic_system_level_settings \
-    "Skipping basic system-level settings, because they’ve already been set this session"
-
-
-  
-
 
   ############### Last act: Delete all SESH_ state environment variables
 
