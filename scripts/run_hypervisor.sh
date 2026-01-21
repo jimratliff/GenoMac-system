@@ -17,9 +17,10 @@ safe_source "${GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR}/install_resources.sh"
 ############### Context
 # It is assumed that, prior to running this script:
 # - Homebrew has been installed
-#   - This process also installs Xcode Developer Tools, which itself installs git
-# - The GenoMac-system repo has been cloned to ~/.genomac-system directory within USER_CONFIGURER’s
-#   home directory.
+#   - Installing Homebrew also installs Xcode Developer Tools, which itself installs git
+# - The GenoMac-system repo has been cloned to the ~/.genomac-system directory within 
+#   USER_CONFIGURER’s home directory.
+# - `run-hypervisor` is a defined recipe in `Makefile`.
 #
 # This script can then be executed by launching Terminal and then typing:
 #   cd ~/.genomac-system
@@ -39,10 +40,11 @@ function run_hypervisor() {
   #   Requires new function `hypervisor_forced_logout_if_dirty`
 
   ############### Welcome! or Welcome back!
-  local welcome_message="Welcome"
+  local welcome_message
   if test_genomac_system_state "$SESH_SESSION_HAS_STARTED"; then
     welcome_message="Welcome back"
   else
+    welcome_message="Welcome"
     set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
   fi
   
