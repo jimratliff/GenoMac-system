@@ -4,7 +4,6 @@ function conditionally_adjust_path_for_homebrew() {
   report_start_phase_standard
   
   run_if_system_has_not_done \
-    --force-logout \
     "$PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED" \
     adjust_path_for_homebrew \
     "Skipping adjusting PATH for Homebrew, because this was done in the past."
