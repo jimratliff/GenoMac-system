@@ -74,18 +74,8 @@ function interactive_get_Mac_names() {
     report_action_taken "Assigning ComputerName to $final_name"
     sudo systemsetup -setcomputername "$final_name" 2> >(grep -v '### Error:-99' >&2); success_or_not
   fi
-  
-  # Derive LocalHostName by sanitizing ComputerName
-  # - Replace all whitespace with hyphens
-  # - Remove all but alphanumerics and hyphens
-  # - Remove leading/trailing hyphens (which also removes any originally leading/trailing whitespace)
-  sanitized_name=$(echo "$final_name" \
-    | tr '[:space:]' '-' \
-    | tr -cd '[:alnum:]-' \
-    | sed 's/^-*//;s/-*$//')
-  
-  report_action_taken "Sanitized LocalHostName: \"$sanitized_name\""
-  sudo scutil --set LocalHostName "$sanitized_name"; success_or_not
+
+  set_localhostname_from_computername "${fixed_name}
   
   # Display final names
   echo ""
@@ -123,6 +113,31 @@ function fix_mangled_computername_if_necessary() {
     report_warning "ComputerName was auto-mangled. Fixing to: \"$fixed_name\""
     sudo systemsetup -setcomputername "$fixed_name" 2> >(grep -v '### Error:-99' >&2); success_or_not
   fi
+
+  set_localhostname_from_computername "${fixed_name}
+  
+}
+
+function sanitize_localhostname() {
+  # Takes a name, returns it sanitized for use as LocalHostName:
+  # - Replace all whitespace with hyphens
+  # - Remove all but alphanumerics and hyphens
+  # - Remove leading/trailing hyphens
+  local name="$1"
+  
+  echo "$name" \
+    | tr '[:space:]' '-' \
+    | tr -cd '[:alnum:]-' \
+    | sed 's/^-*//;s/-*$//'
+}
+
+function set_localhostname_from_computername() {
+  # Derives LocalHostName from ComputerName and assigns it
+  local computername="$1"
+  local sanitized=$(sanitize_localhostname "$computername")
+  
+  report_action_taken "Setting LocalHostName: \"$sanitized\""
+  sudo scutil --set LocalHostName "$sanitized"; success_or_not
 }
 
 function interactive_get_loginwindow_message() {
