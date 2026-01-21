@@ -5,8 +5,6 @@ set -euo pipefail
 
 source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
 
-############### TODO WIP! Being refactored from GenoMac-user to GenoMac-system
-
 # Source required files
 safe_source "${GMS_PREFS_SCRIPTS}/adjust_path_for_homebrew.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/install_via_homebrew.sh"
