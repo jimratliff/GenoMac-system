@@ -32,7 +32,7 @@ function interactive_get_Mac_names() {
   # - Display current ComputerName to user, offering opportunity to change it.
   #   - If ComputerName has been “mangled” with a ' (nnn)' suffix (e.g., 'MyComputerName (5)'), strip that
   #     ' (nnn)' suffix, and alert user that this has occurred.
-  #   - Offer the user to chance to change ComputerName.
+  #   - Offer the user the chance to change ComputerName.
   #     - This choice is offered both when ComputerName was not mangled and when it was mangled.
   #     - If user opts to change ComputerName, any leading/trailing whitespace characters are removed from the new name
   #       before assigning the new value to ComputerName.
