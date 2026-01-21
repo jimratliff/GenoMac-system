@@ -7,6 +7,7 @@ source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
 
 # Source required files
 safe_source "${GMS_PREFS_SCRIPTS}/adjust_path_for_homebrew.sh"
+safe_source "${GMS_PREFS_SCRIPTS}/implement_systemwide_settings.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/install_via_homebrew.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/install_non_homebrew_apps.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
