@@ -51,7 +51,7 @@ function run_hypervisor() {
 
   interactive_ensure_terminal_has_fda
   crash_if_homebrew_not_installed
-  conditionally_get_Mac_names_and_login_window_message
+  conditionally_interactive_get_Mac_names_and_login_window_message
   conditionally_adjust_path_for_homebrew
   conditionally_interactive_sign_into_MAS
   conditionally_install_via_homebrew
