@@ -49,7 +49,7 @@ function run_hypervisor() {
   fi
   
   report "${welcome_message} to the GenoMac-system Hypervisor!"
-  report "$GMU_HYPERVISOR_HOW_TO_RESTART_STRING"
+  report "$GMS_HYPERVISOR_HOW_TO_RESTART_STRING"
 
 
   interactive_ensure_terminal_has_fda
