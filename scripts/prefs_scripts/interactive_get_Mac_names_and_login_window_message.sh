@@ -68,6 +68,8 @@ function interactive_get_Mac_names() {
     sudo systemsetup -setcomputername "$final_name" 2> >(grep -v '### Error:-99' >&2); success_or_not
   fi
 
+  # Unconditionally sets localhostname to ensure localhostname is set even if computername 
+  # was accepted without change
   set_localhostname_from_computername "${final_name}"
   
   # Display final names
