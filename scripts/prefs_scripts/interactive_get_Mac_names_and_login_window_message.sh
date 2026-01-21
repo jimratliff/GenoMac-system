@@ -48,7 +48,7 @@ function interactive_get_Mac_names() {
   final_name_is_dirty=false
 
   # If current_name ends with ' (###)', clean it
-  if final_name=$(mangled_computername_was_unmangled "$current_name"); then
+  if final_name=$(unmangled_version_of_mangled_computername "$current_name"); then
     report_warning "ComputerName appears to have been auto-mangled. I have unmangled it: \"$final_name\""
     final_name_is_dirty=true
   fi
@@ -80,7 +80,7 @@ function interactive_get_Mac_names() {
   report_end_phase_standard
 }
 
-function mangled_computername_was_unmangled() {
+function unmangled_version_of_mangled_computername() {
   # Takes a ComputerName, returns it with any ' (###)' suffix stripped.
   # Sets return code: 0 if mangled (was fixed), 1 if clean (unchanged).
   local name="$1"
@@ -102,7 +102,7 @@ function fix_mangled_computername_if_necessary() {
   local current_name=$(sudo systemsetup -getcomputername 2>/dev/null | sed 's/^Computer Name: //')
   local fixed_name
   
-  if fixed_name=$(mangled_computername_was_unmangled "$current_name"); then
+  if fixed_name=$(unmangled_version_of_mangled_computername "$current_name"); then
     report_warning "ComputerName was auto-mangled. Fixing to: \"$fixed_name\""
     sudo systemsetup -setcomputername "$fixed_name" 2> >(grep -v '### Error:-99' >&2); success_or_not
     set_localhostname_from_computername "${fixed_name}"
