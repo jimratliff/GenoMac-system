@@ -47,10 +47,9 @@ function interactive_get_Mac_names() {
   
   # Assume name is clean unless proven otherwise
   final_name_is_dirty=false
-  
+
   # If current_name ends with ' (###)', clean it
-  if echo "$current_name" | grep -qE ' \([0-9]+\)$'; then
-    final_name=$(echo "$current_name" | sed -E 's/ \([0-9]+\)$//')
+  if final_name=$(check_supplied_computername_and_unmangle_if_necessary "$current_name"); then
     report_warning "ComputerName appears to have been auto-mangled. I have unmangled it: \"$final_name\""
     final_name_is_dirty=true
   fi
@@ -90,6 +89,30 @@ function interactive_get_Mac_names() {
   printf "HostName:       %s\n" "$(sudo scutil --get HostName 2>/dev/null || echo "(not set)")"
   
   report_end_phase_standard
+}
+
+function check_supplied_computername_and_unmangle_if_necessary() {
+  # Takes a ComputerName, returns it with any ' (###)' suffix stripped.
+  # Sets return code: 0 if mangled (was fixed), 1 if clean (unchanged).
+  local name="$1"
+  
+  if echo "$name" | grep -qE ' \([0-9]+\)$'; then
+    echo "$name" | sed -E 's/ \([0-9]+\)$//'
+    return 0  # Was mangled
+  fi
+  
+  echo "$name"
+  return 1  # Was clean
+}
+
+function fix_mangled_computername_if_necessary() {
+  local current_name=$(sudo systemsetup -getcomputername 2>/dev/null | sed 's/^Computer Name: //')
+  local fixed_name
+  
+  if fixed_name=$(check_supplied_computername_and_unmangle_if_necessary "$current_name"); then
+    report_warning "ComputerName was auto-mangled. Fixing to: \"$fixed_name\""
+    sudo systemsetup -setcomputername "$fixed_name" 2> >(grep -v '### Error:-99' >&2); success_or_not
+  fi
 }
 
 function interactive_get_loginwindow_message() {
