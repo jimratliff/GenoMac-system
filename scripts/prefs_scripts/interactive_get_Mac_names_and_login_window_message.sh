@@ -6,22 +6,15 @@ function conditionally_interactive_get_Mac_names_and_login_window_message() {
   report_start_phase_standard
 
   if test_genomac_system_state "${PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED}"; then
-    fix_mangled_computername_if_necessary
     report_action_taken "Skipping asking for computer names and login-window text, because these were obtained in the past."
+    fix_mangled_computername_if_necessary
+  
   else
-    interactive_get_Mac_names_and_login_window_message
+    interactive_get_Mac_names
+    interactive_get_loginwindow_message
     # Sets this state so the user won’t be asked again to supply answers to these questions
     set_genomac_system_state "${PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED}"
   fi
-
-  report_end_phase_standard
-}
-
-function interactive_get_Mac_names_and_login_window_message() {
-  report_start_phase_standard
-  
-  interactive_get_Mac_names
-  interactive_get_loginwindow_message
 
   report_end_phase_standard
 }
@@ -102,10 +95,8 @@ function check_supplied_computername_and_unmangle_if_necessary() {
 }
 
 function fix_mangled_computername_if_necessary() {
-  # Intended to check computername for mangling every time Hypervisor is run, fixing when necessary
-  # In the case where interactive_get_Mac_names() is run, this will be redundant because interactive_get_Mac_names()
-  # also performs this test/fix. However, interactive_get_Mac_names() is intended as a once-or-rarely performed
-  # function, thus the redundancy isn’t a big deal.
+  # Check computername for mangling, fixing when necessary and then set localhostname.
+  # This is a standalone, noninteractive version of interactive_get_Mac_names.
   report_start_phase_standard
   
   local current_name=$(sudo systemsetup -getcomputername 2>/dev/null | sed 's/^Computer Name: //')
