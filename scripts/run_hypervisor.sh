@@ -50,15 +50,9 @@ function run_hypervisor() {
   report "${welcome_message} to the GenoMac-system Hypervisor!"
   report "$GMU_HYPERVISOR_HOW_TO_RESTART_STRING"
 
-  ############### Test for Full Disk Access for the currently running terminal application
-  # NOTE: This is *not* conditioned on a PERM state variable, because there are multiple possible
-  #       terminal apps. Each would need to tracked separately, requiring the script to interrogate
-  #       what terminal app was running for that shell session. Too complicated!
+
   interactive_ensure_terminal_has_fda
-
-  # Guard clause: Fail fast if Homebrew not installed
-  ensure_homebrew_is_installed
-
+  crash_if_homebrew_not_installed
   conditionally_get_Mac_names_and_login_window_message
   conditionally_adjust_path_for_homebrew
   conditionally_interactive_sign_into_MAS
