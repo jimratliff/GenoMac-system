@@ -28,10 +28,19 @@
 #         helpers-apps.h
 #         …
 #         helpers.sh
+#     homebrew
+#     resources
+#       docs_to_display_to_user
+#       images
+#       sounds
+#         alerts
 #     scripts/
 #       0_initialize_me.sh        # You are HERE!
 #       an_entry_point_script.sh  # The script of interest, will source 0_initialize_me.sh
+#       non-Homebrew_installation
 #       prefs_scripts/
+#       resource_installation
+#     Makefile
 
 set -euo pipefail
 
