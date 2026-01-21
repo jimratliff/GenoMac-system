@@ -1,13 +1,19 @@
 #!/usr/bin/env zsh
 
 conditionally_interactive_get_Mac_names_and_login_window_message() {
+  # If not previously obtained, asks user for computer names and login-window text.
+  # If these were previously obtained, check computername to see whether it’s become mangled. If so, unmangle it.
   report_start_phase_standard
 
-  run_if_system_has_not_done \
-    "$PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED" \
-    implement_systemwide_settings \
-    "Skipping implementation of system-wide settings, because these were implemented earlier this session."
-  
+  if test_genomac_system_state "${PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED}"; then
+    fix_mangled_computername_if_necessary
+    report_action_taken "Skipping asking for computer names and login-window text, because these were obtained in the past."
+  else
+    interactive_get_Mac_names_and_login_window_message
+    # Sets this state so the user won’t be asked again to supply answers to these questions
+    set_genomac_system_state "${PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED}"
+  fi
+
   report_end_phase_standard
 }
 
@@ -106,6 +112,10 @@ function check_supplied_computername_and_unmangle_if_necessary() {
 }
 
 function fix_mangled_computername_if_necessary() {
+  # Intended to check computername for mangling every time Hypervisor is run, fixing when necessary
+  # In the case where interactive_get_Mac_names() is run, this will be redundant because interactive_get_Mac_names()
+  # also performs this test/fix. However, interactive_get_Mac_names() is intended as a once-or-rarely performed
+  # function, thus the redundancy isn’t a big deal.
   local current_name=$(sudo systemsetup -getcomputername 2>/dev/null | sed 's/^Computer Name: //')
   local fixed_name
   
