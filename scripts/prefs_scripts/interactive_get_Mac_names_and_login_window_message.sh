@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-conditionally_interactive_get_Mac_names_and_login_window_message() {
+function conditionally_interactive_get_Mac_names_and_login_window_message() {
   # If not previously obtained, asks user for computer names and login-window text.
   # If these were previously obtained, check computername to see whether it’s become mangled. If so, unmangle it.
   report_start_phase_standard
@@ -75,7 +75,7 @@ function interactive_get_Mac_names() {
     sudo systemsetup -setcomputername "$final_name" 2> >(grep -v '### Error:-99' >&2); success_or_not
   fi
 
-  set_localhostname_from_computername "${fixed_name}
+  set_localhostname_from_computername "${final_name}"
   
   # Display final names
   echo ""
@@ -106,16 +106,18 @@ function fix_mangled_computername_if_necessary() {
   # In the case where interactive_get_Mac_names() is run, this will be redundant because interactive_get_Mac_names()
   # also performs this test/fix. However, interactive_get_Mac_names() is intended as a once-or-rarely performed
   # function, thus the redundancy isn’t a big deal.
+  report_start_phase_standard
+  
   local current_name=$(sudo systemsetup -getcomputername 2>/dev/null | sed 's/^Computer Name: //')
   local fixed_name
   
   if fixed_name=$(check_supplied_computername_and_unmangle_if_necessary "$current_name"); then
     report_warning "ComputerName was auto-mangled. Fixing to: \"$fixed_name\""
     sudo systemsetup -setcomputername "$fixed_name" 2> >(grep -v '### Error:-99' >&2); success_or_not
+    set_localhostname_from_computername "${fixed_name}"
   fi
 
-  set_localhostname_from_computername "${fixed_name}
-  
+  report_end_phase_standard
 }
 
 function sanitize_localhostname() {
