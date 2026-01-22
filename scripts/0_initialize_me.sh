@@ -55,7 +55,7 @@ GMS_HELPERS_DIR="${GMS_SCRIPTS:h}/external/genomac-shared/scripts"              
 
 GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_SCRIPTS}/non-Homebrew_installation" # scripts/non-Homebrew_installation
 GMS_PREFS_SCRIPTS="${GMS_SCRIPTS}/prefs_scripts"                            # scripts/prefs_scripts
-GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR="${GMS_SCRIPTS}/resource_installation"    # scripts/resource_installation
+GMS_RESOURCE_INSTALLATION_SCRIPTS="${GMS_SCRIPTS}/resource_installation"    # scripts/resource_installation
 
 function source_with_report() {
   # Ensures that an error is raised if a `source` of the file in the supplied argument fails.
@@ -87,6 +87,6 @@ export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_SCRIPTS
 export_and_report GMS_PREFS_SCRIPTS
 export_and_report GMS_HELPERS_DIR
-export_and_report GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR
+export_and_report GMS_RESOURCE_INSTALLATION_SCRIPTS
 
 echo "Leaving /scripts/0_initialize_me.sh"
