@@ -12,7 +12,7 @@ safe_source "${GMS_PREFS_SCRIPTS}/implement_systemwide_settings.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/install_via_homebrew.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
 safe_source "${GMS_PREFS_SCRIPTS}/interactive_sign_into_MAS.sh"
-safe_source "${GMS_RESOURCE_INSTALLATION_SCRIPTS}/install_resources.sh"
+safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
 safe_source "${GMS_USER_SCOPE_SCRIPTS}/clone_genomac_user_repo.sh"
 
 ############### Context
