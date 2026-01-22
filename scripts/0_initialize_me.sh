@@ -57,7 +57,6 @@ GMS_SCRIPTS="${this_script_path:h}"                                             
 GMS_HELPERS_DIR="${GMS_SCRIPTS:h}/external/genomac-shared/scripts"              # external/genomac-shared/scripts
 
 
-GMS_RESOURCE_INSTALLATION_SCRIPTS="${GMS_SCRIPTS}/installations/of_resources"    # scripts/resource_installation
 
 function source_with_report() {
   # Ensures that an error is raised if a `source` of the file in the supplied argument fails.
@@ -88,6 +87,6 @@ source_with_report "${GMS_SCRIPTS}/assign_enum_env_vars_for_states.sh"
 export_and_report GMS_SCRIPTS
 
 export_and_report GMS_HELPERS_DIR
-export_and_report GMS_RESOURCE_INSTALLATION_SCRIPTS
+
 
 echo "Leaving /scripts/0_initialize_me.sh"
