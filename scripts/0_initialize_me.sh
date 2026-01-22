@@ -54,7 +54,7 @@ GMS_SCRIPTS_DIR="${this_script_path:h}"                                         
 GMS_HELPERS_DIR="${GMS_SCRIPTS_DIR:h}/external/genomac-shared/scripts"              # external/genomac-shared/scripts
 
 GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_SCRIPTS_DIR}/non-Homebrew_installation" # scripts/non-Homebrew_installation
-GMS_PREFS_SCRIPTS_DIR="${GMS_SCRIPTS_DIR}/prefs_scripts"                            # scripts/prefs_scripts
+GMS_PREFS_SCRIPTS="${GMS_SCRIPTS_DIR}/prefs_scripts"                            # scripts/prefs_scripts
 GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR="${GMS_SCRIPTS_DIR}/resource_installation"    # scripts/resource_installation
 
 function source_with_report() {
@@ -85,7 +85,7 @@ source_with_report "${GMS_SCRIPTS_DIR}/assign_enum_env_vars_for_states.sh"
 #       which is used directly below.
 export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_SCRIPTS_DIR
-export_and_report GMS_PREFS_SCRIPTS_DIR
+export_and_report GMS_PREFS_SCRIPTS
 export_and_report GMS_HELPERS_DIR
 export_and_report GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR
 
