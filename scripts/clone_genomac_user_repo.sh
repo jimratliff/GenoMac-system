@@ -15,6 +15,8 @@ function clone_genomac_user_repo() {
   # Clone GenoMac-user repo to GENOMAC_USER_LOCAL_DIRECTORY
   report_start_phase_standard
 
+  report_action_taken "Cloning GenoMac-user to your home directory."
+
   local local_cloning_dir="$GENOMAC_USER_LOCAL_DIRECTORY"
   local repo_url="$GENOMAC_USER_REPO_URL"
 
