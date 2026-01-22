@@ -61,6 +61,7 @@ set -euo pipefail
 # Just some examples as a template
 # PERM_1PASSWORD_HAS_BEEN_AUTHENTICATED="PERM_1password_has_been_authenticated"
 
+PERM_GENOMAC_USER_HAS_BEEN_CLONED="PERM_genomac_user_has_been_cloned"
 PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED="PERM_homebrew_path_has_been_adjusted"
 PERM_MAC_APP_STORE_IS_SIGNED_INTO="PERM_mac_app_store_is_signed_into"
 PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED="PERM_Mac_names_and_login_window_message_obtained"
@@ -76,6 +77,7 @@ SESH_SYSTEMWIDE_SETTINGS_HAVE_BEEN_IMPLEMENTED="SESH_systemwide_settings_have_be
 # Export environment variables to be available in all subsequent shells
 report_action_taken "Exporting environment variables corresponding to states."
 
+export_and_report PERM_GENOMAC_USER_HAS_BEEN_CLONED
 export_and_report PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED
 export_and_report PERM_MAC_APP_STORE_IS_SIGNED_INTO
 export_and_report PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED
