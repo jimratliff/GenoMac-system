@@ -6,8 +6,8 @@
 # - Exports:
 #   - GMS_SCRIPTS
 #     - the path to ~/.genomac-system/scripts
-#   - GMS_PREFS_SCRIPTS
-#     - the path to ~/.genomac-system/scripts/prefs_scripts
+#   - GMS_SETTINGS_SCRIPTS
+#     - the path to ~/.genomac-system/scripts/settings
 #   - GMS_HELPERS_DIR
 #     - the path to the helper scripts from the submodule GenoMac-shared
 # - Sources:
@@ -35,11 +35,14 @@
 #       sounds
 #         alerts
 #     scripts/
+#       installations/
+#         homebrew/
+#         non_homebrew/
+#         of_resources/
+#       settings/
+#       user_scope/
 #       0_initialize_me.sh        # You are HERE!
 #       an_entry_point_script.sh  # The script of interest, will source 0_initialize_me.sh
-#       non-Homebrew_installation
-#       prefs_scripts/
-#       resource_installation
 #     Makefile
 
 set -euo pipefail
