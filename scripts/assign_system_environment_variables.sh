@@ -7,7 +7,7 @@ GMS_INSTALL_SCRIPTS="${GMS_SCRIPTS}/installations"
 GMS_HOMEBREW_INSTALLATION_SCRIPTS="${GMS_INSTALL_SCRIPTS}/homebrew"
 GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/non_homebrew"
 GMS_RESOURCE_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/of_resources"
-GMS_PREFS_SCRIPTS="${GMS_SCRIPTS}/settings"
+GMS_SETTINGS_SCRIPTS="${GMS_SCRIPTS}/settings"
 GMS_USER_SCOPE_SCRIPTS="${GMS_SCRIPTS}/user_scope"
 
 # Specify the local directory in which user login pictures are stored to be
@@ -48,7 +48,7 @@ export_and_report GMS_HYPERVISOR_MAKE_COMMAND_STRING
 export_and_report GMS_INSTALL_SCRIPTS
 export_and_report GMS_HOMEBREW_INSTALLATION_SCRIPTS
 export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
-export_and_report GMS_PREFS_SCRIPTS
+export_and_report GMS_SETTINGS_SCRIPTS
 export_and_report GMS_RESOURCE_INSTALL_SCRIPTS
 export_and_report GMS_USER_SCOPE_SCRIPTS
 
