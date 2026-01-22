@@ -59,6 +59,7 @@ function run_hypervisor() {
   conditionally_interactive_sign_into_MAS
   conditionally_install_via_homebrew
   conditionally_install_non_homebrew_apps
+  conditionally_install_resources_systemwide
   conditionally_implement_systemwide_settings
 
   ############### Last act: Delete all SESH_ state environment variables
