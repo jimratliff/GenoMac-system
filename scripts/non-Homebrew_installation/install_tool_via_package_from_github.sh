@@ -1,19 +1,5 @@
 #!/bin/zsh
 
-# This file assumes GENOMAC_HELPER_DIR is already set in the current shell
-# to the absolute path of the directory containing helpers.sh.
-# That variable must be defined before this file is sourced.
-
-if [[ -z "${GENOMAC_HELPER_DIR:-}" ]]; then
-  echo "❌ GENOMAC_HELPER_DIR is not set. Please ensure helpers.sh has been loaded before sourcing install_tool_via_package_from_github.sh."
-  return 1
-fi
-
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
-
-# Fail early on unset variables or command failure
-set -euo pipefail
-
 function install_tool_via_package_from_github() {
   # Download and install a GitHub-hosted macOS installer package (.pkg) whose
   # payload is a *command-line tool or utility*, not an .app bundle, and manage
@@ -34,7 +20,6 @@ function install_tool_via_package_from_github() {
   #   4: pkg_filename    – exact .pkg filename in that release
   #   5: pkg_id          – optional pkgutil package id (e.g. "com.scriptingosx.utiluti")
   #   6: binary_path     – optional path of installed binary to verify
-  #
 
   report_start_phase_standard
 
