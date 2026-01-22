@@ -4,7 +4,7 @@
 #
 # Performs:
 # - Exports:
-#   - GMS_SCRIPTS_DIR
+#   - GMS_SCRIPTS
 #     - the path to ~/.genomac-system/scripts
 #   - GMS_PREFS_SCRIPTS
 #     - the path to ~/.genomac-system/scripts/prefs_scripts
@@ -48,14 +48,14 @@ echo "Inside /scripts/0_initialize_me.sh"
 
 # Resolve directory of the current script
 this_script_path="${0:A}"
-GMS_SCRIPTS_DIR="${this_script_path:h}"                                             # scripts
+GMS_SCRIPTS="${this_script_path:h}"                                             # scripts
 
 # Helpers are sourced from the GenoMac-shared repo, which appears as a submodule
-GMS_HELPERS_DIR="${GMS_SCRIPTS_DIR:h}/external/genomac-shared/scripts"              # external/genomac-shared/scripts
+GMS_HELPERS_DIR="${GMS_SCRIPTS:h}/external/genomac-shared/scripts"              # external/genomac-shared/scripts
 
-GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_SCRIPTS_DIR}/non-Homebrew_installation" # scripts/non-Homebrew_installation
-GMS_PREFS_SCRIPTS="${GMS_SCRIPTS_DIR}/prefs_scripts"                            # scripts/prefs_scripts
-GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR="${GMS_SCRIPTS_DIR}/resource_installation"    # scripts/resource_installation
+GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_SCRIPTS}/non-Homebrew_installation" # scripts/non-Homebrew_installation
+GMS_PREFS_SCRIPTS="${GMS_SCRIPTS}/prefs_scripts"                            # scripts/prefs_scripts
+GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR="${GMS_SCRIPTS}/resource_installation"    # scripts/resource_installation
 
 function source_with_report() {
   # Ensures that an error is raised if a `source` of the file in the supplied argument fails.
@@ -76,15 +76,15 @@ function source_with_report() {
 source_with_report "${GMS_HELPERS_DIR}/helpers.sh"
 
 # Source repo-specific environment-variables script
-source_with_report "${GMS_SCRIPTS_DIR}/assign_system_environment_variables.sh"
+source_with_report "${GMS_SCRIPTS}/assign_system_environment_variables.sh"
 
 # Source environment variables corresponding to enums for states
-source_with_report "${GMS_SCRIPTS_DIR}/assign_enum_env_vars_for_states.sh"
+source_with_report "${GMS_SCRIPTS}/assign_enum_env_vars_for_states.sh"
 
 # Note: The above source of master_common_helpers_script will make available export_and_report(),
 #       which is used directly below.
 export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
-export_and_report GMS_SCRIPTS_DIR
+export_and_report GMS_SCRIPTS
 export_and_report GMS_PREFS_SCRIPTS
 export_and_report GMS_HELPERS_DIR
 export_and_report GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR
