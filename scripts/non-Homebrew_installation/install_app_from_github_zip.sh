@@ -1,53 +1,35 @@
 #!/bin/zsh
 
-# This file assumes GENOMAC_HELPER_DIR is already set in the current shell
-# to the absolute path of the directory containing helpers.sh.
-# That variable must be defined before this file is sourced.
-
-if [[ -z "${GENOMAC_HELPER_DIR:-}" ]]; then
-  echo "❌ GENOMAC_HELPER_DIR is not set. Please ensure helpers.sh has been loaded before sourcing helper_install_app_from_github_zip.sh."
-  return 1
-fi
-
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
-
-set -euo pipefail
-
 # is-at-least is builtin to zsh but must be explicitly loaded before called.
 autoload -Uz is-at-least
 
-# Returns 0 iff "$have" >= "$min" (semantic version comparison)
 function version_ge() {
+  # Returns 0 iff "$have" >= "$min" (semantic version comparison)
   local min="$1"
   local have="$2"
   is-at-least "$min" "$have"
 }
 
-############################## GENERIC HELPER ##############################
-
-# install_app_from_github_zip
-#
-# Downloads a macOS .zip from a GitHub repo and installs the contained .app bundle.
-#
-# This helper is intended for apps like Alan.app, which is not available via Homebrew but is available
-# directly as a zip-ped .app from a GitHub repo.
-#
-# Arguments:
-#   1: app_name         – app bundle name, e.g. "Alan.app"
-#   2: repo_slug        – "owner/repo", e.g. "tylerhall/Alan"
-#   3: pinned_tag       – Git tag, e.g. "v1.0"
-#   4: zip_filename     – exact .zip filename in that release, e.g. "Alan.zip"
-#   5: applications_dir – destination directory, e.g. "/Applications"
-#   6: bundle_id        – bundle identifier, e.g. "com.tylerhall.Alan"
-#
-# Behavior:
-#   - Reads installed version from app's Info.plist (CFBundleShortVersionString or CFBundleVersion)
-#   - If installed == pinned  → skip
-#   - If installed < pinned   → upgrade (download + install)
-#   - If installed > pinned   → warn and skip (no downgrade)
-#   - Always checks GitHub for a newer tag and warns if pinned is behind.
-#
 function install_app_from_github_zip() {
+  # Downloads a macOS .zip from a GitHub repo and installs the contained .app bundle.
+  #
+  # This helper is intended for apps like Alan.app, which is not available via Homebrew but is available
+  # directly as a zip-ped .app from a GitHub repo.
+  #
+  # Arguments:
+  #   1: app_name         – app bundle name, e.g. "Alan.app"
+  #   2: repo_slug        – "owner/repo", e.g. "tylerhall/Alan"
+  #   3: pinned_tag       – Git tag, e.g. "v1.0"
+  #   4: zip_filename     – exact .zip filename in that release, e.g. "Alan.zip"
+  #   5: applications_dir – destination directory, e.g. "/Applications"
+  #   6: bundle_id        – bundle identifier, e.g. "com.tylerhall.Alan"
+  #
+  # Behavior:
+  #   - Reads installed version from app's Info.plist (CFBundleShortVersionString or CFBundleVersion)
+  #   - If installed == pinned  → skip
+  #   - If installed < pinned   → upgrade (download + install)
+  #   - If installed > pinned   → warn and skip (no downgrade)
+  #   - Always checks GitHub for a newer tag and warns if pinned is behind.
 
   report_start_phase_standard
 
@@ -119,7 +101,7 @@ function install_app_from_github_zip() {
   sudo chown -R root:wheel "$destination_path" ; success_or_not
   sudo chmod -R go-w "$destination_path" ; success_or_not
 
-  # Optional: check for newer GitHub release (best-effort)
+  # Check for newer GitHub release (best-effort)
   report_action_taken "Checking for newer ${app_name} release on GitHub"
   local latest_tag
   latest_tag="$(gh release view --repo "$repo_slug" --json tagName -q .tagName 2>/dev/null || true)"
