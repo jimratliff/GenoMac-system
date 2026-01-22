@@ -7,6 +7,7 @@ set -euo pipefail
 GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_SCRIPTS}/installations/non_homebrew"
 GMS_PREFS_SCRIPTS="${GMS_SCRIPTS}/settings"
 GMS_RESOURCE_INSTALLATION_SCRIPTS="${GMS_SCRIPTS}/installations/of_resources"
+GMS_USER_SCOPE_SCRIPTS="${GMS_SCRIPTS}/user_scope"
 
 # Specify the local directory in which user login pictures are stored to be
 # accessed during user-account creation.
@@ -46,3 +47,4 @@ export_and_report GMS_HYPERVISOR_MAKE_COMMAND_STRING
 export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_PREFS_SCRIPTS
 export_and_report GMS_RESOURCE_INSTALLATION_SCRIPTS
+export_and_report GMS_USER_SCOPE_SCRIPTS
