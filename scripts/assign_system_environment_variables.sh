@@ -4,6 +4,8 @@
 
 set -euo pipefail
 
+GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_SCRIPTS}/installations/non_homebrew"
+
 # Specify the local directory in which user login pictures are stored to be
 # accessed during user-account creation.
 # QUERY: IS THIS CORRECT? DO THESE RESIDE IN CONFIGGER’S HOME DIRECTORY?
