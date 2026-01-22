@@ -1,24 +1,18 @@
 #!/bin/zsh
 
-# Clone GenoMac-user repo to GENOMAC_USER_LOCAL_DIRECTORY
+function conditionally_clone_genomac_user() {
+  report_start_phase_standard
+  
+  run_if_system_has_not_done \
+    "$PERM_GENOMAC_USER_HAS_BEEN_CLONED" \
+    clone_genomac_user_repo \
+    "Skipping cloning GenoMac-user, because this was done in the past."
 
-# Fail early on unset variables or command failure
-set -euo pipefail
+  report_end_phase_standard
+}
 
-# Resolve this script's directory (even if sourced)
-this_script_path="${0:A}"
-this_script_dir="${this_script_path:h}"
-
-# Assign environment variables (including GENOMAC_HELPER_DIR, GENOMAC_USER_REPO_URL, 
-# and GENOMAC_USER_LOCAL_DIRECTORY)
-# Assumes that assign_environment_variables.sh is in same directory as this script.
-source "${this_script_dir}/assign_environment_variables.sh"
-
-# Source helpers
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
-
-############################## BEGIN SCRIPT PROPER #############################
 function clone_genomac_user_repo() {
+  # Clone GenoMac-user repo to GENOMAC_USER_LOCAL_DIRECTORY
   report_start_phase_standard
 
   local local_cloning_dir="$GENOMAC_USER_LOCAL_DIRECTORY"
@@ -41,9 +35,3 @@ function clone_genomac_user_repo() {
 
   report_end_phase_standard
 }
-
-function main() {
-  clone_genomac_user_repo
-}
-
-main
