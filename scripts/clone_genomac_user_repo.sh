@@ -33,7 +33,7 @@ function clone_genomac_user_repo() {
   report_action_taken "Cloning repo: $repo_url"
   git clone "$repo_url" .; success_or_not
 
-  report_action_taken "The repo has been cloned to $repo_url and you are now in that local directory."
+  report_action_taken "The repo has been cloned to ${local_cloning_dir} and you are now in that local directory."
 
   report_end_phase_standard
 }
