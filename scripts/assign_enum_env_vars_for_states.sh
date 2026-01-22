@@ -71,6 +71,7 @@ SESH_SESSION_HAS_STARTED="SESH_session_has_started"
 SESH_HOMEBREW_APPS_HAVE_BEEN_INSTALLED="SESH_homebrew_apps_have_been_installed"
 SESH_NON_HOMEBREW_APPS_HAVE_BEEN_INSTALLED="SESH_non_homebrew_apps_have_been_installed"
 SESH_RESOURCES_HAVE_BEEN_INSTALLED="SESH_resources_have_been_installed"
+SESH_SYSTEMWIDE_SETTINGS_HAVE_BEEN_IMPLEMENTED="SESH_systemwide_settings_have_been_implemented"
 
 # Export environment variables to be available in all subsequent shells
 report_action_taken "Exporting environment variables corresponding to states."
@@ -84,3 +85,4 @@ export_and_report SESH_HOMEBREW_APPS_HAVE_BEEN_INSTALLED
 export_and_report SESH_NON_HOMEBREW_APPS_HAVE_BEEN_INSTALLED
 export_and_report SESH_RESOURCES_HAVE_BEEN_INSTALLED
 export_and_report SESH_SESSION_HAS_STARTED
+export_and_report SESH_SYSTEMWIDE_SETTINGS_HAVE_BEEN_IMPLEMENTED
