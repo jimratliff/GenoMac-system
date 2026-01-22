@@ -1,10 +1,5 @@
 #!/usr/bin/env zs
 
-# Installs non-Homebrew apps (direct downloads such as Alan.app).
-
-# Non-Homebrew app–related scripts live here:
-#   scripts/non-Homebrew_installation/
-
 # Source the function file(s)
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_alan_app.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_app_from_github_zip.sh"
@@ -25,6 +20,7 @@ function conditionally_install_non_homebrew_apps() {
 }
 
 function install_non_homebrew_apps() {
+  # Installs non-Homebrew apps (direct downloads such as Alan.app)
   report_start_phase_standard
 
   # Installs Alan.app to highlight prominently the active window
