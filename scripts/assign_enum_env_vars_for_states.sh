@@ -56,19 +56,14 @@
 # or GenoMac-user processes that instruct/direct the user to achieve the local cloning
 # of the repository.
 
-set -euo pipefail
-
-# Just some examples as a template
-# PERM_1PASSWORD_HAS_BEEN_AUTHENTICATED="PERM_1password_has_been_authenticated"
-
 PERM_GENOMAC_USER_HAS_BEEN_CLONED="PERM_genomac_user_has_been_cloned"
 PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED="PERM_homebrew_path_has_been_adjusted"
 PERM_MAC_APP_STORE_IS_SIGNED_INTO="PERM_mac_app_store_is_signed_into"
 PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED="PERM_Mac_names_and_login_window_message_obtained"
 
-# SESH_BASIC_IDEMPOTENT_SETTINGS_HAVE_BEEN_IMPLEMENTED="SESH_basic_idempotent_settings_have_been_implemented"
 SESH_REACHED_FINALITY="SESH_reached_finality"
 SESH_SESSION_HAS_STARTED="SESH_session_has_started"
+
 SESH_HOMEBREW_APPS_HAVE_BEEN_INSTALLED="SESH_homebrew_apps_have_been_installed"
 SESH_NON_HOMEBREW_APPS_HAVE_BEEN_INSTALLED="SESH_non_homebrew_apps_have_been_installed"
 SESH_RESOURCES_HAVE_BEEN_INSTALLED="SESH_resources_have_been_installed"
