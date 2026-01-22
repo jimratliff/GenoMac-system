@@ -32,17 +32,7 @@
 #   - GENOMAC_USER_LOGIN_PICTURES_DIRECTORY  (directory containing avatar images)
 
 # --------------------------- Strict mode & setup ------------------------------
-set -euo pipefail
 
-# Resolve this script's directory (even if sourced)
-this_script_path="${0:A}"
-this_script_dir="${this_script_path:h}"
-
-# Assign environment variables (incl. GENOMAC_HELPER_DIR, GENOMAC_USER_LOGIN_PICTURES_DIRECTORY)
-source "${this_script_dir}/assign_environment_variables.sh"
-
-# Source helpers (expects report_* and success_or_not, etc.)
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
 
 # ----------------------------- Utility wrappers ------------------------------
 function log() { printf "%s\n" "$*" >&2; }
