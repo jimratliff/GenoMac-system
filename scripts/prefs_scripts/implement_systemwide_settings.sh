@@ -1,8 +1,5 @@
 #!/usr/bin/env zsh
 
-safe_source "${GMS_PREFS_SCRIPTS_DIR}/get_Mac_names.sh"
-safe_source "${GMS_PREFS_SCRIPTS_DIR}/get_loginwindow_message.sh"
-
 function conditionally_implement_systemwide_settings() {
   report_start_phase_standard
 
