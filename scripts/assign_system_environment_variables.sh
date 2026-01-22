@@ -2,8 +2,6 @@
 
 # Establishes values for environment variables used exclusively by GenoMac-system
 
-set -euo pipefail
-
 # Aliases to intra-repository hierarchical structures
 GMS_INSTALL_SCRIPTS="${GMS_SCRIPTS}/installations"
 GMS_HOMEBREW_INSTALLATION_SCRIPTS="${GMS_INSTALL_SCRIPTS}/homebrew"
