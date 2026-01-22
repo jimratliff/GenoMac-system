@@ -11,7 +11,7 @@ function conditionally_install_resources_systemwide() {
 
   run_if_system_has_not_done \
     "$SESH_RESOURCES_HAVE_BEEN_INSTALLED" \
-    install_non_homebrew_apps \
+    install_resources_systemwide \
     "Skipping installation of resources, because this installation was performed earlier this session."
 
   report_end_phase_standard
