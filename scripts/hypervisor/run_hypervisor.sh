@@ -3,17 +3,9 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
 
-# Source required files
-safe_source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_non_homebrew_apps.sh"
-safe_source "${GMS_SETTINGS_SCRIPTS}/adjust_path_for_homebrew.sh"
-safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
-safe_source "${GMS_SETTINGS_SCRIPTS}/install_via_homebrew.sh"
-safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
-safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_sign_into_MAS.sh"
-safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
-safe_source "${GMS_USER_SCOPE_SCRIPTS}/clone_genomac_user_repo.sh"
+
+
 
 ############### Context
 # It is assumed that, prior to running this script:
@@ -30,6 +22,19 @@ safe_source "${GMS_USER_SCOPE_SCRIPTS}/clone_genomac_user_repo.sh"
 function run_hypervisor() {
 
   report_start_phase_standard
+
+  # Source required files
+  # NOTE: At this point, safe_source is *not* available
+  source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
+  # NOTE: Beyond this point, safe_source *is* available
+  safe_source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_non_homebrew_apps.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/adjust_path_for_homebrew.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/install_via_homebrew.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_sign_into_MAS.sh"
+  safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
+  safe_source "${GMS_USER_SCOPE_SCRIPTS}/clone_genomac_user_repo.sh"
 
   # TODO:
   # - Consider checking $set_genomac_system_state "$SESH_REACHED_FINALITY" to
