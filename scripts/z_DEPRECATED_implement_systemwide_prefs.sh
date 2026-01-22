@@ -5,7 +5,7 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-safe_source "${GMS_PREFS_SCRIPTS_DIR}/set_initial_systemwide_settings.sh"
+safe_source "${GMS_PREFS_SCRIPTS}/set_initial_systemwide_settings.sh"
 
 report_start_phase 'Begin the systemwide-settings phase'
 
