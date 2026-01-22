@@ -2,9 +2,9 @@
 
 # Source function(s)
 # Resource-related scripts should be placed in GenoMac-system/scripts/resource_installation
-source "${GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR}/install_fira_code_nerd_font_systemwide.sh"
-source "${GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR}/install_matrix_screensaver_systemwide.sh"
-source "${GMS_RESOURCE_INSTALLATION_SCRIPTS_DIR}/install_uh_oh_sound_systemwide.sh"
+source "${GMS_RESOURCE_INSTALLATION_SCRIPTS}/install_fira_code_nerd_font_systemwide.sh"
+source "${GMS_RESOURCE_INSTALLATION_SCRIPTS}/install_matrix_screensaver_systemwide.sh"
+source "${GMS_RESOURCE_INSTALLATION_SCRIPTS}/install_uh_oh_sound_systemwide.sh"
 
 function conditionally_install_resources_systemwide() {
   report_start_phase_standard
