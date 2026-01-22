@@ -1,19 +1,7 @@
-# This file assumes GENOMAC_HELPER_DIR is already set in the current shell
-# to the absolute path of the directory containing helpers.sh.
-# That variable must be defined before this file is sourced.
-
-if [[ -z "${GENOMAC_HELPER_DIR:-}" ]]; then
-  echo "❌ GENOMAC_HELPER_DIR is not set. Please ensure helpers.sh has been loaded before sourcing install_alan_app.sh."
-  return 1
-fi
-
-source "${GENOMAC_HELPER_DIR}/helpers.sh"
-
-############################## BEGIN SCRIPT PROPER ##############################
+#!/usr/bin/env zs
 
 function install_alan_app() {
   # Installs Tyler Hall’s “Alan” macOS app into /Applications.
-  # 🗑️ To uninstall: sudo rm -rf "/Applications/Alan.app"
 
   report_start_phase_standard
 
@@ -22,7 +10,7 @@ function install_alan_app() {
   local pinned_version="v1.0"
   local zip_filename="Alan.zip"
   local applications_dir="/Applications"
-  local bundle_id="studio.retina.Alan"
+  local bundle_id="BUNDLE_ID_ALAN_APP"     # studio.retina.Alan
 
   # Memorialize whether Alan was already running
   local alan_was_running=false
