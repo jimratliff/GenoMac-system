@@ -61,6 +61,7 @@ function run_hypervisor() {
   conditionally_install_non_homebrew_apps
   conditionally_install_resources_systemwide
   conditionally_implement_systemwide_settings
+  conditionally_clone_genomac_user
 
   ############### Last act: Delete all SESH_ state environment variables
 
