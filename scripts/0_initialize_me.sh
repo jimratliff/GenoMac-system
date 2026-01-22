@@ -56,7 +56,7 @@ GMS_SCRIPTS="${this_script_path:h}"                                             
 # Helpers are sourced from the GenoMac-shared repo, which appears as a submodule
 GMS_HELPERS_DIR="${GMS_SCRIPTS:h}/external/genomac-shared/scripts"              # external/genomac-shared/scripts
 
-GMS_PREFS_SCRIPTS="${GMS_SCRIPTS}/settings"                            # scripts/prefs_scripts
+
 GMS_RESOURCE_INSTALLATION_SCRIPTS="${GMS_SCRIPTS}/installations/of_resources"    # scripts/resource_installation
 
 function source_with_report() {
@@ -86,7 +86,7 @@ source_with_report "${GMS_SCRIPTS}/assign_enum_env_vars_for_states.sh"
 # Note: The above source of master_common_helpers_script will make available export_and_report(),
 #       which is used directly below.
 export_and_report GMS_SCRIPTS
-export_and_report GMS_PREFS_SCRIPTS
+
 export_and_report GMS_HELPERS_DIR
 export_and_report GMS_RESOURCE_INSTALLATION_SCRIPTS
 
