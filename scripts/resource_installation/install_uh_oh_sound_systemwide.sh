@@ -12,7 +12,8 @@ function install_uh_oh_sound_systemwide() {
 
   # Destination directory is macOS-standard directory for storing available alert sounds
   # Hint: SYSTEM_ALERT_SOUNDS_DIRECTORY="/Library/Audio/Sounds/Alerts"
-  local destination_path="${SYSTEM_ALERT_SOUNDS_DIRECTORY}/${sound_name}"
+  # Hint: PATH_TO_INSTALLED_CUSTOM_ALERT_SOUND_FILE="${SYSTEM_ALERT_SOUNDS_DIRECTORY}/${CUSTOM_ALERT_SOUND_FILENAME}"
+  local destination_path="${PATH_TO_INSTALLED_CUSTOM_ALERT_SOUND_FILE}"
   
   # Use the helper function to copy the resource
   copy_resource_between_local_directories \
