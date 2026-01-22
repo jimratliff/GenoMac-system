@@ -23,16 +23,16 @@ function install_non_homebrew_apps() {
   # Installs non-Homebrew apps (direct downloads such as Alan.app)
   report_start_phase_standard
 
-  # Installs Alan.app to highlight prominently the active window
+  report_action_taken "Install Alan.app to highlight prominently the active window"
   install_alan_app
 
-  # Install utiluti utility to set the default app associated with document types, etc.
+  report_action_taken "Install utiluti utility to set the default app associated with document types, etc."
   install_utiluti
 
-  # Install default-browser utility to set the default browser
+  report_action_taken "Install default-browser utility to set the default browser"
   install_default_browser_cli
 
-  # Install VisualDiffer.app to diff two text files
+  report_action_taken "Install VisualDiffer.app to diff two text files"
   install_visualdiffer
 
   report_end_phase_standard
