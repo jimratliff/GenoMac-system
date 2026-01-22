@@ -22,26 +22,21 @@ function implement_systemwide_settings() {
   report_action_taken "Begin commands that require 'sudo'"
   keep_sudo_alive
   
-  # Get ComputerName and LocalHostName
-  get_Mac_names
-  
-  # Get login-window message
-  get_loginwindow_message
-  
   # Disable auto-boot when opening the lid or connecting to power on Apple Silicon laptop
   # Howard Oakley, “How to change lid behaviour on MacBook Air and Pro,” Eclectic Light Company, February 3, 2025
   # https://eclecticlight.co/2025/02/03/how-to-change-lid-behaviour-on-macbook-air-and-pro/
   report_action_taken "Disable auto-boot when opening the lid or connecting to power on Apple Silicon laptop"
   sudo nvram BootPreference=%00 ; success_or_not
   
-  # Configure application firewall
+  ############### Configure application firewall
   report_action_taken "Configure application firewall"
   report_adjust_setting "1 of 2: Enable application firewall"
   sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on ; success_or_not
   report_adjust_setting "2 of 2: Enable Stealth Mode"
   sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on ; success_or_not
+  ###
   
-  # Configure system-wide settings controlling software-update behavior
+  ############### Configure system-wide settings controlling software-update behavior
   report_action_taken "Implement system-wide settings controlling how macOS and MAS-app software updates occur"
   
   report_adjust_setting "Do automatically check for updates (both macOS and MAS apps)"
@@ -55,6 +50,7 @@ function implement_systemwide_settings() {
   
   report_adjust_setting "Do automatically update applications from Mac App Store"
   sudo defaults write /Library/Preferences/com.apple.commerce AutoUpdate -bool true ; success_or_not
+  ###
   
   # Display additional information on login window
   report_adjust_setting "Display additional info (IP address, hostname, OS version) when clicking on the clock digits of the login window"
@@ -66,7 +62,7 @@ function implement_systemwide_settings() {
   # As of macOS Sonoma, the settings can be added to a separate file /etc/pam.d/sudo_local, which isn’t
   # overwritten during updates, allowing Touch ID to remain enabled for sudo commands consistently.
   report_action_taken "Enable Touch ID authentication for sudo"
-  sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local
+  sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local ; success_or_not
   
   report_end_phase_standard
 
