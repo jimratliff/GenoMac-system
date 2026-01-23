@@ -47,13 +47,13 @@ function alphahypervisor() {
   ############### Finish initializations
   # Now that repo is updated, we can finish the initialization process
 
-  secondary_initialization_script="$GMS_HYPERVISOR_SCRIPTS/0_initialize_me_second.sh"
-  source_with_report "$secondary_initialization_script"
+  secondary_initialization_script="${GMS_HYPERVISOR_SCRIPTS}/0_initialize_me_second.sh"
+  source_with_report "${secondary_initialization_script}"
 
   ############### Spawn Hypervisor
   # Spawn the hypervisor that manages the bootstrapping/maintenance of the system-scoped configuration
   
-  hypervisor_script="$GMS_HYPERVISOR_SCRIPTS/run_hypervisor.sh"
+  hypervisor_script="${GMS_HYPERVISOR_SCRIPTS}/run_hypervisor.sh"
   source_with_report "$hypervisor_script"
 
   run_hypervisor
@@ -62,7 +62,9 @@ function alphahypervisor() {
 }
 
 function update_genomac_system_repo() {
-  if [[ ! -d ~/.genomac-system || -z "$(ls -A ~/.genomac-system 2>/dev/null)" ]]; then
+  # NOTE: The immediately below check for the existence of this repo is comically useless:
+  #       if the repo has not been cloned, this script itself would not exist.
+  if [[ ! -d ${GMS_LOCAL_DIRECTORY} || -z "$(ls -A ${GMS_LOCAL_DIRECTORY} 2>/dev/null)" ]]; then
     echo "You must clone the GenoMac-system repo to ${GMS_LOCAL_DIRECTORY} before running the Hypervisor"
     return 1
   fi
