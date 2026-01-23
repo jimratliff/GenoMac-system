@@ -25,7 +25,7 @@ function install_via_homebrew() {
   report_action_taken "Suppressing quarantine flag on to-be-installed apps"
   export HOMEBREW_CASK_OPTS=--no-quarantine
 
-  brewfile_path="${GENOMAC_SYSTEM_LOCAL_HOMEBREW_DIRECTORY}/Brewfile"
+  brewfile_path="${GMS_HOMEBREW}/Brewfile"
 
   # Updates Homebrew itself and its package definitions (formulae and casks) from the remote repository
   report_action_taken "Updating Homebrew itself"
