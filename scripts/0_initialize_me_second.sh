@@ -33,36 +33,7 @@
 #       that are common to both GenoMac-system and GenoMac-user
 #   - assign_system_environment_variables.sh, which exports the environment variables that are 
 #     specific to this repository
-#
-# Assumed directory structure
-#   ~/.genomac-system/
-#     external/
-#       genomac-shared/
-#         assign_common_environment_variables.sh
-#         helpers-apps.h
-#         …
-#         helpers.sh
-#     homebrew
-#     resources
-#       docs_to_display_to_user
-#       images
-#       sounds
-#         alerts
-#     scripts/
-#       hypervisor/
-#         alphahypervisor.sh
-#         assign_enum_env_vars_for_states.sh
-#         assign_system_environment_variables.sh
-#         run_hypervisor.sh
-#       installations/
-#         homebrew/
-#         non_homebrew/
-#         of_resources/
-#       settings/
-#       user_scope/
-#       0_initialize_me_first.sh
-#       0_initialize_me_second.sh
-#     Makefile
+
 
 set -euo pipefail
 
@@ -82,7 +53,7 @@ source_with_report "${GMS_HELPERS_DIR}/helpers.sh"
 source_with_report "${GMS_SCRIPTS}/assign_system_environment_variables.sh"
 
 # Source environment variables corresponding to enums for states
-source_with_report "${GMS_SCRIPTS}/assign_enum_env_vars_for_states.sh"
+source_with_report "${GMS_HYPERVISOR_SCRIPTS}/assign_enum_env_vars_for_states.sh"
 
 # Note: The above source of master_common_helpers_script will make available export_and_report(),
 #       which is used directly below.
