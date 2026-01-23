@@ -7,8 +7,8 @@ function install_uh_oh_sound_systemwide() {
   
   # Construct path to stored custom alert-sound file
   # Hint: CUSTOM_ALERT_SOUND_FILENAME="Uh_oh.aiff"
-  # Hint: GENOMAC_SYSTEM_LOCAL_RESOURCE_DIRECTORY="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
-  local source_path="${GENOMAC_SYSTEM_LOCAL_RESOURCE_DIRECTORY}/sounds/alerts/${CUSTOM_ALERT_SOUND_FILENAME}"
+  # Hint: GMS_RESOURCES="${GMS_LOCAL_DIRECTORY}/resources"
+  local source_path="${GMS_RESOURCES}/sounds/alerts/${CUSTOM_ALERT_SOUND_FILENAME}"
 
   # Destination directory is macOS-standard directory for storing available alert sounds
   # Hint: SYSTEM_ALERT_SOUNDS_DIRECTORY="/Library/Audio/Sounds/Alerts"
