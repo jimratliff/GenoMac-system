@@ -6,7 +6,7 @@ function alphahypervisor() {
   # Supervises the hypervisor by ensuring the GenoMac-system repository is updated before
   # running the hypervisor. 
   #
-  # This is the function called first, directly, and immediately by `make hypervisor-run`.
+  # This is the function called first, directly, and immediately by `make run-hypervisor`.
   #
   # It assumes that GenoMac-system has been cloned locally to GMS_LOCAL_DIRECTORY (~/.genomac-system).
   # It is *not* necessary to update the clone before running this function, because this function updates the clone.
@@ -33,6 +33,7 @@ function alphahypervisor() {
   export_and_report "GMS_HYPERVISOR_SCRIPTS"
 
   # Updates the clone of GenoMac-system that is assumed to reside at GENOMAC_SYSTEM_LOCAL_DIRECTORY
+  echo "Updating local clone of GenoMac-system"
   update_genomac_system_repo
 
   # Now that GenoMac-system has been updated, spawn the hypervisor that manages the bootstrapping/maintenance
