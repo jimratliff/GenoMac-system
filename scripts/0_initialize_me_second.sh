@@ -5,7 +5,8 @@
 #
 # This file is intended to be sourced *after* the GenoMac-system repo is updated. Thus, unlike
 # 0_initialize_me_first, this script is free to use the full extent of GenoMac-system and
-# GenoMac-shared code.
+# GenoMac-shared code without fear of having that code be changed in the background due to a 
+# repo update.
 # 
 # Assumes that scripts/0_initialize_me_first.sh has already been sourced, from which is received:
 # - Environment variables
