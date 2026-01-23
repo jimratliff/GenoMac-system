@@ -26,9 +26,9 @@ function alphahypervisor() {
   #     - This will be disfavored relative to safe_source, once safe_source becomes available
   #       after helper-misc.sh is sourced
 
-  # WARNING: This path is hard-wired and needs to be monitored for continued appropriateness
+  # WARNING: The below path for initial_initialization_script is hard-wired (without reference
+  # to the appropriate environment variable and needs to be monitored for continued appropriateness.
   initial_initialization_script="$HOME/.genomac-system/scripts/0_initialize_me_first.sh"
-
   if source "$initial_initialization_script" 2>/dev/null; then
     echo "Sourced: $initial_initialization_script"
   else
@@ -38,15 +38,19 @@ function alphahypervisor() {
 
   ###
 
+  ############### Update clone
   # Updates the clone of GenoMac-system that is assumed to reside at GMS_LOCAL_DIRECTORY
-  echo "Updating local clone of GenoMac-system"
+  echo "Updating local clone of GenoMac-system at ${GMS_LOCAL_DIRECTORY}"
   update_genomac_system_repo
 
-  # Now that GenoMac-system has been updated, spawn the hypervisor that manages the bootstrapping/maintenance
-  # of the system-scoped configuration
+  ############### Finish initializations
+  # Now that repo is updated, we can finish the initialization process
 
   secondary_initialization_script="$GMS_HYPERVISOR_SCRIPTS/0_initialize_me_second.sh"
   source_with_report "$secondary_initialization_script"
+
+  ############### Spawn Hypervisor
+  # Spawn the hypervisor that manages the bootstrapping/maintenance of the system-scoped configuration
   
   hypervisor_script="$GMS_HYPERVISOR_SCRIPTS/run_hypervisor.sh"
   source_with_report "$hypervisor_script"
@@ -54,7 +58,6 @@ function alphahypervisor() {
   run_hypervisor
 
   echo "Leaving alphahypervisor"
-
 }
 
 function update_genomac_system_repo() {
