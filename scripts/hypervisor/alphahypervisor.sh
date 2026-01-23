@@ -38,7 +38,7 @@ function alphahypervisor() {
 
   ###
 
-  # Updates the clone of GenoMac-system that is assumed to reside at GENOMAC_SYSTEM_LOCAL_DIRECTORY
+  # Updates the clone of GenoMac-system that is assumed to reside at GMS_LOCAL_DIRECTORY
   echo "Updating local clone of GenoMac-system"
   update_genomac_system_repo
 
