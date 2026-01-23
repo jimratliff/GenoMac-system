@@ -5,12 +5,12 @@ set -euo pipefail
 
 # Template for entry-point scripts
 
-source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
+source "${HOME}/.genomac-system/scripts/0_initialize_me_first.sh
 
-############################## BEGIN SCRIPT PROPER ##############################
+############### SCRIPT PROPER BEGINS NOW
 
 # Source required files
-# safe_source "${GMS_SETTINGS_SCRIPTS}/install_btt_license.sh"
+# safe_source "${GMS_HYPERVISOR_SCRIPTS}/alphahypervisor.sh"
 
 function some_function() {
   report_start_phase_standard
@@ -24,5 +24,3 @@ function some_function() {
 function main() {
   some_function
 }
-
-main
