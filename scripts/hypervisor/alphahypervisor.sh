@@ -45,11 +45,10 @@ function alphahypervisor() {
   # Now that GenoMac-system has been updated, spawn the hypervisor that manages the bootstrapping/maintenance
   # of the system-scoped configuration
 
-
-
-  initialization_script="$GMS_HYPERVISOR_SCRIPTS/0_initialize_me.sh"
+  secondary_initialization_script="$GMS_HYPERVISOR_SCRIPTS/0_initialize_me_second.sh"
+  source_with_report "$secondary_initialization_script"
+  
   hypervisor_script="$GMS_HYPERVISOR_SCRIPTS/run_hypervisor.sh"
-  source_with_report "$initialization_script"
   source_with_report "$hypervisor_script"
 
   run_hypervisor
