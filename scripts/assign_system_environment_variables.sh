@@ -6,7 +6,7 @@
 
 # Aliases to intra-repository hierarchical structures
 GMS_INSTALL_SCRIPTS="${GMS_SCRIPTS}/installations"
-GMS_HOMEBREW_INSTALLATION_SCRIPTS="${GMS_INSTALL_SCRIPTS}/homebrew"
+GMS_HOMEBREW_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/homebrew"
 GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/non_homebrew"
 GMS_RESOURCE_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/of_resources"
 GMS_SETTINGS_SCRIPTS="${GMS_SCRIPTS}/settings"
@@ -25,7 +25,7 @@ GMS_RESOURCES="${GMS_LOCAL_DIRECTORY}/resources"
 GMS_DOCS_TO_DISPLAY="${GMS_RESOURCES}/docs_to_display_to_user"
 
 # Specify the local directory that holds declarative Homebrew files
-GENOMAC_SYSTEM_LOCAL_HOMEBREW_DIRECTORY="${GMS_LOCAL_DIRECTORY}/homebrew"
+GMS_HOMEBREW="${GMS_LOCAL_DIRECTORY}/homebrew"
 
 # Environment variables to support the Hypervisor
 GMS_HYPERVISOR_MAKE_COMMAND_STRING="make run-hypervisor"
@@ -34,13 +34,13 @@ GMS_HYPERVISOR_HOW_TO_RESTART_STRING="To get back into the groove at any time, j
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
 export_and_report GMS_DOCS_TO_DISPLAY
-export_and_report GENOMAC_SYSTEM_LOCAL_HOMEBREW_DIRECTORY
+export_and_report GMS_HOMEBREW
 export_and_report GMS_RESOURCES
 export_and_report GMS_HYPERVISOR_HOW_TO_RESTART_STRING
 export_and_report GMS_HYPERVISOR_MAKE_COMMAND_STRING
 
 export_and_report GMS_INSTALL_SCRIPTS
-export_and_report GMS_HOMEBREW_INSTALLATION_SCRIPTS
+export_and_report GMS_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_HYPERVISOR_SCRIPTS
 export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_RESOURCE_INSTALL_SCRIPTS
