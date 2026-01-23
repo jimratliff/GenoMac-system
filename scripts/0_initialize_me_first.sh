@@ -1,10 +1,13 @@
 #!/usr/bin/env zs
 
 # The earliest component of initialization, designed to minimize the amount of repository 
-# code on which it relies, while still supporting updating the repository.
+# code on which it relies, while still having the bare minimum supporting updating the repository.
 # This allows this script to be called to support updating the repository, while minimizing the
 # likelihood/severity of this small amount of relied-upon repository code being changed
 # underneath when the repository is updated.
+#
+# WARNING: If this file changes materially (e.g., other than comments), the Hypervisor should be
+#          aborted immediately after the clone is updated and the Hypervisor should then be restarted.
 #
 # Exports:
 # - Environment variables
