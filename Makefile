@@ -19,6 +19,27 @@
 # Targets
 # --------------------------------------------------------------------
 
+run-hypervisor:
+	zsh scripts/hypervisor/alphahypervisor.sh
+
+refresh-repo:
+	cd ~/.genomac-system
+	git -C ~/.genomac-system pull --recurse-submodules origin main
+
+## Updates genomac-system repo, including genomac-shared submodule, and pushes it back to GitHub
+## git diff… checks whether there are staged changes to the submodule and, if so, commits them
+
+dev-update-repo-and-submodule:
+	cd ~/.genomac-system
+	git pull --recurse-submodules origin main
+	git submodule update --remote
+	git add external/genomac-shared
+	git diff --cached --quiet external/genomac-shared || git commit -m "Update genomac-shared submodule"
+	git push origin main
+
+
+############### 38th Parallel
+
 app-install-via-homebrew:
 	zsh scripts/install_via_homebrew.sh
 
