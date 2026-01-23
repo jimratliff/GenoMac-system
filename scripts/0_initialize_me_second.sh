@@ -2,6 +2,9 @@
 
 # Sources common (cross-repo) helpers and environment variables from GenoMac-shared.
 #
+# This file is intended to be sourced *after* the GenoMac-system repo is updated. Thus, unlike
+# 
+#
 # Assumes that scripts/0_initialize_me_first.sh has already been sourced, from which is received:
 # - Environment variables
 #   - GMS_LOCAL_DIRECTORY      ~/.genomac-system
@@ -72,8 +75,6 @@ echo "Inside /scripts/0_initialize_me_second.sh"
 # Helpers are sourced from the GenoMac-shared repo, which appears as a submodule
 GMS_HELPERS_DIR="${GMS_SCRIPTS:h}/external/genomac-shared/scripts"  # external/genomac-shared/scripts
 
-
-
 # Source master helpers script from GenoMac-shared submodule
 source_with_report "${GMS_HELPERS_DIR}/helpers.sh"
 
@@ -85,7 +86,7 @@ source_with_report "${GMS_SCRIPTS}/assign_enum_env_vars_for_states.sh"
 
 # Note: The above source of master_common_helpers_script will make available export_and_report(),
 #       which is used directly below.
-export_and_report GMS_SCRIPTS
+# export_and_report GMS_SCRIPTS
 export_and_report GMS_HELPERS_DIR
 
 echo "Leaving /scripts/0_initialize_me.sh"
