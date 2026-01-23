@@ -2,6 +2,8 @@
 
 # Establishes values for environment variables used exclusively by GenoMac-system
 
+# Intended to be sourced by scripts/0_initialize_me_second.sh
+
 # Aliases to intra-repository hierarchical structures
 GMS_INSTALL_SCRIPTS="${GMS_SCRIPTS}/installations"
 GMS_HOMEBREW_INSTALLATION_SCRIPTS="${GMS_INSTALL_SCRIPTS}/homebrew"
@@ -9,11 +11,9 @@ GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/non_homebrew"
 GMS_RESOURCE_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/of_resources"
 GMS_SETTINGS_SCRIPTS="${GMS_SCRIPTS}/settings"
 GMS_USER_SCOPE_SCRIPTS="${GMS_SCRIPTS}/user_scope"
+GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
 
-# Specify the local directory in which user login pictures are stored to be
-# accessed during user-account creation.
-# QUERY: IS THIS CORRECT? DO THESE RESIDE IN CONFIGGER’S HOME DIRECTORY?
-# GENOMAC_USER_LOGIN_PICTURES_DIRECTORY="$HOME/.genomac-user-login-pictures"
+
 
 # Specify local directory into which the GenoMac-system repository will be 
 # cloned
@@ -41,14 +41,14 @@ export_and_report GENOMAC_SYSTEM_LOCAL_DOCS_TO_DISPLAY
 export_and_report GENOMAC_SYSTEM_LOCAL_DOCUMENTATION_DIRECTORY
 export_and_report GENOMAC_SYSTEM_LOCAL_HOMEBREW_DIRECTORY
 export_and_report GENOMAC_SYSTEM_LOCAL_RESOURCE_DIRECTORY
-# export_and_report GENOMAC_USER_LOGIN_PICTURES_DIRECTORY
 export_and_report GMS_HYPERVISOR_HOW_TO_RESTART_STRING
 export_and_report GMS_HYPERVISOR_MAKE_COMMAND_STRING
 
 export_and_report GMS_INSTALL_SCRIPTS
 export_and_report GMS_HOMEBREW_INSTALLATION_SCRIPTS
+export_and_report GMS_HYPERVISOR_SCRIPTS
 export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
-export_and_report GMS_SETTINGS_SCRIPTS
 export_and_report GMS_RESOURCE_INSTALL_SCRIPTS
+export_and_report GMS_SETTINGS_SCRIPTS
 export_and_report GMS_USER_SCOPE_SCRIPTS
 
