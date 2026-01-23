@@ -5,6 +5,12 @@
 #
 # Assumes that export_and_report() has already been made available
 #
+# In the current implementation of state management:
+# - each state corresponds to the existence of a file whose filename is of either form 
+#   PERM_xxx.state or SESH_xxx.state, where xxx is a string.
+# - the existence of a state’s file implies the state is true; the absence of a state’s file
+#   implies the state is false.
+#
 # There are two kinds of steps:
 # - Bootstrap
 # 	- Typically executed once per given Mac
@@ -21,7 +27,7 @@
 # 			    an app takes time)
 # 			- a manual configuration that can’t be automated (and therefore is too expensive for
 # 			  thoughtless repetition, even if doing so would be idempotent)
-# 			  - e.g., authentication of an app or external service
+# 			  - e.g., manual (i.e., interactive) authentication of an app or external service
 # 			  - e.g., implementing a setting that isn’t exposed to scripting (e.g., granting 
 # 			    full-disk access to an app)
 # - Maintenance
@@ -33,7 +39,7 @@
 # 	  	- `defaults write` commands, where you want to continually enforce the choices 
 # 	  	  specified by GenoMac-user, even if the user has deviated from those
 #
-# GenoMac-user and GenoMac-system each is its own distinct set of states. These two sets of
+# GenoMac-user and GenoMac-system each has is its own distinct set of states. These two sets of
 # states are kept segregated by being stored in separate directories. Nothing about their names
 # is sufficient to distinguish GenoMac-user states from GenoMac-system states.
 # 	  	  
@@ -43,13 +49,11 @@
 # 		  if an extraordinary circumstance arises that, after deliberation, is found to 
 # 		  warrant the repetition of this otherwise-bootstrap step.
 # 	- `SESH_` for “session”
-# 		- is cleared/reset/deleted as the final step of each successful session (or possibly
-# 		  at the beginning of each “new” session, though it’s not clear how to easily 
-# 		  determine that—without determining that the current SESH states take you all the 
-# 		  way to the end)
-# 		- `SESH_` states provide a mechanism such that the hypervisor script can be re-entered
-# 			(for example, following an enforced logout) and be able to determine which steps
-# 			can be skipped over and where to pick up the remaining sequence.
+# 		- is cleared/reset/deleted as the final step of each successful session
+#
+# States provide a mechanism such that the hypervisor script can be re-entered (for example,
+# following an enforced logout) and be able to determine which steps can be skipped over 
+# and where to pick up the remaining sequence.
 # 		  
 # The state mechanism is managed by the repository (i.e., GenoMac-system or GenoMac-user).
 # Therefore the state mechanism doesn’t cover the earliest stages of the GenoMac-system
