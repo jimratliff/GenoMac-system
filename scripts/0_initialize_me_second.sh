@@ -1,6 +1,19 @@
 #!/usr/bin/env zs
 
-# Intended to be sourced at the beginning of every entry-point script in ~/.genomac-system/
+# Sources common (cross-repo) helpers and environment variables from GenoMac-shared.
+#
+# Assumes that scripts/0_initialize_me_first.sh has already been sourced, from which is received:
+# - Environment variables
+#   - GMS_LOCAL_DIRECTORY      ~/.genomac-system
+#   - GMS_SCRIPTS              ${GMS_LOCAL_DIRECTORY}/scripts
+#   - GMS_HYPERVISOR_SCRIPTS   ${GMS_SCRIPTS}/hypervisor
+# - Functions
+#   - export_and_report
+#   - source_with_report
+#     - This will be disfavored relative to safe_source, once safe_source becomes available
+#       after helper-misc.sh is sourced
+#
+
 #
 # Performs:
 # - Exports:
@@ -50,29 +63,16 @@
 
 set -euo pipefail
 
-echo "Inside /scripts/0_initialize_me.sh"
+echo "Inside /scripts/0_initialize_me_second.sh"
 
 # Resolve directory of the current script
-this_script_path="${0:A}"
-GMS_SCRIPTS="${this_script_path:h}" # scripts
+# this_script_path="${0:A}"
+# GMS_SCRIPTS="${this_script_path:h}" # scripts
 
 # Helpers are sourced from the GenoMac-shared repo, which appears as a submodule
 GMS_HELPERS_DIR="${GMS_SCRIPTS:h}/external/genomac-shared/scripts"  # external/genomac-shared/scripts
 
-function source_with_report() {
-  # Ensures that an error is raised if a `source` of the file in the supplied argument fails.
-  #
-  # Defining this function here solves a chicken-or-egg problem: We’d like to use the helper 
-  # safe_source(), but it hasn’t been sourced yet. The current function is not quite as full functional 
-  # but will do for the initial sourcing of helpers.
-  local file="$1"
-  if source "$file"; then
-    echo "Sourced: $file"
-  else
-    echo "Failed to source: $file"
-    return 1
-  fi
-}
+
 
 # Source master helpers script from GenoMac-shared submodule
 source_with_report "${GMS_HELPERS_DIR}/helpers.sh"
