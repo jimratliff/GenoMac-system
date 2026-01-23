@@ -45,6 +45,7 @@
 #         of_resources/
 #       settings/
 #       user_scope/
+#       0_initialize_me_first.sh
 #     Makefile
 
 set -euo pipefail
