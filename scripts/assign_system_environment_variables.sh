@@ -10,7 +10,9 @@
 # - Local directory into which the GenoMac-system repo is cloned
 #   GMS_LOCAL_DIRECTORY="$HOME/.genomac-system" 
 # - Local directory that holds scripts
-#   GMS_SCRIPTS="${GMS_LOCAL_DIRECTORY}/scripts" 
+#   GMS_SCRIPTS="${GMS_LOCAL_DIRECTORY}/scripts"
+# - Local subdirectory of GMS_SCRIPTS that holds scripts specific to Hypervisor
+#   GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor" 
 
 # Local directory that holds declarative Homebrew files
 GMS_HOMEBREW="${GMS_LOCAL_DIRECTORY}/homebrew"
@@ -23,8 +25,8 @@ GMS_RESOURCES="${GMS_LOCAL_DIRECTORY}/resources"
 GMS_DOCS_TO_DISPLAY="${GMS_RESOURCES}/docs_to_display_to_user"
 
 ############### Subdirectories of /scripts
-# Hypervisor scripts
-GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
+# Hypervisor scripts (defined in 0_initialize_me_first.sh)
+# GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
 
 # Install scripts
 GMS_INSTALL_SCRIPTS="${GMS_SCRIPTS}/installations"
@@ -42,7 +44,8 @@ GMS_USER_SCOPE_SCRIPTS="${GMS_SCRIPTS}/user_scope"
 
 # Environment variables to support the Hypervisor
 GMS_HYPERVISOR_MAKE_COMMAND_STRING="make run-hypervisor"
-GMS_HYPERVISOR_HOW_TO_RESTART_STRING="To get back into the groove at any time, just re-execute ${GMS_HYPERVISOR_MAKE_COMMAND_STRING}${NEWLINE}and we’ll pick up where we left off."
+local message="To restart, re-execute ${GMS_HYPERVISOR_MAKE_COMMAND_STRING} and we’ll pick up where we left off."
+GMS_HYPERVISOR_HOW_TO_RESTART_STRING="${message}"
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
