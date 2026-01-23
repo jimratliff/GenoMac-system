@@ -2,10 +2,13 @@
 
 set -euo pipefail
 
-function sentinel_of_the_hypervisor() {
+function alphahypervisor() {
+  # Supervises the hypervisor by ensuring the GenoMac-system repository is updated before
+  # running the hypervisor. 
+  #
   # This is the function called first, directly, and immediately by `make hypervisor-run`.
   #
-  # It assumes that GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
+  # It assumes that GenoMac-system has been cloned locally to GMS_LOCAL_DIRECTORY (~/.genomac-system).
   # It is *not* necessary to update the clone before running this function, because this function updates the clone.
   #
   # Side effects:
