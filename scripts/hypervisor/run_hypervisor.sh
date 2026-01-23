@@ -1,7 +1,7 @@
 #!/usr/bin/env zs
 
-# Fail early on unset variables or command failure
-set -euo pipefail
+# Source environment variables corresponding to enums for states
+source_with_report "${GMS_HYPERVISOR_SCRIPTS}/assign_enum_env_vars_for_states.sh"
 
 function run_hypervisor() {
 
