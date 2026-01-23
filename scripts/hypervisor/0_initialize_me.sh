@@ -66,7 +66,7 @@ function source_with_report() {
   if source "$file"; then
     echo "Sourced: $file"
   else
-    return "Failed to source: $file"
+    echo "Failed to source: $file"
     return 1
   fi
 }
