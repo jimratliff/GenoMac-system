@@ -18,8 +18,6 @@
 #   - assign_system_environment_variables.sh, which exports the environment variables that are 
 #     specific to this repository
 #
-# It is assumed that the sourcing entry-point script is located at ~/.genomac-system/scripts
-#
 # Assumed directory structure
 #   ~/.genomac-system/
 #     external/
@@ -35,14 +33,18 @@
 #       sounds
 #         alerts
 #     scripts/
+#       hypervisor/
+#         0_initialize_me.sh        # You are HERE!
+#         alphahypervisor.sh
+#         assign_enum_env_vars_for_states.sh
+#         assign_system_environment_variables.sh
+#         run_hypervisor.sh
 #       installations/
 #         homebrew/
 #         non_homebrew/
 #         of_resources/
 #       settings/
 #       user_scope/
-#       0_initialize_me.sh        # You are HERE!
-#       an_entry_point_script.sh  # The script of interest, will source 0_initialize_me.sh
 #     Makefile
 
 set -euo pipefail
