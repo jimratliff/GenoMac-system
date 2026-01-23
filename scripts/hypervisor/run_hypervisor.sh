@@ -3,29 +3,13 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-
-
-
-
-############### Context
-# It is assumed that, prior to running this script:
-# - Homebrew has been installed
-#   - Installing Homebrew also installs Xcode Developer Tools, which itself installs git
-# - The GenoMac-system repo has been cloned to the ~/.genomac-system directory within 
-#   USER_CONFIGURER’s home directory.
-# - `run-hypervisor` is a defined recipe in `Makefile`.
-#
-# This script can then be executed by launching Terminal and then typing:
-#   cd ~/.genomac-system
-#   make run-hypervisor
-
 function run_hypervisor() {
 
   report_start_phase_standard
 
   # Source required files
   # NOTE: At this point, safe_source is *not* available
-  source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
+  # source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
   # NOTE: Beyond this point, safe_source *is* available
   safe_source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_non_homebrew_apps.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/adjust_path_for_homebrew.sh"
