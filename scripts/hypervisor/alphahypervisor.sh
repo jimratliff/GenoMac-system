@@ -54,7 +54,7 @@ function alphahypervisor() {
   hypervisor_script="${GMS_HYPERVISOR_SCRIPTS}/run_hypervisor.sh"
   source_with_report "$hypervisor_script"
 
-  run_hypervisor
+  # run_hypervisor
 
   echo "Leaving alphahypervisor"
 }
