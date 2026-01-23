@@ -17,6 +17,8 @@ function alphahypervisor() {
   #   - GMS_SCRIPTS="${GMS_LOCAL_DIRECTORY}/scripts"
   #   - GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
 
+  echo "Inside alphahypervisor"
+
   # Specify local directory into which the GenoMac-system repository will be cloned
   GMS_LOCAL_DIRECTORY="$HOME/.genomac-system"
   GMS_SCRIPTS="${GMS_LOCAL_DIRECTORY}/scripts"
@@ -39,18 +41,32 @@ function alphahypervisor() {
   # Now that GenoMac-system has been updated, spawn the hypervisor that manages the bootstrapping/maintenance
   # of the system-scoped configuration
 
-  hypervisor_script="$GMS_HYPERVISOR_SCRIPTS/run_hypervisor.sh"
-  if source "$hypervisor_script"; then
-    echo "Sourced: $hypervisor_script"
-  else
-    return "Failed to source: $hypervisor_script"
-    return 1
-  fi
-  
-  run_hypervisor
+  function source_with_report() {
+    # Ensures that an error is raised if a `source` of the file in the supplied argument fails.
+    #
+    # Defining this function here solves a chicken-or-egg problem: We’d like to use the helper 
+    # safe_source(), but it hasn’t been sourced yet. The current function is not quite as full functional 
+    # but will do for the initial sourcing of helpers.
+    local file="$1"
+    if source "$file"; then
+      echo "Sourced: $file"
+    else
+      echo "Failed to source: $file"
+      return 1
+    fi
+  }
 
+  initialization_script="$GMS_HYPERVISOR_SCRIPTS/0_initialize_me.sh"
+  hypervisor_script="$GMS_HYPERVISOR_SCRIPTS/run_hypervisor.sh"
+  source_with_report "$initialization_script"
+  source_with_report "$hypervisor_script"
   unfunction source_with_report
   unfunction export_and_report
+
+  run_hypervisor
+
+  echo "Leaving alphahypervisor"
+
 }
 
 function update_genomac_system_repo() {
