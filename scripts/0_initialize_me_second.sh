@@ -22,7 +22,8 @@
 # Performs:
 # - Exports:
 #   - GMS_HELPERS_DIR           external/genomac-shared/scripts
-#     - the path to the helper scripts from the submodule GenoMac-shared
+#     - the path (from *this* repo’s perspective) to the helper scripts provided by the 
+#       submodule GenoMac-shared
 # - Sources:
 #   - the helpers.sh script from GenoMac-shared, which in turn:
 #     - sources all the other helpers-xxx.sh scripts from GenoMac-shared
