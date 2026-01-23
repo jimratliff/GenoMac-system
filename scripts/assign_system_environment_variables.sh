@@ -15,10 +15,7 @@ GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
 
 
 
-# Specify local directory into which the GenoMac-system repository will be 
-# cloned
-# Note: This repo is cloned only by USER_CONFIGURER.
-GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
+
 
 # Specify the local directory that holds resources (files or folders) needed for particular
 # operations by GenoMac-system
@@ -36,7 +33,6 @@ GMS_HYPERVISOR_HOW_TO_RESTART_STRING="To get back into the groove at any time, j
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
-export_and_report GENOMAC_SYSTEM_LOCAL_DIRECTORY
 export_and_report GENOMAC_SYSTEM_LOCAL_DOCS_TO_DISPLAY
 export_and_report GENOMAC_SYSTEM_LOCAL_DOCUMENTATION_DIRECTORY
 export_and_report GENOMAC_SYSTEM_LOCAL_HOMEBREW_DIRECTORY
