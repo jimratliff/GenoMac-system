@@ -27,7 +27,8 @@ function alphahypervisor() {
   #       after helper-misc.sh is sourced
 
   # WARNING: The below path for initial_initialization_script is hard-wired (without reference
-  # to the appropriate environment variable and needs to be monitored for continued appropriateness.
+  # to the appropriate environment variable (GMS_LOCAL_DIRECTORY) and needs to be monitored for 
+  # continued appropriateness.
   initial_initialization_script="$HOME/.genomac-system/scripts/0_initialize_me_first.sh"
   if source "$initial_initialization_script" 2>/dev/null; then
     echo "Sourced: $initial_initialization_script"
