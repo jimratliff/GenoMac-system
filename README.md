@@ -324,7 +324,7 @@ git remote set-url --push origin git@github.com:jimratliff/GenoMac-system.git
 #### To add GenoMac-shared as a submodule of GenoMac-user
 ```
 cd ~/.genomac-system
-git submodule add https://github.com/jimratliff/genomac-shared.git external/genomac-shared
+git submodule add https://github.com/jimratliff/GenoMac-shared.git external/genomac-shared
 git commit -m "Add genomac-shared submodule"
 git push origin main
 ```
