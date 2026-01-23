@@ -51,8 +51,6 @@ function alphahypervisor() {
   hypervisor_script="$GMS_HYPERVISOR_SCRIPTS/run_hypervisor.sh"
   source_with_report "$initialization_script"
   source_with_report "$hypervisor_script"
-  unfunction source_with_report
-  unfunction export_and_report
 
   run_hypervisor
 
@@ -62,9 +60,10 @@ function alphahypervisor() {
 
 function update_genomac_system_repo() {
   if [[ ! -d ~/.genomac-system || -z "$(ls -A ~/.genomac-system 2>/dev/null)" ]]; then
-    echo "You must clone the GenoMac-system repo to ${GENOMAC_SYSTEM_LOCAL_DIRECTORY} before running the Hypervisor"
+    echo "You must clone the GenoMac-system repo to ${GMS_LOCAL_DIRECTORY} before running the Hypervisor"
     return 1
   fi
-  cd "${GENOMAC_SYSTEM_LOCAL_DIRECTORY}"
+  
+  cd "${GMS_LOCAL_DIRECTORY}"
   git pull --recurse-submodules origin main
 }
