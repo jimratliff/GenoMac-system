@@ -52,9 +52,6 @@ source_with_report "${GMS_HELPERS_DIR}/helpers.sh"
 # Source repo-specific environment-variables script
 source_with_report "${GMS_SCRIPTS}/assign_system_environment_variables.sh"
 
-# Source environment variables corresponding to enums for states
-source_with_report "${GMS_HYPERVISOR_SCRIPTS}/assign_enum_env_vars_for_states.sh"
-
 # Note: The above source of master_common_helpers_script will make available export_and_report(),
 #       which is used directly below.
 # export_and_report GMS_SCRIPTS
