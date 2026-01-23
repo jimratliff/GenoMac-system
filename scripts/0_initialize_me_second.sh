@@ -34,7 +34,6 @@
 #         alerts
 #     scripts/
 #       hypervisor/
-#         0_initialize_me.sh        # You are HERE!
 #         alphahypervisor.sh
 #         assign_enum_env_vars_for_states.sh
 #         assign_system_environment_variables.sh
