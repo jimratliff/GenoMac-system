@@ -16,12 +16,12 @@ function sentinel_of_the_hypervisor() {
 
     # Specify local directory into which the GenoMac-system repository will be cloned
     GMS_LOCAL_DIRECTORY="$HOME/.genomac-system"
-    GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
+    GMS_SCRIPTS="${GMS_LOCAL_DIRECTORY}/scripts"
     GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
     
-    export_and_report "$GMS_LOCAL_DIRECTORY"
-    export_and_report "$GMS_SCRIPTS"
-    export_and_report "$GMS_HYPERVISOR_SCRIPTS"
+    export_and_report "GMS_LOCAL_DIRECTORY"
+    export_and_report "GMS_SCRIPTS"
+    export_and_report "GMS_HYPERVISOR_SCRIPTS"
 
     # Updates the clone of GenoMac-system that is assumed to reside at GENOMAC_SYSTEM_LOCAL_DIRECTORY
     update_genomac_system_repo
