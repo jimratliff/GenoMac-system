@@ -11,8 +11,8 @@
 #
 # Exports:
 # - Environment variables
-#   - GMS_LOCAL_DIRECTORY      ~/.genomac-system
-#   - GMS_SCRIPTS              ${GMS_LOCAL_DIRECTORY}/scripts
+#   - GENOMAC_SYSTEM_LOCAL_DIRECTORY      ~/.genomac-system
+#   - GMS_SCRIPTS              ${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts
 #   - GMS_HYPERVISOR_SCRIPTS   ${GMS_SCRIPTS}/hypervisor
 # - Functions
 #   - export_and_report
@@ -45,10 +45,10 @@ function source_with_report() {
 }
 
 # Specify local directory into which the GenoMac-system repository will be cloned
-GMS_LOCAL_DIRECTORY="$HOME/.genomac-system"
-GMS_SCRIPTS="${GMS_LOCAL_DIRECTORY}/scripts"
+GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
+GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
 GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
 
-export_and_report "GMS_LOCAL_DIRECTORY"
+export_and_report "GENOMAC_SYSTEM_LOCAL_DIRECTORY"
 export_and_report "GMS_SCRIPTS"
 export_and_report "GMS_HYPERVISOR_SCRIPTS"
