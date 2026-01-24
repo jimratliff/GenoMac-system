@@ -10,9 +10,9 @@
 # 
 # Assumes that scripts/0_initialize_me_first.sh has already been sourced, from which is received:
 # - Environment variables
-#   - GMS_LOCAL_DIRECTORY      ~/.genomac-system
-#   - GMS_SCRIPTS              ${GMS_LOCAL_DIRECTORY}/scripts
-#   - GMS_HYPERVISOR_SCRIPTS   ${GMS_SCRIPTS}/hypervisor
+#   - GENOMAC_SYSTEM_LOCAL_DIRECTORY  ~/.genomac-system
+#   - GMS_SCRIPTS                     ${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts
+#   - GMS_HYPERVISOR_SCRIPTS          ${GMS_SCRIPTS}/hypervisor
 # - Functions
 #   - export_and_report
 #   - source_with_report
@@ -21,7 +21,7 @@
 #
 # Performs:
 # - Exports:
-#   - GMS_HELPERS_DIR           external/genomac-shared/scripts
+#   - GMS_HELPERS_DIR                 external/genomac-shared/scripts
 #     - the path (from *this* repo’s perspective) to the helper scripts provided by the 
 #       submodule GenoMac-shared
 # - Sources:
