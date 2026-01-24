@@ -11,9 +11,9 @@
 #
 # Exports:
 # - Environment variables
-#   - GENOMAC_SYSTEM_LOCAL_DIRECTORY      ~/.genomac-system
-#   - GMS_SCRIPTS              ${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts
-#   - GMS_HYPERVISOR_SCRIPTS   ${GMS_SCRIPTS}/hypervisor
+#   - GENOMAC_SYSTEM_LOCAL_DIRECTORY   ~/.genomac-system
+#   - GMS_SCRIPTS                      ${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts
+#   - GMS_HYPERVISOR_SCRIPTS           ${GMS_SCRIPTS}/hypervisor
 # - Functions
 #   - export_and_report
 #   - source_with_report
