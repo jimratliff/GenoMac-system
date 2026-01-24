@@ -8,18 +8,18 @@
 
 # Aliases defined in scripts/0_initialize_me_first.sh
 # - Local directory into which the GenoMac-system repo is cloned
-#   GMS_LOCAL_DIRECTORY="$HOME/.genomac-system" 
+#   GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system" 
 # - Local directory that holds scripts
-#   GMS_SCRIPTS="${GMS_LOCAL_DIRECTORY}/scripts"
+#   GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
 # - Local subdirectory of GMS_SCRIPTS that holds scripts specific to Hypervisor
 #   GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor" 
 
 # Local directory that holds declarative Homebrew files
-GMS_HOMEBREW="${GMS_LOCAL_DIRECTORY}/homebrew"
+GMS_HOMEBREW="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/homebrew"
 
 # Local directory that holds resources (files or folders) needed for particular
 # operations by GenoMac-system, typically resources to be installed at the system level
-GMS_RESOURCES="${GMS_LOCAL_DIRECTORY}/resources"
+GMS_RESOURCES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
 
 # Specify the local directory that holds documentation files to display to the executing user
 GMS_DOCS_TO_DISPLAY="${GMS_RESOURCES}/docs_to_display_to_user"
