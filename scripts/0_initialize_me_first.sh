@@ -1,5 +1,9 @@
 #!/usr/bin/env zs
 
+# Initializes any entry-point script by sourcing (a) helpers and cross-repo environment variables
+# from GenoMac-shared and (b) environment variables specific to the GenoMac-system repository.
+#
+#
 #
 # Exports:
 # - Environment variables
@@ -14,6 +18,22 @@
 
 # Fail early on unset variables or command failure
 set -euo pipefail
+
+# Resolve directory of the current script
+this_script_path="${0:A}"                       # ~/.genomac-system/scripts/0_initialize_me_first.sh
+GENOMAC_SYSTEM_SCRIPTS="${this_script_path:h}"  # ~/.genomac-system/scripts
+GENOMAC_SYSTEM_ROOT="${GMS_SCRIPTS:h}"          # ~/.genomac-system
+GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM="${GENOMAC_SYSTEM_ROOT}/external/genomac-shared"
+
+############### Source helpers and environment variables from GenoMac-shared,
+#               which appears as a submodule of GenoMac-system
+HELPERS_FROM_GENOMAC_SHARED="${GENOMAC_SYSTEM_SCRIPTS:h}/external/genomac-shared/scripts"  # external/genomac-shared/scripts
+# Source the master-helper script from GenoMac-shared submodule
+source_with_report "${HELPERS_FROM_GENOMAC_SHARED}/helpers.sh"
+
+############### Source environment variables specific to this repository
+# Source repo-specific environment-variables script
+source_with_report "${GMS_SCRIPTS}/assign_system_environment_variables.sh"
 
 function export_and_report() {
   local var_name="$1"
@@ -37,32 +57,12 @@ function source_with_report() {
 }
 
 # Specify local directory into which the GenoMac-system repository will be cloned
-GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
-GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
-GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
+# GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
 
-export_and_report "GENOMAC_SYSTEM_LOCAL_DIRECTORY"
-export_and_report "GMS_SCRIPTS"
-export_and_report "GMS_HYPERVISOR_SCRIPTS"
+# export_and_report "GMS_SCRIPTS"
 
-############### Source helpers and environment variables from GenoMac-shared
-# Helpers are sourced from the GenoMac-shared repo, which appears as a submodule
-# NOTE:
-# - The GMS_ prefix here indicates that these are helpers used by GenoMac-system, but the helpers
-#   themselves are from GenoMac-shared, which appears as a submodule.
-# - GenoMac-shared itself exports environment variables which give the locations of its subdirectories
-#   relative to GenoMac-shared’s root. See, e.g., GENOMAC_SHARED_ROOT, GENOMAC_SHARED_RESOURCE_DIRECTORY,
-#   GENOMAC_SHARED_DOCS_TO_DISPLAY_DIRECTORY
 
-GMS_HELPERS_DIR="${GMS_SCRIPTS:h}/external/genomac-shared/scripts"  # external/genomac-shared/scripts
 
-# Source the master-helper script from GenoMac-shared submodule
-source_with_report "${GMS_HELPERS_DIR}/helpers.sh"
 
-############### Source environment variables specific to this repository
-# Source repo-specific environment-variables script
-source_with_report "${GMS_SCRIPTS}/assign_system_environment_variables.sh"
 
-# Note: The above source of master_common_helpers_script will make available export_and_report(),
-#       which is used directly below.
-export_and_report GMS_HELPERS_DIR
+
