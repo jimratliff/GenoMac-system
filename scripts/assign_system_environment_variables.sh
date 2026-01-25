@@ -42,11 +42,6 @@ GMS_USER_SCOPE_SCRIPTS="${GMS_SCRIPTS}/user_scope"
 
 ###
 
-# Environment variables to support the Hypervisor
-GMS_HYPERVISOR_MAKE_COMMAND_STRING="make run-hypervisor"
-local message="To restart, re-execute ${GMS_HYPERVISOR_MAKE_COMMAND_STRING} and we’ll pick up where we left off."
-GMS_HYPERVISOR_HOW_TO_RESTART_STRING="${message}"
-
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
 export_and_report GMS_DOCS_TO_DISPLAY
