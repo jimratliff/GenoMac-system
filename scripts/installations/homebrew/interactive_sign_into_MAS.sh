@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 function conditionally_interactive_sign_into_MAS() {
   report_start_phase_standard
