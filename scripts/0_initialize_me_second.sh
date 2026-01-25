@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 # Sources (a) common (cross-repo) (1) helpers and (2) environment variables from GenoMac-shared
 # and (b) environment variables specific to this repository.
