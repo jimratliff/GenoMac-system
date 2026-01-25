@@ -3,8 +3,8 @@
 set -euo pipefail
 
 function hypervisor() {
-  # Supervises the hypervisor by ensuring the GenoMac-system repository is updated before
-  # running the hypervisor. 
+  # The outermost layer of hypervisory supervison. Ensures the GenoMac-system repository is updated
+  # before running the subdermal layer (subdermis). 
   #
   # This is the function called first, directly, and immediately by `make run-hypervisor`.
   #
@@ -14,7 +14,7 @@ function hypervisor() {
   #     updates the clone.
   # - scripts/0_initialize_me_first.sh has been sourced
   
-  echo "Inside alphahypervisor"
+  echo "Inside hypervisor"
 
   ############### Update clone
   # Updates the clone of GenoMac-system that is assumed to reside at GENOMAC_SYSTEM_LOCAL_DIRECTORY
@@ -30,12 +30,13 @@ function hypervisor() {
   ############### Spawn Hypervisor
   # Spawn the hypervisor that manages the bootstrapping/maintenance of the system-scoped configuration
   
-  hypervisor_script="${GMS_HYPERVISOR_SCRIPTS}/run_hypervisor.sh"
+  hypervisor_script="${GMS_HYPERVISOR_SCRIPTS}/subdermis.sh"
   source_with_report "$hypervisor_script"
 
-  # run_hypervisor
+  # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
+  # subdermis
 
-  echo "Leaving alphahypervisor"
+  echo "Leaving hypervisor"
 }
 
 function update_genomac_system_repo() {
