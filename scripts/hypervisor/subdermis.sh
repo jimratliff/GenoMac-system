@@ -17,6 +17,10 @@ function subdermis() {
   safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
   safe_source "${GMS_USER_SCOPE_SCRIPTS}/clone_genomac_user_repo.sh"
 
+  GMS_HYPERVISOR_MAKE_COMMAND_STRING="make run-hypervisor"
+  local hypervisor_make_message="To restart, re-execute ${GMS_HYPERVISOR_MAKE_COMMAND_STRING} and we’ll pick up where we left off."
+  GMS_HYPERVISOR_HOW_TO_RESTART_STRING="${hypervisor_make_message}"
+
   # TODO:
   # - Consider checking $set_genomac_system_state "$SESH_REACHED_FINALITY" to
   #   check whether this is an immediate reentry after a complete session and,
