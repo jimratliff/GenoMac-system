@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 # Runs the function alphahypervisor, which is the entry point for the Hypervisor process.
 
