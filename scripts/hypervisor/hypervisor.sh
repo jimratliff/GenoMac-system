@@ -30,8 +30,8 @@ function hypervisor() {
   ############### Spawn Hypervisor
   # Spawn the hypervisor that manages the bootstrapping/maintenance of the system-scoped configuration
   
-  hypervisor_script="${GMS_HYPERVISOR_SCRIPTS}/subdermis.sh"
-  source_with_report "$hypervisor_script"
+  subdermal_script="${GMS_subdermal_scriptS}/subdermis.sh"
+  source_with_report "$subdermal_script"
 
   # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
   # subdermis
