@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 # Source the function file(s)
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_alan_app.sh"
