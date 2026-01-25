@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 function conditionally_install_via_homebrew() {
   report_start_phase_standard
