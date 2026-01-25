@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 function conditionally_adjust_path_for_homebrew() {
   report_start_phase_standard
