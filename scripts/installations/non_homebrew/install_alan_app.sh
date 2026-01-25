@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 function install_alan_app() {
   # Installs Tyler Hall’s “Alan” macOS app into /Applications.
