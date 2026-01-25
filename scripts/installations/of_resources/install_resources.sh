@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 # Source function(s)
 # Resource-related scripts should be placed in GenoMac-system/scripts/resource_installation
