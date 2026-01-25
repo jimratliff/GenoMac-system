@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 function install_matrix_screensaver_systemwide() {
   # Installs Monroe Williams’ “MatrixDownload” screensaver systemwide.
