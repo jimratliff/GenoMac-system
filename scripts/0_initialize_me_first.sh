@@ -10,9 +10,9 @@ local GENOMAC_SYSTEM_SCRIPTS
 local GENOMAC_SYSTEM_ROOT
 local GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM
 
-this_script_path="${0:A}"                       # ~/.genomac-system/scripts/0_initialize_me_first.sh
-GENOMAC_SYSTEM_SCRIPTS="${this_script_path:h}"  # ~/.genomac-system/scripts
-GENOMAC_SYSTEM_ROOT="${GMS_SCRIPTS:h}"          # ~/.genomac-system
+this_script_path="${0:A}"                           # ~/.genomac-system/scripts/0_initialize_me_first.sh
+GENOMAC_SYSTEM_SCRIPTS="${this_script_path:h}"      # ~/.genomac-system/scripts
+GENOMAC_SYSTEM_ROOT="${GENOMAC_SYSTEM_SCRIPTS:h}"   # ~/.genomac-system
 GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM="${GENOMAC_SYSTEM_ROOT}/external/genomac-shared"
 
 # Source helpers and environment variables from GenoMac-shared, which appears as a submodule of GenoMac-system
