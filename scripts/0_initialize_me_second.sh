@@ -21,7 +21,7 @@
 #
 # Performs:
 # - Exports:
-#   - GMS_HELPERS_DIR                 external/genomac-shared/scripts
+#   - GMS_HELPERS_DIR                  external/genomac-shared/scripts
 #     - the path (from *this* repo’s perspective) to the helper scripts provided by the 
 #       submodule GenoMac-shared
 # - Sources:
@@ -36,6 +36,7 @@ set -euo pipefail
 
 echo "Inside /scripts/0_initialize_me_second.sh"
 
+# LEGACY COMMENT; retained for historical purposes and potential future use
 # Resolve directory of the current script
 # this_script_path="${0:A}"
 # GMS_SCRIPTS="${this_script_path:h}" # scripts
@@ -51,7 +52,7 @@ echo "Inside /scripts/0_initialize_me_second.sh"
 
 GMS_HELPERS_DIR="${GMS_SCRIPTS:h}/external/genomac-shared/scripts"  # external/genomac-shared/scripts
 
-# Source master helpers script from GenoMac-shared submodule
+# Source the master-helper script from GenoMac-shared submodule
 source_with_report "${GMS_HELPERS_DIR}/helpers.sh"
 
 ############### Source environment variables specific to this repository
