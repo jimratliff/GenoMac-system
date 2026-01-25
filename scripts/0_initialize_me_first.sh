@@ -25,4 +25,5 @@ echo "Source ${master_helper_script}"
 source "${master_helper_script}"
 
 # Source repo-specific environment-variables script
+# NOTE: Now that the helpers from GenoMac-shared have been sourced, source_with_report is available
 source_with_report "${GMS_SCRIPTS}/assign_system_environment_variables.sh"
