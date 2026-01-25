@@ -22,11 +22,11 @@ else
 fi
 
 # Source required files
-source "${GMS_HYPERVISOR_SCRIPTS}/alphahypervisor.sh"
+source "${GMS_HYPERVISOR_SCRIPTS}/hypervisor.sh"
 
 
 function main() {
-  alphahypervisor
+  hypervisor
 }
 
 main
