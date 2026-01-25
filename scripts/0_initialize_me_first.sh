@@ -1,17 +1,5 @@
 #!/usr/bin/env zs
 
-# Provides the bare minimum of configuration to support (a) updating the local clone of
-# GenoMac-system and (b) launching the script that begins the post-updating remainder of
-# the Hypervisor process.
-#
-# By minimizing the amount of repository code sourced prior to updating the repo, it minimizes
-# the likelihood that any recent change in the remote repo’s code (between the pre-update state 
-# of the local clone and the post-update state of the local clone) would implicate the current
-# script.
-#
-# WARNING: If the current script file changes materially (e.g., other than comments), the 
-#          Hypervisor should be aborted immediately after the clone is updated and the Hypervisor
-#          should then be restarted.
 #
 # Exports:
 # - Environment variables
@@ -56,3 +44,25 @@ GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
 export_and_report "GENOMAC_SYSTEM_LOCAL_DIRECTORY"
 export_and_report "GMS_SCRIPTS"
 export_and_report "GMS_HYPERVISOR_SCRIPTS"
+
+############### Source helpers and environment variables from GenoMac-shared
+# Helpers are sourced from the GenoMac-shared repo, which appears as a submodule
+# NOTE:
+# - The GMS_ prefix here indicates that these are helpers used by GenoMac-system, but the helpers
+#   themselves are from GenoMac-shared, which appears as a submodule.
+# - GenoMac-shared itself exports environment variables which give the locations of its subdirectories
+#   relative to GenoMac-shared’s root. See, e.g., GENOMAC_SHARED_ROOT, GENOMAC_SHARED_RESOURCE_DIRECTORY,
+#   GENOMAC_SHARED_DOCS_TO_DISPLAY_DIRECTORY
+
+GMS_HELPERS_DIR="${GMS_SCRIPTS:h}/external/genomac-shared/scripts"  # external/genomac-shared/scripts
+
+# Source the master-helper script from GenoMac-shared submodule
+source_with_report "${GMS_HELPERS_DIR}/helpers.sh"
+
+############### Source environment variables specific to this repository
+# Source repo-specific environment-variables script
+source_with_report "${GMS_SCRIPTS}/assign_system_environment_variables.sh"
+
+# Note: The above source of master_common_helpers_script will make available export_and_report(),
+#       which is used directly below.
+export_and_report GMS_HELPERS_DIR
