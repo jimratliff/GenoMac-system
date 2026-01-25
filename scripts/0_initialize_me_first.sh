@@ -23,9 +23,6 @@ echo "this_script_path: ${this_script_path}
 
 # Source the master-helper script from GenoMac-shared submodule, which sources helpers and environment variables
 # from GenoMac-shared
-local HELPERS_FROM_GENOMAC_SHARED
-local master_helper_script
-
 HELPERS_FROM_GENOMAC_SHARED="${GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM}/scripts"  # external/genomac-shared/scripts
 master_helper_script="${HELPERS_FROM_GENOMAC_SHARED}/helpers.sh"
 
@@ -33,7 +30,6 @@ echo "Source ${master_helper_script}"
 source "${master_helper_script}"
 
 # Source repo-specific environment-variables script
-local repo_specific_environment_variables
 repo_specific_environment_variables="${GENOMAC_SYSTEM_SCRIPTS}/assign_system_environment_variables.sh"
 
 echo "Source ${repo_specific_environment_variables}"
