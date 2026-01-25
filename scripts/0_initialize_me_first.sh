@@ -7,10 +7,19 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-this_script_path="${0:A}"                           # ~/.genomac-system/scripts/0_initialize_me_first.sh
+# Get path of THIS script, even when sourced
+# Explanation:
+# %x — zsh prompt escape meaning "path of the script being sourced"
+# ${(%):-%x} — trick to evaluate a prompt escape outside a prompt (the (%) flag)
+# ${...:A} — resolve to absolute path
+# So ${${(%):-%x}:A} means "the absolute path of the file currently being sourced."
+this_script_path="${${(%):-%x}:A}"                  # ~/.genomac-system/scripts/0_initialize_me_first.sh
+
 GENOMAC_SYSTEM_SCRIPTS="${this_script_path:h}"      # ~/.genomac-system/scripts
 GENOMAC_SYSTEM_ROOT="${GENOMAC_SYSTEM_SCRIPTS:h}"   # ~/.genomac-system
 GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM="${GENOMAC_SYSTEM_ROOT}/external/genomac-shared"
+
+echo "this_script_path: ${this_script_path}
 
 # Source the master-helper script from GenoMac-shared submodule, which sources helpers and environment variables
 # from GenoMac-shared
