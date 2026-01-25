@@ -5,7 +5,6 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-initial_initialization_script
 initial_initialization_script="$HOME/.genomac-system/scripts/0_initialize_me_first.sh"
 
 if source "$initial_initialization_script" 2>/dev/null; then
