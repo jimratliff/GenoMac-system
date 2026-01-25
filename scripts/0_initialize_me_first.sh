@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 # Initializes any entry-point script by sourcing:
 # - helpers and cross-repo environment variables from GenoMac-shared
