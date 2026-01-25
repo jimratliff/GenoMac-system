@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 function install_fira_code_nerd_font_systemwide() {
   # Installs the latest version Fira Code Nerdfont for all users (i.e., systemwide) if missing or changed
