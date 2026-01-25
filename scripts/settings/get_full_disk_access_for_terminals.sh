@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 function ensure_terminal_has_fda() {
   # Run at the beginning of a terminal session to try to ensure the currently running terminal
