@@ -1,4 +1,4 @@
-#!/usr/bin/env zs
+#!/usr/bin/env zsh
 
 function install_visualdiffer() {
   # Installs VisualDiffer macOS app, by Davide Ficano, et al., into /Applications.
