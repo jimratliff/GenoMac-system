@@ -45,7 +45,7 @@ function alphahypervisor() {
   ############### Finish initializations
   # Now that repo is updated, we can finish the initialization process
 
-  secondary_initialization_script="${GMS_HYPERVISOR_SCRIPTS}/0_initialize_me_second.sh"
+  secondary_initialization_script="${GMS_SCRIPTS}/0_initialize_me_second.sh"
   source_with_report "${secondary_initialization_script}"
 
   ############### Spawn Hypervisor
