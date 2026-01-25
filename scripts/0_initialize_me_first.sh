@@ -1,13 +1,17 @@
 #!/usr/bin/env zs
 
-# The earliest component of initialization, designed to minimize the amount of repository 
-# code on which it relies, while still having the bare minimum supporting updating the repository.
-# This allows this script to be called to support updating the repository, while minimizing the
-# likelihood/severity of this small amount of relied-upon repository code being changed
-# underneath when the repository is updated.
+# Provides the bare minimum of configuration to support (a) updating the local clone of
+# GenoMac-system and (b) launching the script that begins the post-updating remainder of
+# the Hypervisor process.
 #
-# WARNING: If this file changes materially (e.g., other than comments), the Hypervisor should be
-#          aborted immediately after the clone is updated and the Hypervisor should then be restarted.
+# By minimizing the amount of repository code sourced prior to updating the repo, it minimizes
+# the likelihood that any recent change in the remote repo’s code (between the pre-update state 
+# of the local clone and the post-update state of the local clone) would implicate the current
+# script.
+#
+# WARNING: If the current script file changes materially (e.g., other than comments), the 
+#          Hypervisor should be aborted immediately after the clone is updated and the Hypervisor
+#          should then be restarted.
 #
 # Exports:
 # - Environment variables
