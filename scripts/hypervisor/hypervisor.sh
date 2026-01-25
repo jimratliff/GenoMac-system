@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-function alphahypervisor() {
+function hypervisor() {
   # Supervises the hypervisor by ensuring the GenoMac-system repository is updated before
   # running the hypervisor. 
   #
