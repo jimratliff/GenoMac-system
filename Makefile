@@ -20,10 +20,9 @@
 # --------------------------------------------------------------------
 
 run-hypervisor:
-	zsh scripts/hypervisor/alphahypervisor.sh
+	zsh scripts/run_hypervisor.sh
 
 refresh-repo:
-	cd ~/.genomac-system
 	git -C ~/.genomac-system pull --recurse-submodules origin main
 
 ## Updates genomac-system repo, including genomac-shared submodule, and pushes it back to GitHub
