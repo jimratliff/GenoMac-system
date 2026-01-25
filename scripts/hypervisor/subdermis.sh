@@ -8,9 +8,6 @@ function subdermis() {
   report_start_phase_standard
 
   # Source required files
-  # NOTE: At this point, safe_source is *not* available
-  # source "${HOME}/.genomac-system/scripts/0_initialize_me.sh"
-  # NOTE: Beyond this point, safe_source *is* available
   safe_source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_non_homebrew_apps.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/adjust_path_for_homebrew.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
