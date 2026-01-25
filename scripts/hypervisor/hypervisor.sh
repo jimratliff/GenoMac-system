@@ -24,6 +24,7 @@ function hypervisor() {
   ############### Finish initializations
   # Now that repo is updated, we can finish the initialization process
 
+  local secondary_initialization_script
   secondary_initialization_script="${GMS_SCRIPTS}/0_initialize_me_second.sh"
   source_with_report "${secondary_initialization_script}"
 
