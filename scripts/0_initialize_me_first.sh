@@ -7,11 +7,6 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-local GENOMAC_SYSTEM_ROOT
-local GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM
-local GENOMAC_SYSTEM_SCRIPTS
-local this_script_path
-
 this_script_path="${0:A}"                           # ~/.genomac-system/scripts/0_initialize_me_first.sh
 GENOMAC_SYSTEM_SCRIPTS="${this_script_path:h}"      # ~/.genomac-system/scripts
 GENOMAC_SYSTEM_ROOT="${GENOMAC_SYSTEM_SCRIPTS:h}"   # ~/.genomac-system
