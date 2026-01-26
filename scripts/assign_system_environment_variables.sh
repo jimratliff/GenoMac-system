@@ -6,10 +6,11 @@
 
 ############### Aliases to intra-repository hierarchical structures
 
-# Aliases defined in scripts/0_initialize_me_first.sh
 # - Local directory into which the GenoMac-system repo is cloned
-GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system" 
-# - Local directory that holds scripts (exported by 0_initialize_me_first.sh)
+# Defined in GenoMac-shared/scripts/assign_common_environment_variables.sh
+# GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
+
+# - Local directory that holds scripts
 #   GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
 # - Local subdirectory of GMS_SCRIPTS that holds scripts specific to Hypervisor
 GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor" 
