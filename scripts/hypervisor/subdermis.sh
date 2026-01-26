@@ -8,7 +8,7 @@ function subdermis() {
   report_start_phase_standard
 
   # Source required files
-  safe_source "${GMS_HOMEBREW_INSTALL_SCRIPTS}/install_via_homebrew.sh""
+  safe_source "${GMS_HOMEBREW_INSTALL_SCRIPTS}/install_via_homebrew.sh"
   safe_source "${GMS_HOMEBREW_INSTALL_SCRIPTS}/interactive_sign_into_MAS.sh"
   safe_source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_non_homebrew_apps.sh"
   safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
