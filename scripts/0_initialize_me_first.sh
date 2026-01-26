@@ -23,7 +23,7 @@ this_script_path="${${(%):-%x}:A}"                  # ~/.genomac-system/scripts/
 
 GENOMAC_SYSTEM_SCRIPTS="${this_script_path:h}"      # ~/.genomac-system/scripts
 GENOMAC_SYSTEM_ROOT="${GENOMAC_SYSTEM_SCRIPTS:h}"   # ~/.genomac-system
-GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM="${GENOMAC_SYSTEM_ROOT}/external/genomac-shared"
+GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM="${GENOMAC_SYSTEM_ROOT}/external/genomac-shared" # ~/.genomac-system/external/genomac-shared
 
 echo "Paths determined in 0_initialize_me_first.sh:"
 echo "• this_script_path: ${this_script_path}"
