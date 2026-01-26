@@ -27,7 +27,7 @@ function hypervisor() {
     set_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"
 
     if [[ "$local_commit_hash" != "$remote_commit_hash" ]]; then
-      report_action_taken "Update to ${GENOMAC_SYSTEM_REPO_NAME} available. Pulling and merging update before restarting Hypervisor"
+      report_action_taken "Update to ${GENOMAC_SYSTEM_REPO_NAME} available.${NEWLINE}Pulling update before restarting Hypervisor"
       git -C "$GENOMAC_SYSTEM_LOCAL_DIRECTORY" pull origin main
 
       report_action_taken "Re-execute Hypervisor using updated repo code"
