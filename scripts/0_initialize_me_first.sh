@@ -3,6 +3,12 @@
 # Initializes any entry-point script by sourcing:
 # - helpers and cross-repo environment variables from GenoMac-shared
 # - environment variables specific to the GenoMac-system repository
+#
+# WARNING: There are hard-wired paths in this script. Some/all of these paths are
+#          referred to in other scripts (typically referenced by exported 
+#          environment variables). Because this is a bootstrap script, the paths
+#          are hard-wired rather than referring to those environment variables.
+
 
 # Fail early on unset variables or command failure
 set -euo pipefail
@@ -20,13 +26,13 @@ GENOMAC_SYSTEM_ROOT="${GENOMAC_SYSTEM_SCRIPTS:h}"   # ~/.genomac-system
 GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM="${GENOMAC_SYSTEM_ROOT}/external/genomac-shared"
 
 echo "Paths determined in 0_initialize_me_first.sh:"
-echo "this_script_path: ${this_script_path}"
-echo "GENOMAC_SYSTEM_SCRIPTS: ${GENOMAC_SYSTEM_SCRIPTS}"
-echo "GENOMAC_SYSTEM_ROOT: ${GENOMAC_SYSTEM_ROOT}"
-echo "GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM: ${GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM}"
+echo "• this_script_path: ${this_script_path}"
+echo "• GENOMAC_SYSTEM_SCRIPTS: ${GENOMAC_SYSTEM_SCRIPTS}"
+echo "• GENOMAC_SYSTEM_ROOT: ${GENOMAC_SYSTEM_ROOT}"
+echo "• GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM: ${GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM}"
 
-# Source the master-helper script from GenoMac-shared submodule, which sources helpers and environment variables
-# from GenoMac-shared
+# Source the master-helper script from GenoMac-shared submodule, which sources helpers
+# and environment variables from GenoMac-shared
 HELPERS_FROM_GENOMAC_SHARED="${GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM}/scripts"  # external/genomac-shared/scripts
 master_helper_script="${HELPERS_FROM_GENOMAC_SHARED}/helpers.sh"
 
