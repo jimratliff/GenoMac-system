@@ -4,20 +4,19 @@
 
 # Intended to be sourced by scripts/0_initialize_me_second.sh
 
-############### Aliases to intra-repository hierarchical structures
-
-# - Local directory into which the GenoMac-system repo is cloned
+#############################################
+#                  Aliases to intra-repository hierarchical structures
+#
+############### Local directory into which the GenoMac-system repo is cloned
+# ~/.genomac-system
 # Defined in GenoMac-shared/scripts/assign_common_environment_variables.sh
 # GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
 
-# - Local directory that holds scripts
-#   GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
-# - Local subdirectory of GMS_SCRIPTS that holds scripts specific to Hypervisor
-GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor" 
-
+############### ~/.genomac-system/homebrew
 # Local directory that holds declarative Homebrew files
 GMS_HOMEBREW="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/homebrew"
 
+############### ~/.genomac-system/resources
 # Local directory that holds resources (files or folders) needed for particular
 # operations by GenoMac-system, typically resources to be installed at the system level
 GMS_RESOURCES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
@@ -25,20 +24,24 @@ GMS_RESOURCES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
 # Specify the local directory that holds documentation files to display to the executing user
 GMS_DOCS_TO_DISPLAY="${GMS_RESOURCES}/docs_to_display_to_user"
 
-############### Subdirectories of /scripts
-# Hypervisor scripts (defined in 0_initialize_me_first.sh)
-# GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
+############### ~/.genomac-system/scripts
+# - Local directory that holds scripts: ~/.genomac-system/scripts
+GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
 
-# Install scripts
+# ~/.genomac-system/scripts/hypervisor
+# - Local subdirectory of GMS_SCRIPTS that holds scripts specific to Hypervisor
+GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor" 
+
+# ~/.genomac-system/scripts/installations
 GMS_INSTALL_SCRIPTS="${GMS_SCRIPTS}/installations"
 GMS_HOMEBREW_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/homebrew"
 GMS_NON_HOMEBREW_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/non_homebrew"
 GMS_RESOURCE_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/of_resources"
 
-# Settings scripts
+# ~/.genomac-system/scripts/settings
 GMS_SETTINGS_SCRIPTS="${GMS_SCRIPTS}/settings"
 
-# User-scope scripts
+# ~/.genomac-system/scripts/user_scope
 GMS_USER_SCOPE_SCRIPTS="${GMS_SCRIPTS}/user_scope"
 
 ###
