@@ -2,17 +2,19 @@
 
 set -euo pipefail
 
+safe_source "${GMS_subdermal_scriptS}/subdermis.sh"
+
 function hypervisor() {
-  # The outermost layer of hypervisory supervison. Ensures the GenoMac-system repository is updated
-  # before running the subdermal layer (subdermis). 
-  #
-  # This is the function called first, directly, and immediately by `make run-hypervisor`.
+  # The outermost “dermal” layer of hypervisory supervison (the dermis). Ensures the 
+  # GenoMac-system repository is updated before running the subdermal layer (subdermis). 
   #
   # It assumes that:
   # - GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
   #   - It is *not* necessary to update the clone before running this function, because this function
   #     updates the clone.
   # - scripts/0_initialize_me_first.sh has been sourced
+  #   - This sources (a) helpers and cross-repo environment variables from GenoMac-shared and
+  #     (b) repo-specific environment variables.
   
   echo "Inside hypervisor"
 
@@ -21,21 +23,8 @@ function hypervisor() {
   echo "Updating local clone of GenoMac-system at ${GENOMAC_SYSTEM_LOCAL_DIRECTORY}"
   update_genomac_system_repo
 
-  ############### Finish initializations
-  # Now that repo is updated, we can finish the initialization process
-
-  local secondary_initialization_script
-  secondary_initialization_script="${GMS_SCRIPTS}/0_initialize_me_second.sh"
-  source_with_report "${secondary_initialization_script}"
-
-  ############### Spawn Hypervisor
-  # Spawn the hypervisor that manages the bootstrapping/maintenance of the system-scoped configuration
-  
-  subdermal_script="${GMS_subdermal_scriptS}/subdermis.sh"
-  source_with_report "$subdermal_script"
-
   # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
-  # subdermis
+  subdermis
 
   echo "Leaving hypervisor"
 }
