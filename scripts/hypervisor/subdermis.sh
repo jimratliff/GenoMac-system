@@ -67,9 +67,3 @@ function subdermis() {
   
   report_end_phase_standard
 }
-
-function main() {
-  subdermis
-}
-
-main
