@@ -16,7 +16,7 @@ function hypervisor() {
   #   - This sources (a) helpers and cross-repo environment variables from GenoMac-shared and
   #     (b) repo-specific environment variables.
   
-  echo "Entering hypervisor"
+  report_start_phase_standard
 
   if ! test_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"; then
     report_action_taken "Testing remote copy of ${GENOMAC_SYSTEM_REPO_NAME} for changes"
@@ -31,7 +31,7 @@ function hypervisor() {
       git -C "$GENOMAC_SYSTEM_LOCAL_DIRECTORY" pull origin main
 
       report_action_taken "Re-execute Hypervisor using updated repo code"
-      echo "Leaving hypervisor"
+      report_end_phase_standard
       exec "$0"
     else
       report "Local clone of ${GENOMAC_SYSTEM_REPO_NAME} was up to date"
@@ -43,6 +43,6 @@ function hypervisor() {
   # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
   subdermis
 
-  echo "Leaving hypervisor"
+  report_end_phase_standard
 }
 
