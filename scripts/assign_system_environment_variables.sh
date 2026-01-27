@@ -22,6 +22,7 @@ GMS_HOMEBREW="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/homebrew"
 GMS_RESOURCES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
 
 # Specify the local directory that holds documentation files to display to the executing user
+# ~/.genomac-system/resources/docs_to_display_to_user
 GMS_DOCS_TO_DISPLAY="${GMS_RESOURCES}/docs_to_display_to_user"
 
 ############### ~/.genomac-system/scripts
