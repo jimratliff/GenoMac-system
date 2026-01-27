@@ -41,8 +41,10 @@ function hypervisor() {
   fi
 
   # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
-  report "Subdermis would begin here, but I have commented it out for initial-testing purposes."
-  # subdermis
+  subdermis
+
+  # Reset SESH states for next session
+  delete_all_system_SESH_states
 
   report_end_phase_standard
 }
