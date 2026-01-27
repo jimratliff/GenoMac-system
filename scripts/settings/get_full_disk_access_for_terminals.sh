@@ -15,6 +15,7 @@ function ensure_terminal_has_fda() {
   report_start_phase_standard
   
   # Query a restricted location (a) to test FDA and (b) if not, add terminal app to list
+  report_action_taken "Testing Terminal for Full Disk Access"
   if ! ls ~/Library/Mail &>/dev/null; then
     # The currently running terminal app does *not* have FDA
     # macOS will add the terminal app to the list, but un-enabled
@@ -31,9 +32,11 @@ function ensure_terminal_has_fda() {
         
     else
       # The session is not interactive
-      report_warning "Warning: Terminal lacks FDA and no interactive session to fix it"
+      report_warning "Warning: Terminal lacks Full Disk Access and no interactive session to fix it"
       return 1
     fi
+  else
+    report_success "Terminal already has Full Disk Access"
   fi
   report_end_phase_standard
 }
