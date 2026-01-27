@@ -43,7 +43,7 @@ function subdermis() {
   report "$GMS_HYPERVISOR_HOW_TO_RESTART_STRING"
 
 
-  keep_sudo_alive
+  # keep_sudo_alive
   interactive_ensure_terminal_has_fda         # GenoMac-shared/scripts/helpers-interactive.sh
   crash_if_homebrew_not_installed             # GenoMac-shared/scripts/helpers-apps.sh
   conditionally_adjust_path_for_homebrew      # scripts/installations/homebrew/adjust_path_for_homebrew.sh
