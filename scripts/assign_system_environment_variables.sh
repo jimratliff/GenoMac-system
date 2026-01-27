@@ -45,6 +45,10 @@ GMS_SETTINGS_SCRIPTS="${GMS_SCRIPTS}/settings"
 # ~/.genomac-system/scripts/user_scope
 GMS_USER_SCOPE_SCRIPTS="${GMS_SCRIPTS}/user_scope"
 
+############### ~/.genomac-system/utilities
+# Holds narrow-focused scripts to be individually accessed by make recipes
+GMS_UTILITIES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/utilities"
+
 ###
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
@@ -60,4 +64,5 @@ export_and_report GMS_RESOURCES
 export_and_report GMS_SCRIPTS
 export_and_report GMS_SETTINGS_SCRIPTS
 export_and_report GMS_USER_SCOPE_SCRIPTS
+export_and_report GMS_UTILITIES
 
