@@ -5,38 +5,35 @@ function ensure_terminal_has_fda() {
   # app has Full Disk Access (FDA) permission.
   #
   # If the terminal app does *not* have FDA, the Settings » Privacy & Security » Full Disk Access
-  # panel is opened, this terminal app should already be pre-populated (but un-enabled) on the 
+  # panel is opened. This terminal app should already appear (but un-enabled) on the 
   # list of apps, so the user can simply flip the switch for this app.
   #
-  # The reason this terminal app will be pre-populated on the FDA list is: The current script tests
-  # whether the current terminal app has FDA by attempting to query a restricted location.
-  # If the app doesn’t have FDA, this query is sufficient for macOS to add this app to that list.
+  # Note: FDA changes require restarting the terminal app to take effect.
 
   report_start_phase_standard
-  
-  # Query a restricted location (a) to test FDA and (b) if not, add terminal app to list
-  report_action_taken "Testing Terminal for Full Disk Access"
-  if ! ls ~/Library/Mail &>/dev/null; then
-    # The currently running terminal app does *not* have FDA
-    # macOS will add the terminal app to the list, but un-enabled
+  report_action_taken "Testing currently running terminal app for Full Disk Access"
 
-    # Tests whether this is an interactive session
-    if [[ -t 0 ]]; then
-    
-      # The session is interactive
-      open_privacy_panel_for_full_disk_permissions
-      launch_app_and_prompt_user_to_act \
-        --no-app \
-        --show-doc "${GENOMAC_USER_LOCAL_DOCUMENTATION_DIRECTORY}/full_disk_access_how_to_configure.md" \
-        "Follow the instructions in the Quick Look window to to grant the current terminal app Full Disk Access"
-        
-    else
-      # The session is not interactive
-      report_warning "Warning: Terminal lacks Full Disk Access and no interactive session to fix it"
-      return 1
-    fi
-  else
+  # Query a restricted location to test FDA (and as side effect, add terminal app to FDA list)
+  if ls ~/Library/Mail &>/dev/null; then
     report_success "Terminal already has Full Disk Access"
+    report_end_phase_standard
+    return 0
   fi
+
+  # The currently running terminal app does *not* have FDA
+  # macOS will have added the terminal app to the FDA list (but un-enabled)
+
+  if [[ ! -t 0 ]]; then
+    report_warning "Warning: Terminal lacks Full Disk Access and no interactive session to fix it"
+    report_end_phase_standard
+    return 1
+  fi
+
+  open_privacy_panel_for_full_disk_permissions
+  launch_app_and_prompt_user_to_act \
+    --no-app \
+    --show-doc "${GENOMAC_USER_LOCAL_DOCUMENTATION_DIRECTORY}/full_disk_access_how_to_configure.md" \
+    "Follow the instructions in the Quick Look window to grant the current terminal app Full Disk Access"
+
   report_end_phase_standard
 }
