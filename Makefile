@@ -44,6 +44,18 @@ dev-configure-remote-for-https-fetch-and-ssh-push:
 	git remote set-url origin https://github.com/jimratliff/GenoMac-system.git
 	git remote set-url --push origin git@github.com:jimratliff/GenoMac-system.git
 
+############### UTILITIES
+
+
+show-system-states:
+	zsh scripts/utilities/show_system_states.sh
+
+clear-system-sesh-states:
+	zsh scripts/utilities/clear_system_sesh_states.sh
+
+clear-all-system-states:
+	zsh scripts/utilities/clear_all_system_states.sh
+
 
 
 ############### 38th Parallel
