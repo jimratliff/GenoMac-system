@@ -18,6 +18,8 @@ function hypervisor() {
   
   report_start_phase_standard
 
+  keep_sudo_alive
+  
   if ! test_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"; then
     report_action_taken "Testing remote copy of ${GENOMAC_SYSTEM_REPO_NAME} for changes"
     git -C "$GENOMAC_SYSTEM_LOCAL_DIRECTORY" fetch origin main
