@@ -3,6 +3,7 @@
 function conditionally_interactive_get_Mac_names_and_login_window_message() {
   # If not previously obtained, asks user for computer names and login-window text.
   # If these were previously obtained, check computername to see whether it’s become mangled. If so, unmangle it.
+  
   report_start_phase_standard
 
   if test_genomac_system_state "${PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED}"; then
@@ -41,7 +42,7 @@ function interactive_get_Mac_names() {
   report_action_taken "Get and optionally set Mac ComputerName and LocalHostName"
   
   # Get current ComputerName
-  current_name=$(sudo systemsetup -getcomputername 2>/dev/null | sed 's/^Computer Name: //')
+  current_name=$(scutil --get ComputerName 2>/dev/null)
   report "Current ComputerName: \"$current_name\""
   
   # Assume name is clean unless proven otherwise
@@ -75,9 +76,9 @@ function interactive_get_Mac_names() {
   # Display final names
   echo ""
   printf "Final name settings:\n"
-  printf "ComputerName:   %s\n" "$(sudo scutil --get ComputerName 2>/dev/null || echo "(not set)")"
-  printf "LocalHostName:  %s\n" "$(sudo scutil --get LocalHostName 2>/dev/null || echo "(not set)")"
-  printf "HostName:       %s\n" "$(sudo scutil --get HostName 2>/dev/null || echo "(not set)")"
+  printf "ComputerName:   %s\n" "$(scutil --get ComputerName 2>/dev/null || echo "(not set)")"
+  printf "LocalHostName:  %s\n" "$(scutil --get LocalHostName 2>/dev/null || echo "(not set)")"
+  printf "HostName:       %s\n" "$(scutil --get HostName 2>/dev/null || echo "(not set)")"
   
   report_end_phase_standard
 }
