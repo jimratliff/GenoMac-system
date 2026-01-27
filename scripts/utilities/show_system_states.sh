@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-# Template for a utility script
-
 # Fail early on unset variables or command failure
 set -euo pipefail
 
