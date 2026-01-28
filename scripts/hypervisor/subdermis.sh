@@ -44,6 +44,9 @@ function subdermis() {
 
 
   # Mark the configuring user as a USER_CONFIGURER
+  # Only USER_CONFIGURER runs GenoMac-system, therefore this user is USER_CONFIGURER
+  # Use the *user*-state management system to leave a state for this user that will
+  # tell GenoMac-user to configure this user as a USER_CONFIGURER user.
   set_genomac_user_state   "$PERM_THIS_USER_IS_A_USER_CONFIGGER"
   
   keep_sudo_alive
