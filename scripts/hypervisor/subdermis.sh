@@ -30,18 +30,9 @@ function subdermis() {
   #   state rather than immediately triggering a logout.
   #   Requires new function `hypervisor_forced_logout_if_dirty`
 
-  ############### Welcome! or Welcome back!
-  local welcome_message
-  if test_genomac_system_state "$SESH_SESSION_HAS_STARTED"; then
-    welcome_message="Welcome back"
-  else
-    welcome_message="Welcome"
-    set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
-  fi
-  
-  report "${welcome_message} to the GenoMac-system Hypervisor!"
-  report "$GMS_HYPERVISOR_HOW_TO_RESTART_STRING"
-
+  output_welcome_banner
+  keep_sudo_alive
+  set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
 
   # Mark the configuring user as a USER_CONFIGURER
   # Only USER_CONFIGURER runs GenoMac-system, therefore this user is USER_CONFIGURER
@@ -49,7 +40,6 @@ function subdermis() {
   # tell GenoMac-user to configure this user as a USER_CONFIGURER user.
   set_genomac_user_state   "$PERM_THIS_USER_IS_A_USER_CONFIGGER"
   
-  keep_sudo_alive
   interactive_ensure_terminal_has_fda         # GenoMac-shared/scripts/helpers-interactive.sh
   crash_if_homebrew_not_installed             # GenoMac-shared/scripts/helpers-apps.sh
   conditionally_adjust_path_for_homebrew      # scripts/installations/homebrew/adjust_path_for_homebrew.sh
@@ -61,11 +51,27 @@ function subdermis() {
   conditionally_implement_systemwide_settings # scripts/settings/implement_systemwide_settings.sh
   conditionally_clone_genomac_user            # scripts/user_scope/clone_genomac_user_repo.sh
 
+  output_departure_banner
   
-  # TODO: Un-comment-out the below 'figlet' line after GenoMac-system is refactored so that it works
-  # figlet "The End"
-  
-  # hypervisor_force_logout
+  hypervisor_force_logout
   
   report_end_phase_standard
+}
+
+function output_welcome_banner() {
+  local welcome_prefix
+  if test_genomac_system_state "$SESH_SESSION_HAS_STARTED"; then
+    welcome_prefix="Welcome back"
+  else
+    welcome_prefix="Welcome"
+  fi
+
+  welcome_message="${welcome_prefix} to the GenoMac-system Hypervisor\!"
+  print_banner_text "${welcome_message}"
+  report "$GMS_HYPERVISOR_HOW_TO_RESTART_STRING"
+}
+
+function output_departure_banner() {
+  departure_message="TTFN\!"
+  print_banner_text "${departure_message}"
 }
