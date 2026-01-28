@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 function conditionally_clone_genomac_user_using_HTTPS() {
   report_start_phase_standard
