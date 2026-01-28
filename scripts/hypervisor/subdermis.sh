@@ -17,10 +17,6 @@ function subdermis() {
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
   safe_source "${GMS_USER_SCOPE_SCRIPTS}/clone_genomac_user_repo.sh"
 
-  GMS_HYPERVISOR_MAKE_COMMAND_STRING="make run-hypervisor"
-  local hypervisor_make_message="To restart, re-execute ${GMS_HYPERVISOR_MAKE_COMMAND_STRING} and we’ll pick up where we left off."
-  GMS_HYPERVISOR_HOW_TO_RESTART_STRING="${hypervisor_make_message}"
-
   # TODO:
   # - Consider checking $set_genomac_system_state "$SESH_REACHED_FINALITY" to
   #   check whether this is an immediate reentry after a complete session and,
@@ -68,7 +64,7 @@ function output_welcome_banner() {
 
   welcome_message="${welcome_prefix} to the GenoMac-system Hypervisor\!"
   print_banner_text "${welcome_message}"
-  report "$GMS_HYPERVISOR_HOW_TO_RESTART_STRING"
+  report "$HYPERVISOR_HOW_TO_RESTART_STRING"
 }
 
 function output_departure_banner() {
