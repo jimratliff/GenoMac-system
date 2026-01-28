@@ -45,6 +45,7 @@ function subdermis() {
 
   # keep_sudo_alive
   interactive_ensure_terminal_has_fda         # GenoMac-shared/scripts/helpers-interactive.sh
+  mark_user_as_configger_user
   crash_if_homebrew_not_installed             # GenoMac-shared/scripts/helpers-apps.sh
   conditionally_adjust_path_for_homebrew      # scripts/installations/homebrew/adjust_path_for_homebrew.sh
   conditionally_interactive_get_Mac_names_and_login_window_message # scripts/settings/interactive_get_Mac_names_and_login_window_message.sh
