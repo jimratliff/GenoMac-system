@@ -64,7 +64,6 @@ PERM_GENOMAC_USER_HAS_BEEN_CLONED="PERM_genomac_user_has_been_cloned"
 PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED="PERM_homebrew_path_has_been_adjusted"
 PERM_MAC_APP_STORE_IS_SIGNED_INTO="PERM_mac_app_store_is_signed_into"
 PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED="PERM_Mac_names_and_login_window_message_obtained"
-PERM_THIS_USER_IS_A_USER_CONFIGGER="PERM_this_user_is_a_user_configger"
 
 SESH_REACHED_FINALITY="SESH_reached_finality"
 SESH_SESSION_HAS_STARTED="SESH_session_has_started"
@@ -75,6 +74,8 @@ SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES="SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"
 SESH_RESOURCES_HAVE_BEEN_INSTALLED="SESH_resources_have_been_installed"
 SESH_SYSTEMWIDE_SETTINGS_HAVE_BEEN_IMPLEMENTED="SESH_systemwide_settings_have_been_implemented"
 
+############### USER-DOMAIN
+
 # Export environment variables to be available in all subsequent shells
 report_action_taken "Exporting environment variables corresponding to states."
 
@@ -82,7 +83,6 @@ export_and_report PERM_GENOMAC_USER_HAS_BEEN_CLONED
 export_and_report PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED
 export_and_report PERM_MAC_APP_STORE_IS_SIGNED_INTO
 export_and_report PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED
-export_and_report PERM_THIS_USER_IS_A_USER_CONFIGGER
 
 export_and_report SESH_REACHED_FINALITY
 export_and_report SESH_HOMEBREW_APPS_HAVE_BEEN_INSTALLED
