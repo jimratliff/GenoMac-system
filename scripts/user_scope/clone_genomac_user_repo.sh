@@ -1,28 +1,28 @@
 #!/bin/zsh
 
-function conditionally_clone_genomac_user() {
+function conditionally_clone_genomac_user_using_HTTPS() {
   report_start_phase_standard
   
   run_if_system_has_not_done \
     "$PERM_GENOMAC_USER_HAS_BEEN_CLONED" \
-    clone_genomac_user_repo \
+    clone_genomac_user_repo_using_HTTPS \
     "Skipping cloning GenoMac-user, because this was done in the past."
 
   report_end_phase_standard
 }
 
-function clone_genomac_user_repo() {
-  # Clone GenoMac-user repo to GENOMAC_USER_LOCAL_DIRECTORY
+function clone_genomac_user_repo_using_HTTPS() {
+  # Clone GenoMac-user repo to GENOMAC_USER_LOCAL_DIRECTORY using HTTPS
   #
   # If GenoMac-user is already cloned to GENOMAC_USER_LOCAL_DIRECTORY, sets the
   # $PERM_GENOMAC_USER_HAS_BEEN_CLONED state and returns normally.
   
   report_start_phase_standard
 
-  report_action_taken "Cloning GenoMac-user to your home directory."
+  report_action_taken "Cloning GenoMac-user to your home directory using HTTPS."
 
   local local_cloning_dir="$GENOMAC_USER_LOCAL_DIRECTORY"
-  local repo_url="$GENOMAC_USER_REPO_URL"
+  local repo_url="${GENOMAC_USER_HTTP_REPO_URL}"
 
   report_action_taken "Checking for existing repo cloned here"
   local existing_remote
