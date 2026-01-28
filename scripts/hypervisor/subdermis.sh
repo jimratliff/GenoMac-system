@@ -40,16 +40,16 @@ function subdermis() {
   # tell GenoMac-user to configure this user as a USER_CONFIGURER user.
   set_genomac_user_state   "$PERM_THIS_USER_IS_A_USER_CONFIGGER"
   
-  interactive_ensure_terminal_has_fda         # GenoMac-shared/scripts/helpers-interactive.sh
-  crash_if_homebrew_not_installed             # GenoMac-shared/scripts/helpers-apps.sh
-  conditionally_adjust_path_for_homebrew      # scripts/installations/homebrew/adjust_path_for_homebrew.sh
+  interactive_ensure_terminal_has_fda          # GenoMac-shared/scripts/helpers-interactive.sh
+  crash_if_homebrew_not_installed              # GenoMac-shared/scripts/helpers-apps.sh
+  conditionally_adjust_path_for_homebrew       # scripts/installations/homebrew/adjust_path_for_homebrew.sh
   conditionally_interactive_get_Mac_names_and_login_window_message # scripts/settings/interactive_get_Mac_names_and_login_window_message.sh
-  conditionally_interactive_sign_into_MAS     # scripts/installations/homebrew/interactive_sign_into_MAS.sh
-  conditionally_install_via_homebrew          # scripts/installations/homebrew/install_via_homebrew.sh
-  conditionally_install_non_homebrew_apps     # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
-  conditionally_install_resources_systemwide  # scripts/installations/of_resources/install_resources.sh
-  conditionally_implement_systemwide_settings # scripts/settings/implement_systemwide_settings.sh
-  conditionally_clone_genomac_user            # scripts/user_scope/clone_genomac_user_repo.sh
+  conditionally_interactive_sign_into_MAS      # scripts/installations/homebrew/interactive_sign_into_MAS.sh
+  conditionally_install_via_homebrew           # scripts/installations/homebrew/install_via_homebrew.sh
+  conditionally_install_non_homebrew_apps      # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
+  conditionally_install_resources_systemwide   # scripts/installations/of_resources/install_resources.sh
+  conditionally_implement_systemwide_settings  # scripts/settings/implement_systemwide_settings.sh
+  conditionally_clone_genomac_user_using_HTTPS # scripts/user_scope/clone_genomac_user_repo.sh
 
   output_departure_banner
   
