@@ -2,7 +2,7 @@
 
 # Establishes values for environment variables used exclusively by GenoMac-system
 
-# Intended to be sourced by scripts/0_initialize_me_second.sh
+# Intended to be sourced by scripts/0_initialize_me_first.sh
 
 #############################################
 #                  Aliases to intra-repository hierarchical structures
