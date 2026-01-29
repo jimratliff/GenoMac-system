@@ -62,12 +62,12 @@ function output_welcome_banner() {
     welcome_prefix="Welcome"
   fi
 
-  welcome_message="${welcome_prefix} to the GenoMac-system Hypervisor\!"
+  welcome_message="${welcome_prefix} to the GenoMac-system Hypervisor!"
   print_banner_text "${welcome_message}"
   report "$HYPERVISOR_HOW_TO_RESTART_STRING"
 }
 
 function output_departure_banner() {
-  departure_message="TTFN\!"
+  departure_message="TTFN!"
   print_banner_text "${departure_message}"
 }
