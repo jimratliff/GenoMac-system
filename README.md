@@ -8,6 +8,17 @@
 - [Apps to install manually](#apps-to-install-manually)
 - [Known issues](#known-issues)
 - [Dev issues](#appendix-dev-issues)
+
+## New paradigm supercedes below discussion: The Hypervisor
+As of January 28, 2026, GenoMac-system has been refactored to use what I’m calling the Hypervisor: a single script (executed with `make run-hypervisor`) that manages the entire Phase 1 process (up until spawning new users/volumes).
+
+This management of Phase 1 includes updating the local clone’s copy of the GenoMac-system remote repo. Thus, the previously prescribed step (`git pull --recurse-submodules origin main`) is not necessary.
+
+However, because GenoMac-system relies on GenoMac-shared as a submodule, after any substantive change to GenoMac-shared, GenoMac-system must be updated to point to the newest commit of GenoMac-shared. This can be accomplished with `make dev-update-repo-and-submodule`.
+
+
+
+
 ## Quick-reference cheat sheet for occasional maintenance
 (First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
 
