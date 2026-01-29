@@ -21,6 +21,8 @@ set -euo pipefail
 # So ${${(%):-%x}:A} means "the absolute path of the file currently being sourced."
 this_script_path="${${(%):-%x}:A}"                  # ~/.genomac-system/scripts/0_initialize_me_first.sh
 
+# NOTE: The following are NOT exported. They are defined/calculated here only for the purpose
+#       of sourcing other scripts.
 GENOMAC_SYSTEM_SCRIPTS="${this_script_path:h}"      # ~/.genomac-system/scripts
 GENOMAC_SYSTEM_ROOT="${GENOMAC_SYSTEM_SCRIPTS:h}"   # ~/.genomac-system
 GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM="${GENOMAC_SYSTEM_ROOT}/external/genomac-shared" # ~/.genomac-system/external/genomac-shared
