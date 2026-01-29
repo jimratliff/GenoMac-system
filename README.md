@@ -11,8 +11,6 @@
 ## Quick-reference cheat sheet for occasional maintenance
 (First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
 
-WARNING: GRATUITOUS CHANGE TO TRIGGER A NEW COMMIT
-
 ### Refresh local clone
 After initial cloning, to pull down subsequent changes to this repository
 ```bash
