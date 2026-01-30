@@ -19,28 +19,21 @@ function hypervisor() {
   report_start_phase_standard
 
   keep_sudo_alive
-  
+
   if ! test_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"; then
-    report_action_taken "Testing remote copy of ${GENOMAC_SYSTEM_REPO_NAME} for changes"
-    git -C "$GENOMAC_SYSTEM_LOCAL_DIRECTORY" fetch origin main
-    local_commit_hash=$(git -C "$GENOMAC_SYSTEM_LOCAL_DIRECTORY" rev-parse HEAD)
-    remote_commit_hash=$(git -C "$GENOMAC_SYSTEM_LOCAL_DIRECTORY" rev-parse origin/main)
-
-    set_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"
-
-    if [[ "$local_commit_hash" != "$remote_commit_hash" ]]; then
-      report_action_taken "Update to ${GENOMAC_SYSTEM_REPO_NAME} available.${NEWLINE}Pulling update before restarting Hypervisor"
-      git -C "$GENOMAC_SYSTEM_LOCAL_DIRECTORY" pull origin main
-
-      report_action_taken "Re-execute Hypervisor using updated repo code"
-      report_end_phase_standard
-      exec "$0"
-    else
-      report "Local clone of ${GENOMAC_SYSTEM_REPO_NAME} was up to date"
-    fi
-  else
-    report_action_taken "Skipping test for changes to repo, because this has already been tested this session."
-  fi
+  	report_action_taken "Testing remote copy of ${GENOMAC_SYSTEM_REPO_NAME} for changes"
+  	if local_clone_was_updated_from_remote "$GENOMAC_SYSTEM_LOCAL_DIRECTORY"; then
+      set_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"
+  		report_action_taken "Re-execute Hypervisor using updated repo code"
+  		report_end_phase_standard
+  		exec "$0"
+		else
+      set_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"
+			report "Local clone of ${GENOMAC_SYSTEM_REPO_NAME} was up to date"
+		fi
+	else
+		report_action_taken "Skipping test for changes to repo, because this has already been tested this session."
+	fi
 
   # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
   subdermis
