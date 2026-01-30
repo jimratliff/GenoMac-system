@@ -23,7 +23,7 @@ function subdermis() {
   #   state rather than immediately triggering a logout.
   #   Requires new function `hypervisor_forced_logout_if_dirty`
 
-  output_hypervisor_welcome_banner
+  output_hypervisor_welcome_banner "$GENOMAC_SCOPE_SYSTEM"
   keep_sudo_alive
   set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
 
@@ -44,7 +44,7 @@ function subdermis() {
   conditionally_implement_systemwide_settings  # scripts/settings/implement_systemwide_settings.sh
   conditionally_clone_genomac_user_using_HTTPS # scripts/user_scope/clone_genomac_user_repo.sh
 
-  output_hypervisor_departure_banner
+  output_hypervisor_departure_banner "$GENOMAC_SCOPE_SYSTEM"
   
   hypervisor_force_logout
   
