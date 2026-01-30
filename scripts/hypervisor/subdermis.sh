@@ -18,9 +18,6 @@ function subdermis() {
   safe_source "${GMS_USER_SCOPE_SCRIPTS}/clone_genomac_user_repo.sh"
 
   # TODO:
-  # - Consider checking $set_genomac_system_state "$SESH_REACHED_FINALITY" to
-  #   check whether this is an immediate reentry after a complete session and,
-  #   if so, to ask whether the user wants to start a new session.
   # - Consider adding environment variable SESH_FORCED_LOGOUT_DIRTY to avoid
   #   gratuitous logouts. An action requiring --forced-logout would (a) set this
   #   state rather than immediately triggering a logout.
