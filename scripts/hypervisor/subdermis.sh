@@ -23,7 +23,7 @@ function subdermis() {
   #   state rather than immediately triggering a logout.
   #   Requires new function `hypervisor_forced_logout_if_dirty`
 
-  output_welcome_banner
+  output_hypervisor_welcome_banner
   keep_sudo_alive
   set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
 
@@ -44,27 +44,10 @@ function subdermis() {
   conditionally_implement_systemwide_settings  # scripts/settings/implement_systemwide_settings.sh
   conditionally_clone_genomac_user_using_HTTPS # scripts/user_scope/clone_genomac_user_repo.sh
 
-  output_departure_banner
+  output_hypervisor_departure_banner
   
   hypervisor_force_logout
   
   report_end_phase_standard
 }
 
-function output_welcome_banner() {
-  local welcome_prefix
-  if test_genomac_system_state "$SESH_SESSION_HAS_STARTED"; then
-    welcome_prefix="Welcome back"
-  else
-    welcome_prefix="Welcome"
-  fi
-
-  welcome_message="${welcome_prefix} to the GenoMac-system Hypervisor!"
-  print_banner_text "${welcome_message}"
-  report "$HYPERVISOR_HOW_TO_RESTART_STRING"
-}
-
-function output_departure_banner() {
-  departure_message="TTFN!"
-  print_banner_text "${departure_message}"
-}
