@@ -10,7 +10,7 @@ function ensure_terminal_has_fda() {
   #
   # NOTE: This does *not* use a state variable, because FDA is required for each terminal application
   #       e.g., Terminal, iTerm, Warp, etc. It would require too much complexity to (a) determine which
-  #       terminal application was currently running and whether it had already been tested for FDA.
+  #       terminal application was currently running and (b) whether it had already been tested for FDA.
   #
   # Note: FDA changes require restarting the terminal app to take effect.
 
