@@ -34,10 +34,10 @@ function interactive_get_loginwindow_message() {
   
     report "Final choice: \"$user_input\""
     if [[ -n "$user_input" ]]; then
-    	report_action_taken "New login-window message: ${user_input}"
+      report_action_taken "New login-window message: ${user_input}"
       sudo defaults write /Library/Preferences/com.apple.loginwindow LoginwindowText -string "$user_input"; success_or_not
     else
-    	report_action_taken "Login-window message deleted"
+      report_action_taken "Login-window message deleted"
       sudo defaults delete /Library/Preferences/com.apple.loginwindow LoginwindowText 2>/dev/null; success_or_not
     fi
   else
