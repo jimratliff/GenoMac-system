@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+# DEPRECATED, replaced by version in interactive_get_Mac_names_and_login_window_message.sh
+
 function interactive_get_loginwindow_message() {
   # Get login-window message
   # Displays any preexisting login-window message
