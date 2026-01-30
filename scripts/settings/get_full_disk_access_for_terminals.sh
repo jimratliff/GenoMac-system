@@ -8,6 +8,10 @@ function ensure_terminal_has_fda() {
   # panel is opened. This terminal app should already appear (but un-enabled) on the 
   # list of apps, so the user can simply flip the switch for this app.
   #
+  # NOTE: This does *not* use a state variable, because FDA is required for each terminal application
+  #       e.g., Terminal, iTerm, Warp, etc. It would require too much complexity to (a) determine which
+  #       terminal application was currently running and whether it had already been tested for FDA.
+  #
   # Note: FDA changes require restarting the terminal app to take effect.
 
   report_start_phase_standard
@@ -32,7 +36,7 @@ function ensure_terminal_has_fda() {
   open_privacy_panel_for_full_disk_permissions
   launch_app_and_prompt_user_to_act \
     --no-app \
-    --show-doc "${GENOMAC_USER_LOCAL_DOCUMENTATION_DIRECTORY}/full_disk_access_how_to_configure.md" \
+    --show-doc "${GENOMAC_SHARED_DOCS_TO_DISPLAY_DIRECTORY}/full_disk_access_how_to_configure.md" \
     "Follow the instructions in the Quick Look window to grant the current terminal app Full Disk Access"
 
   report_end_phase_standard
