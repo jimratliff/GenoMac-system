@@ -29,18 +29,18 @@ function hypervisor() {
   if ! test_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"; then
   	report_action_taken "Testing remote copy of ${GENOMAC_SYSTEM_REPO_NAME} for changes"
   	if local_clone_was_updated_from_remote "$GENOMAC_SYSTEM_LOCAL_DIRECTORY"; then
-	  # The local clone was found to be behind the remote; local clone updated, and then
-	  # this script is re-executed.
+      # The local clone was found to be behind the remote; local clone updated, and then
+      # this script is re-executed.
       set_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"
-  	  report_action_taken "Re-execute Hypervisor using updated repo code"
-  	  report_end_phase_standard
-  	  exec "$0"
+      report_action_taken "Re-execute Hypervisor using updated repo code"
+      report_end_phase_standard
+      exec "$0"
 	else
       set_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"
-	  report "Local clone of ${GENOMAC_SYSTEM_REPO_NAME} was up to date"
+      report "Local clone of ${GENOMAC_SYSTEM_REPO_NAME} was up to date"
 	fi
   else
-	report_action_taken "Skipping test for changes to repo, because this has already been tested this session."
+    report_action_taken "Skipping test for changes to repo, because this has already been tested this session."
   fi
 
   # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
