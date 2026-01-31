@@ -11,7 +11,7 @@ function hypervisor() {
   # Compares the local clone against the remote repo to determine whether there are unpulled
   # changes. If so, updates the local clone and restarts this script. Otherwise, hand
   # control off to the subdermal layer (subdermis). The next time through, still under the
-  # same “session,” the local will be found up to date with the remote, and thus control will
+  # same “session,” the local won’t be tested against the remote, and thus control will
   # pass immediately to subdermis.
   #
   # It assumes that:
