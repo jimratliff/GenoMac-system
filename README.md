@@ -301,9 +301,7 @@ At this point, all apps have been installed and all systemwide settings have bee
   - [version 1.4](https://eclecticlight.co/wp-content/uploads/2025/06/podofyllin14.zip)
 
 ## Known issues
-- The test for existence of Homebrew assumes an Apple Silicon Mac rather than an Intel Mac. See:
-  - `crash_if_homebrew_not_installed` in GenoMac-shared/scripts/helpers-apps.sh and, in particular, its
-    reliance on the location `/opt/homebrew/bin/brew`.
+- Assumption of an Apple Silicon Mac rather than an Intel Mac:
   - `adjust_path_for_homebrew` in GenoMac-system/scripts/prefs_scripts/adjust_path_for_homebrew.sh
 - Defining a separate lockscreen.png (i.e., separate from a user’s wallpaper) is not working.
   - The previously known technique is given by Sodiq Olanrewaju, “[How to Change Your Mac’s Lock Screen Background Image](https://www.switchingtomac.com/how-to-change-your-macs-lock-screen-background-image/),” Switching2Mac.com, February 14, 2024.
