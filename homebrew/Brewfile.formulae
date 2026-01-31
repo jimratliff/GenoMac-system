@@ -20,6 +20,7 @@ brew "jq"                      # Lightweight and flexible command-line JSON proc
                                  # REQUIRED: Used by:
                                  # - GenoMac-system to create volumes and user accounts
                                  # - GenoMac-user/scripts/settings/set_claude_settings.sh
+brew "just"                    # Modern alternative to `make` for project-specific commands
 brew "mas"                     # Mac App Store command-line interface
                                  # REQUIRED: Used by GenoMac (via Homebrew) to install MAS apps
 brew "node"                    # Also known as: node.js, node@24, nodejs, npm
