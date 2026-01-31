@@ -46,6 +46,10 @@ function hypervisor() {
     report_action_taken "Skipping test for changes to repo, because this has already been tested this session."
   fi
 
+  # Although the following needs to be performed only once,
+  # it’s simpler to always do it than to test whether it’s been done before.
+  configure_split_remote_URLs_for_GenoMac_system
+
   # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
   subdermis
 
