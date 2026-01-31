@@ -31,7 +31,6 @@ function subdermis() {
   set_genomac_user_state   "$PERM_THIS_USER_IS_A_USER_CONFIGGER"
   
   interactive_ensure_terminal_has_fda          # GenoMac-shared/scripts/helpers-interactive.sh
-  crash_if_homebrew_not_installed              # GenoMac-shared/scripts/helpers-apps.sh
   conditionally_adjust_path_for_homebrew       # scripts/installations/homebrew/adjust_path_for_homebrew.sh
   conditionally_interactive_get_Mac_names_and_login_window_message # scripts/settings/interactive_get_Mac_names_and_login_window_message.sh
   conditionally_interactive_sign_into_MAS      # scripts/installations/homebrew/interactive_sign_into_MAS.sh
