@@ -30,8 +30,7 @@ brew "php"                     # General-purpose scripting language
 brew "ripgrep"                 # Search tool like, but better than, grep and the Silver Searcher
 brew "starship"                # Configures prompt for Zsh and other shells
 brew "stockfish"               # Strong open-source chess engine
-brew "stow"                    # Symlink-farm manager, used for deploying symlinks of 
-                                 # dotfiles to $HOME
+brew "stow"                    # Symlink-farm manager; deploys symlinks of dotfiles to $HOME
                                  # REQUIRED: Manages dotfiles for Project GenoMac
 brew "tlrc"                    # tldr (alternative to man pages) client written in Rust
 brew "trash"                   # CLI tool that moves files or folders to the trash
