@@ -37,6 +37,10 @@ function install_via_homebrew() {
   report_warning "Don’t walk away! You’ll be required to enter your password for some apps."
   brew bundle install --cleanup --file="${brewfile_path}" ; success_or_not
 
+  # Sets state to indicate that Homebrew has been used at least once to install apps
+  # This assumes basic existence of non-builtin apps on which other parts of GenoMac-system relies
+  set_genomac_system_state "$PERM_HOMEBREW_HAS_INSTALLED_APPS_AT_LEAST_ONCE"
+
   # Upgrades, as necessary, installed packages
   report_action_taken "Upgrades, as needed, installed packages"
   brew upgrade ; success_or_not
