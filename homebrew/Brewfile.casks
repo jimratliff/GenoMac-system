@@ -58,6 +58,5 @@ cask "vlc"                      # Multimedia player
 cask "waterfox"                 # Gecko-based web browser
 cask "witch"                    # Switch apps, windows, or tabs
 cask "zed"                      # Multiplayer code editor (VS Code challenger)
-cask "zen"                      # Gecko based web browser
 cask "zoom"                     # Virtual meeting platform
 cask "zotero"                   # Bibliographic-reference manager
