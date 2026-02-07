@@ -38,14 +38,18 @@ cask "glance-chamburr"          # All-in-one Quick Look previews.
 cask "google-chrome"            # Web browser
 cask "google-drive"             # Desktop client for Google Drive storage service
 cask "graphicconverter"         # Graphic Converter image viewer, editor, and slideshow presenter
-cask "insta360-link-controller"   # Controller for Insta360 webcams
+cask "helium-browser"           # Chromium-based web browser
+cask "insta360-link-controller" # Controller for Insta360 webcams
 cask "iterm2"                   # Terminal emulator; alternative to Apple’s Terminal
 cask "keyboard-maestro"         # Automation software (version 11)
 cask "microsoft-edge"           # Microsoft’s web browser
 cask "microsoft-teams"          # Microsoft version of Zoom
 cask "notion"                   # Knowledge base using proprietary files
 cask "obsidian"                 # Knowledge base using local folder of Markdown files
+
 cask "opencode-desktop"         # AI coding agent desktop client
+                                # See also `brew "anomalyco/tap/opencode"`
+
 cask "orion"                    # WebKit-based web browser
 cask "raindropio"               # Bookmarking manager
 cask "textexpander"             # Insert pre-made snippets of text anywhere
