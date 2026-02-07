@@ -27,6 +27,7 @@ brew "node"                    # Also known as: node.js, node@24, nodejs, npm
                                  # Required for Alfred’s “Proper Title Case” workflow.
 
 # opencode
+tap "anomalyco/tap"
 brew "anomalyco/tap/opencode"  # Recommended over `brew install opencode` because the tap is
                                # more frequently updated
                                # See also `cask "opencode-desktop"`
