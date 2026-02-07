@@ -99,7 +99,6 @@ function unmangled_version_of_mangled_computername() {
 
 function fix_mangled_computername_if_necessary() {
   # Check computername for mangling, fixing when necessary and then set localhostname.
-  # This is a standalone, noninteractive version of interactive_get_Mac_names.
   report_start_phase_standard
   
   local current_name=$(sudo systemsetup -getcomputername 2>/dev/null | sed 's/^Computer Name: //')
