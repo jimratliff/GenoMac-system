@@ -25,6 +25,12 @@ brew "mas"                     # Mac App Store command-line interface
                                  # REQUIRED: Used by GenoMac (via Homebrew) to install MAS apps
 brew "node"                    # Also known as: node.js, node@24, nodejs, npm
                                  # Required for Alfred’s “Proper Title Case” workflow.
+
+# opencode
+brew "anomalyco/tap/opencode"  # Recommended over `brew install opencode` because the tap is
+                               # more frequently updated
+                               # See also `cask "opencode-desktop"`
+
 brew "php"                     # General-purpose scripting language
                                  # Required for Alfred’s “Text Actions” workflow.
 brew "ripgrep"                 # Search tool like, but better than, grep and the Silver Searcher
