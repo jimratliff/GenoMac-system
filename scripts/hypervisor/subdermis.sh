@@ -39,10 +39,6 @@ function subdermis() {
   conditionally_install_resources_systemwide   # scripts/installations/of_resources/install_resources.sh
   conditionally_implement_systemwide_settings  # scripts/settings/implement_systemwide_settings.sh
   conditionally_clone_genomac_user_using_HTTPS # scripts/user_scope/clone_genomac_user_repo.sh
-
-  output_hypervisor_departure_banner "$GENOMAC_SCOPE_SYSTEM"
-  
-  hypervisor_force_logout
   
   report_end_phase_standard
 }
