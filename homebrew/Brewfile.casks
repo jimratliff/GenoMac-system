@@ -15,7 +15,11 @@ cask "bettertouchtool"          # UI utility to customize behavior of input devi
 cask "brave-browser"            # Web browser
 cask "calibre"                  # E-book management software
 cask "chatgpt"                  # Official OpenAI ChatGPT client desktop app
+cask "chatgpt-atlas"            # OpenAI’s official browser with ChatGPT built in
 cask "claude"                   # Official Anthropic Claude AI desktop app
+cask "claude-code"              # Terminal-based AI coding assistant
+cask "codex"                    # OpenAI’s coding agent that runs in your terminal
+cask "codex-app"                # OpenAI’s Codex desktop app for managing coding agents
 cask "daisydisk"                # Disk-space visualizer
 cask "discord"                  # Voice and text chat software
 cask "docker-desktop"           # App to build and share containerized applications and services
@@ -41,9 +45,8 @@ cask "microsoft-edge"           # Microsoft’s web browser
 cask "microsoft-teams"          # Microsoft version of Zoom
 cask "notion"                   # Knowledge base using proprietary files
 cask "obsidian"                 # Knowledge base using local folder of Markdown files
-
-cask "orion"                    # Orion Browser web browser
-
+cask "opencode-desktop"         # AI coding agent desktop client
+cask "orion"                    # WebKit-based web browser
 cask "raindropio"               # Bookmarking manager
 cask "textexpander"             # Insert pre-made snippets of text anywhere
 cask "tower"                    # Git client GUI
