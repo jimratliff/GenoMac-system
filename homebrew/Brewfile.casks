@@ -30,6 +30,8 @@ cask "firefox"                  # Web browser
 # cask "ghostty"                  # Terminal emulator that uses platform-native UI and GPU acceleration
                                   # Not installed because no scrollbar (as of 9/4/2025)
 
+cask "gitbutler"                # Git client for simultaneous branches on top of existing workflow
+
 cask "glance-chamburr"          # All-in-one Quick Look previews.
                                 # Modern fork of glance that works post-Catalina’s deprecation of legacy
                                 # framework.
