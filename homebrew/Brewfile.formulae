@@ -16,6 +16,7 @@ brew "fresh-editor"            # Rust-based text editor
 brew "fzf"                     # Command-line fuzzy finder
 brew "gh"                      # GitHub command-line tool
 brew "git"                     # Distributed revision-control system
+brew "lolcat"                  # Adds rainbow colors to output when piped through lolcat
 brew "jq"                      # Lightweight and flexible command-line JSON processor
                                  # REQUIRED: Used by:
                                  # - GenoMac-system to create volumes and user accounts
