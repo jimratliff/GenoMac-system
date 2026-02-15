@@ -43,6 +43,7 @@ cask "graphicconverter"         # Graphic Converter image viewer, editor, and sl
 cask "helium-browser"           # Chromium-based web browser
 cask "insta360-link-controller" # Controller for Insta360 webcams
 cask "iterm2"                   # Terminal emulator; alternative to Apple’s Terminal
+cask "key-codes"                # Display key code, unicode value, and modifier keys state for any key combination
 cask "keyboard-maestro"         # Automation software (version 11)
 cask "microsoft-edge"           # Microsoft’s web browser
 cask "microsoft-teams"          # Microsoft version of Zoom
