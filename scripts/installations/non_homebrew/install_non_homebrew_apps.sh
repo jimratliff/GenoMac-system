@@ -7,6 +7,7 @@ source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_tool_via_package_from_github
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_default_browser_cli.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_utiluti.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_visualdiffer.sh"
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_witch_prefpane.sh"
 
 function conditionally_install_non_homebrew_apps() {
   report_start_phase_standard
@@ -15,6 +16,8 @@ function conditionally_install_non_homebrew_apps() {
     "$SESH_NON_HOMEBREW_APPS_HAVE_BEEN_INSTALLED" \
     install_non_homebrew_apps \
     "Skipping installation of non-Homebrew apps, because this installation was performed earlier this session."
+
+  conditionally_install_witch_prefpane
 
   report_end_phase_standard
 }
