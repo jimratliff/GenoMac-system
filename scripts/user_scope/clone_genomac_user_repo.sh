@@ -36,11 +36,13 @@ function clone_genomac_user_repo_using_HTTPS() {
       return 0
     fi
     report_fail "Directory contains a different repository: $existing_repo_name (expected: $GENOMAC_USER_REPO_NAME)"
+    report_end_phase_standard
     return 1
   fi
 
   if [[ -n "$(ls -A "$local_cloning_dir" 2>/dev/null)" ]]; then
-    report_fail "Directory exists and is not empty (and is not a git repository): $local_cloning_dir"
+    report_fail "Directory exists but is not empty (and is not a git repository): $local_cloning_dir"
+    report_end_phase_standard
     return 1
   fi
   
