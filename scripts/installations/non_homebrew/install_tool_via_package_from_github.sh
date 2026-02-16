@@ -127,6 +127,7 @@ function install_tool_via_package_from_github() {
       true ; success_or_not
     else
       report_fail "Expected ${tool_name} binary at ${binary_path}, but it was neither found nor executable after purported installation."
+      report_end_phase_standard
       return 1
     fi
   fi
