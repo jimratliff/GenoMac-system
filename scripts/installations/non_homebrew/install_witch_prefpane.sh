@@ -17,11 +17,14 @@ function install_witch_prefpane() {
   #
   # Installs to /Library/PreferencePanes/ so the pane is available to all users.
   #
-  # This is a bootstrap function: the caller checks PERM_WITCH_HAS_BEEN_INSTALLED
-  # before calling, and sets it after a successful return. Any existing prefPane
-  # at the destination is overwritten.
+  # This is a bootstrap function: Any existing prefPane at the destination is overwritten.
+  # Anticipated to be called by conditionally_install_witch_prefpane(), which calls this only
+  # if (a) initial bootstrap or (b) a new version has been licensed, in response to which
+  # PERM_WITCH_HAS_BEEN_INSTALLED was deleted to trigger an installation of the newer 
+  # licensed version.
 
   report_start_phase_standard
+  report_action_taken "Installing Witch preference pane for use by all users"
 
   local prefpane_name="Witch.prefPane"
   local zip_source="${GMS_RESOURCES}/witch/witch_prefpane.zip"
@@ -29,7 +32,7 @@ function install_witch_prefpane() {
   local destination_path="${system_prefpanes_dir}/${prefpane_name}"
 
   if [[ ! -f "$zip_source" ]]; then
-    report_warning "Zip not found at ${zip_source}"
+    report_warning "Zip of Witch preference pane not found at ${zip_source}"
     report_end_phase_standard
     return 1
   fi
@@ -42,10 +45,6 @@ function install_witch_prefpane() {
   unzip -q "$zip_source" -d "$temp_dir" ; success_or_not
 
   local source_path="${temp_dir}/${prefpane_name}"
-
-  if [[ ! -d "$source_path" ]]; then
-    source_path="$(find "$temp_dir" -name "$prefpane_name" -maxdepth 2 -type d | head -1)"
-  fi
 
   if [[ -z "$source_path" || ! -d "$source_path" ]]; then
     report_warning "${prefpane_name} not found inside ${zip_source}"
