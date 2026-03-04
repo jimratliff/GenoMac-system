@@ -17,8 +17,6 @@ function conditionally_install_non_homebrew_apps() {
     install_non_homebrew_apps \
     "Skipping installation of non-Homebrew apps, because this installation was performed earlier this session."
 
-  conditionally_install_witch_prefpane
-
   report_end_phase_standard
 }
 
