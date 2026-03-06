@@ -36,6 +36,7 @@ brew "anomalyco/tap/opencode"  # Recommended over `brew install opencode` becaus
 
 brew "php"                     # General-purpose scripting language
                                  # Required for Alfred’s “Text Actions” workflow.
+brew "python"                  # Python 3. See https://docs.brew.sh/Homebrew-and-Python
 brew "ripgrep"                 # Search tool like, but better than, grep and the Silver Searcher
 brew "starship"                # Configures prompt for Zsh and other shells
 brew "stockfish"               # Strong open-source chess engine
