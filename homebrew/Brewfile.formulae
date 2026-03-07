@@ -8,6 +8,7 @@ brew "bash"                    # Bourne-Again SHell, a UNIX command interpreter
 brew "bat"                     # Clone of cat(1) with syntax highlighting and Git integration
 brew "cloc"                    # Counts lines of code
 brew "coreutils"               # basic file, shell and text manipulation utilities
+brew "docker"                  # Pack, ship, and run any application as a lightweight container
 brew "dockutil"                # Tool for configuring the items in a macOS Dock
 brew "eza"                     # Modern alternative to `ls`
 brew "fastfetch"               # Displays system information (replacement for neofetch)
