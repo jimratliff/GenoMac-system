@@ -315,6 +315,7 @@ At this point, all apps have been installed and all systemwide settings have bee
     - If and until this is resolved, this file is vestigial.
   - Zsh and autocompletion issues
     - At some early stage, I encountered problems getting zsh-autocomplete to work, so I removed it and use only zsh-autosuggestions.
+    - This may be related to: I don’t install zsh from Homebrew, using the macOS built-in zsh instead. Homebrew’s zsh appeared to cause trouble for users other than the user that installed Homebrew. (Homebrew doesn’t always adopt the perspective of a multi-user environment.)
    
 ## Appendix: Dev issues
 The preceding content of this README focuses on the “user” experience, i.e., the experience from USER_CONFIGURER’s experience, as a consumer of the repository in its contemperaneous state.
