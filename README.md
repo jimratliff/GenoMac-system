@@ -315,7 +315,14 @@ At this point, all apps have been installed and all systemwide settings have bee
     - If and until this is resolved, this file is vestigial.
   - Zsh and autocompletion issues
     - At some early stage, I encountered problems getting zsh-autocomplete to work, so I removed it and use only zsh-autosuggestions.
-    - This may be related to: I don’t install zsh from Homebrew, using the macOS built-in zsh instead. Homebrew’s zsh appeared to cause trouble for users other than the user that installed Homebrew. (Homebrew doesn’t always adopt the perspective of a multi-user environment.)
+    - This may be related to:
+      - I don’t install zsh from Homebrew, using the macOS built-in zsh instead. Homebrew’s zsh appeared to cause trouble for users other than the user that installed Homebrew. (Homebrew doesn’t always adopt the perspective of a multi-user environment.)
+      - https://github.com/casey/just?tab=readme-ov-file#what-are-the-idiosyncrasies-of-make-that-just-avoids:~:text=them%2E-,macOS
+        - If you use Homebrew to install `just`, it will automatically install the most recent copy of the zsh completion script in the Homebrew zsh
+        directory, which the built-in version of zsh doesn't know about by default. It's best to use this copy of the script if possible, since it will
+        be updated whenever you update `just` via Homebrew. Also, many other Homebrew packages use the same location for completion scripts, and the built
+        in zsh doesn't know about those either. To take advantage of `just` completion in zsh in this scenario, you can set `fpath` to the Homebrew
+        location before calling `compinit`
    
 ## Appendix: Dev issues
 The preceding content of this README focuses on the “user” experience, i.e., the experience from USER_CONFIGURER’s experience, as a consumer of the repository in its contemperaneous state.
