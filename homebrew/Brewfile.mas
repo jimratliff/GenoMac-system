@@ -31,5 +31,5 @@ mas "Slack for Desktop",              id: 803453959
 mas "Smart Converter",                id: 447513724  # Failed to install via mas
 mas "Soulver 3",                      id: 1508732804
 mas "The Unarchiver",                 id: 425424353
-mas "WordService",                   id: 899972312
+# mas "WordService",                   id: 899972312
 
