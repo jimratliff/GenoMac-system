@@ -27,6 +27,7 @@ mas "Pixelmator Pro",                 id: 1289583905
 mas "Plain Text Editor",              id: 1572202501
 mas "ReadKit - Reading Hub",          id: 1615798039
 mas "Screen Ruler - A Desktop Ruler", id: 1352308362
+mas "Simple Menu Bar Stopwatch",      id: 6477624717
 mas "Slack for Desktop",              id: 803453959
 mas "Smart Converter",                id: 447513724  # Failed to install via mas
 mas "Soulver 3",                      id: 1508732804
