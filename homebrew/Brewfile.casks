@@ -18,6 +18,7 @@ cask "chatgpt"                  # Official OpenAI ChatGPT client desktop app
 # cask "chatgpt-atlas"            # OpenAI’s official browser with ChatGPT built in
 cask "claude"                   # Official Anthropic Claude AI desktop app
 cask "claude-code"              # Terminal-based AI coding assistant
+cask "cmux"                     # Ghostty-based terminal with vertical tabs and notifications for AI coding agents
 cask "codex"                    # OpenAI’s coding agent that runs in your terminal
 cask "codex-app"                # OpenAI’s Codex desktop app for managing coding agents
 cask "daisydisk"                # Disk-space visualizer
