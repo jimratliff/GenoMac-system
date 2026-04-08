@@ -56,7 +56,7 @@ cask "opencode-desktop"         # AI coding agent desktop client
 
 cask "orion"                    # WebKit-based web browser
 cask "raindropio"               # Bookmarking manager
-cask "textexpander"             # Insert pre-made snippets of text anywhere
+# cask "textexpander"             # Insert pre-made snippets of text anywhere
 cask "tower"                    # Git client GUI
 cask "visual-studio-code"       # Microsoft open-source code editor
 cask "vlc"                      # Multimedia player
