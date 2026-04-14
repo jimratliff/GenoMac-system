@@ -48,6 +48,7 @@ cask "key-codes"                # Display key code, unicode value, and modifier 
 cask "keyboard-maestro"         # Automation software (version 11)
 # cask "microsoft-edge"           # Microsoft’s web browser
 cask "microsoft-teams"          # Microsoft version of Zoom
+cask "msgfiler"                 # Keyboard-based email filing application for Apple Mail
 cask "notion"                   # Knowledge base using proprietary files
 cask "obsidian"                 # Knowledge base using local folder of Markdown files
 
