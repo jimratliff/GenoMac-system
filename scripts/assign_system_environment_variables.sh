@@ -60,10 +60,21 @@ GMS_USER_SPAWNING_SCRIPTS="${GMS_SCRIPTS}/spawn"
 # Holds narrow-focused scripts to be individually accessed by make recipes
 GMS_UTILITIES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/utilities"
 
+############### 1Password-related
+# Also see environment variable defined in GenoMac-shared: 1PASSWORD_VAULT_FOR_GENOMAC_STUFF
+
+# Name of 1Password item that stores the JSON configuration mapping user-class to (a) passwords and (b) volumes
+1PASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="GenoMac-system_user_spawn_config_json"
+
+# Name of 1Password item that stores the list of users to create
+1PASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="GenoMac-system_specs_of_users_to_create"
+
 ###
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
+export_and_report 1PASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
+export_and_report 1PASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
 export_and_report GMS_DOCS_TO_DISPLAY
 export_and_report GMS_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_HOMEBREW
