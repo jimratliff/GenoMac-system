@@ -75,8 +75,6 @@ SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES="SESH_repo_has_been_tested_for_changes"
 SESH_RESOURCES_HAVE_BEEN_INSTALLED="SESH_resources_have_been_installed"
 SESH_SYSTEMWIDE_SETTINGS_HAVE_BEEN_IMPLEMENTED="SESH_systemwide_settings_have_been_implemented"
 
-############### USER-DOMAIN
-
 # Export environment variables to be available in all subsequent shells
 report_action_taken "Exporting environment variables corresponding to states."
 
