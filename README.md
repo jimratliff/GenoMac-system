@@ -10,7 +10,7 @@
 - [Dev issues](#appendix-dev-issues)
 
 ## New paradigm supercedes below discussion: The Hypervisor
-As of January 28, 2026, GenoMac-system has been refactored to use what I’m calling the Hypervisor: a single script (executed with `make run-hypervisor`) that manages the entire Phase 1 process (up until spawning new users/volumes).
+As of January 28, 2026, GenoMac-system has been refactored to use what I’m calling the Hypervisor: a single script (executed with `make run-hypervisor`) that manages the entire Phase 1 process (up until (a) using GenoMac-user to further configure USER_CONFIGURER followed by (b) spawning new users/volumes).
 
 This management of Phase 1 includes updating the local clone’s copy of the GenoMac-system remote repo. Thus, the previously prescribed step (`git pull --recurse-submodules origin main`) is not necessary.
 
