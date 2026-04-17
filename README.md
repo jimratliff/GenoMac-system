@@ -19,7 +19,7 @@ However, because GenoMac-system relies on GenoMac-shared as a submodule, after a
 ## TODOs
 - Apps that require Accessibility settings
   - USER_CONFIGURER should be interactively walked through the required accessibility/privacy settings
-    - This is superior than requires other users to do it, because—AFAICT—it needs to be done only once
+    - This is superior than requiring other users to do it, because—AFAICT—it needs to be done only once
   - Alan.app
     - Accessibility Permission Required
       - Alan needs Accessibility permission to highlight the focused window. Please open System Settings → Privacy & Security → Accessibility and enable “Alan”. Then relaunch Alan.
