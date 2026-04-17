@@ -17,6 +17,9 @@
 # accessed by GenoMac-system when it creates user accounts.
 GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
 
+# Directory (relative to current volume) in which all user home directories reside
+# USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
+
 #############################################
 #                  Aliases to intra-repository hierarchical structures
 #
@@ -89,4 +92,5 @@ export_and_report GMS_SETTINGS_SCRIPTS
 export_and_report GMS_USER_SCOPE_SCRIPTS
 export_and_report GMS_USER_SPAWNING_SCRIPTS
 export_and_report GMS_UTILITIES
+export_and_report USER_DIRECTORY_CONTAINER_WITHIN_VOLUME
 
