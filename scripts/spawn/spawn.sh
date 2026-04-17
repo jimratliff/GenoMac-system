@@ -5,7 +5,7 @@ set -euo pipefail
 function create_user_accounts_for_this_Mac() {
   # Creates specific user accounts for this Mac.
   # When a user to be created is specified to reside (i.e., its home directory inhabits) a volume
-  #   that doesn’t currently exist, that volume is created.
+  #   that doesn’t currently exist, that APFS volume is created.
   #
   # It’s assumed that this process is being executed by USER_CONFIGURER, which user already exists, as does
   #   a "vanilla" account. Thus, the users being created are anticipated to be the third and subsequent
@@ -26,6 +26,10 @@ function create_user_accounts_for_this_Mac() {
   #   - The path is expressed relative to GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
   #     - Hint: GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
   #
+  # To be clear, "user-class" specifies the *volume* of the home directory but the actually path to the home directory
+  # is `some_volume/Users/some_user`.
+  # See environment variable: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
+  #
   # A separate configuration file maps "user-class" to both (a) a password and (b) a volume.
   #
   # This function assumes that:
@@ -33,6 +37,9 @@ function create_user_accounts_for_this_Mac() {
   # - scripts/0_initialize_me_first.sh has been sourced
   #   - This sources (a) helpers and cross-repo environment variables from GenoMac-shared and
   #     (b) repo-specific environment variables.
+  # - The following environment variables have been defined:
+  #   - 1PASSWORD_VAULT_FOR_GENOMAC_STUFF
+  #   - USER_DIRECTORY_CONTAINER_WITHIN_VOLUME
   
   report_start_phase_standard
   print_banner_text "BEGIN USER CREATION"
@@ -90,4 +97,31 @@ function get_mappings_from_user_class_to_passwords_and_volumes() {
   # ############### TODO WORK IN PROGRESS
 
 
+}
+
+function determine_startup_container() {
+  # Determines the container of the startup volume.
+  # This container will be used for all subsequent new volumes for user home directories
+  report_start_phase_standard
+
+  local container_ref
+
+  if ! container_ref="$(
+    "$PLISTBUDDY_PATH" -c 'Print :APFSContainerReference' /dev/stdin \
+        <<<"$(diskutil info -plist /)"
+  )"; then
+    report_fail "Failed to determine APFS container for startup volume."
+    return 1
+  fi
+
+  if [[ -z "$container_ref" ]]; then
+    report_fail "APFS container reference for startup volume was empty."
+    return 1
+  fi
+
+  container_ref="/dev/${container_ref#/dev/}"
+
+  report "Container of startup volume is: ${container_ref}"
+
+  report_end_phase_standard
 }
