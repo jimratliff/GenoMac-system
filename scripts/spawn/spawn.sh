@@ -39,7 +39,12 @@ function create_user_accounts_for_this_Mac() {
   report_action_taken "Beginning process to create users"
 
   keep_sudo_alive
+  
   prompt_configurer_to_supply_login_pictures_if_desired
+
+  get_mappings_from_user_class_to_passwords_and_volumes
+
+  get_list_of_user_specs_to_create
 
   
 
@@ -79,4 +84,10 @@ function prompt_configurer_to_supply_login_pictures_if_desired() {
   report_success "You have confirmed the existence of the desired login pictures. Moving on to create new users."
   
   report_end_phase_standard
+}
+
+function get_mappings_from_user_class_to_passwords_and_volumes() {
+  # ############### TODO WORK IN PROGRESS
+
+
 }
