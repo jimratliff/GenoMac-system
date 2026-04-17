@@ -8,14 +8,18 @@
 #
 # See also environment_variables_for_state_enums_script.sh
 
-#############################################
-#                  Aliases to intra-repository hierarchical structures
-#
-############### Local directory into which the GenoMac-system repo is cloned
+# Local directory into which the GenoMac-system repo is cloned
 # ~/.genomac-system
 # Defined in GenoMac-shared/scripts/assign_common_environment_variables.sh
 # GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
 
+# Specify the local directory in which user login pictures are stored to be
+# accessed by GenoMac-system when it creates user accounts.
+GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
+
+#############################################
+#                  Aliases to intra-repository hierarchical structures
+#
 ############### ~/.genomac-system/homebrew
 # Local directory that holds declarative Homebrew files
 GMS_HOMEBREW="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/homebrew"
@@ -65,6 +69,7 @@ export_and_report GMS_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_HOMEBREW
 export_and_report GMS_HYPERVISOR_SCRIPTS
 export_and_report GMS_INSTALL_SCRIPTS
+export_and_report GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
 export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_RESOURCE_INSTALL_SCRIPTS
 export_and_report GMS_RESOURCES
