@@ -81,8 +81,9 @@ function create_user_accounts_for_this_Mac() {
   
   prompt_configurer_to_supply_login_pictures_if_desired
   get_user_spawn_config_associative_arrays
-  get_list_of_user_specs_to_create
-  startup_container="$(determine_startup_container)"
+  
+  # get_list_of_user_specs_to_create
+  # startup_container="$(determine_startup_container)"
 
   # ############### TODO WORK IN PROGRESS
 
