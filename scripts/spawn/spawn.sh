@@ -54,8 +54,6 @@ function create_user_accounts_for_this_Mac() {
   #     }
   #   }
   #
-  # HINT: STARTUP_VOLUME_SIGNIFIER="::STARTUP_VOLUME::"
-  #
   # This function assumes that:
   # - GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
   # - scripts/0_initialize_me_first.sh has been sourced
