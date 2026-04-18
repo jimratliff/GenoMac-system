@@ -5,7 +5,7 @@ set -euo pipefail
 # Global associative arrays to be populated from item ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
 # of 1Password vault ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
 typeset -gA volume_key_from_user_class
-typeset -gA op_key_for_passphrase_from_volume_key
+typeset -gA onepassword_key_for_passphrase_from_volume_key
 typeset -gA volume_name_from_volume_key
 
 function create_user_accounts_for_this_Mac() {
@@ -48,7 +48,7 @@ function create_user_accounts_for_this_Mac() {
   #       "work": "work_volume",
   #       "auxiliary": "auxiliary_volume"
   #     },
-  #     "1password_key_for_passphrase_from_volume_key": {
+  #     "onepassword_key_for_passphrase_from_volume_key": {
   #       "startup_volume": "THE_STARTUP_PASSWORD",
   #       "personal_volume": "PERSONAL_PASSWORD",
   #       "work_volume": "WORK_PASSWORD",
@@ -80,7 +80,7 @@ function create_user_accounts_for_this_Mac() {
   keep_sudo_alive
   
   prompt_configurer_to_supply_login_pictures_if_desired
-  get_user_spawn_config_associcative_arrays
+  get_user_spawn_config_associative_arrays
   get_list_of_user_specs_to_create
   startup_container="$(determine_startup_container)"
 
@@ -89,20 +89,20 @@ function create_user_accounts_for_this_Mac() {
   report_end_phase_standard
 }
 
-
-
-function get_user_spawn_config_associcative_arrays() {
+function get_user_spawn_config_associative_arrays() {
   # Get values for associative arrays volume_key_from_user_class,
-  # op_key_for_passphrase_from_volume_key, and volume_name_from_volume_key
+  # onepassword_key_for_passphrase_from_volume_key, and volume_name_from_volume_key
 
   report_start_phase_standard
   local user_spawn_config_json
 
+  # Get JSON from 1Password
   if ! user_spawn_config_json="$(get_user_spawn_config_from_1password)"; then
     report_fail "Failed to retrieve user spawn config from 1Password."
     return 1
   fi
 
+  # Get associative arrays from JSON
   if ! populate_user_spawn_associative_arrays_from_json <<<"$user_spawn_config_json"; then
     report_fail "Failed to populate user spawn associative arrays from JSON."
     return 1
@@ -111,7 +111,7 @@ function get_user_spawn_config_associcative_arrays() {
   report_end_phase_standard
 }
 
-get_user_spawn_config_from_1password() {
+function get_user_spawn_config_from_1password() {
 
 	report_start_phase_standard
 	local user_spawn_config_json
@@ -125,6 +125,42 @@ get_user_spawn_config_from_1password() {
 
 	report_end_phase_standard
 	print -- "$user_spawn_config_json"
+}
+
+function populate_user_spawn_associative_arrays_from_json() {
+	report_start_phase_standard
+
+	local json_input
+	json_input="$(cat)"
+
+	if ! populate_associative_array_from_json_object \
+		"$json_input" \
+		'.volume_key_from_user_class' \
+		volume_key_from_user_class
+	then
+		report_fail "Failed to populate volume_key_from_user_class."
+		return 1
+	fi
+
+	if ! populate_associative_array_from_json_object \
+		"$json_input" \
+		'.onepassword_key_for_passphrase_from_volume_key' \
+		onepassword_key_for_passphrase_from_volume_key
+	then
+		report_fail "Failed to populate onepassword_key_for_passphrase_from_volume_key."
+		return 1
+	fi
+
+	if ! populate_associative_array_from_json_object \
+		"$json_input" \
+		'.volume_name_from_volume_key' \
+		volume_name_from_volume_key
+	then
+		report_fail "Failed to populate volume_name_from_volume_key."
+		return 1
+	fi
+
+	report_end_phase_standard
 }
 
 function does_user_exist() {
