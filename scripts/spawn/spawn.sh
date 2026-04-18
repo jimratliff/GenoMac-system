@@ -137,6 +137,8 @@ function determine_startup_container() {
     return 1
   fi
 
+  # Normalize to form diskutil apfs addVolume accepts comfortably.
+  # If the plist already includes /dev/, leave it alone.
   container_ref="/dev/${container_ref#/dev/}"
 
   report "Container of startup volume is: ${container_ref}"
