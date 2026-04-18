@@ -31,6 +31,24 @@ function create_user_accounts_for_this_Mac() {
   # See environment variable: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
   #
   # A separate configuration file maps "user-class" to both (a) a password and (b) a volume.
+  #   {
+  #     "volumes": {
+  #       "Volume1": {
+  #         "container_key": "primary_user_container"
+  #       },
+  #       "Volume2": {
+  #         "container_key": "primary_user_container"
+  #       },
+  #       "Volume3": {
+  #         "container_key": "isolated_container"
+  #       }
+  #     },
+  #     "user_class_to_volume": {
+  #       "simple_admin": "Volume1",
+  #       "personal": "Volume2",
+  #       "work": "Volume3"
+  #     }
+  #   }  
   #
   # This function assumes that:
   # - GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
