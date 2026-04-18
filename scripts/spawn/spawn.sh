@@ -143,5 +143,8 @@ function determine_startup_container() {
 
   report "Container of startup volume is: ${container_ref}"
 
+  # “Return” value
+  print -- "$container_ref"
+
   report_end_phase_standard
 }
