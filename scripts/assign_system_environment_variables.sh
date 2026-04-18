@@ -13,13 +13,6 @@
 # Defined in GenoMac-shared/scripts/assign_common_environment_variables.sh
 # GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
 
-# Specify the local directory in which user login pictures are stored to be
-# accessed by GenoMac-system when it creates user accounts.
-GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
-
-# Directory (relative to current volume) in which all user home directories reside
-# USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
-
 #############################################
 #                  Aliases to intra-repository hierarchical structures
 #
@@ -75,6 +68,20 @@ GMS_UTILITIES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/utilities"
 
 ###
 
+############### Related to spawning new user accounts
+
+# Specify the local directory in which user login pictures are stored to be
+# accessed by GenoMac-system when it creates user accounts.
+GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
+
+# Directory (relative to current volume) in which all user home directories reside
+USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
+
+# Signifier for the startup volume
+STARTUP_VOLUME_SIGNIFIER="::STARTUP_VOLUME::"
+
+###
+
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
 export_and_report 1PASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
@@ -94,5 +101,6 @@ export_and_report GMS_SETTINGS_SCRIPTS
 export_and_report GMS_USER_SCOPE_SCRIPTS
 export_and_report GMS_USER_SPAWNING_SCRIPTS
 export_and_report GMS_UTILITIES
+export_and_report STARTUP_VOLUME_SIGNIFIER
 export_and_report USER_DIRECTORY_CONTAINER_WITHIN_VOLUME
 
