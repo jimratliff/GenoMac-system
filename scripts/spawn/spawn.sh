@@ -74,10 +74,9 @@ function create_user_accounts_for_this_Mac() {
   keep_sudo_alive
   
   prompt_configurer_to_supply_login_pictures_if_desired
-
-  get_mappings_from_user_class_to_passwords_and_volumes
-
+  get_user_spawn_config
   get_list_of_user_specs_to_create
+  startup_container="$(determine_startup_container)"
 
   # ############### TODO WORK IN PROGRESS
 
@@ -86,10 +85,19 @@ function create_user_accounts_for_this_Mac() {
 
 
 
-function get_mappings_from_user_class_to_passwords_and_volumes() {
+function get_user_spawn_config() {
+  report_start_phase_standard
   # ############### TODO WORK IN PROGRESS
 
+  report_end_phase_standard
+}
 
+function does_user_exist() {
+  report_start_phase_standard
+  user_name_to_test="$1"
+  # ############### TODO WORK IN PROGRESS
+
+  report_end_phase_standard
 }
 
 function determine_startup_container() {
