@@ -77,9 +77,6 @@ GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pict
 # Directory (relative to current volume) in which all user home directories reside
 USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
 
-# Signifier for the startup volume
-STARTUP_VOLUME_SIGNIFIER="::STARTUP_VOLUME::"
-
 ###
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
