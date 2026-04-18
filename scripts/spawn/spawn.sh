@@ -32,23 +32,23 @@ function create_user_accounts_for_this_Mac() {
   #
   # A separate configuration file maps "user-class" to both (a) a password and (b) a volume.
   #   {
-  #     "volumes": {
-  #       "Volume1": {
-  #         "container_key": "primary_user_container"
-  #       },
-  #       "Volume2": {
-  #         "container_key": "primary_user_container"
-  #       },
-  #       "Volume3": {
-  #         "container_key": "isolated_container"
-  #       }
-  #     },
   #     "user_class_to_volume": {
-  #       "simple_admin": "Volume1",
-  #       "personal": "Volume2",
-  #       "work": "Volume3"
+  #       "simple_admin": "::STARTUP_VOLUME::",
+  #       "implementor": "::STARTUP_VOLUME::",
+  #       "unsullied": "::STARTUP_VOLUME::",
+  #       "personal": "Volume_for_Personal_Users",
+  #       "work": "Volume_for_Work_Users",
+  #       "auxiliary": "Volume_for_Auxiliary_Users"
+  #     },
+  #     "volume_to_1password_key_for_passphrase": {
+  #       "startup": "THE_STARTUP_PASSWORD",
+  #       "personal_users_volume": "PERSONAL_PASSWORD",
+  #       "work_users_volume": "WORK_PASSWORD",
+  #       "auxiliary_users_volume": "AUX_PASSWORD"
   #     }
-  #   }  
+  #   }
+  #
+  # HINT: STARTUP_VOLUME_SIGNIFIER="::STARTUP_VOLUME::"
   #
   # This function assumes that:
   # - GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
@@ -56,6 +56,7 @@ function create_user_accounts_for_this_Mac() {
   #   - This sources (a) helpers and cross-repo environment variables from GenoMac-shared and
   #     (b) repo-specific environment variables.
   # - The following environment variables have been defined:
+  #   - 1PASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
   #   - 1PASSWORD_VAULT_FOR_GENOMAC_STUFF
   #   - USER_DIRECTORY_CONTAINER_WITHIN_VOLUME
   
@@ -71,45 +72,12 @@ function create_user_accounts_for_this_Mac() {
 
   get_list_of_user_specs_to_create
 
-  
-
-  
-
-  
-
   # ############### TODO WORK IN PROGRESS
 
   report_end_phase_standard
 }
 
-function prompt_configurer_to_supply_login_pictures_if_desired() {
-  # Asks USER_CONFIGURER whether login pictures are desired when creating user accounts. If so, prompts USER_CONFIGURER
-  # to confirm that the desired login pictures reside in GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
-  # If login pictures are desired, but their existence isn’t confirmed by USER_CONFIGURER, the user-creation process is
-  # aborted.
-  
-  report_start_phase_standard
 
-  if ! get_yes_no_answer_to_question "Do you want the new users to be specified with login pictures?"; then
-    report "I won’t create a directory for login pictures, since you don’t want to use them"
-    return 0
-  fi
-
-  report_action_taken "Creating, if necessary, directory for users’ login pictures"
-  mkdir -p "$GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY" ; success_or_not
-
-  report "The login picture for each user must be in: $GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY"
-  report_action_taken "I am opening this directory for you to inspect its contents"
-  open "$GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY" ; success_or_not
-  if ! get_yes_no_answer_to_question "Answer “yes” if you’re satisfied the login pics are in the folder. Answer “no” to cancel."; then
-    report "You want login pictures, but you haven’t confirmed you’ve supplied them.${NEWLINE}I am aborting. Feel free to try again later."
-    return 1
-  fi
-
-  report_success "You have confirmed the existence of the desired login pictures. Moving on to create new users."
-  
-  report_end_phase_standard
-}
 
 function get_mappings_from_user_class_to_passwords_and_volumes() {
   # ############### TODO WORK IN PROGRESS
@@ -146,5 +114,34 @@ function determine_startup_container() {
   # “Return” value
   print -- "$container_ref"
 
+  report_end_phase_standard
+}
+
+function prompt_configurer_to_supply_login_pictures_if_desired() {
+  # Asks USER_CONFIGURER whether login pictures are desired when creating user accounts. If so, prompts USER_CONFIGURER
+  # to confirm that the desired login pictures reside in GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
+  # If login pictures are desired, but their existence isn’t confirmed by USER_CONFIGURER, the user-creation process is
+  # aborted.
+  
+  report_start_phase_standard
+
+  if ! get_yes_no_answer_to_question "Do you want the new users to be specified with login pictures?"; then
+    report "I won’t create a directory for login pictures, since you don’t want to use them"
+    return 0
+  fi
+
+  report_action_taken "Creating, if necessary, directory for users’ login pictures"
+  mkdir -p "$GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY" ; success_or_not
+
+  report "The login picture for each user must be in: $GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY"
+  report_action_taken "I am opening this directory for you to inspect its contents"
+  open "$GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY" ; success_or_not
+  if ! get_yes_no_answer_to_question "Answer “yes” if you’re satisfied the login pics are in the folder. Answer “no” to cancel."; then
+    report "You want login pictures, but you haven’t confirmed you’ve supplied them.${NEWLINE}I am aborting. Feel free to try again later."
+    return 1
+  fi
+
+  report_success "You have confirmed the existence of the desired login pictures. Moving on to create new users."
+  
   report_end_phase_standard
 }
