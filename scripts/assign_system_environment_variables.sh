@@ -61,10 +61,10 @@ GMS_UTILITIES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/utilities"
 ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION="GenoMac-user-creation"
 
 # Name of 1Password item that stores the JSON configuration mapping user-class to (a) passwords and (b) volumes
-ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="GenoMac-system_user_spawn_config_json"
+ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="GenoMac-system-user-spawn-config-json"
 
 # Name of 1Password item that stores the list of users to create
-ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="GenoMac-system_specs_of_users_to_create"
+ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="GenoMac-system-specs-of-users-to-create"
 
 ###
 
