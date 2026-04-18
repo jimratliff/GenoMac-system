@@ -2,6 +2,12 @@
 
 set -euo pipefail
 
+# Global associative arrays to be populated from item ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
+# of 1Password vault ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+typeset -gA volume_key_from_user_class
+typeset -gA op_key_for_passphrase_from_volume_key
+typeset -gA volume_name_from_volume_key
+
 function create_user_accounts_for_this_Mac() {
   # Creates specific user accounts for this Mac.
   # When a user to be created is specified to reside (i.e., its home directory inhabits) a volume
@@ -62,9 +68,9 @@ function create_user_accounts_for_this_Mac() {
   #   - This sources (a) helpers and cross-repo environment variables from GenoMac-shared and
   #     (b) repo-specific environment variables.
   # - The following environment variables have been defined:
-  #   - 1PASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
-  #   - 1PASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
-  #   - 1PASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
+  #   - ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+  #   - ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
+  #   - ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
   #   - USER_DIRECTORY_CONTAINER_WITHIN_VOLUME
   
   report_start_phase_standard
@@ -74,7 +80,7 @@ function create_user_accounts_for_this_Mac() {
   keep_sudo_alive
   
   prompt_configurer_to_supply_login_pictures_if_desired
-  get_user_spawn_config
+  get_user_spawn_config_associcative_arrays
   get_list_of_user_specs_to_create
   startup_container="$(determine_startup_container)"
 
@@ -85,11 +91,40 @@ function create_user_accounts_for_this_Mac() {
 
 
 
-function get_user_spawn_config() {
+function get_user_spawn_config_associcative_arrays() {
+  # Get values for associative arrays volume_key_from_user_class,
+  # op_key_for_passphrase_from_volume_key, and volume_name_from_volume_key
+
   report_start_phase_standard
-  # ############### TODO WORK IN PROGRESS
+  local user_spawn_config_json
+
+  if ! user_spawn_config_json="$(get_user_spawn_config_from_1password)"; then
+    report_fail "Failed to retrieve user spawn config from 1Password."
+    return 1
+  fi
+
+  if ! populate_user_spawn_associative_arrays_from_json <<<"$user_spawn_config_json"; then
+    report_fail "Failed to populate user spawn associative arrays from JSON."
+    return 1
+  fi
 
   report_end_phase_standard
+}
+
+get_user_spawn_config_from_1password() {
+
+	report_start_phase_standard
+	local user_spawn_config_json
+
+	if ! user_spawn_config_json="$(
+		op read "op://$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION/$ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG"
+	)"; then
+		report_fail "Failed to read user spawn config from 1Password."
+		return 1
+	fi
+
+	report_end_phase_standard
+	print -- "$user_spawn_config_json"
 }
 
 function does_user_exist() {
