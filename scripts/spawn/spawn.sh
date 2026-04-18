@@ -32,19 +32,25 @@ function create_user_accounts_for_this_Mac() {
   #
   # A separate configuration file maps "user-class" to both (a) a password and (b) a volume.
   #   {
-  #     "user_class_to_volume": {
-  #       "simple_admin": "::STARTUP_VOLUME::",
-  #       "implementor": "::STARTUP_VOLUME::",
-  #       "unsullied": "::STARTUP_VOLUME::",
-  #       "personal": "Volume_for_Personal_Users",
-  #       "work": "Volume_for_Work_Users",
-  #       "auxiliary": "Volume_for_Auxiliary_Users"
+  #     "volume_key_to_volume_name": {
+  #       "startup_volume": "::STARTUP_VOLUME::",
+  #       "personal_volume": "Volume_for_Personal_Users",
+  #       "work_volume": "Volume_for_Work_Users",
+  #       "auxiliary_volume": "Volume_for_Auxiliary_Users"
   #     },
-  #     "volume_to_1password_key_for_passphrase": {
-  #       "startup": "THE_STARTUP_PASSWORD",
-  #       "personal_users_volume": "PERSONAL_PASSWORD",
-  #       "work_users_volume": "WORK_PASSWORD",
-  #       "auxiliary_users_volume": "AUX_PASSWORD"
+  #     "user_class_to_volume_key": {
+  #       "simple_admin": "startup_volume",
+  #       "implementor": "startup_volume",
+  #       "unsullied": "startup_volume",
+  #       "personal": "personal_volume",
+  #       "work": "work_volume",
+  #       "auxiliary": "auxiliary_volume"
+  #     },
+  #     "volume_key_to_1password_key_for_passphrase": {
+  #       "startup_volume": "THE_STARTUP_PASSWORD",
+  #       "personal_volume": "PERSONAL_PASSWORD",
+  #       "work_volume": "WORK_PASSWORD",
+  #       "auxiliary_volume": "AUX_PASSWORD"
   #     }
   #   }
   #
