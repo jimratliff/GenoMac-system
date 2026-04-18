@@ -30,15 +30,11 @@ function create_user_accounts_for_this_Mac() {
   # is `some_volume/Users/some_user`.
   # See environment variable: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
   #
-  # A separate configuration file maps "user-class" to both (a) a password and (b) a volume.
+  # A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely
+  # look up a passphrase, and (c) volume key to a volume name.
+  #
   #   {
-  #     "volume_key_to_volume_name": {
-  #       "startup_volume": "Volume_for_Startup",
-  #       "personal_volume": "Volume_for_Personal_Users",
-  #       "work_volume": "Volume_for_Work_Users",
-  #       "auxiliary_volume": "Volume_for_Auxiliary_Users"
-  #     },
-  #     "user_class_to_volume_key": {
+  #     "volume_key_from_user_class": {
   #       "simple_admin": "startup_volume",
   #       "implementor": "startup_volume",
   #       "unsullied": "startup_volume",
@@ -46,12 +42,18 @@ function create_user_accounts_for_this_Mac() {
   #       "work": "work_volume",
   #       "auxiliary": "auxiliary_volume"
   #     },
-  #     "volume_key_to_1password_key_for_passphrase": {
+  #     "1password_key_for_passphrase_from_volume_key": {
   #       "startup_volume": "THE_STARTUP_PASSWORD",
   #       "personal_volume": "PERSONAL_PASSWORD",
   #       "work_volume": "WORK_PASSWORD",
   #       "auxiliary_volume": "AUX_PASSWORD"
   #     }
+  #     "volume_name_from_volume_key": {
+  #       "startup_volume": "Volume_for_Startup",
+  #       "personal_volume": "Volume_for_Personal_Users",
+  #       "work_volume": "Volume_for_Work_Users",
+  #       "auxiliary_volume": "Volume_for_Auxiliary_Users"
+  #     },
   #   }
   #
   # This function assumes that:
