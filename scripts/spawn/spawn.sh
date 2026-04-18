@@ -33,7 +33,7 @@ function create_user_accounts_for_this_Mac() {
   # A separate configuration file maps "user-class" to both (a) a password and (b) a volume.
   #   {
   #     "volume_key_to_volume_name": {
-  #       "startup_volume": "::STARTUP_VOLUME::",
+  #       "startup_volume": "Volume_for_Startup",
   #       "personal_volume": "Volume_for_Personal_Users",
   #       "work_volume": "Volume_for_Work_Users",
   #       "auxiliary_volume": "Volume_for_Auxiliary_Users"
