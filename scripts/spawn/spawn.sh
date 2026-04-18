@@ -99,12 +99,17 @@ function create_user_accounts_for_this_Mac() {
   print_banner_text "BEGIN USER CREATION"
   report_action_taken "Beginning process to create users"
 
+
+  
+  get_user_spawn_config_associative_arrays
+
+  users_to_create_json="$(get_users_to_create_from_1password)" || return 1
+
   keep_sudo_alive
   
   prompt_configurer_to_supply_login_pictures_if_desired
-  get_user_spawn_config_associative_arrays
   
-  # get_list_of_user_specs_to_create
+
   # startup_container="$(determine_startup_container)"
 
   # ############### TODO WORK IN PROGRESS
@@ -184,6 +189,21 @@ function populate_user_spawn_associative_arrays_from_json() {
 	fi
 
 	report_end_phase_standard
+}
+
+function get_users_to_create_from_1password() {
+  report_start_phase_standard
+  local users_to_create_json
+
+  if ! users_to_create_json="$(
+    op read "op://${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}/${ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE}/notesPlain"
+  )"; then
+    report_fail "Failed to read users-to-create JSON from 1Password."
+    return 1
+  fi
+
+  report_end_phase_standard
+  print -- "$users_to_create_json"
 }
 
 function does_user_exist() {
@@ -270,5 +290,30 @@ function home_directory_path_from_volume_name() {
   print -- "$home_directory_path"
   
   report_end_phase_standard
+}
+
+get_short_name_from_user_spec_json() {
+  local user_spec_json="$1"
+  jq -r '.short_name' <<<"$user_spec_json"
+}
+
+get_full_name_from_user_spec_json() {
+  local user_spec_json="$1"
+  jq -r '.full_name' <<<"$user_spec_json"
+}
+
+get_uid_from_user_spec_json() {
+  local user_spec_json="$1"
+  jq -r '.uid' <<<"$user_spec_json"
+}
+
+get_user_class_from_user_spec_json() {
+  local user_spec_json="$1"
+  jq -r '.user_class' <<<"$user_spec_json"
+}
+
+get_avatar_from_user_spec_json() {
+  local user_spec_json="$1"
+  jq -r '.avatar // empty' <<<"$user_spec_json"
 }
 
