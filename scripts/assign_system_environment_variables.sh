@@ -75,7 +75,9 @@ ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="GenoMac-system_specs_of_users_to
 GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
 
 # Directory (relative to current volume) in which all user home directories reside
-USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
+# NOTE: The prefixing `/` is part of the string. This simplifies constructing the path in the case that the
+#       home directory is located at the root of the volume.
+USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="/Users"
 
 ###
 
