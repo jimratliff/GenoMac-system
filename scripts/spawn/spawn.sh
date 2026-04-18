@@ -10,16 +10,20 @@ typeset -gA volume_name_from_volume_key
 
 function create_user_accounts_for_this_Mac() {
   # Creates specific user accounts for this Mac.
-  # When a user to be created is specified to reside (i.e., its home directory inhabits) a volume
+  # When a user to be created is specified to reside on (i.e., its home directory inhabits) a volume
   #   that doesn’t currently exist, that APFS volume is created.
   #
   # It’s assumed that this process is being executed by USER_CONFIGURER, which user already exists, as does
   #   a "vanilla" account. Thus, the users being created are anticipated to be the third and subsequent
   #   users.
   #
+  # The users to be created are specified in a "users_to_create" JSON object.
+  #
   # Each user to be created is specified by:
-  # - "name"
+  # - "short_name"
   #   - a string, e.g., "Betty")
+  # - "full_name" (optional)
+  #   - a string, e.g., "Betty Rubble")
   # - "uid"
   #   - the user’s ID, in the range 510–999, which macOS uses to distinguish users (rather than by user name)
   #   - (Project GenoMac excludes IDs 501–509 here, even though they are legit user IDs, in order to prevent
@@ -31,6 +35,24 @@ function create_user_accounts_for_this_Mac() {
   #   - Relative path to image file for the user’s avatar, e.g., "Betty.png"
   #   - The path is expressed relative to GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
   #     - Hint: GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
+  #
+  #   {
+  #     "users_to_create": [
+  #       {
+  #         "short_name": "betty",
+  #         "full_name": "Betty Rubble",
+  #         "uid": 511,
+  #         "user_class": "personal",
+  #         "avatar": "Betty.png"
+  #       },
+  #       {
+  #         "short_name": "wilma",
+  #         "full_name": "Wilma Flintstone",
+  #         "uid": 512,
+  #         "user_class": "work"
+  #       }
+  #     ]
+  #   }
   #
   # To be clear, "user-class" specifies the *volume* of the home directory but the actual path to the home directory
   # is `some_volume/Users/some_user`.
@@ -118,7 +140,7 @@ function get_user_spawn_config_from_1password() {
 	local user_spawn_config_json
 
 	if ! user_spawn_config_json="$(
-		op read "op://$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION/$ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG"
+		op read "op://${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}/${ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG}/notesPlain"
 	)"; then
 		report_fail "Failed to read user spawn config from 1Password."
 		return 1
@@ -233,3 +255,20 @@ function prompt_configurer_to_supply_login_pictures_if_desired() {
   
   report_end_phase_standard
 }
+
+function home_directory_path_from_volume_name() {
+  # Constructs the home-directory path from the home-directory volume name (supplied as $1), using
+  # the environment variable USER_DIRECTORY_CONTAINER_WITHIN_VOLUME.
+  # NOTE: The environment variable USER_DIRECTORY_CONTAINER_WITHIN_VOLUME is assumed to *include* any
+  #       `/` that separates the volume from a directory.
+  # HINT: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="/Users"
+  report_start_phase_standard
+  local volume_name="$1"
+  local home_directory_path
+  
+  home_directory_path="${volume_name}${USER_DIRECTORY_CONTAINER_WITHIN_VOLUME}"
+  print -- "$home_directory_path"
+  
+  report_end_phase_standard
+}
+
