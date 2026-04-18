@@ -32,7 +32,7 @@ function create_user_accounts_for_this_Mac() {
   #   - The path is expressed relative to GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
   #     - Hint: GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
   #
-  # To be clear, "user-class" specifies the *volume* of the home directory but the actually path to the home directory
+  # To be clear, "user-class" specifies the *volume* of the home directory but the actual path to the home directory
   # is `some_volume/Users/some_user`.
   # See environment variable: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
   #
@@ -53,7 +53,7 @@ function create_user_accounts_for_this_Mac() {
   #       "personal_volume": "PERSONAL_PASSWORD",
   #       "work_volume": "WORK_PASSWORD",
   #       "auxiliary_volume": "AUX_PASSWORD"
-  #     }
+  #     },
   #     "volume_name_from_volume_key": {
   #       "startup_volume": "Volume_for_Startup",
   #       "personal_volume": "Volume_for_Personal_Users",
@@ -166,7 +166,7 @@ function populate_user_spawn_associative_arrays_from_json() {
 
 function does_user_exist() {
   report_start_phase_standard
-  user_name_to_test="$1"
+  local user_name_to_test="$1"
   # ############### TODO WORK IN PROGRESS
 
   report_end_phase_standard
@@ -214,6 +214,7 @@ function prompt_configurer_to_supply_login_pictures_if_desired() {
 
   if ! get_yes_no_answer_to_question "Do you want the new users to be specified with login pictures?"; then
     report "I won’t create a directory for login pictures, since you don’t want to use them"
+	report_end_phase_standard
     return 0
   fi
 
