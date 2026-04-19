@@ -133,7 +133,7 @@ function create_users() {
 	  full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
 	  uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
 	  user_class="$(get_user_class_from_user_spec_json "$user_spec_json")" || return 1
-	  avatar="$(get_avatar_from_user_spec_json "$user_spec_json")" || return 1
+	  avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")" || return 1
 	
 	  if does_user_exist "$short_name"; then
 	    report "User already exists; skipping: $short_name"
