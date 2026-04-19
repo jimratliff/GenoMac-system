@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-helpers.sh"
+
 # Global associative arrays to be populated from item ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
 # of 1Password vault ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
 typeset -gA volume_key_from_user_class
@@ -233,54 +235,6 @@ function get_users_to_create_from_1password() {
   print -- "$users_to_create_json"
 }
 
-function does_user_exist() {
-  # Returns success iff a user with the given short name exists.
-  report_start_phase_standard
-
-  local user_name_to_test="$1"
-
-  if id -u "$user_name_to_test" >/dev/null 2>&1; then
-	  report_warning "User $user_name_to_test already exists. Moving on…"
-    report_end_phase_standard
-    return 0
-  fi
-
-  report_end_phase_standard
-  return 1
-}
-
-function determine_startup_container() {
-  # Determines the container of the startup volume.
-  # This container will be used for all subsequent new volumes for user home directories
-  report_start_phase_standard
-
-  local container_ref
-
-  if ! container_ref="$(
-    "$PLISTBUDDY_PATH" -c 'Print :APFSContainerReference' /dev/stdin \
-        <<<"$(diskutil info -plist /)"
-  )"; then
-    report_fail "Failed to determine APFS container for startup volume."
-    return 1
-  fi
-
-  if [[ -z "$container_ref" ]]; then
-    report_fail "APFS container reference for startup volume was empty."
-    return 1
-  fi
-
-  # Normalize to form diskutil apfs addVolume accepts comfortably.
-  # If the plist already includes /dev/, leave it alone.
-  container_ref="/dev/${container_ref#/dev/}"
-
-  report "Container of startup volume is: ${container_ref}"
-
-  # “Return” value
-  print -- "$container_ref"
-
-  report_end_phase_standard
-}
-
 function prompt_configurer_to_supply_login_pictures_if_desired() {
   # Asks USER_CONFIGURER whether login pictures are desired when creating user accounts. If so, prompts USER_CONFIGURER
   # to confirm that the desired login pictures reside in GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
@@ -310,45 +264,3 @@ function prompt_configurer_to_supply_login_pictures_if_desired() {
   
   report_end_phase_standard
 }
-
-function home_directory_path_from_volume_name() {
-  # Constructs the home-directory path from the home-directory volume name (supplied as $1), using
-  # the environment variable USER_DIRECTORY_CONTAINER_WITHIN_VOLUME.
-  # NOTE: The environment variable USER_DIRECTORY_CONTAINER_WITHIN_VOLUME is assumed to *include* any
-  #       `/` that separates the volume from a directory.
-  # HINT: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="/Users"
-  report_start_phase_standard
-  local volume_name="$1"
-  local home_directory_path
-  
-  home_directory_path="${volume_name}${USER_DIRECTORY_CONTAINER_WITHIN_VOLUME}"
-  print -- "$home_directory_path"
-  
-  report_end_phase_standard
-}
-
-get_short_name_from_user_spec_json() {
-  local user_spec_json="$1"
-  jq -r '.short_name' <<<"$user_spec_json"
-}
-
-get_full_name_from_user_spec_json() {
-  local user_spec_json="$1"
-  jq -r '.full_name' <<<"$user_spec_json"
-}
-
-get_uid_from_user_spec_json() {
-  local user_spec_json="$1"
-  jq -r '.uid' <<<"$user_spec_json"
-}
-
-get_user_class_from_user_spec_json() {
-  local user_spec_json="$1"
-  jq -r '.user_class' <<<"$user_spec_json"
-}
-
-get_avatar_from_user_spec_json() {
-  local user_spec_json="$1"
-  jq -r '.avatar // empty' <<<"$user_spec_json"
-}
-
