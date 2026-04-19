@@ -1,7 +1,5 @@
 #!/usr/bin/env zsh
 
-
-
 function does_user_exist() {
   # Returns success iff a user with the given short name exists.
   report_start_phase_standard
@@ -86,7 +84,7 @@ get_user_class_from_user_spec_json() {
   jq -r '.user_class' <<<"$user_spec_json"
 }
 
-get_avatar_from_user_spec_json() {
+get_avatar_subpath_from_user_spec_json() {
   local user_spec_json="$1"
   jq -r '.avatar // empty' <<<"$user_spec_json"
 }
