@@ -99,21 +99,48 @@ function create_user_accounts_for_this_Mac() {
   print_banner_text "BEGIN USER CREATION"
   report_action_taken "Beginning process to create users"
 
-
-  
   get_user_spawn_config_associative_arrays
-
   users_to_create_json="$(get_users_to_create_from_1password)" || return 1
 
   keep_sudo_alive
   
   prompt_configurer_to_supply_login_pictures_if_desired
+
+  create_users
   
 
   # startup_container="$(determine_startup_container)"
 
   # ############### TODO WORK IN PROGRESS
 
+  report_end_phase_standard
+}
+
+function create_users() {
+  report_start_phase_standard
+
+	local user_spec_json
+	local short_name
+	local full_name
+	local uid
+	local user_class
+	local avatar
+	
+	while IFS= read -r user_spec_json; do
+	  short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
+	  full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
+	  uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
+	  user_class="$(get_user_class_from_user_spec_json "$user_spec_json")" || return 1
+	  avatar="$(get_avatar_from_user_spec_json "$user_spec_json")" || return 1
+	
+	  if does_user_exist "$short_name"; then
+	    report "User already exists; skipping: $short_name"
+	    continue
+	  fi
+	
+	  report "Need to create user: $short_name ($full_name), uid=$uid, class=$user_class, avatar=$avatar"
+	done < <(iterate_over_users_to_create "$users_to_create_json")
+  
   report_end_phase_standard
 }
 
@@ -207,11 +234,19 @@ function get_users_to_create_from_1password() {
 }
 
 function does_user_exist() {
+  # Returns success iff a user with the given short name exists.
   report_start_phase_standard
+
   local user_name_to_test="$1"
-  # ############### TODO WORK IN PROGRESS
+
+  if id -u "$user_name_to_test" >/dev/null 2>&1; then
+	  report_warning "User $user_name_to_test already exists. Moving on…"
+    report_end_phase_standard
+    return 0
+  fi
 
   report_end_phase_standard
+  return 1
 }
 
 function determine_startup_container() {
