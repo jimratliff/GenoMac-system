@@ -101,6 +101,9 @@ function create_user_accounts_for_this_Mac() {
   print_banner_text "BEGIN USER CREATION"
   report_action_taken "Beginning process to create users"
 
+  # Sign into 1Password
+  op signin
+
   get_user_spawn_config_associative_arrays
   users_to_create_json="$(get_users_to_create_from_1password)" || return 1
 
