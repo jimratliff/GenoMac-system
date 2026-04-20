@@ -56,9 +56,10 @@ function create_user_accounts_for_this_Mac() {
   #     ]
   #   }
   #
-  # To be clear, "user-class" specifies the *volume* of the home directory but the actual path to the home directory
+  # To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory
   # is `some_volume/Users/some_user`.
   # See environment variable: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
+  # and use home_directory_path_from_volume_name()
   #
   # A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely
   # look up a passphrase, and (c) volume key to a volume name.
@@ -139,14 +140,75 @@ function create_users() {
 	  avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")" || return 1
 	
 	  if does_user_exist "$short_name"; then
-	    report "User already exists; skipping: $short_name"
+	    report_warning "User ($short_name) already exists; skipping creation of this user."
 	    continue
 	  fi
 	
 	  report "Need to create user: $short_name ($full_name), uid=$uid, class=$user_class, avatar=$avatar"
-	done < <(iterate_over_users_to_create "$users_to_create_json")
+
+	  create_local_user_account
+	  
+	done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
   
   report_end_phase_standard
+}
+
+function create_local_user_account() {
+  local name="$1"
+  local uid="$2"
+  local user_class="$3"
+  local avatar_rel="$4"
+
+  local vol="${VOC_VOL[$vocation]:-}"
+  [[ -n "$vol" ]] || { report "ERROR: user-class '$user_class' has no mapped volume"; exit 1; }
+
+  local pass="${VOL_PASS[$vol]:-}"
+  [[ -n "$pass" ]] || { report "ERROR: volume '$vol' has no passphrase provided"; exit 1; }
+
+  local shortname="$name"
+  local home="/Volumes/${vol}/Users/${name}"
+
+  # Strict guards (initialize-only)
+  if id -u "$shortname" >/dev/null 2>&1; then
+    report "ERROR: user '$shortname' already exists; refusing to modify on pristine init"
+    exit 1
+  fi
+  
+  if dscacheutil -q user | awk -v target="$uid" '$1=="uid:" && $2==target {found=1} END{exit(found?0:1)}'; then
+    report "ERROR: UID '$uid' is already in use; refusing to proceed"
+    exit 1
+  fi
+
+  report_action_taken "Creating user '$name' (uid=$uid, vocation=$vocation, volume=$vol)"
+
+  run "mkdir -p '$home'"; success_or_not
+
+  # Resolve avatar path relative to GENOMAC_USER_LOGIN_PICTURES_DIRECTORY (optional)
+  local avatar_abs=""
+  local picture_flag=""
+  if [[ -n "${avatar_rel}" ]]; then
+    avatar_abs="${GENOMAC_USER_LOGIN_PICTURES_DIRECTORY%/}/${avatar_rel}"
+    if [[ -f "$avatar_abs" ]]; then
+      picture_flag="-picture \"$avatar_abs\""
+    else
+      report "  - Avatar file not found at '$avatar_abs'; user will have the default picture"
+    fi
+  else
+    report "  - No avatar filename provided; user will have the default picture"
+  fi
+
+  # Create user with UID, home, shell, picture; feed password via stdin (kept off argv)
+  # Note: many systems accept `-password -` to read from stdin; we keep that pattern.
+  local add_cmd="printf %s \"\${pass}\" | sysadminctl -addUser \"$shortname\" \
+    -fullName \"$name\" \
+    -UID \"$uid\" \
+    -home \"$home\" \
+    ${picture_flag} \
+    -password -"
+  run "$add_cmd"; success_or_not
+
+  # Ensure ownership of the home directory
+  run "chown -R '$shortname':staff '$home'"; success_or_not
 }
 
 function get_user_spawn_config_associative_arrays() {
