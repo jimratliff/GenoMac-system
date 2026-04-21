@@ -100,6 +100,5 @@ export_and_report GMS_SETTINGS_SCRIPTS
 export_and_report GMS_USER_SCOPE_SCRIPTS
 export_and_report GMS_USER_SPAWNING_SCRIPTS
 export_and_report GMS_UTILITIES
-export_and_report STARTUP_VOLUME_SIGNIFIER
 export_and_report USER_DIRECTORY_CONTAINER_WITHIN_VOLUME
 
