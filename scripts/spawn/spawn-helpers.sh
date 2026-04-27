@@ -1,50 +1,5 @@
 #!/usr/bin/env zsh
 
-function sysadminctl_adduser() {
-	# An interface to the addUser subcommand of sysadminctl.
-	#
-	# Creates a new user and, by default, awards the new user a Secure Token.
-	# 
-	# Intended usage is to provide the password for each of (a) the new user and (b) an existing admin user
-	# with a Secure Token by providing the name of a 1Password vault and the name of the items in that vault
-	# that contain those two passwords. (Alternatively, but insecurely, cleartext passwords can be supplied
-	# primarily for testing purposes.)
-	#
-	# Parameters (optional unless otherwise specified):
-	#   --shortname						mandatory	<string> of user’s short name
-	#		--fullname								<string> of user’s full name
-	#		--uid						mandatory	<integer> of user’s ID
-	#   --avatar-path								<string> of full path to avatar file
-	#
-	#   Home-directory parameters
-	#		--container					mandatory	<string> of container that contains --volume
-	#		--volume					mandatory	<string> of volume to house user’s home directory
-	#
-	#   --admin-user-name				mandatory	<string> of short name of existing admin user with Secure Token
-	#
-	#   PASSWORD SPECIFICATIONS: Mandatory to specify *either* (a) 1Password vault and items or (b) cleartext passwords
-	#     1PASSWORD:
-	#   --op-vault									<string> of 1Password vault name containing items with desired passwords
-	#   --op-item-user-password						<string> naming the 1Password item with password for --shortname
-	#   --op-item-admin-password				 	<string> naming the 1Password item with password for --admin-user-name
-	#
-	#	  CLEARTEXT (insecure, meant only for testing):
-	#   --cleartext-password-user					cleartext <string> of password for --shortname
-	#   --cleartext-password-admin					cleartext <string> of password for --admin-user-name
-	#
-	#   --hint										<string> of password hint
-	#
-	#   --not-an-admin								If supplied, new user will *not* be an admin user. 
-	#												When not supplied (default), new user *will* be an admin user.
-	#   --no-secure-token							If supplied, do *not* give new user a Secure Token. 
-	#												When not supplied (default), new user *does* receive a Secure Token.
-	
-	
-	report_start_phase_standard
-
-	report_end_phase_standard
-}
-
 function does_user_exist() {
   # Returns success iff a user with the given short name exists.
   report_start_phase_standard
@@ -58,6 +13,31 @@ function does_user_exist() {
   fi
 
   report_end_phase_standard
+  return 1
+}
+
+function confirm_secure_token_was_enabled_for_user() {
+  # Normal exit (exit status 0) implies that Secure Token is enabled for user $1
+  # Otherwise, either the check for Secure Token status failed or gave a result not
+  # expected when Secure Token is enabled.
+  
+  report_start_phase_standard
+
+  local short_name="$1"
+  local output
+
+  if ! output="$(sysadminctl -secureTokenStatus "$short_name" 2>&1)"; then
+    report_fail "Failed to determine Secure Token status for user ${short_name}."
+    return 1
+  fi
+
+  if [[ "$output" == *"Secure token is ENABLED for user"* ]]; then
+    report_success "Secure Token is enabled for user ${short_name}."
+    report_end_phase_standard
+    return 0
+  fi
+
+  report_fail "Secure Token does not appear to be enabled for user ${short_name}. Output was: ${output}"
   return 1
 }
 
