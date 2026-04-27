@@ -3,34 +3,41 @@
 function sysadminctl_adduser() {
 	# An interface to the addUser subcommand of sysadminctl.
 	#
+	# Creates a new user and, by default, awards the new user a Secure Token.
+	# 
+	# Intended usage is to provide the password for each of (a) the new user and (b) an existing admin user
+	# with a Secure Token by providing the name of a 1Password vault and the name of the items in that vault
+	# that contain those two passwords. (Alternatively, but insecurely, cleartext passwords can be supplied
+	# primarily for testing purposes.)
+	#
 	# Parameters (optional unless otherwise specified):
-	#   --shortname									mandatory				<string> of user’s short name
-	#		--fullname																	<string> of user’s full name
-	#		--uid						  					mandatory				<integer> of user’s ID
-	#   --avatar-path																<string> of full path to avatar file
+	#   --shortname						mandatory	<string> of user’s short name
+	#		--fullname								<string> of user’s full name
+	#		--uid						mandatory	<integer> of user’s ID
+	#   --avatar-path								<string> of full path to avatar file
 	#
 	#   Home-directory parameters
-	#		--container									mandatory				<string> of container that contains --volume
-	#		--volume										mandatory				<string> of volume to house user’s home directory
+	#		--container					mandatory	<string> of container that contains --volume
+	#		--volume					mandatory	<string> of volume to house user’s home directory
 	#
-	#   --admin-user-name						mandatory				<string> of short name of existing admin user with Secure Token
+	#   --admin-user-name				mandatory	<string> of short name of existing admin user with Secure Token
 	#
-	#   PASSWORD SPECIFICATIONS: Must specify *either* (a) 1Password vault and items or (b) cleartext passwords
+	#   PASSWORD SPECIFICATIONS: Mandatory to specify *either* (a) 1Password vault and items or (b) cleartext passwords
 	#     1PASSWORD:
-	#   --op-vault													        <string> of 1Password vault name containing items with desired passwords
-	#   --op-item-user-password						          <string> naming the 1Password item with password for --shortname
-	#   --op-item-admin-password						        <string> naming the 1Password item with password for --admin-user-name
+	#   --op-vault									<string> of 1Password vault name containing items with desired passwords
+	#   --op-item-user-password						<string> naming the 1Password item with password for --shortname
+	#   --op-item-admin-password				 	<string> naming the 1Password item with password for --admin-user-name
 	#
-	#		  CLEARTEXT (insecure, meant only for testing):
-	#   --cleartext-password-user										cleartext <string> of password for --shortname
-	#   --cleartext-password-admin									cleartext <string> of password for --admin-user-name
+	#	  CLEARTEXT (insecure, meant only for testing):
+	#   --cleartext-password-user					cleartext <string> of password for --shortname
+	#   --cleartext-password-admin					cleartext <string> of password for --admin-user-name
 	#
-	#   --hint																			<string> of password hint
+	#   --hint										<string> of password hint
 	#
-	#   --not-an-admin															if supplied, user is *not* an admin user. 
-	#																		  					When not supplied (default), user *is* an admin user.
-	#   --no-secure-token														if supplied, do *not* given new user a Secure Token. 
-	#																		  					When not supplied (default), new user *does* receive a Secure Token.
+	#   --not-an-admin								If supplied, new user will *not* be an admin user. 
+	#												When not supplied (default), new user *will* be an admin user.
+	#   --no-secure-token							If supplied, do *not* give new user a Secure Token. 
+	#												When not supplied (default), new user *does* receive a Secure Token.
 	
 	
 	report_start_phase_standard
