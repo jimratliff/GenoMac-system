@@ -13,35 +13,35 @@ run-hypervisor:
 
 ############### Repo management
 
+genomac_system_dir := env_var('HOME') / '.genomac-system'
+
 refresh-repo:
     git -C ~/.genomac-system pull --recurse-submodules origin main
 
 # Updates genomac-system repo, including genomac-shared submodule, and pushes it back to GitHub.
 # The git diff check detects whether there are staged changes to the submodule and, if so, commits them.
-[working-directory: "~/.genomac-system"]
 dev-update-repo-and-submodule:
-    git pull --recurse-submodules origin main
-    git submodule update --remote
-    git add external/genomac-shared
-    git diff --cached --quiet external/genomac-shared || git commit -m "Update genomac-shared submodule"
-    git push origin main
+    git -C "{{genomac_system_dir}}" pull --recurse-submodules origin main
+    git -C "{{genomac_system_dir}}" submodule update --remote
+    git -C "{{genomac_system_dir}}" add external/genomac-shared
+    git -C "{{genomac_system_dir}}" diff --cached --quiet external/genomac-shared || git commit -m "Update genomac-shared submodule"
+    git -C "{{genomac_system_dir}}" push origin main
 
-[working-directory: "~/.genomac-system"]
 dev-configure-remote-for-https-fetch-and-ssh-push:
-    git remote set-url origin https://github.com/jimratliff/GenoMac-system.git
-    git remote set-url --push origin git@github.com:jimratliff/GenoMac-system.git
+    git -C "{{genomac_system_dir}}" remote set-url origin https://github.com/jimratliff/GenoMac-system.git
+    git -C "{{genomac_system_dir}}" remote set-url --push origin git@github.com:jimratliff/GenoMac-system.git
 
 
 ############### System state utilities
 
 system-states command:
-    zsh scripts/utilities/system_state_utilities.zsh {{command}}
+    zsh scripts/utilities/system_state_utilities.zsh '{{command}}'
 
 show-system-states:
     just system-states show
 
 clear-system-sesh-states:
-    just system-states clear-seshion
+    just system-states clear-session
 
 clear-all-system-states:
     just system-states clear-all
