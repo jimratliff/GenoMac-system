@@ -7,7 +7,7 @@ function does_user_exist() {
   local user_name_to_test="$1"
 
   if id -u "$user_name_to_test" >/dev/null 2>&1; then
-	  report_warning "User $user_name_to_test already exists. Moving on…"
+	report_warning "User $user_name_to_test already exists. Moving on…"
     report_end_phase_standard
     return 0
   fi
