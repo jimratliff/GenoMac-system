@@ -35,7 +35,7 @@ dev-configure-remote-for-https-fetch-and-ssh-push:
 ############### System state utilities
 
 system-states command:
-    zsh scripts/utilities/system_state_utilities.zsh '{{command}}'
+    zsh scripts/utilities/system_state_utilities.sh '{{command}}'
 
 show-system-states:
     just system-states show
