@@ -1,9 +1,10 @@
 #!/usr/bin/env zsh
 
 function does_user_exist() {
-  # Returns success iff a user with the given short name exists.
+  # Returns success (exit status 0) iff a user with the given short name exists;
+  # otherwise returns exit status 1.
+  
   report_start_phase_standard
-
   local user_name_to_test="$1"
 
   if id -u "$user_name_to_test" >/dev/null 2>&1; then
