@@ -7,7 +7,7 @@ default:
 	@just --choose
 
 system-states command:
-    zsh scripts/utilities/system_states.zsh {{command}}
+    zsh scripts/utilities/system_state_utilities.zsh {{command}}
 
 show-system-states:
     just system-states show
