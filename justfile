@@ -37,11 +37,11 @@ dev-configure-remote-for-https-fetch-and-ssh-push:
 system-states command:
     zsh scripts/utilities/system_state_utilities.sh '{{command}}'
 
-show-system-states:
+system-states-show:
     just system-states show
 
-clear-system-session-states:
+system-states-clear-session-states:
     just system-states clear-session
 
-clear-all-system-states:
+system-states-clear-all-states:
     just system-states clear-all
