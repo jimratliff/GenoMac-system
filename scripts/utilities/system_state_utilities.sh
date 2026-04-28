@@ -15,7 +15,7 @@ function usage() {
   cat >&2 <<'EOF'
 Usage:
   system_states.zsh show
-  system_states.zsh clear-seshion
+  system_states.zsh clear-session
   system_states.zsh clear-all
 EOF
 }
@@ -37,7 +37,7 @@ function main() {
       open "${GENOMAC_SYSTEM_LOCAL_STATE_DIRECTORY}" ; success_or_not
       ;;
 
-    clear-seshion)
+    clear-session)
       report_action_taken "Clear system SESH states"
       delete_all_system_SESH_states ; success_or_not
       ;;
