@@ -37,7 +37,7 @@ function sysadminctl_adduser() {
 	#
 	#   CLEARTEXT (insecure; testing only):
 	#   --cleartext-password-user              <string> password for --short-name
-	#   --cleartext-password-admin  					 <string> password for --admin-user-name
+	#   --cleartext-password-admin  		   <string> password for --admin-user-name
 	#
 	#   --hint                                 <string> password hint
 	#
