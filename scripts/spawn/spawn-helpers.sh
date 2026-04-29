@@ -87,7 +87,8 @@ function home_directory_path_from_volume_name() {
 }
 
 function create_encrypted_apfs_volume() {
-  # Create an encrypted APFS volume given (a) container name ($1), (b) volume name ($2), and (c) passphrase ($3)
+  # Create, if not already present, an encrypted APFS volume given:
+  # (a) container name ($1), (b) volume name ($2), and (c) passphrase ($3)
   
   report_start_phase_standard
   local apfs_container="$1"
