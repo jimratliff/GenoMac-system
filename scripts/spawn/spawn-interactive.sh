@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 function interactive_test_for_user_existence() {
-  # Interactive front end for does_user_exist
+  # Interactive front end for iteratively running does_user_exist
 
   report_start_phase_standard
   local user_short_name=""
