@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# Utility script to perform maintenance and informational actions on the set of system states
+# Utility script for testing and interactively running spawn-related commands
 
 set -euo pipefail
 
@@ -12,14 +12,14 @@ echo "Source ${initialization_script}"
 source "${initialization_script}"
 
 # Source required files
-# safe_source "${GMS_HYPERVISOR_SCRIPTS}/hypervisor.sh"
+safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn.sh"
 
 function usage() {
   cat >&2 <<'EOF'
 Usage:
-  system_states.zsh show
-  system_states.zsh clear-session
-  system_states.zsh clear-all
+  spawn-related-commands.sh test-user
+  spawn-related-commands.sh ?????????
+  spawn-related-commands.sh ?????????
 EOF
 }
 
@@ -35,9 +35,9 @@ function main() {
   local command="$1"
 
   case "${command}" in
-    show)
-      report_action_taken "Open system local state directory"
-      open "${GENOMAC_SYSTEM_LOCAL_STATE_DIRECTORY}" ; success_or_not
+    test-user)
+      report_action_taken "Interactively (and iteratively) test for user existence"
+      interactive_test_for_user_existence ; success_or_not
       ;;
 
     clear-session)
