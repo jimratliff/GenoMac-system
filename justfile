@@ -45,3 +45,8 @@ system-states-clear-session-states:
 
 system-states-clear-all-states:
     just system-states clear-all
+
+############### Spawn-related commands
+
+spawn-related command:
+    zsh scripts/spawn/spawn-related-commands.sh '{{command}}'
