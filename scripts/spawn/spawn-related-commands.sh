@@ -37,17 +37,17 @@ function main() {
   case "${command}" in
     test-user-exists)
       report_action_taken "Interactively (and iteratively) test for user existence"
-      interactive_test_for_user_existence ; success_or_not
+      interactive_test_for_user_existence
       ;;
 
     what-is-startup-container)
       report_action_taken "Determine name of startup-volume container"
-      determine_startup_container ; success_or_not
+      determine_startup_container
       ;;
 
-    clear-all)
-      report_action_taken "Clear all system states"
-      delete_all_system_states ; success_or_not
+    ensure-volume-exists)
+      report_action_taken "Interactively ensure volume exists"
+      interactive_ensure_encrypted_apfs_volume_exists
       ;;
 
     *)
