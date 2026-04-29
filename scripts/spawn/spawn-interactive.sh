@@ -20,7 +20,6 @@ function interactive_test_for_user_existence() {
     does_user_exist "$user_short_name" || true
     confirm_secure_token_was_enabled_for_user "$user_short_name" || true
 
-    
   done
 }
 
