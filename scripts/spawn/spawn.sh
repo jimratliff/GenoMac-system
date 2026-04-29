@@ -4,6 +4,7 @@ set -euo pipefail
 
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-addUser.sh"
+safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-create-volume.sh"
 
 # Global associative arrays to be populated from item ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
 # of 1Password vault ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
