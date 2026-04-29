@@ -39,11 +39,6 @@ function main() {
       report_action_taken "Interactively (and iteratively) test for user existence"
       interactive_test_for_user_existence
       ;;
-      
-    test-user-secure-token-enabled)
-      report_action_taken "Interactively (and iteratively) test user(s) for Secure Token enabled"
-      interactive_test_for_user_secure_token_exists
-      ;;
 
     what-is-startup-container)
       report_action_taken "Determine name of startup-volume container"
