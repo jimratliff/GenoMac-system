@@ -52,4 +52,7 @@ spawn-related command:
     zsh scripts/spawn/spawn-related-commands.sh '{{command}}'
 
 spawn-related-does-user-exist:
-	just spawn-related test-user
+	just spawn-related test-user-exists
+
+spawn-related-what-is-startup-container:
+	just spawn-related what-is-startup-container
