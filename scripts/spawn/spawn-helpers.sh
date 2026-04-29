@@ -13,7 +13,7 @@ function does_user_exist() {
     return 0
   fi
 
-  report "User $user_name_to_test does NOT nalready exist"
+  report "User $user_name_to_test does NOT already exist"
   report_end_phase_standard
   return 1
 }
