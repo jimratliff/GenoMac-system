@@ -66,6 +66,9 @@ ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="GenoMac-system-user-spawn-config-json"
 # Name of 1Password item that stores the list of users to create
 ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="GenoMac-system-specs-of-users-to-create"
 
+# Name of 1Password item that stores a fake password for testing purposes
+ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD="TEST_PASSWORD"
+
 ###
 
 ############### Related to spawning new user accounts
@@ -83,6 +86,7 @@ USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="/Users"
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
+export_and_report ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD
 export_and_report ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
 export_and_report ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
 export_and_report ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
