@@ -86,29 +86,6 @@ function home_directory_path_from_volume_name() {
   report_end_phase_standard
 }
 
-function create_encrypted_apfs_volume() {
-  # Create, if not already present, an encrypted APFS volume given:
-  # (a) container name ($1), (b) volume name ($2), and (c) passphrase ($3)
-  
-  report_start_phase_standard
-  local apfs_container="$1"
-  local vol_name="$2"
-  local passphrase="$3"
-
-  report_action_taken "Ensuring encrypted APFS volume '$vol_name' exists"
-
-  if diskutil apfs list | grep -q "Name: ${vol_name} "; then
-    report "  - '$vol_name' already exists; skipping creation"
-	report_end_phase_standard
-    return 0
-  fi
-
-  local cmd="printf %s \"\${passphrase}\" | diskutil apfs addVolume \"${apfs_container}\" APFS \"${vol_name}\" -passphrase"
-  run "$cmd"; success_or_not
-  report "Created encrypted APFS volume '$vol_name'"
-  report_end_phase_standard
-}
-
 get_short_name_from_user_spec_json() {
   local user_spec_json="$1"
   jq -r '.short_name' <<<"$user_spec_json"
