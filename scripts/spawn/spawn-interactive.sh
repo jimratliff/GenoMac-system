@@ -2,9 +2,12 @@
 
 function interactive_test_for_user_existence() {
   # Interactive front end for iteratively running does_user_exist
+  # Also runs confirm_secure_token_was_enabled_for_user
 
   report_start_phase_standard
   local user_short_name=""
+
+  report "I will test, for each user you specify, whether that user exists."
 
   while true; do
     user_short_name=$(get_nonblank_answer_to_question "User short name or “stop”")
@@ -15,6 +18,29 @@ function interactive_test_for_user_existence() {
     fi
 
     does_user_exist "$user_short_name" || true
+    confirm_secure_token_was_enabled_for_user "$user_short_name" || true
+
+    
+  done
+}
+
+function interactive_test_for_user_secure_token_exists() {
+  # Interactive front end for iteratively running confirm_secure_token_was_enabled_for_user
+
+  report_start_phase_standard
+  local user_short_name=""
+
+  report "I will test, for each user you specify, whether Secure Token is enabled for that user."
+
+  while true; do
+    user_short_name=$(get_nonblank_answer_to_question "User short name or “stop”")
+
+    if [[ "${user_short_name:l}" == "stop" ]]; then
+      report_end_phase_standard
+      return 0
+    fi
+
+    confirm_secure_token_was_enabled_for_user "$user_short_name" || true
   done
 }
 
