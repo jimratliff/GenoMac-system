@@ -46,9 +46,6 @@ GMS_RESOURCE_INSTALL_SCRIPTS="${GMS_INSTALL_SCRIPTS}/of_resources"
 # ~/.genomac-system/scripts/settings
 GMS_SETTINGS_SCRIPTS="${GMS_SCRIPTS}/settings"
 
-# ~/.genomac-system/scripts/spawn
-GMS_SPAWN_SCRIPTS="${GMS_SCRIPTS}/spawn"
-
 # ~/.genomac-system/scripts/user_scope
 GMS_USER_SCOPE_SCRIPTS="${GMS_SCRIPTS}/user_scope"
 
@@ -100,7 +97,6 @@ export_and_report GMS_RESOURCE_INSTALL_SCRIPTS
 export_and_report GMS_RESOURCES
 export_and_report GMS_SCRIPTS
 export_and_report GMS_SETTINGS_SCRIPTS
-export_and_report GMS_SPAWN_SCRIPTS
 export_and_report GMS_USER_SCOPE_SCRIPTS
 export_and_report GMS_USER_SPAWNING_SCRIPTS
 export_and_report GMS_UTILITIES
