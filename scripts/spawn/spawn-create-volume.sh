@@ -1,10 +1,5 @@
 #!/usr/bin/env zsh
 
-PASSPHRASE_MODE_1PASSWORD="1PASSWORD"
-PASSPHRASE_MODE_CLEARTEXT="CLEARTEXT"
-PASSPHRASE_MODE_INTERACTIVE="INTERACTIVE"
-
-
 function interactive_ensure_encrypted_apfs_volume_exists() {
   # Interactive front end for ensure_encrypted_apfs_volume_exists
   
@@ -49,7 +44,7 @@ function ensure_encrypted_apfs_volume_exists() {
   #   --volume <volume name>
   #
   # PASSPHRASE SPECIFICATION:
-  #   Choose exactly one of 1PASSWORD, CLEARTEXT, INTERACTIVE:
+  #   Choose exactly one of 1PASSWORD, CLEARTEXT, INTERACTIVE immediately below:
   #
   #   1PASSWORD: (specify both of the following)
   #   --op-vault                 <string> 1Password vault name
