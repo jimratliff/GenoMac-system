@@ -1,37 +1,5 @@
 #!/usr/bin/env zsh
 
-function interactive_ensure_encrypted_apfs_volume_exists() {
-  # Interactive front end for ensure_encrypted_apfs_volume_exists
-  
-  report_start_phase_standard
-  local container_name=""
-  local use_startup_volume_container=false
-  local volume_name=""
-
-  if ! get_yes_no_answer_to_question "Do you want to use the startup-volume container?"; then
-    container_name=$(get_confirmed_answer_to_question "Name of container?")
-  else
-    use_startup_volume_container=true
-  fi
-
-  volume_name=$(get_confirmed_answer_to_question "Name of volume?")
-  
-  ensure_volume_args=(
-    --volume-name "$volume_name"
-    --interactive-passphrase
-  )
-
-  if [[ "$use_startup_volume_container" == true ]]; then
-    ensure_volume_args+=(--startup-container)
-  else
-    ensure_volume_args+=(--container "$container_name")
-  fi
-
-  ensure_encrypted_apfs_volume_exists "${ensure_volume_args[@]}"
-  
-  report_end_phase_standard
-}
-
 function ensure_encrypted_apfs_volume_exists() {
   # Ensure an encrypted APFS volume exists.
   #
