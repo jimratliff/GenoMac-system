@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 function does_user_exist() {
-  # Returns success (exit status 0) iff a user with the given short name exists;
+  # Returns success (exit status 0) iff user with the given short name $1 exists;
   # otherwise returns exit status 1.
   
   report_start_phase_standard
@@ -13,17 +13,17 @@ function does_user_exist() {
     return 0
   fi
 
+  report "User $user_name_to_test does NOT nalready exist"
   report_end_phase_standard
   return 1
 }
 
 function confirm_secure_token_was_enabled_for_user() {
-  # Normal exit (exit status 0) implies that Secure Token is enabled for user $1
+  # Normal exit (exit status 0) implies that Secure Token is enabled for user with short name $1
   # Otherwise, either the check for Secure Token status failed or gave a result not
   # expected when Secure Token is enabled.
   
   report_start_phase_standard
-
   local short_name="$1"
   local output
 
@@ -45,8 +45,8 @@ function confirm_secure_token_was_enabled_for_user() {
 function determine_startup_container() {
   # Determines the container of the startup volume.
   # This container will be used for all subsequent new volumes for user home directories
+  
   report_start_phase_standard
-
   local container_ref
 
   if ! container_ref="$(
@@ -54,11 +54,6 @@ function determine_startup_container() {
         <<<"$(diskutil info -plist /)"
   )"; then
     report_fail "Failed to determine APFS container for startup volume."
-    return 1
-  fi
-
-  if [[ -z "$container_ref" ]]; then
-    report_fail "APFS container reference for startup volume was empty."
     return 1
   fi
 
@@ -80,6 +75,7 @@ function home_directory_path_from_volume_name() {
   # NOTE: The environment variable USER_DIRECTORY_CONTAINER_WITHIN_VOLUME is assumed to *include* any
   #       `/` that separates the volume from a directory.
   # HINT: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="/Users"
+  
   report_start_phase_standard
   local volume_name="$1"
   local home_directory_path
@@ -91,6 +87,8 @@ function home_directory_path_from_volume_name() {
 }
 
 function create_encrypted_apfs_volume() {
+  # Create an encrypted APFS volume given (a) container name ($1), (b) volume name ($2), and (c) passphrase ($3)
+  
   report_start_phase_standard
   local apfs_container="$1"
   local vol_name="$2"
