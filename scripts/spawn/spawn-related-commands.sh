@@ -35,14 +35,14 @@ function main() {
   local command="$1"
 
   case "${command}" in
-    test-user)
+    test-user-exists)
       report_action_taken "Interactively (and iteratively) test for user existence"
       interactive_test_for_user_existence ; success_or_not
       ;;
 
-    clear-session)
-      report_action_taken "Clear system SESH states"
-      delete_all_system_SESH_states ; success_or_not
+    what-is-startup-container)
+      report_action_taken "Determine name of startup-volume container"
+      determine_startup_container ; success_or_not
       ;;
 
     clear-all)
