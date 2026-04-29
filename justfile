@@ -50,3 +50,6 @@ system-states-clear-all-states:
 
 spawn-related command:
     zsh scripts/spawn/spawn-related-commands.sh '{{command}}'
+
+spawn-related-does-user-exist:
+	just spawn-related test-user
