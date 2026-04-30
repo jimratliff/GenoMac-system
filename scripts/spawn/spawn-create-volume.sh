@@ -150,7 +150,7 @@ function ensure_encrypted_apfs_volume_exists() {
 
   if [[ "$using_1password" == true ]]; then
     if ! passphrase="$(
-      op read "op://${op_vault}/${op_item_passphrase}/password"
+      read_1password_item_password "$op_vault" "$op_item_passphrase"
     )"; then
       report_fail "Failed to retrieve volume passphrase from 1Password."
       return 1
