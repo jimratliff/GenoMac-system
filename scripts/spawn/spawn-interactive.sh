@@ -1,5 +1,27 @@
 #!/usr/bin/env zsh
 
+function interactive_test_of_home_directory_path_from_volume_name() {
+  # Interactive front end for home_directory_path_from_volume_name
+  report_start_phase_standard
+  local volume_name=""
+
+  report "I will test, for each user you specify, whether that user exists."
+
+  while true; do
+    volume_name=$(get_nonblank_answer_to_question "Volume name or “stop”")
+
+    if [[ "${volume_name:l}" == "stop" ]]; then
+      report_end_phase_standard
+      return 0
+    fi
+
+    home_directory="$(home_directory_path_from_volume_name "$volume_name")"
+
+    report "Home-directory path: $home_directory"
+
+  done
+}
+
 function interactive_test_for_user_existence() {
   # Interactive front end for iteratively running does_user_exist
   # Also runs confirm_secure_token_was_enabled_for_user
@@ -98,7 +120,10 @@ function interactive_adduser() {
 
   user_short_name=$(get_nonblank_answer_to_question "User short name")
   uid=$(get_nonblank_answer_to_question "User uid (suggest 510–999)")
+  
   user_full_name=$(get_nonblank_answer_to_question "User FULL name (or “none”")
+  [[ "${user_full_name:l}" == "none" ]] && user_full_name=""
+  
   admin_user_short_name=$(get_nonblank_answer_to_question "Admin-user short name")
 
   volume_name=$(get_nonblank_answer_to_question "Name of volume for user’s home directory")
