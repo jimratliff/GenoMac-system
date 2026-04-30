@@ -71,16 +71,16 @@ function determine_startup_container() {
 
 function home_directory_path_from_volume_name() {
   # Constructs the home-directory path from the home-directory volume name (supplied as $1), using
-  # the environment variable USER_DIRECTORY_CONTAINER_WITHIN_VOLUME.
-  # NOTE: The environment variable USER_DIRECTORY_CONTAINER_WITHIN_VOLUME is assumed to *include* any
+  # the environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES.
+  # NOTE: The environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES is assumed to *include* any
   #       `/` that separates the volume from a directory.
-  # HINT: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="/Users"
+  # HINT: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="/Users"
   
   report_start_phase_standard
   local volume_name="$1"
   local home_directory_path
   
-  home_directory_path="${volume_name}${USER_DIRECTORY_CONTAINER_WITHIN_VOLUME}"
+  home_directory_path="${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
   print -- "$home_directory_path"
   
   report_end_phase_standard
