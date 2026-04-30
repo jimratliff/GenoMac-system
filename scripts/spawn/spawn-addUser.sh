@@ -5,16 +5,16 @@ function sysadminctl_adduser() {
   #
   # Creates a new user via sysadminctl -addUser, including enabling Secure Token.
   # 
-  # Intended usage is to provide the password for each of (a) the new user and (b) an
-  # existing admin user with a Secure Token by providing the name of a 1Password vault and
-  # the name of the items in that vault that contain those two passwords. (This reduces
-  # the security exposure relative to passing cleartext passwords between functions.)
-  # (Alternatively, but insecurely, cleartext passwords can be supplied, primarily for
-  # testing purposes.)
+  # Intended usage is to provide the password for (each of (a) the new user and (b) an
+  # existing admin user with a Secure Token) by providing the name of a 1Password vault
+  # and the name of the password items in that vault that contain those two passwords.
+  # (This reduces the security exposure relative to passing cleartext passwords between
+  # functions.) (Alternatively, but insecurely, cleartext passwords can be supplied,
+  # primarily for testing purposes.)
   #
   # This function requires credentials for an existing admin user with a Secure Token.
-  # After creation, it confirms that Secure Token is enabled for the new user.
-  # If Secure Token is not confirmed enabled, the function fails.
+  # After creation, this function confirms that Secure Token is enabled for the new user.
+  # If Secure Token is not confirmed to be enabled, the function fails.
   #
   # Parameters:
   #   --short-name                mandatory  <string> short user name
@@ -26,7 +26,7 @@ function sysadminctl_adduser() {
   #
   #   PASSWORD SPECIFICATIONS:
   #   Specify either:
-  #     (a) 1Password vault + item names for both new-user and admin-user passwords
+  #     (a) 1Password vault + password-type item names for both new-user and admin-user passwords
   #   or
   #     (b) cleartext passwords for both (testing only)
   #
