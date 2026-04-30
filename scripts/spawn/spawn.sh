@@ -61,7 +61,7 @@ function create_user_accounts_for_this_Mac() {
   #
   # To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory
   # is `some_volume/Users/some_user`.
-  # See environment variable: USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="Users"
+  # See environment variable: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="Users"
   # and use home_directory_path_from_volume_name()
   #
   # A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely
@@ -99,7 +99,7 @@ function create_user_accounts_for_this_Mac() {
   #   - ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
   #   - ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
   #   - ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
-  #   - USER_DIRECTORY_CONTAINER_WITHIN_VOLUME
+  #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES
   
   report_start_phase_standard
   print_banner_text "BEGIN USER CREATION"
