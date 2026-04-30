@@ -70,3 +70,47 @@ function interactive_ensure_encrypted_apfs_volume_exists() {
   
   report_end_phase_standard
 }
+
+function interactive_adduser() {
+  # Interactive front end for sysadminctl_adduser().
+  #
+  # Mostly for testing purposes. Therefore, both more flexible and less flexible
+  # than might be desired as a user-creation utility.
+  #
+  # - Allows for either interactive or 1Password password provision.
+  # - Assumes the home directory will be created on some volume on the startup-volume
+  #   container.
+  #   - Asks for that volume name.
+  
+  report_start_phase_standard
+  local user_short_name=""
+  local user_full_name=""
+  local uid=""
+  local home=""
+  local avatar_path=""
+  local onepassword_user_password_item_name=""
+  local onepassword_admin_password_item_name=""
+  local admin_user_short_name=""
+  local passphrase_mode=""
+  local volume_name=""
+  local -a adduser_args
+  adduser_args=()
+
+  user_short_name=$(get_nonblank_answer_to_question "User short name")
+  uid=$(get_nonblank_answer_to_question "User uid (suggest 510–999)")
+  user_full_name=$(get_nonblank_answer_to_question "User FULL name (or “none”")
+  admin_user_short_name=$(get_nonblank_answer_to_question "Admin-user short name")
+
+  volume_name=$(get_nonblank_answer_to_question "Name of volume for user’s home directory")
+  home=$(home_directory_path_from_volume_name "volume_name")
+  
+
+  
+
+  
+  
+
+  
+
+
+}
