@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-function sysadminctl_adduser() {x
+function sysadminctl_adduser() {
 	# An interface to the addUser subcommand of sysadminctl.
 	#
 	# Creates a new user via sysadminctl -addUser, including enabling Secure Token.
