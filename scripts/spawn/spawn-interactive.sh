@@ -31,13 +31,12 @@ function interactive_ensure_encrypted_apfs_volume_exists() {
   local onepassword_item_name=""
   local passphrase_mode=""
   local volume_name=""
-  local use_startup_volume_container=false
   local -a ensure_volume_args
   ensure_volume_args=()
 
   if get_yes_no_answer_to_question "Do you want to use the startup-volume container?"; then
     ensure_volume_args+=(--startup-container)
-  else)
+  else
     container_name=$(get_confirmed_answer_to_question "Name of container?")
     ensure_volume_args+=(--container "$container_name")
   fi
