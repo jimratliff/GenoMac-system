@@ -168,7 +168,7 @@ function ensure_encrypted_apfs_volume_exists() {
   fi
 
   if [[ "$use_interactive_passphrase" == true ]]; then
-    if ! diskutil apfs addVolume "$apfs_container" APFS "$vol_name" -passphrase; then
+    if ! diskutil apfs addVolume "$apfs_container" APFS "$vol_name" -passprompt; then
       report_fail "Failed to create encrypted APFS volume '$vol_name' in container '$apfs_container'."
       return 1
     fi
