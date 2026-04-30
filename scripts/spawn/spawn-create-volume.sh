@@ -9,7 +9,7 @@ function ensure_encrypted_apfs_volume_exists() {
   #     --startup-container
   #
   # REQUIRED:
-  #   --volume <volume name>
+  #   --volume-name <volume name>
   #
   # PASSPHRASE SPECIFICATION:
   #   Choose exactly one of 1PASSWORD, CLEARTEXT, INTERACTIVE immediately below:
@@ -28,18 +28,18 @@ function ensure_encrypted_apfs_volume_exists() {
   #
   #   ensure_encrypted_apfs_volume_exists \
   #     --startup-container \
-  #     --volume "Volume_for_Work_Users" \
+  #     --volume-name "Volume_for_Work_Users" \
   #     --op-vault "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" \
   #     --op-item-passphrase "WORK_PASSWORD"
   #
   #   ensure_encrypted_apfs_volume_exists \
   #     --container "/dev/disk3" \
-  #     --volume "Test_Volume" \
+  #     --volume-name "Test_Volume" \
   #     --cleartext-passphrase "test_password"
   #
   #   ensure_encrypted_apfs_volume_exists \
   #     --startup-container \
-  #     --volume "Utility_Volume" \
+  #     --volume-name "Utility_Volume" \
   #     --interactive-passphrase
 
   report_start_phase_standard
@@ -67,7 +67,7 @@ function ensure_encrypted_apfs_volume_exists() {
         use_startup_container=true
         shift
         ;;
-      --volume)
+      --volume-name)
         vol_name="$2"
         shift 2
         ;;
@@ -105,7 +105,7 @@ function ensure_encrypted_apfs_volume_exists() {
   fi
 
   if [[ -z "$vol_name" ]]; then
-    report_fail "Missing mandatory parameter --volume."
+    report_fail "Missing mandatory parameter --volume-name."
     return 1
   fi
 
