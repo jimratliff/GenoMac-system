@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
-# Utility script for testing and interactively running spawn-related commands
+# Utility script for testing and interactively running spawn-related commands,
+# anticipated to be used in conjunction with a justfile.
 
 set -euo pipefail
 
