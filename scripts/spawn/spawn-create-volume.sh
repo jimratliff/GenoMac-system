@@ -60,33 +60,40 @@ function ensure_encrypted_apfs_volume_exists() {
   while (( $# > 0 )); do
     case "$1" in
       --container)
-        apfs_container="$2"
+        apfs_container=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
         ;;
+
       --startup-container)
         use_startup_container=true
         shift
         ;;
+
       --volume-name)
-        vol_name="$2"
+        vol_name=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
         ;;
+
       --op-vault)
-        op_vault="$2"
+        op_vault=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
         ;;
+
       --op-item-passphrase)
-        op_item_passphrase="$2"
+        op_item_passphrase=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
         ;;
+
       --cleartext-passphrase)
-        cleartext_passphrase="$2"
+        cleartext_passphrase=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
         ;;
+
       --interactive-passphrase)
         use_interactive_passphrase=true
         shift
         ;;
+
       *)
         report_fail "Unknown parameter: $1"
         return 1
