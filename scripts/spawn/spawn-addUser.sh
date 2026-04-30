@@ -72,51 +72,51 @@ function sysadminctl_adduser() {
 	while (( $# > 0 )); do
 		case "$1" in
 			--short-name)
-				short_name="$2"
+				short_name=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--full-name)
-				full_name="$2"
+				full_name=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--uid)
-				uid="$2"
+				uid=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--home)
-				home="$2"
+				home=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--avatar-path)
-				avatar_path="$2"
+				avatar_path=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--admin-user-name)
-				admin_user_name="$2"
+				admin_user_name=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--op-vault)
-				op_vault="$2"
+				op_vault=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--op-item-user-password)
-				op_item_user_password="$2"
+				op_item_user_password=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--op-item-admin-password)
-				op_item_admin_password="$2"
+				op_item_admin_password=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--cleartext-password-user)
-				cleartext_password_user="$2"
+				cleartext_password_user=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--cleartext-password-admin)
-				cleartext_password_admin="$2"
+				cleartext_password_admin=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--hint)
-				hint="$2"
+				hint=$(required_value_for_option "$1" "${2-}") || return 1
 				shift 2
 				;;
 			--not-an-admin)
