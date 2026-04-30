@@ -37,7 +37,7 @@ function sysadminctl_adduser() {
   #
   #   CLEARTEXT (insecure; testing only):
   #   --cleartext-password-user              <string> password for --short-name
-  #   --cleartext-password-admin         <string> password for --admin-user-name
+  #   --cleartext-password-admin             <string> password for --admin-user-name
   #
   #   --hint                                 <string> password hint
   #
@@ -130,25 +130,11 @@ function sysadminctl_adduser() {
     esac
   done
 
-  if [[ -z "$short_name" ]]; then
-    report_fail "Missing mandatory parameter --short-name."
-    return 1
-  fi
-
-  if [[ -z "$uid" ]]; then
-    report_fail "Missing mandatory parameter --uid."
-    return 1
-  fi
-
-  if [[ -z "$home" ]]; then
-    report_fail "Missing mandatory parameter --home."
-    return 1
-  fi
-
-  if [[ -z "$admin_user_name" ]]; then
-    report_fail "Missing mandatory parameter --admin-user-name."
-    return 1
-  fi
+  require_mandatory_parameters \
+    short_name       --short-name \
+    uid              --uid \
+    home             --home \
+    admin_user_name  --admin-user-name
 
   if [[ -n "$op_vault" || -n "$op_item_user_password" || -n "$op_item_admin_password" ]]; then
     using_1password=true
@@ -241,7 +227,9 @@ function sysadminctl_adduser() {
     return 1
   fi
 
-  if ! confirm_secure_token_was_enabled_for_user "$short_name"; then
+  if confirm_secure_token_was_enabled_for_user "$short_name"; then
+    report_success "User ${short_name} was created and Secure Token was enabled."
+  else
     report_fail "User ${short_name} was created, but Secure Token was not confirmed enabled."
     return 1
   fi
