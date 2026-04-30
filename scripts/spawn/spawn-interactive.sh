@@ -28,28 +28,44 @@ function interactive_ensure_encrypted_apfs_volume_exists() {
   
   report_start_phase_standard
   local container_name=""
-  local use_startup_volume_container=false
+  local onepassword_item_name=""
+  local passphrase_mode=""
   local volume_name=""
+  local use_startup_volume_container=false
   local -a ensure_volume_args
+  ensure_volume_args=()
 
-  if ! get_yes_no_answer_to_question "Do you want to use the startup-volume container?"; then
+  if get_yes_no_answer_to_question "Do you want to use the startup-volume container?"; then
+    ensure_volume_args+=(--startup-container)
+  else)
     container_name=$(get_confirmed_answer_to_question "Name of container?")
-  else
-    use_startup_volume_container=true
+    ensure_volume_args+=(--container "$container_name")
   fi
 
   volume_name=$(get_confirmed_answer_to_question "Name of volume?")
-  
-  ensure_volume_args=(
-    --volume-name "$volume_name"
-    --interactive-passphrase
-  )
+  ensure_volume_args+=(--volume-name "$volume_name")
 
-  if [[ "$use_startup_volume_container" == true ]]; then
-    ensure_volume_args+=(--startup-container)
-  else
-    ensure_volume_args+=(--container "$container_name")
-  fi
+  passphrase_mode=$(
+    get_value_from_numbered_choices \
+      "Choose a passphrase mode for supplying the passphrase" \
+      "Interactively" "INTERACTIVE" \
+      "From a named item in the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” vault from 1Password" "1PASSWORD"
+  )
+  
+  case "$passphrase_mode" in
+    "INTERACTIVE")
+      ensure_volume_args+=(--interactive-passphrase)
+      ;;
+    "1PASSWORD")
+      onepassword_item_name=$(get_confirmed_answer_to_question "Name of 1Password item (in the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” vault)?")
+      ensure_volume_args+=(--op-vault "${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}")
+      ensure_volume_args+=(--op-item-passphrase "${onepassword_item_name}")
+      ;;
+    *)
+      report_fail "Unknown passphrase mode: $passphrase_mode"
+      return 1
+      ;;
+  esac
 
   ensure_encrypted_apfs_volume_exists "${ensure_volume_args[@]}"
   
