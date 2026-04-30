@@ -1,4 +1,4 @@
-#!/usr/bin/env zshdfgdfgdfg
+#!/usr/bin/env zsh
 
 function sysadminctl_adduser() {
 	# An interface to the addUser subcommand of sysadminctl.
