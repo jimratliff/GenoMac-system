@@ -160,7 +160,6 @@ function ensure_encrypted_apfs_volume_exists() {
   fi
 
   report_action_taken "Ensuring encrypted APFS volume '$vol_name' exists in container '$apfs_container'"
-
   if diskutil apfs list "$apfs_container" | grep -Fq "Name: ${vol_name} "; then
     success_or_not
     report "  - '$vol_name' already exists in '$apfs_container'; skipping creation"
