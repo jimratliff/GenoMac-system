@@ -80,16 +80,13 @@ GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pict
 # Directory (relative to current volume) in which all user home directories reside
 # NOTE: The prefixing `/` is part of the string. This simplifies constructing the path in the case that the
 #       home directory is located at the root of the volume.
-USER_DIRECTORY_CONTAINER_WITHIN_VOLUME="/Users"
+DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="/Users"
 
 ###
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
-export_and_report ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD
-export_and_report ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
-export_and_report ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
-export_and_report ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+export_and_report DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES
 export_and_report GMS_DOCS_TO_DISPLAY
 export_and_report GMS_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_HOMEBREW
@@ -104,5 +101,8 @@ export_and_report GMS_SETTINGS_SCRIPTS
 export_and_report GMS_USER_SCOPE_SCRIPTS
 export_and_report GMS_USER_SPAWNING_SCRIPTS
 export_and_report GMS_UTILITIES
-export_and_report USER_DIRECTORY_CONTAINER_WITHIN_VOLUME
+export_and_report ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD
+export_and_report ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
+export_and_report ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
+export_and_report ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
 
