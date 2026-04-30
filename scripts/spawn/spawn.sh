@@ -242,7 +242,7 @@ function get_user_spawn_config_from_1password() {
 	local user_spawn_config_json
 
 	if ! user_spawn_config_json="$(
-		op read "op://${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}/${ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG}/notesPlain"
+		read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG"
 	)"; then
 		report_fail "Failed to read user spawn config from 1Password."
 		return 1
@@ -293,7 +293,7 @@ function get_users_to_create_from_1password() {
   local users_to_create_json
 
   if ! users_to_create_json="$(
-    op read "op://${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}/${ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE}/notesPlain"
+	read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
   )"; then
     report_fail "Failed to read users-to-create JSON from 1Password."
     return 1
