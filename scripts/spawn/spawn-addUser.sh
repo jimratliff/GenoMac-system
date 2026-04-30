@@ -184,14 +184,14 @@ function sysadminctl_adduser() {
 
 	if [[ "$using_1password" == true ]]; then
 		if ! user_password="$(
-			op read "op://${op_vault}/${op_item_user_password}/notesPlain"
+			read_1password_item_password "$op_vault" "$op_item_user_password"
 		)"; then
 			report_fail "Failed to retrieve the new user's password from 1Password."
 			return 1
 		fi
 
 		if ! admin_password="$(
-			op read "op://${op_vault}/${op_item_admin_password}/notesPlain"
+			read_1password_item_password "$op_vault" "$op_item_admin_password"
 		)"; then
 			report_fail "Failed to retrieve the admin user's password from 1Password."
 			return 1
