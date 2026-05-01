@@ -1,24 +1,36 @@
 #!/usr/bin/env zsh
 
-function interactive_test_of_parent_of_users_home_directories_from_volume_name() {
+function interactive_test_of_parent_of_users_home_directories() {
   # Interactive front end for parent_of_users_home_directories_from_volume_name
   report_start_phase_standard
+  local option=""
   local volume_name=""
+  local parent=""
 
-  report "I will create, for each volume you specify, the path to the parent of users’ home directories."
-
+  report "For each choice of volume you make, I’ll print the path of the${NEWLINE}parent of the home directories on that volume."
   while true; do
-    volume_name=$(get_nonblank_answer_to_question "Volume name or “stop”")
-
-    if [[ "${volume_name:l}" == "stop" ]]; then
-      report_end_phase_standard
-      return 0
-    fi
-
-    parent_of_home_directories="$(parent_of_users_home_directories_from_volume_name "$volume_name")"
-
-    report "Parent of users’ home directories: $parent_of_home_directories"
-
+    option=$(
+      get_value_from_numbered_choices \
+        "Choose an option for the volume on which the users’ home directories live:" \
+        "This is the startup volume" "IS_STARTUP_VOLUME" \
+        "This is other than the startup volume" "OTHER_VOLUME" \
+        "STOP. I’m done with this testing." "STOP"
+    )
+  
+    case "$option" in
+      "IS_STARTUP_VOLUME")
+        parent="$(parent_of_users_home_directories --startup-volume)"
+        report "Parent of users’ home directories: $parent" 
+        ;;
+      "OTHER_VOLUME")
+        volume_name=$(get_nonblank_answer_to_question "Non-startup volume name")
+        parent="$(parent_of_users_home_directories --volume-name "$volume_name")"
+        report "Parent of users’ home directories: $parent" 
+        ;;
+      "STOP")
+        report_end_phase_standard
+        return 0
+    esac
   done
 }
 
