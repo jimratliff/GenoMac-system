@@ -94,7 +94,7 @@ while (( $# > 0 )); do
         shift
         ;;
       --volume-name)
-	    is_not_startup_volume=true
+        is_not_startup_volume=true
         volume_name=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
         ;;
@@ -105,19 +105,20 @@ while (( $# > 0 )); do
     esac
   done
 
-  # Fill in syntax: If both is_startup_volume AND is_not_startup_volume:
-  # report_fail "Specify EITHER --startup-volume or --volume-name, but NOT both"
+  if [[ "$is_startup_volume" == true && "$volume_name_was_provided" == true ]]; then
+    report_fail "Specify EITHER --startup-volume or --volume-name, but NOT both."
+    return 1
+  fi
 
-  # Fill in syntax: If NEITHER is_startup_volume AND is_not_startup_volume:
-  # report_fail "You must specify EITHER --startup-volume or --volume-name"
+  if [[ "$is_startup_volume" != true && "$volume_name_was_provided" != true ]]; then
+    report_fail "You must specify EITHER --startup-volume or --volume-name."
+    return 1
+  fi
 
   if [[ "$is_startup_volume" == true ]]; then
     path_of_parent_of_home_directories="${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
-  elif [[ "$is_not_startup_volume" == true ]]; then
-    path_of_parent_of_home_directories="/Volumes/${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
   else
-    report_fail "Neither a startup volume nor another volume was provided"
-	return 1
+    path_of_parent_of_home_directories="/Volumes/${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
   fi
   
   print -- "$path_of_parent_of_home_directories"
