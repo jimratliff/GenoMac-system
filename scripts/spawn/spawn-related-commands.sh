@@ -53,7 +53,7 @@ function main() {
 
     test-home-directories-parent)
       report_action_taken "Interactively test path to parent of users’ home directories"
-      interactive_test_of_parent_of_users_home_directories_from_volume_name
+      interactive_test_of_parent_of_users_home_directories
       ;;
 
     *)
