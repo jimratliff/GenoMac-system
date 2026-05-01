@@ -62,7 +62,7 @@ function create_user_accounts_for_this_Mac() {
   # To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory
   # is `some_volume/Users/some_user`.
   # See environment variable: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="Users"
-  # and use home_directory_path_from_volume_name()
+  # and use parent_of_users_home_directories_from_volume_name()
   #
   # A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely
   # look up a passphrase, and (c) volume key to a volume name.
