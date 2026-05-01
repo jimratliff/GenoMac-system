@@ -51,6 +51,11 @@ function main() {
       interactive_ensure_encrypted_apfs_volume_exists
       ;;
 
+    test-home-directory-parent)
+      report_action_taken "Interactively test path to parent of users’ home directories"
+      interactive_ensure_encrypted_apfs_volume_exists
+      ;;
+
     *)
       report_fail "Unknown system-states command: ${command}"
       usage
