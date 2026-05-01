@@ -110,8 +110,8 @@ function parent_of_users_home_directories() {
     return 1
   fi
 
-  if [[ "$is_startup_volume" != true && "$is_not_startup_volume  " != true ]]; then
-    report_fail "You must specify EITHER --startup-volume or --volume-name."
+  if [[ "$is_startup_volume" != true && "$is_not_startup_volume" != true ]]; then
+    report_fail "You must specify EITHER --startup-volume or --volume-name.${NEWLINE}is_startup_volume: ${is_startup_volume} is_not_startup_volume: ${is_not_startup_volume}."
     return 1
   fi
 
