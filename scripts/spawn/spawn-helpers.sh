@@ -69,19 +69,58 @@ function determine_startup_container() {
   report_end_phase_standard
 }
 
-function parent_of_users_home_directories_from_volume_name() {
-  # Constructs the home-directory path from the home-directory volume name (supplied as $1), using
-  # the environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES.
-  # NOTE: The environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES is assumed to *include* any
-  #       `/` that separates the volume from a directory.
+function parent_of_users_home_directories() {
+  # Constructs the path of the parent of users’ home directories.
+  # Takes either:
+  #   --startup-volume
+  #     resulting in "/Users"
+  #   --volume-name <volume_name>
+  #     resulting in "/Volumes/volume_name/Users"
+  # using the environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES.
+  # NOTE: The environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES
+  #       is assumed to *include* the leading `/`.
   # HINT: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="/Users"
   
   report_start_phase_standard
-  local volume_name="$1"
-  local home_directory_path
+  local is_startup_volume=false
+  local is_not_startup_volume=false
+  local volume_name=""
+  local path_of_parent_of_home_directories
+
+while (( $# > 0 )); do
+    case "$1" in
+      --startup-volume)
+        is_startup_volume=true
+        shift
+        ;;
+      --volume-name)
+	    is_not_startup_volume=true
+        volume_name=$(required_value_for_option "$1" "${2-}") || return 1
+        shift 2
+        ;;
+      *)
+        report_fail "Unknown parameter: $1"
+        return 1
+        ;;
+    esac
+  done
+
+  # Fill in syntax: If both is_startup_volume AND is_not_startup_volume:
+  # report_fail "Specify EITHER --startup-volume or --volume-name, but NOT both"
+
+  # Fill in syntax: If NEITHER is_startup_volume AND is_not_startup_volume:
+  # report_fail "You must specify EITHER --startup-volume or --volume-name"
+
+  if [[ "$is_startup_volume" == true ]]; then
+    path_of_parent_of_home_directories="${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
+  elif [[ "$is_not_startup_volume" == true ]]; then
+    path_of_parent_of_home_directories="/Volumes/${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
+  else
+    report_fail "Neither a startup volume nor another volume was provided"
+	return 1
+  fi
   
-  home_directory_path="${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
-  print -- "$home_directory_path"
+  print -- "$path_of_parent_of_home_directories"
   
   report_end_phase_standard
 }
