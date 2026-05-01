@@ -87,7 +87,7 @@ function parent_of_users_home_directories() {
   local volume_name=""
   local path_of_parent_of_home_directories
 
-while (( $# > 0 )); do
+  while (( $# > 0 )); do
     case "$1" in
       --startup-volume)
         is_startup_volume=true
@@ -105,12 +105,12 @@ while (( $# > 0 )); do
     esac
   done
 
-  if [[ "$is_startup_volume" == true && "$volume_name_was_provided" == true ]]; then
+  if [[ "$is_startup_volume" == true && "$is_not_startup_volume" == true ]]; then
     report_fail "Specify EITHER --startup-volume or --volume-name, but NOT both."
     return 1
   fi
 
-  if [[ "$is_startup_volume" != true && "$volume_name_was_provided" != true ]]; then
+  if [[ "$is_startup_volume" != true && "$is_not_startup_volume  " != true ]]; then
     report_fail "You must specify EITHER --startup-volume or --volume-name."
     return 1
   fi
