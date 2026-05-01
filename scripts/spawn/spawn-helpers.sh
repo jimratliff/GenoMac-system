@@ -69,7 +69,7 @@ function determine_startup_container() {
   report_end_phase_standard
 }
 
-function home_directory_path_from_volume_name() {
+function parent_of_users_home_directories_from_volume_name() {
   # Constructs the home-directory path from the home-directory volume name (supplied as $1), using
   # the environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES.
   # NOTE: The environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES is assumed to *include* any
