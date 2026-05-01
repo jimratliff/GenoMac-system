@@ -7,7 +7,7 @@ function interactive_test_of_parent_of_users_home_directories() {
   local volume_name=""
   local parent=""
 
-  report "For each choice of volume you make, I’ll print the path of the${NEWLINE}parent of the home directories on that volume."
+  report "For each choice of volume you make, I’ll return the path of the${NEWLINE}parent of the home directories on that volume."
   while true; do
     option=$(
       get_value_from_numbered_choices \
