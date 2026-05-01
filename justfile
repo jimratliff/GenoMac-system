@@ -51,6 +51,9 @@ system-states-clear-all-states:
 spawn-related command:
     zsh scripts/spawn/spawn-related-commands.sh '{{command}}'
 
+spawn-related-test-parent-of-home-directories-from-volume:
+	just spawn-related test-home-directories-parent
+
 spawn-related-does-user-exist:
 	just spawn-related test-user-exists
 
