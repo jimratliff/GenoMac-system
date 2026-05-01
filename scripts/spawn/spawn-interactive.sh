@@ -15,9 +15,9 @@ function interactive_test_of_parent_of_users_home_directories_from_volume_name()
       return 0
     fi
 
-    home_directory="$(parent_of_users_home_directories_from_volume_name "$volume_name")"
+    parent_of_home_directories="$(parent_of_users_home_directories_from_volume_name "$volume_name")"
 
-    report "Home-directory path: $home_directory"
+    report "Parent of users’ home directories: $parent_of_home_directories"
 
   done
 }
