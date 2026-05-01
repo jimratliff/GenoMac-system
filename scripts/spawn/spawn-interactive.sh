@@ -5,7 +5,7 @@ function interactive_test_of_parent_of_users_home_directories_from_volume_name()
   report_start_phase_standard
   local volume_name=""
 
-  report "I will test, for each user you specify, whether that user exists."
+  report "I will create, for each volume you specify, the path to the parent of users’ home directories."
 
   while true; do
     volume_name=$(get_nonblank_answer_to_question "Volume name or “stop”")
