@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-function interactive_test_of_home_directory_path_from_volume_name() {
-  # Interactive front end for home_directory_path_from_volume_name
+function interactive_test_of_parent_of_users_home_directories_from_volume_name() {
+  # Interactive front end for parent_of_users_home_directories_from_volume_name
   report_start_phase_standard
   local volume_name=""
 
@@ -15,7 +15,7 @@ function interactive_test_of_home_directory_path_from_volume_name() {
       return 0
     fi
 
-    home_directory="$(home_directory_path_from_volume_name "$volume_name")"
+    home_directory="$(parent_of_users_home_directories_from_volume_name "$volume_name")"
 
     report "Home-directory path: $home_directory"
 
@@ -127,7 +127,7 @@ function interactive_adduser() {
   admin_user_short_name=$(get_nonblank_answer_to_question "Admin-user short name")
 
   volume_name=$(get_nonblank_answer_to_question "Name of volume for user’s home directory")
-  home=$(home_directory_path_from_volume_name "volume_name")
+  home=$(parent_of_users_home_directories_from_volume_name "volume_name")
   
 
   
