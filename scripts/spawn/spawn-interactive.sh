@@ -1,65 +1,48 @@
 #!/usr/bin/env zsh
 
 function interactive_get_parent_of_users_home_directories() {
-  report_start_phase_standard
-  option=$(
-    get_value_from_numbered_choices \
-      "Choose an option for the volume on which the users’ home directories live:" \
-      "This is the startup volume" "IS_STARTUP_VOLUME" \
-      "This is other than the startup volume" "OTHER_VOLUME" \
-      "STOP. I’m done with this testing." "STOP"
-  )
-
-  case "$option" in
-    "IS_STARTUP_VOLUME")
-      parent="$(parent_of_users_home_directories --startup-volume)"
-      report "Parent of users’ home directories: $parent"
-      print -- "$parent"
-      ;;
-    "OTHER_VOLUME")
-      volume_name=$(get_nonblank_answer_to_question "Non-startup volume name")
-      parent="$(parent_of_users_home_directories --volume-name "$volume_name")"
-      report "Parent of users’ home directories: $parent"
-      print -- "$parent"
-      ;;
-    "STOP")
-      report_fail "I was told to STOP"
-      report_end_phase_standard
-      return 1
-  esac
-}
-
-function interactive_test_of_parent_of_users_home_directories() {
-  # Interactive front end for parent_of_users_home_directories_from_volume_name
+  # Return path of parent directory of users’ home directory based on interactive input.
+  #
+  # Asks to choose between whether the volume is (a) the startup volume or (b) another volume.
+  # If another volume, asks to supply a volume name.
   report_start_phase_standard
   local option=""
   local volume_name=""
   local parent=""
+  
+  option="$(
+    get_value_from_numbered_choices \
+      "Choose an option for the volume on which the users’ home directories live:" \
+      "This is the startup volume" "IS_STARTUP_VOLUME" \
+      "This is other than the startup volume" "OTHER_VOLUME"
+  )"
+
+  case "$option" in
+    "IS_STARTUP_VOLUME")
+      parent="$(parent_of_users_home_directories --startup-volume)"
+      ;;
+    "OTHER_VOLUME")
+      volume_name="$(get_nonblank_answer_to_question "Non-startup volume name")"
+      parent="$(parent_of_users_home_directories --volume-name "$volume_name")"
+      ;;
+    *)
+      report_fail "PROGRAMMER ERROR: Unexpected option: ${option}"
+      return 1
+      ;;
+  esac
+  report "Parent of users’ home directories: $parent"
+  print -- "$parent"
+  report_end_phase_standard
+}
+
+function interactive_test_of_parent_of_users_home_directories() {
+  # Iterative interactive test for interactive_get_parent_of_users_home_directories
+  local parent=""
 
   report "For each choice of volume you make, I’ll return the path of the${NEWLINE}parent of the home directories on that volume."
   while true; do
-    option=$(
-      get_value_from_numbered_choices \
-        "Choose an option for the volume on which the users’ home directories live:" \
-        "This is the startup volume" "IS_STARTUP_VOLUME" \
-        "This is other than the startup volume" "OTHER_VOLUME" \
-        "STOP. I’m done with this testing." "STOP"
-    )
-  
-    case "$option" in
-      "IS_STARTUP_VOLUME")
-        parent="$(parent_of_users_home_directories --startup-volume)"
-        report "Parent of users’ home directories: $parent" 
-        ;;
-      "OTHER_VOLUME")
-        volume_name=$(get_nonblank_answer_to_question "Non-startup volume name")
-        parent="$(parent_of_users_home_directories --volume-name "$volume_name")"
-        report "Parent of users’ home directories: $parent" 
-        ;;
-      "STOP")
-        report_end_phase_standard
-        return 0
-    esac
+    interactive_get_parent_of_users_home_directories || return 1
+    report "Type ⌃C to stop"
   done
 }
 
