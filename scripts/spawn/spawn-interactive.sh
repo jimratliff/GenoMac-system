@@ -138,20 +138,22 @@ function interactive_adduser() {
   local onepassword_admin_password_item_name=""
   local admin_user_short_name=""
   local passphrase_mode=""
-  local volume_name=""
   local -a adduser_args
   adduser_args=()
 
-  user_short_name=$(get_nonblank_answer_to_question "User short name")
-  uid=$(get_nonblank_answer_to_question "User uid (suggest 510–999)")
+  user_short_name="$(get_nonblank_answer_to_question "User short name")"
+  uid="$(get_nonblank_answer_to_question "User uid (suggest 510–999)")"
   
-  user_full_name=$(get_nonblank_answer_to_question "User FULL name (or “none”")
+  user_full_name="$(get_nonblank_answer_to_question "User FULL name (or “none”")"
   [[ "${user_full_name:l}" == "none" ]] && user_full_name=""
   
-  admin_user_short_name=$(get_nonblank_answer_to_question "Admin-user short name")
+  admin_user_short_name="$(get_nonblank_answer_to_question "Admin-user short name")"
+  home="$(interactive_get_parent_of_users_home_directories)"
+  
+  avatar_path="$(get_nonblank_answer_to_question "Avatar path (or “none”")"
+  [[ "${avatar_path:l}" == "none" ]] && avatar_path=""
 
-  volume_name=$(get_nonblank_answer_to_question "Name of volume for user’s home directory")
-  home=$(parent_of_users_home_directories_from_volume_name "volume_name")
+  
   
 
   
