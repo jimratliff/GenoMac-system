@@ -12,7 +12,12 @@ function sysadminctl_adduser() {
   # functions.) (Alternatively, but insecurely, cleartext passwords can be supplied,
   # primarily for testing purposes.)
   #
-  # This function requires credentials for an existing admin user with a Secure Token.
+  # This function requires credentials for an existing admin user with a Secure Token,
+  # referred to as the “authorizing admin.”
+  #
+  # The new user is referred to as “user,” even though that user is also often an admin-level
+  # user.
+  #
   # After creation, this function confirms that Secure Token is enabled for the new user.
   # If Secure Token is not confirmed to be enabled, the function fails.
   #
