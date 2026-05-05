@@ -21,6 +21,8 @@ function sysadminctl_adduser() {
   # After creation, this function confirms that Secure Token is enabled for the new user.
   # If Secure Token is not confirmed to be enabled, the function fails.
   #
+  # NOTE: The --home path does *not* need to exist in order for the user to be created.
+  #
   # Parameters:
   #   --short-name                mandatory  <string> short user name
   #   --full-name                            <string> full user name
