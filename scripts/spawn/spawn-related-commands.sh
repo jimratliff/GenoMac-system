@@ -56,6 +56,11 @@ function main() {
       interactive_test_of_parent_of_users_home_directories
       ;;
 
+    add-user)
+      report_action_taken "Interactively create a single user"
+      interactive_adduser
+      ;;
+
     *)
       report_fail "Unknown system-states command: ${command}"
       usage
