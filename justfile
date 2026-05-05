@@ -62,3 +62,6 @@ spawn-related-what-is-startup-container:
 
 spawn-related-ensure-volume-exists:
 	just spawn-related ensure-volume-exists
+
+spawn-related-create-user:
+	just spawn-related add-user
