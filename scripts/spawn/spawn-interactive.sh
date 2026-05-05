@@ -202,7 +202,7 @@ function interactive_adduser() {
   fi
 
   report "I’m this close to creating the new user, but first let me show you the arguments I have:"
-  report_argument_vector adduser_args
+  report_argument_vector "${adduser_args[@]}"
 
   if ! get_yes_no_answer_to_question "Continue to create the new user? (If not, I’ll stop)"; then
     report "Aborting at your request"
