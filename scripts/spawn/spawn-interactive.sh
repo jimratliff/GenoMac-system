@@ -160,10 +160,10 @@ function interactive_adduser() {
   parent_of_home="$(interactive_get_parent_of_users_home_directories)"
   home="${parent_of_home}/${user_short_name}"
   adduser_args+=(--home "$home")
-  
+
   avatar_path="$(get_nonblank_answer_to_question "Avatar path (or “none”)")"
   [[ "${avatar_path:l}" == "none" ]] && avatar_path=""
-  adduser_args+=(--avatar-path "$avatar_path")
+  [[ -n "$avatar_path" ]] && adduser_args+=(--avatar-path "$avatar_path")
 
   passphrase_mode="$(get_value_from_numbered_choices \
     "How do you want to supply passwords (for the new user and authorizing admin user)?" \
