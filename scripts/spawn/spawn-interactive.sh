@@ -5,7 +5,7 @@ function interactive_get_parent_of_users_home_directories() {
   #
   # Asks to choose between whether the volume is (a) the startup volume or (b) another volume.
   # If another volume, asks to supply a volume name.
-  report_start_phase_standard
+
   local option=""
   local volume_name=""
   local parent=""
@@ -32,7 +32,6 @@ function interactive_get_parent_of_users_home_directories() {
   esac
   report "Parent of users’ home directories: $parent"
   print -- "$parent"
-  report_end_phase_standard
 }
 
 function interactive_test_of_parent_of_users_home_directories() {
