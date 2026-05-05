@@ -193,7 +193,7 @@ function sysadminctl_adduser() {
   fi
 
   cmd=(
-    sysadminctl
+    sudo sysadminctl
     -addUser "$short_name"
     -UID "$uid"
     -password "$user_password"
