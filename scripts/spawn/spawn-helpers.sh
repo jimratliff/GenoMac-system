@@ -81,7 +81,6 @@ function parent_of_users_home_directories() {
   #       is assumed to *include* the leading `/`.
   # HINT: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="/Users"
   
-  report_start_phase_standard
   local is_startup_volume=false
   local is_not_startup_volume=false
   local volume_name=""
@@ -122,8 +121,6 @@ function parent_of_users_home_directories() {
   fi
   
   print -- "$path_of_parent_of_home_directories"
-  
-  report_end_phase_standard
 }
 
 get_short_name_from_user_spec_json() {
