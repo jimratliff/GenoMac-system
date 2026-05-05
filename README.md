@@ -52,9 +52,56 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 - USER_CONFIGURER periodically runs the GenoMac-system Hypervisor to (a) use Homebrew to update apps and install/remove any apps that have been added/removed from the specified lists of desired Homebrew apps and (b) to re-implement and/or implement any desired changes in system-scoped preferences.
 - Every user periodically runs the GenoMac-user Hypervisor to (a) re-implement and/or (b) implement any desired changes in user-scoped preferences.
 
+## The initial bootstrapping GenoMac-system process
+### Make sure you’re logged into the USER_CONFIGURER account
+Make sure you’re logged into the USER_CONFIGURER account, *not* into the USER_VANILLA account.
+### Establish real-time connection to communicate text back and forth with other devices
+Open a Google Docs document to be used as/if needed for real-time exchange of text, error messages, etc., between the target Mac and other devices.
+- In Safari
+  - sign into my standard Google account:
+    - Go to google.com and click “Log in”
+    - Enter the username of my Google account
+    - A QR code will appear. Scan it with my iPhone and complete the authentication.
+  - Open the Google Doc document “[Project GenoMac: Text-exchange Document](https://docs.google.com/document/d/1RCbwjLHPidxRJJcvzILKGwtSkKpDrm8dT1fgJxlUdZ4/edit?usp=sharing)]” (Of course, this document is specific to, and accessible by, only me. Make your own!)
 
-## Quick-reference cheat sheet for occasional maintenance
-(First time here? Please go to the next major heading, viz., “[Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process).”)
+### Launch Terminal and grant it full-disk access
+Perhaps obviously, when beginning this GenoMac-system bootstrapping process the first time, the Mac is pristine. Thus, the macOS-supplied Terminal is the only terminal-emulator application available. We’ll use it at least until the Hypervisor has installed third-party apps.
+
+- Launch Terminal
+- System Settings
+  - Privacy & Security
+    - Scroll down and click Full Disk Access
+      - Enable for Terminal
+
+### Manually install Homebrew
+Installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
+installation of which will install, among other things, a version of Git, which will permit cloning this repo.
+
+To install Homebrew, launch Terminal:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+(This is the same command as you would get by going to [brew.sh](https://brew.sh/) and copying the command from near the top of the page under “Install Homebrew.”)
+
+**Do *not* follow Homebrew’s instructions to modify the PATH. This will be dealt with systemwide later.**
+
+### Clone this repo to `~/.genomac-system`
+This public GenoMac-user repo is meant to be cloned locally (using https) to USER_CONFIGURER’s home directory.[^https] 
+More specifically, the local directory to which this repo is to be cloned is the hidden directory `~/.genomac-system`, specified by the environment variable $GENOMAC_SYSTEM_LOCAL_DIRECTORY (which is exported by the script `assign_environment_variables.sh`).
+
+[^https]: After having cloned the repository via https, GitHub will not let you edit the repo from the CLI (but will from the browser). In order to edit
+the repo from the CLI, you would need to change the repo from https to SSH, which can be done via 
+`make dev-configure-remote-for-https-fetch-and-ssh-push` or, once `just` has been installed, by `just dev-configure-remote-for-https-fetch-and-ssh-push`.
+
+Copy the following code block and paste into Terminal:
+```shell
+mkdir -p ~/.genomac-system
+cd ~/.genomac-system
+git clone --recurse-submodules https://github.com/jimratliff/GenoMac-system.git .
+```
+**Note the trailing “.” at the end of the `git clone` command.**
+
+(The `--recurse-submodules` flag exists because this repo has a submodule ([GenoMac-shared](https://github.com/jimratliff/GenoMac-shared). The `--recurse-submodules` ensures that the submodule’s code is also cloned, not just a pointer to it.)
 
 ### Refresh local clone
 After initial cloning, to pull down subsequent changes to this repository
