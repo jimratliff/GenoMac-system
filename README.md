@@ -1,5 +1,7 @@
 Project GenoMac is an implementation of automated setup and maintenance of multiple Macs, each with multiple users. The current repository (GenoMac-system) is one of three repositories in Project GenoMac. It addresses system-level configuration of each Mac. The other two repositories are: (a) [GenoMac-user](https://github.com/jimratliff/GenoMac-user), which addresses user-level configuration of each user and (b) [GenoMac-shared](https://github.com/jimratliff/GenoMac-shared), which provides shared code used by both GenoMac-system and GenoMac-user.
 
+Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provide access to the necessary scripts and other resources. (GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac. GenoMac-system is cloned separately by *each user*.)
+
 # GenoMac-system
 - [Quick-reference cheat sheet for occasional maintenance](#quick-reference-cheat-sheet-for-occasional-maintenance)
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
@@ -11,20 +13,40 @@ Project GenoMac is an implementation of automated setup and maintenance of multi
 - [Known issues](#known-issues)
 - [Dev issues](#appendix-dev-issues)
 
-## New paradigm supercedes below discussion: The Hypervisor
-As of January 28, 2026, GenoMac-system has been refactored to use what I’m calling the Hypervisor: a single script (executed with `make run-hypervisor`) that manages the entire Phase 1 process (up until (a) using GenoMac-user to further configure USER_CONFIGURER followed by (b) spawning new users/volumes).
+## Overview of the entire GenoMac process
+Project GenoMac is an implementation of automated setup of multiple Macs, each with multiple users. We now focus on a particular Mac (rinse and repeat for each Mac). At this point, we assume the following:
+- An essentially pristine Mac:
+  - Fresh install of macOS
+  - Only two users are defined, both of which are administrators, referred to as USER_VANILLA and USER_CONFIGURER.
+  - ***No other configurations or installations have been performed***
+- USER_CONFIGURER is signed into its account
 
-This management of Phase 1 includes updating the local clone’s copy of the GenoMac-system remote repo. Thus, the previously prescribed step (`git pull --recurse-submodules origin main`) is not necessary.
-
-However, because GenoMac-system relies on GenoMac-shared as a submodule, after any substantive change to GenoMac-shared, GenoMac-system must be updated to point to the newest commit of GenoMac-shared. This can be accomplished with `make dev-update-repo-and-submodule`.
-
-## TODOs
-- Apps that require Accessibility settings
-  - USER_CONFIGURER should be interactively walked through the required accessibility/privacy settings
-    - This is superior than requiring other users to do it, because—AFAICT—it needs to be done only once
-  - Alan.app
-    - Accessibility Permission Required
-      - Alan needs Accessibility permission to highlight the focused window. Please open System Settings → Privacy & Security → Accessibility and enable “Alan”. Then relaunch Alan.
+At a high level, for a particular new Mac, Project GenoMac involves the following steps:
+- Systemwide configuration, performed by USER_CONFIGURER
+  - manually install Homebrew (which necessarily installs Git, allowing cloning this repository)
+  - manually clone the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
+  - using the GenoMac-system repo, run a script, referred to as the Hypervisor, which performs the following, largely autonomously but requiring some interaction at various steps:
+    - makes system-level changes to PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications
+    - installations
+      - apps and fonts using Homebrew
+      - apps from the Mac App Store
+      - third-party apps not available via Homebrew (e.g., that can be downloaded from a GitHub repository)
+      - other resources: a screensaver and an alert sound
+    - implement systemwide settings (e.g., policies regarding firewall and macOS system-update behavior)
+- User-scoped settings for USER_CONFIGURER performed by USER_CONFIGURER
+  - using a script from GenoMac-system, clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
+  - using the GenoMac-user repo, USER_CONFIGURER executes scripts to *inter alia*:
+    - “stow” dotfiles
+    - implement generic user-scoped settings
+    - configure 1Password for authentication with GitHub
+- USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
+- Loop over each USER_j of the newly created users, USER_j performs the following:
+  - USER_j logs into the USER_j account for the first time
+  - USER_j clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
+  - using the GenoMac-user repo, USER_j executes scripts to *inter alia*:
+    - “stow” dotfiles
+    - implement generic user-scoped settings
+    - configure 1Password for authentication with GitHub
 
 
 ## Quick-reference cheat sheet for occasional maintenance
