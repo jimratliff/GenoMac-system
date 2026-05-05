@@ -14,7 +14,7 @@ Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provi
 - [Dev issues](#appendix-dev-issues)
 
 ## Overview of the entire GenoMac process
-Project GenoMac is an implementation of automated setup of multiple Macs, each with multiple users. We now focus on a particular Mac (rinse and repeat for each Mac). At this point, we assume the following:
+Project GenoMac automates setup and maintenance of multiple Macs, each Mac having multiple users. We now focus on a particular Mac (rinse and repeat for each Mac). At this point, we assume the following:
 - An essentially pristine Mac:
   - Fresh install of macOS
   - Only two users are defined, both of which are administrators, referred to as USER_VANILLA and USER_CONFIGURER.
