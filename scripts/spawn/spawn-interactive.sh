@@ -136,22 +136,75 @@ function interactive_adduser() {
   local avatar_path=""
   local onepassword_user_password_item_name=""
   local onepassword_admin_password_item_name=""
+  local cleartext_user_password=""
+  local cleartext_admin_password=""
   local admin_user_short_name=""
   local passphrase_mode=""
+  local hint=""
   local -a adduser_args
   adduser_args=()
 
   user_short_name="$(get_nonblank_answer_to_question "User short name")"
+  adduser_args+=(--short-name "$user_short_name")
+  
   uid="$(get_nonblank_answer_to_question "User uid (suggest 510–999)")"
+  adduser_args+=(--uid "$uid")
   
   user_full_name="$(get_nonblank_answer_to_question "User FULL name (or “none”")"
   [[ "${user_full_name:l}" == "none" ]] && user_full_name=""
+  adduser_args+=(--full-name "$user_full_name")
   
   admin_user_short_name="$(get_nonblank_answer_to_question "Admin-user short name")"
+  adduser_args+=(--admin-user-name "$admin_user_short_name")
+  
   home="$(interactive_get_parent_of_users_home_directories)"
+  adduser_args+=(--home "$home")
   
   avatar_path="$(get_nonblank_answer_to_question "Avatar path (or “none”")"
   [[ "${avatar_path:l}" == "none" ]] && avatar_path=""
+  adduser_args+=(--avatar-path "$avatar_path")
+
+  passphrase_mode="$(get_value_from_numbered_choices \
+    "How do you want to supply user names and passwords (for the new user and authorizing admin user)?" \
+    "Use named items in the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” 1Password vault" "1PASSWORD" \
+    "Clear text" "CLEAR_TEXT"
+
+  case "$passphrase_mode" in
+    "1PASSWORD")
+      adduser_args+=(--op-vault "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION")
+      report "Enter the name of the 1Password ITEMs from the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” 1Password vault for the following passwords:"
+      onepassword_user_password_item_name="$get_nonblank_answer_to_question "Name of 1Password ITEM for NEW USER")"
+      adduser_args+=(--op-item-user-password "$onepassword_user_password_item_name")
+      onepassword_admin_password_item_name="$get_nonblank_answer_to_question "Name of 1Password ITEM for the AUTHORIZING ADMIN USER")"
+      adduser_args+=(--op-item-admin-password "$onepassword_admin_password_item_name")
+      ;;
+    "CLEAR_TEXT")
+      report "Enter the cleartext passwords for the following users:"
+      cleartext_user_password="$get_nonblank_answer_to_question "Cleartext password for NEW USER")"
+      adduser_args+=(--cleartext-password-user "$cleartext_user_password")
+      cleartext_admin_password="$get_nonblank_answer_to_question "Cleartext password for AUTHORIZING ADMIN USER")"
+      adduser_args+=(--cleartext-password-admin "$cleartext_admin_password")
+      ;;
+    *)
+      report_fail "PROGRAMMER ERROR: Unexpected passphrase mode: ${passphrase_mode}"
+      return 1
+      ;;
+  esac
+
+  hint="$get_nonblank_answer_to_question "Hint for new-user password (or “none”)")"
+  [[ "${hint:l}" == "none" ]] && hint=""
+  adduser_args+=(--hint "$hint")
+
+  if ! get_yes_no_answer_to_question "Should the new user have admin-level rights?"; then
+    adduser_args+=(--not-an-admin)
+  fi
+
+  report_action_taken "Creating new user"
+  sysadminctl_adduser "${adduser_args[@]}"
+  success_or_not
+  report_end_phase_standard
+}
+  
 
   
   
