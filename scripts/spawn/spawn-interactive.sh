@@ -204,17 +204,5 @@ function interactive_adduser() {
   success_or_not
   report_end_phase_standard
 }
-  
-
-  
-  
-
-  
-
-  
-  
-
-  
-
 
 }
