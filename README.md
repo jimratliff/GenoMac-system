@@ -18,6 +18,7 @@ Project GenoMac automates setup and maintenance of multiple Macs, each Mac havin
 - An essentially pristine Mac:
   - Fresh install of macOS
   - Only two users are defined, both of which are administrators, referred to as USER_VANILLA and USER_CONFIGURER.
+  - FileVault has been enabled.
   - ***No other configurations or installations have been performed***
 - USER_CONFIGURER is signed into its account
 
