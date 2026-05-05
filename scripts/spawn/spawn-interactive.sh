@@ -126,13 +126,14 @@ function interactive_adduser() {
   # - Allows for either interactive or 1Password password provision.
   # - Assumes the home directory will be created on some volume on the startup-volume
   #   container.
-  #   - Asks for that volume name.
+  # - Asks for either (a) this is on the startup volume or (b) a particular other volume.
   
   report_start_phase_standard
   local user_short_name=""
   local user_full_name=""
   local uid=""
   local home=""
+  local parent_of_home=""
   local avatar_path=""
   local onepassword_user_password_item_name=""
   local onepassword_admin_password_item_name=""
@@ -150,39 +151,41 @@ function interactive_adduser() {
   uid="$(get_nonblank_answer_to_question "User uid (suggest 510–999)")"
   adduser_args+=(--uid "$uid")
   
-  user_full_name="$(get_nonblank_answer_to_question "User FULL name (or “none”")"
+  user_full_name="$(get_nonblank_answer_to_question "User FULL name (or “none”)")"
   [[ "${user_full_name:l}" == "none" ]] && user_full_name=""
   adduser_args+=(--full-name "$user_full_name")
   
   admin_user_short_name="$(get_nonblank_answer_to_question "Admin-user short name")"
   adduser_args+=(--admin-user-name "$admin_user_short_name")
   
-  home="$(interactive_get_parent_of_users_home_directories)"
+  parent_of_home="$(interactive_get_parent_of_users_home_directories)"
+  home="${parent_of_home}/${user_short_name}"
   adduser_args+=(--home "$home")
   
-  avatar_path="$(get_nonblank_answer_to_question "Avatar path (or “none”")"
+  avatar_path="$(get_nonblank_answer_to_question "Avatar path (or “none”)")"
   [[ "${avatar_path:l}" == "none" ]] && avatar_path=""
   adduser_args+=(--avatar-path "$avatar_path")
 
   passphrase_mode="$(get_value_from_numbered_choices \
-    "How do you want to supply user names and passwords (for the new user and authorizing admin user)?" \
+    "How do you want to supply passwords (for the new user and authorizing admin user)?" \
     "Use named items in the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” 1Password vault" "1PASSWORD" \
     "Clear text" "CLEAR_TEXT"
+    )"
 
   case "$passphrase_mode" in
     "1PASSWORD")
       adduser_args+=(--op-vault "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION")
       report "Enter the name of the 1Password ITEMs from the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” 1Password vault for the following passwords:"
-      onepassword_user_password_item_name="$get_nonblank_answer_to_question "Name of 1Password ITEM for NEW USER")"
+      onepassword_user_password_item_name="($get_nonblank_answer_to_question "Name of 1Password ITEM for NEW USER")"
       adduser_args+=(--op-item-user-password "$onepassword_user_password_item_name")
-      onepassword_admin_password_item_name="$get_nonblank_answer_to_question "Name of 1Password ITEM for the AUTHORIZING ADMIN USER")"
+      onepassword_admin_password_item_name="($get_nonblank_answer_to_question "Name of 1Password ITEM for the AUTHORIZING ADMIN USER")"
       adduser_args+=(--op-item-admin-password "$onepassword_admin_password_item_name")
       ;;
     "CLEAR_TEXT")
       report "Enter the cleartext passwords for the following users:"
-      cleartext_user_password="$get_nonblank_answer_to_question "Cleartext password for NEW USER")"
+      cleartext_user_password="($get_nonblank_answer_to_question "Cleartext password for NEW USER")"
       adduser_args+=(--cleartext-password-user "$cleartext_user_password")
-      cleartext_admin_password="$get_nonblank_answer_to_question "Cleartext password for AUTHORIZING ADMIN USER")"
+      cleartext_admin_password="($get_nonblank_answer_to_question "Cleartext password for AUTHORIZING ADMIN USER")"
       adduser_args+=(--cleartext-password-admin "$cleartext_admin_password")
       ;;
     *)
@@ -191,7 +194,7 @@ function interactive_adduser() {
       ;;
   esac
 
-  hint="$get_nonblank_answer_to_question "Hint for new-user password (or “none”)")"
+  hint="$(get_nonblank_answer_to_question "Hint for new-user password (or “none”)")"
   [[ "${hint:l}" == "none" ]] && hint=""
   adduser_args+=(--hint "$hint")
 
@@ -199,10 +202,16 @@ function interactive_adduser() {
     adduser_args+=(--not-an-admin)
   fi
 
+  report "I’m this close to creating the new user, but first let me show you the arguments I have:"
+  report_argument_vector adduser_args
+
+  if ! get_yes_no_answer_to_question "Continue to create the new user? (If not, I’ll stop)"; then
+    report "Aborting at your request"
+    return 1
+  fi
+  
   report_action_taken "Creating new user"
   sysadminctl_adduser "${adduser_args[@]}"
   success_or_not
   report_end_phase_standard
-}
-
 }
