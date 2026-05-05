@@ -1,3 +1,5 @@
+Project GenoMac is an implementation of automated setup and maintenance of multiple Macs, each with multiple users. The current repository (GenoMac-system) is one of three repositories in Project GenoMac. It addresses system-level configuration of each Mac. The other two repositories are: (a) [GenoMac-user](https://github.com/jimratliff/GenoMac-user), which addresses user-level configuration of each user and (b) [GenoMac-shared](https://github.com/jimratliff/GenoMac-shared), which provides shared code used by both GenoMac-system and GenoMac-user.
+
 # GenoMac-system
 - [Quick-reference cheat sheet for occasional maintenance](#quick-reference-cheat-sheet-for-occasional-maintenance)
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
