@@ -226,7 +226,7 @@ function sysadminctl_adduser() {
     report "New user will be created as a standard user."
   fi
 
-  # Do not log the full command, because it contains passwords in argv.
+  # Note: Do not log/print the full command, because it contains passwords in argv.
   if ! "${cmd[@]}"; then
     report_fail "sysadminctl failed while creating user ${short_name}."
     return 1
