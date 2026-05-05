@@ -22,6 +22,9 @@ function sysadminctl_adduser() {
   # If Secure Token is not confirmed to be enabled, the function fails.
   #
   # NOTE: The --home path does *not* need to exist in order for the user to be created.
+  #       The *volume* will need to exist when this user first logs into the account.
+  #       However, the /Users directory need not exist when the user first logs into the
+  #       account. It will be created along with the user’s home directory at that time.
   #
   # Parameters:
   #   --short-name                mandatory  <string> short user name
