@@ -175,16 +175,16 @@ function interactive_adduser() {
     "1PASSWORD")
       adduser_args+=(--op-vault "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION")
       report "Enter the name of the 1Password ITEMs from the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” 1Password vault for the following passwords:"
-      onepassword_user_password_item_name="($get_nonblank_answer_to_question "Name of 1Password ITEM for NEW USER")"
+      onepassword_user_password_item_name="$(get_nonblank_answer_to_question "Name of 1Password ITEM for NEW USER")"
       adduser_args+=(--op-item-user-password "$onepassword_user_password_item_name")
-      onepassword_admin_password_item_name="($get_nonblank_answer_to_question "Name of 1Password ITEM for the AUTHORIZING ADMIN USER")"
+      onepassword_admin_password_item_name="$(get_nonblank_answer_to_question "Name of 1Password ITEM for the AUTHORIZING ADMIN USER")"
       adduser_args+=(--op-item-admin-password "$onepassword_admin_password_item_name")
       ;;
     "CLEAR_TEXT")
       report "Enter the cleartext passwords for the following users:"
-      cleartext_user_password="($get_nonblank_answer_to_question "Cleartext password for NEW USER")"
+      cleartext_user_password="$(get_nonblank_answer_to_question "Cleartext password for NEW USER")"
       adduser_args+=(--cleartext-password-user "$cleartext_user_password")
-      cleartext_admin_password="($get_nonblank_answer_to_question "Cleartext password for AUTHORIZING ADMIN USER")"
+      cleartext_admin_password="$(get_nonblank_answer_to_question "Cleartext password for AUTHORIZING ADMIN USER")"
       adduser_args+=(--cleartext-password-admin "$cleartext_admin_password")
       ;;
     *)
