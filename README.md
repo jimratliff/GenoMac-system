@@ -1,6 +1,8 @@
-Project GenoMac automates setup and maintenance of multiple Macs, each with multiple users.[^multiple_users] The current repository (GenoMac-system) is one of three repositories in Project GenoMac. It addresses system-level configuration of each Mac. The other two repositories are: (a) [GenoMac-user](https://github.com/jimratliff/GenoMac-user), which addresses user-level configuration of each user, and (b) [GenoMac-shared](https://github.com/jimratliff/GenoMac-shared), which provides shared code used by both GenoMac-system and GenoMac-user.
+Project GenoMac automates setup and maintenance of multiple Macs, each with multiple users.[^multiple_users] The current repository (GenoMac-system) is one of three repositories in Project GenoMac. It addresses system-level configuration of each Mac. The other two repositories are: (a) [GenoMac-user](https://github.com/jimratliff/GenoMac-user), which addresses user-level configuration of each user, and (b) [GenoMac-shared](https://github.com/jimratliff/GenoMac-shared), which provides shared code used by both GenoMac-system and GenoMac-user.[^genomac_shared_purpose]
 
 [^multiple_users]: The envisioned case is: there is a set of users and each Mac has all (or almost all) of those users. In other words, this is a scenario of a set of users residing on each of several Macs.
+
+[^genomac_shared_purpose]: GenoMac-shared is an externally defined set of common code that specifies some environment variables and defines some helper functions. This common code is incorporated into each of GenoMac-system and GenoMac-user as a submodule located at `external/genomac-shared` of each of the two container repositories. See GenoMac-shared’s [README](https://github.com/jimratliff/GenoMac-shared/blob/main/README.md) for information on how that affects/complicates work flows, particularly when there is a change to GenoMac-shared’s code.
 
 Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provide access to the necessary scripts and other resources. (GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac. GenoMac-user is cloned separately by *each user*.)
 
@@ -184,6 +186,11 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 
 [^script_systemwide_settings]: See the script `GenoMac-system/scripts/settings/implement_systemwide_settings.sh`.
 
+### A note on the declarativeness, or lack thereof, of non-Homebrew installations by Hypervisor
+Unlike Homebrew installations, upgrading to new versions is not automatic. Instead, some non-Homebrew apps are “pinned” to a particular version (viz., Alan.app, default-browser, .and utiluti). Hypervisor will detect, and report, when the GitHub repo has a newer version available (relative to the pinned version), but it requires a manual change in the corresponding script to update the pinned version. In this sense, this script is intended to be run only (a) on a new system or (b) after one or more the apps/tools has been updated.
+
+If existing resources are marked for deletion, this would require an appropriate `sudo rm -rf path/to/some_resource` to be deployed and executed on each Mac.
+
 ### `make` vs. `just`
 
 ### Refresh local clone
@@ -196,129 +203,14 @@ cd ~/.genomac-system
 git pull --recurse-submodules origin main
 ```
 (The `--recurse-submodules` ensures that the local version of submodule GenoMac-shared is updated to the commit specified by the GenoMac-user origin repository.)
-### Update apps
 
-NOTE: If revisions to the Brewfile imply installing *new* apps from the Mac App Store, you need to be signed in to the App Store before executing the below steps.
 
-To update all apps (and install/remove apps as required by any changes in the Brewfile) after refreshing the local clone:
-```bash
-cd ~/.genomac-system
-git pull origin main
-make app-install-via-homebrew
-```
 
-### Install apps/tools not available in Homebrew
-Some apps are not available in Homebrew but are available as downloads from GitHub repositories (e.g., Alan.app and the CLI tools `default-browser` and `utiluti`.
 
-Unlike Homebrew installations, upgrading to new versions is not automatic. Instead, each app is “pinned” to a particular version. This script will detect, and report, when the GitHub repo has a newer version available (relative to the pinned version), but it requires a manual change in the corresponding script to update the pinned version. In this sense, this script is intended to be run only (a) on a new system or (b) after one or more the apps/tools has been updated. That said, running this script is idempotent; there is no harm in running it repeatedly.
-```shell
-cd ~/.genomac-system
-make app-install-other-than-homebrew
-```
 
-### Reassert systemwide settings
-To reassert the systemwide settings (in response to any changes in them in this repo) after refreshing the local clone:
-```bash
-cd ~/.genomac-system
-git pull origin main
-make prefs-systemwide
-```
 
-### Resources (fonts, screensavers, and sounds) are not routinely updated
-The systemwide installation of resources (fonts, screensaver, and sounds) is considered a one-time install at the time a new Mac is initially configured. Unlike (a) apps and (b) systemwide preferences, resources are assumed to rarely change. Therefore, `make resources-install` is not designed to be executed routinely but only in response to a known change in an existing deployed resource or a desire to add an additional deployed resource.
 
-If existing resources are updated or new resources are chosen to be added, the corresponding scripts would be modified and re-run for each Mac. (That might imply corresponding changes in user-scoped scripts to point at the new resources.)
 
-If existing resources are marked for deletion, this would require an appropriate `sudo rm -rf path/to/some_resource` to be deployed and executed on each Mac.
-
-## Overview of the entire GenoMac process
-Project GenoMac is an implementation of automated setup of multiple Macs, each with multiple users.
-
-We now focus on a particular Mac (rinse and repeat for each Mac). At this point, we assume the following:
-- An essentially pristine Mac:
-  - Fresh install of macOS
-  - Only two users are defined:
-    - USER_VANILLA
-    - USER_CONFIGURER
-  - ***No other configurations or installations have been performed***
-- USER_CONFIGURER is signed into its account
-
-At a high level, for a particular new Mac, Project GenoMac involves the following steps:
-- Systemwide settings, performed by USER_CONFIGURER
-  - manually install Homebrew (which necessarily installs Git)
-  - manually clone the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
-  - using the GenoMac-system repo, execute scripts to:
-    - make system-level changes to PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications
-    - install apps using Homebrew
-    - install non-Homebrew apps (e.g., that can be downloaded from a GitHub repository)
-    - install resources
-      - font(s)
-      - screensaver(s)
-      - sound(s)
-    - implement systemwide settings
-- User-scoped settings for USER_CONFIGURER performed by USER_CONFIGURER
-  - using a script from GenoMac-system, clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
-  - using the GenoMac-user repo, USER_CONFIGURER executes scripts to:
-    - “stow” dotfiles
-    - implement generic user-scoped settings
-    - configure 1Password for authentication with GitHub
-- USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
-- Loop over each USER_j of the newly created users, USER_j performs the following:
-  - USER_j logs into the USER_j account for the first time
-  - USER_j clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
-  - using the GenoMac-user repo, USER_j executes scripts to::
-    - “stow” dotfiles
-    - implement generic user-scoped settings
-    - configure 1Password for authentication with GitHub
-   
-## The four phases of the entire two-repo process
-### Phase 1
-- In Safari, access a pre-defined Google Doc to establish a real-time textual connection to other devices to be used as/if needed for real-time exchange of text, error messages, etc.
-- Give Terminal full-disk access
-- Install Homebrew (and therefore also Git)
-  - Do *not* at this modify PATH to add Homebrew (despite the instructions from the Homebrew installer)
-- Clone this public repo to `~/.genomac-system`
-- Run a script to modify PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications to the user’s PATH
-- Log in to the Mac Apple Store (MAS) with the Apple Account that purchased the MAS apps to be installed
-- Run a script for Homebrew to install applications
-- Run a script to install certain resources (font(s), screensaver(s), and sound(s))
-- Run a script to implement certain systemwide settings
-### Phase 2
-- Clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
-- Follow the instructions at GenoMac-user to configure the user-scoped settings for USER_CONFIGURER
-### Phase 3
-- Return to GenoMac-system to create the additional users and, when necessary, additional volumes to house the user directories for newly created users
-### Phase 4
-- Loop over newly created users… performing the steps in the GenoMac-user repo
-
-## Overview of the role of the GenoMac-system repository
-### Context
-This GenoMac-system repository is the first stop in Project GenoMac to setup any of several Macs, each of which has several users.
-
-The GenoMac-system repo is used and cloned exclusively by USER_CONFIGURER. 
-
-GenoMac-system supports implementing configurations at the system level, i.e., configurations that affect all users. These configurations include:
-- installing Homebrew (and thereby git)
-- installing all CLI and GUI apps (both on or off the Mac App Store)
-- install non-Homebrew apps (e.g., that can be downloaded from a GitHub repository)
-- installing resources
-  - font(s)
-  - screensaver(s)
-  - sound(s)
-- adjusting systemwide settings
-  - giving Terminal and iTerm full-disk access;
-  - giving iTerm ability to control System Events (in order to run AppleScript)
-  - modifying systemwide the PATH to give all users access to apps installed by Homebrew
-  - setting the ComputerName and LocalHostName
-  - setting a login-window message
-  - configuring the firewall
-  - specifying policies regarding software-update behavior
-
-In addition—in a separate, later step, GenoMac-system is used by USER_CONFIGURER (a) to *create* new users and (b) when a user’s home directory will reside on a volume that does not exist, to create that volume.
-
-The current repo is used in conjunction with the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-system), which (a) is cloned by each user (including USER_CONFIGURER) and (b) is responsible for configurations at the user level.
-
-GenoMac-system also relies (as does GenoMac-user) on the [GenoMac-shared repository](https://github.com/jimratliff/GenoMac-shared). GenoMac-shared is an externally defined set of common code that specifies some environment variables and defines some helper functions. This common code is incorporated into each of GenoMac-system and GenoMac-user as a submodule located at `external/genomac-shared` of each of the two container repositories. (See GenoMac-shared’s [README](https://github.com/jimratliff/GenoMac-shared/blob/main/README.md) for information on how that affects/complicates work flows, particularly when there is a change to GenoMac-shared’s code.)
 ### The Makefile is the user’s interface with the functionality of this repo
 
 The `Makefile` provides the interface for the user to effect the functionalities of this repo, such as commanding the execution of (a) installing apps via Homebrew and (b) changing certain systemwide macOS settings using `defaults write` commands.
