@@ -60,6 +60,7 @@ cask "raindropio"               # Bookmarking manager
 # cask "textexpander"             # Insert pre-made snippets of text anywhere
 cask "tower"                    # Git client GUI
 cask "visual-studio-code"       # Microsoft open-source code editor
+cask "visualdiffer"             # Visually compare folders and files
 cask "vlc"                      # Multimedia player
 
 # cask "warp"                     # Rust-based terminal emulator
