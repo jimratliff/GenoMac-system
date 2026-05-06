@@ -43,7 +43,7 @@ At a high level, for a particular new Mac, the initial bootstrapping function of
     - implement generic user-scoped macOS settings
     - implement configurations for native and third-party applications
     - configure 1Password for authentication with GitHub
-    - establish syncing with Dropbox
+    - establish syncing with Dropbox, as a source of shared configuration data and other resources, as well as general-purpose file syncing.
 - USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
 - The human configurer then loops over each USER_j of the newly created users. Each USER_j performs the following:
   - USER_j logs into the USER_j account for the first time
