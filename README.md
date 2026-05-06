@@ -9,11 +9,14 @@ Project GenoMac automates setup and maintenance of multiple Macs, each with mult
 Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provide access to the necessary scripts and other resources. (GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac. GenoMac-user is cloned separately by *each user*.)
 
 ## Table of contents
-- [Quick-reference cheat sheet for occasional maintenance](#quick-reference-cheat-sheet-for-occasional-maintenance)
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
-- [The four phases of the entire two-repo process](#the-four-phases-of-the-entire-two-repo-process)
-- [Overview of the role of the GenoMac-system repository](#overview-of-the-role-of-the-genomac-system-repository)
-- [Step-by-step implementation](#step-by-step-implementation)
+- [The initial bootstrapping GenoMac-system process](#the-initial-bootstrapping-genomac-system-process)
+- [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
+- 38th Parallel
+- [Quick-reference cheat sheet for occasional maintenance](#quick-reference-cheat-sheet-for-occasional-maintenance)
+
+
+
 - [Remaining configuration steps that have not been (cannot be) automated](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#remaining-configuration-steps-that-have-not-been-cannot-be-automated)
 - [Apps to install manually](#apps-to-install-manually)
 - [Known issues](#known-issues)
@@ -145,9 +148,9 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 ✅ No GenoMac warnings or failures detected in this run.
 ```
 
-## 38th Parallel
 
-### What steps the Hypervisor performs
+
+## What steps the Hypervisor performs
 - Ensure that the currently running terminal emulator has Full Disk Access (FDA)
   - If not, the Settings » Privacy & Security » Full Disk Access panel is opened (this terminal app
     should already be pre-populated, but un-enabled, on the list of apps), so the user can simply
@@ -194,6 +197,8 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 Unlike Homebrew installations, upgrading to new versions is not automatic. Instead, some non-Homebrew apps are “pinned” to a particular version (viz., Alan.app, default-browser, .and utiluti). Hypervisor will detect, and report, when the GitHub repo has a newer version available (relative to the pinned version), but it requires a manual change in the corresponding script to update the pinned version. In this sense, this script is intended to be run only (a) on a new system or (b) after one or more the apps/tools has been updated.
 
 If existing resources are marked for deletion, this would require an appropriate `sudo rm -rf path/to/some_resource` to be deployed and executed on each Mac.
+
+## 38th Parallel
 
 ### `make` vs. `just`
 
