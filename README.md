@@ -150,7 +150,7 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 ✅ No GenoMac warnings or failures detected in this run.
 ```
 
-### Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user
+## Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user
 At this point, the Mac is largely setup at a system-scoped level, but USER_CONFIGURER is still very primitive as a *user*: all user-interface settings are at their out-of-the-box defaults. We fix that by using GenoMac-user to configure USER_CONFIGURER’s user-scoped settings.
 
 The Hypervisor (the one belonging to GenoMac-system) you’ve already run should have, as its final step, clone the GenoMac-user repository to the `~/.genomac-user` directory in USER_CONFIGURER’s home directory.
@@ -159,11 +159,24 @@ Now visit [the README from GenoMac-user](https://github.com/jimratliff/GenoMac-u
 
 When finished with that process, return here to finish the remainder of the system-scoped setup: Creating new users.
 
-### Create the new users that will reside on this Mac
+## Create the new users that will reside on this Mac
 
-## 38th Parallel
+## Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor
+At this point, all apps have been installed and all systemwide settings have been configured. There is no need to use this repo again on this Mac until any of the following occurs:
+- the passage of time indicates that apps should be upgraded
+- changes in the Brewfile’s sub-Brewfiles, or any other installation-related code in GenoMac-system, demands that apps/fonts should be added or removed from the Homebrew installation
+- changes in systemwide settings need to be propagated across Macs
 
-## What steps the Hypervisor performs
+In any of the above cases, all you need to do is to rerun the Hypervisor:
+```
+cd ~/.genomac-system
+just run-hypervisor
+```
+
+
+## Appendix
+
+### What steps the Hypervisor performs
 - Ensure that the currently running terminal emulator has Full Disk Access (FDA)
   - If not, the Settings » Privacy & Security » Full Disk Access panel is opened (this terminal app
     should already be pre-populated, but un-enabled, on the list of apps), so the user can simply
@@ -250,22 +263,13 @@ The `Makefile` provides the interface for the user to effect the functionalities
 
 
 
-### Conclusion
-At this point, all apps have been installed and all systemwide settings have been configured. There is no need to use this repo again until any of the following occurs:
-- the passage of time indicates that apps should be upgraded
-  - see [Update app and font installation](#update-app-and-font-installation)
-- changes in Brewfile demands that apps/fonts should be added or removed from the Homebrew installation
-  - see [Update app and font installation](#update-app-and-font-installation)
-- changes in systemwide settings need to be propagated across Macs
-  - See [Reassert systemwide settings](#reassert-systemwide-settings)
-- a new Mac needs to be configured
-  - Go to the top of this repo and start from scratch
+
  
 
 
 
 
-## Known issues
+### Known issues
 - Assumption of an Apple Silicon Mac rather than an Intel Mac:
   - `adjust_path_for_homebrew` in GenoMac-system/scripts/prefs_scripts/adjust_path_for_homebrew.sh
 - Defining a separate lockscreen.png (i.e., separate from a user’s wallpaper) is not working.
