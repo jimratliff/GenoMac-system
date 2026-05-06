@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+# Installing VisualDiffer in this way is DEPRECATED because it’s available from Homebrew
+
 function install_visualdiffer() {
   # Installs VisualDiffer macOS app, by Davide Ficano, et al., into /Applications.
   # Release page: https://github.com/Visualdiffer/visualdiffer/releases
