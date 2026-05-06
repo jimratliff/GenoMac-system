@@ -115,11 +115,13 @@ The Hypervisor is a scripting system that manages the system-scoped configuratio
 
 [^Hypervisor_scripts]: The entry point to the Hypervisor script is `GenoMac-system/scripts/hypervisor/hypervisor.sh`, which calls, for most of the detailed work, `GenoMac-system/scripts/hypervisor/subdermis.sh`
 
-The Hypervisor is run the first time by:
+The Hypervisor is run the first time by:[^homebrew_via_just]
 ```
 cd ~/.genomac-user
 make run-hypervisor
 ```
+
+[^homebrew_via_just]: The first time Hypervisor is run, it uses Homebrew to install many apps/programs, including in particular `just`. At that point, you can use `just` commands instead of the somewhat-less user-friendly `make` commands. In particular, you can then run the Hypervisor with `just run-hypervisor`.
 
 When Hypervisor is first launched during a session, it will check automatically for updates to this repo. If any are found, Hypervisor will refresh this repo and relaunch the Hypervisor.
 
@@ -153,8 +155,10 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 - Gets the ComputerName and LocalHostName for this Mac, and optionally interactively supply a login-window message
 - Sign into the Mac App Store.
   - A document will pop up via QuickLook guiding you through the steps
-- Run Homebrew installations
-
+- Installations via Homebrew
+  - CLI programs (“formulae”)
+  - GUI apps (“casks”) not from Mac App Store
+  - GUI apps from Mac App Store
 ### `make` vs. `just`
 
 ### Refresh local clone
