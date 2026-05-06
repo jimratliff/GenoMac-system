@@ -108,9 +108,59 @@ git clone --recurse-submodules https://github.com/jimratliff/GenoMac-system.git 
 ```
 **Note the trailing “.” at the end of the `git clone` command.**
 
-(The `--recurse-submodules` flag exists because this repo has a submodule ([GenoMac-shared](https://github.com/jimratliff/GenoMac-shared). The `--recurse-submodules` ensures that the submodule’s code is also cloned, not just a pointer to it.)
+(The `--recurse-submodules` flag exists because this repo has a submodule (viz., [GenoMac-shared](https://github.com/jimratliff/GenoMac-shared)). The `--recurse-submodules` ensures that the submodule’s code is also cloned, not just a pointer to it.)
+
+### Run the Hypervisor
+The Hypervisor is a scripting system that manages the system-scoped configuration of the Mac, both (a) for the initial bootstrap and (b) for periodic maintenance.[^Hypervisor_scripts]
+
+[^Hypervisor_scripts]: The entry point to the Hypervisor script is `GenoMac-system/scripts/hypervisor/hypervisor.sh`, which calls, for most of the detailed work, `GenoMac-system/scripts/hypervisor/subdermis.sh`
+
+The Hypervisor is run the first time by:
+```
+cd ~/.genomac-user
+make run-hypervisor
+```
+
+When Hypervisor is first launched during a session, it will check automatically for updates to this repo. If any are found, Hypervisor will refresh this repo and relaunch the Hypervisor.
+
+At certain points in the process, the Hypervisor will encourage/prompt the user to logout of the user account. When you log in after the logout, simply start the Hypervisor again (type the following into terminal: `make run-hypervisor`). The Hypervisor keeps track of its state, and it will restart where you last left off. Keep logging back in, after each logout, and running `make run-hypervisor` until you see “TTFN,” signaling completion of the fully Hypervisor cycle:
+```
+ _____  _____  _____  _   _  _
+|_   _||_   _||  ___|| \ | || |
+  | |    | |  | |_   |  \| || |
+  | |    | |  |  _|  | |\  ||_|
+  |_|    |_|  |_|    |_| \_|(_)
+
+
+ℹ️  You will be logged out semi-automatically to fully internalize all the work we’ve done.
+   Please log back in.
+   To restart, re-execute just run-hypervisor and we’ll pick up where we left off.
+
+✅ No GenoMac warnings or failures detected in this run.
+```
+
+### Run the Hypervisor
+
+## 38th Parallel
+
+### What steps the Hypervisor performs
+- Ensure that the currently running terminal emulator has Full Disk Access (FDA)
+  - If not, the Settings » Privacy & Security » Full Disk Access panel is opened (this terminal app
+    should already be pre-populated, but un-enabled, on the list of apps), so the user can simply
+    flip the switch for this app.
+  - NOTE: This is a potentially interactive step.
+- Adjusts PATH for Homebrew and to make `man` pages available to all users
+- Gets the ComputerName and LocalHostName for this Mac, and optionally interactively supply a login-window message
+- Sign into the Mac App Store.
+  - A document will pop up via QuickLook guiding you through the steps
+- Run Homebrew installations
+
+### `make` vs. `just`
 
 ### Refresh local clone
+
+**TODO: (a) move this to "quick-reference sheet for occasional maintenance" and (b) explain that this can be done with make and just refresh-repo**
+
 After initial cloning, to pull down subsequent changes to this repository
 ```bash
 cd ~/.genomac-system
