@@ -69,8 +69,9 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
 [^my_google_doc]: Of course, this document is specific to, and accessible by, only me. Make your own!
 
 ### Launch Terminal and grant it full-disk access
-Perhaps obviously, when beginning this GenoMac-system bootstrapping process the first time, the Mac is pristine. Thus, the macOS-supplied Terminal is the only terminal-emulator application available. We’ll use it at least until the Hypervisor has installed third-party apps.
+Because the Mac is pristine when beginning this GenoMac-system bootstrapping process the first time, the macOS-supplied Terminal is the only terminal-emulator application available. We’ll use it until the Hypervisor has installed third-party apps, at which point I switch iTerm.
 
+Terminal will need full-disk access:
 - Launch Terminal
 - System Settings
   - Privacy & Security
@@ -78,7 +79,7 @@ Perhaps obviously, when beginning this GenoMac-system bootstrapping process the 
       - Enable for Terminal
 
 ### Manually install Homebrew
-Installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
+We can’t even clone this repository at this point, because Git doesn’t come out-of-the-box on macOS. We’ll need Homebrew eventually to perform app installations. We install Homebrew now, because doing so has the side benefit that installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
 installation of which will install, among other things, a version of Git, which will permit cloning this repo.
 
 To install Homebrew, launch Terminal:
