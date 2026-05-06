@@ -82,7 +82,7 @@ Terminal will need full-disk access:
 We can’t even clone this repository at this point, because Git doesn’t come out-of-the-box on macOS. We’ll need Homebrew eventually to perform app installations. We install Homebrew now, because doing so has the side benefit that installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
 installation of which will install, among other things, a version of Git, which will permit cloning this repo.
 
-To install Homebrew, launch Terminal:
+To install Homebrew, launch Terminal and paste in the following code snippet:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
@@ -96,7 +96,7 @@ More specifically, the local directory to which this repo is to be cloned is the
 
 [^https]: After having cloned the repository via https, GitHub will not let you edit the repo from the CLI (but will from the browser). In order to edit
 the repo from the CLI, you would need to change the repo from https to SSH, which can be done via 
-`make dev-configure-remote-for-https-fetch-and-ssh-push` or, once `just` has been installed, by `just dev-configure-remote-for-https-fetch-and-ssh-push`.
+`make dev-configure-remote-for-https-fetch-and-ssh-push` or, once `just` has been installed, by `just dev-configure-remote-for-https-fetch-and-ssh-push`. Typically, we defer this step—that configures the local clone for editing—until after both (a) the initial system configuration has been performed and (b) USER_CONFIGURERR has configured its own user-scoped setting using GenoMac-user. At that point, 1Password has been configured to authenticate GitHub using SSH. A consequence of this delay is that, should a problem arise that requires a change in GenoMac-system’s code, the change should be made on another computer and pushed to GitHub. At that point, USER_CONFIGURER here can refresh the local clone with `make refresh-repo`, which is shorthand for `git pull --recurse-submodules origin main`.
 
 Copy the following code block and paste into Terminal:
 ```shell
