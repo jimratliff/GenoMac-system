@@ -17,7 +17,6 @@ Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provi
 - [Appendix](#appendix)
 - 38th Parallel
 - [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
-- [Quick-reference cheat sheet for occasional maintenance](#quick-reference-cheat-sheet-for-occasional-maintenance)
 - [Known issues](#known-issues)
 - [Dev issues](#appendix-dev-issues)
 
