@@ -174,6 +174,7 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
   - System-update behavior: Don’t automatically update macOS, but *do* update MAS apps and do download macOS updates when available
   - Display additional info (IP address, hostname, OS version) when clicking on the clock digits of the login window
   - Enable Touch ID authentication for sudo
+- Clone GenoMac-user to USER_CONFIGURER’s home directory (if it has not already been so cloned)
  
 [^Specifying_Homebrew_installs]: The specification of exactly what CLI and GUI apps to install from Homebrew is made in three sub-Brewfile files, all located in `GenoMac-system/homebrew`: (a) `Brewfile.formulae` for CLI programs, (b) `Brewfile.casks` for GUI apps from Homebrew, and (c) `Brewfile.mas` for GUI apps from the Mac App Store.
 
