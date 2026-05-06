@@ -157,7 +157,7 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
   - A document will pop up via QuickLook guiding you through the steps
 - Installations via Homebrew[^Specifying_Homebrew_installs]<sup>,</sup>[^Homebrew_not_good_for_fonts]
   - CLI programs (“formulae”)
-  - GUI apps (“casks”) not from Mac App Store. (You may be asked, *repeatedly* for your password.[^Casks_ask_for_password]
+  - GUI apps (“casks”) not from Mac App Store. (You may be asked, *repeatedly* for your password.[^Casks_ask_for_password])
   - GUI apps from Mac App Store[^mac_is_homebrew]
 - Installations not using Homebrew
   - Apps installed from sources other than Homebrew[^non_homebrew_apps]
@@ -171,7 +171,7 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 - Implement system-wide settings[^script_systemwide_settings]
   - Disable auto-boot when opening the lid or connecting to power on Apple Silicon laptop
   - Firewall settings: Enable application firewall and enable stealth mode
-  - System-update behavior (Don’t automatically update macOS, but *do* update MAS apps and do download macOS updates when available)
+  - System-update behavior: Don’t automatically update macOS, but *do* update MAS apps and do download macOS updates when available
   - Display additional info (IP address, hostname, OS version) when clicking on the clock digits of the login window
   - Enable Touch ID authentication for sudo
  
