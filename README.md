@@ -11,14 +11,10 @@ Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provi
 ## Table of contents
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
 - [The initial bootstrapping GenoMac-system process](#the-initial-bootstrapping-genomac-system-process)
+- [Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#configure-user_configurers-user-scoped-settings-using-genomac-user)
 - [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
 - 38th Parallel
 - [Quick-reference cheat sheet for occasional maintenance](#quick-reference-cheat-sheet-for-occasional-maintenance)
-
-
-
-- [Remaining configuration steps that have not been (cannot be) automated](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#remaining-configuration-steps-that-have-not-been-cannot-be-automated)
-- [Apps to install manually](#apps-to-install-manually)
 - [Known issues](#known-issues)
 - [Dev issues](#appendix-dev-issues)
 
@@ -148,14 +144,16 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 ✅ No GenoMac warnings or failures detected in this run.
 ```
 
-## Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user
-At this point, the Mac is setup at a system-scoped level, but USER_CONFIGURER is still very primitive as a *user*. We fix that by using GenoMac-user to configure USER_CONFIGURER’s user-scoped settings.
+### Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user
+At this point, the Mac is largely setup at a system-scoped level, but USER_CONFIGURER is still very primitive as a *user*: all user-interface settings are at their out-of-the-box defaults. We fix that by using GenoMac-user to configure USER_CONFIGURER’s user-scoped settings.
 
 The Hypervisor (the one belonging to GenoMac-system) you’ve already run should have, as its final step, clone the GenoMac-user repository to the `~/.genomac-user` directory in USER_CONFIGURER’s home directory.
 
 Now visit [the README from GenoMac-user](https://github.com/jimratliff/GenoMac-user/blob/main/README.md) and follow its instructions to set up USER_CONFIGURER’s user-scoped settings. 
 
 When finished with that process, return here to finish the remainder of the system-scoped setup: Creating new users.
+
+### Create the new users that will reside on this Mac
 
 ## 38th Parallel
 
@@ -244,13 +242,7 @@ The `Makefile` provides the interface for the user to effect the functionalities
 
 
 
-## Use GenoMac-user to implement user-scoped settings for USER_CONFIGURER
-Go to [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) and follow the instructions. 
 
-After you have finished implementing user-scoped settings for USER_CONFIGURER, return here and pick up the following next step…
-
-## Create new users
-[TO BE WRITTEN!]
 
 ### Conclusion
 At this point, all apps have been installed and all systemwide settings have been configured. There is no need to use this repo again until any of the following occurs:
