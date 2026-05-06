@@ -96,7 +96,7 @@ More specifically, the local directory to which this repo is to be cloned is the
 
 [^https]: After having cloned the repository via https, GitHub will not let you edit the repo from the CLI (but will from the browser). In order to edit
 the repo from the CLI, you would need to change the repo from https to SSH, which can be done via 
-`make dev-configure-remote-for-https-fetch-and-ssh-push` or, once `just` has been installed, by `just dev-configure-remote-for-https-fetch-and-ssh-push`. Typically, we defer this step—that configures the local clone for editing—until after both (a) the initial system configuration has been performed and (b) USER_CONFIGURERR has configured its own user-scoped setting using GenoMac-user. At that point, 1Password has been configured to authenticate GitHub using SSH. A consequence of this delay is that, should a problem arise that requires a change in GenoMac-system’s code, the change should be made on another computer and pushed to GitHub. At that point, USER_CONFIGURER here can refresh the local clone with `make refresh-repo`, which is shorthand for `git pull --recurse-submodules origin main`.
+`make dev-configure-remote-for-https-fetch-and-ssh-push` or, once `just` has been installed, by `just dev-configure-remote-for-https-fetch-and-ssh-push`. Typically, we defer this step—that configures the local clone for editing—until after both (a) the initial system configuration has been performed and (b) USER_CONFIGURER has configured its own user-scoped setting using GenoMac-user. At that point, 1Password has been configured to authenticate GitHub using SSH. A consequence of this delay is that, should a problem arise that requires a change in GenoMac-system’s code, the change should be made on another computer and pushed to GitHub. At that point, USER_CONFIGURER here can refresh the local clone with `make refresh-repo`, which is shorthand for `git pull --recurse-submodules origin main`.
 
 Copy the following code block and paste into Terminal:
 ```shell
@@ -276,9 +276,7 @@ To install Homebrew, launch Terminal:
 This public GenoMac-user repo is meant to be cloned locally (using https) to USER_CONFIGURER’s home directory.[^https] 
 More specifically, the local directory to which this repo is to be cloned is the hidden directory `~/.genomac-system`, specified by the environment variable $GENOMAC_SYSTEM_LOCAL_DIRECTORY (which is exported by the script `assign_environment_variables.sh`).
 
-[^https]: After having cloned the repository via https, GitHub will not let you edit the repo from the CLI (but will from the browser). In order to edit
-the repo from the CLI, you would need to change the repo from https to SSH, which can be done via 
-`git remote set-url origin git@github.com:OWNER/REPOSITORY.git`. (Use `git remote -v` to clarify the syntax for your repo.)
+
 
 Copy the following code block and paste into Terminal:
 ```shell
