@@ -55,6 +55,7 @@ function sysadminctl_adduser() {
   #                                          Default: new user WILL be an admin.
 
   report_start_phase_standard
+  report_argument_vector "$@"
 
   local short_name=""
   local full_name=""
