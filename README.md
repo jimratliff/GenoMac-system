@@ -2,7 +2,7 @@ Project GenoMac automates setup and maintenance of multiple Macs, each with mult
 
 [^multiple_users]: The envisioned case is: there is a set of users and each Mac has all (or almost all) of those users. In other words, this is a scenario of a set of users residing on each of several Macs.
 
-Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provide access to the necessary scripts and other resources. (GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac. GenoMac-system is cloned separately by *each user*.)
+Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provide access to the necessary scripts and other resources. (GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac. GenoMac-user is cloned separately by *each user*.)
 
 # GenoMac-system
 - [Quick-reference cheat sheet for occasional maintenance](#quick-reference-cheat-sheet-for-occasional-maintenance)
