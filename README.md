@@ -44,11 +44,11 @@ At a high level, for a particular new Mac, the initial bootstrapping function of
     - implement configurations for native and third-party applications
     - configure 1Password for authentication with GitHub
     - establish syncing with Dropbox, as a source of shared configuration data and other resources, as well as general-purpose file syncing.
-- USER_CONFIGURER returns to the GenoMac-system repo to create each of the additional users (and the implied additional volumes).
-- The human configurer then loops over each USER_j of the newly created users. Each USER_j performs the following:
-  - USER_j logs into the USER_j account for the first time
-  - USER_j clones the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
-  - using the GenoMac-user repo, USER_j runs the Hypervisor to perform the same user-scoped configurations that USER_CONFIGURER performed
+- USER_CONFIGURER returns to the GenoMac-system repo to use a script to create each of the additional users (and the implied additional volumes).
+- The human configurer then loops over each USER_j of the newly created users, performing the following:
+  - Log into the USER_j account for the first time
+  - Clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
+  - Runs the GenoMac-user Hypervisor to perform the same user-scoped configurations that USER_CONFIGURER performed, described above.
  
 After the above initial bootstrapping, each of GenoMac-system and GenoMac-user uses its respective Hypervisor to maintain the system and users, respectively:
 - USER_CONFIGURER periodically runs the GenoMac-system Hypervisor to (a) use Homebrew to update apps and install/remove any apps that have been added/removed from the specified lists of desired Homebrew apps and (b) to re-implement and/or implement any desired changes in system-scoped preferences.
