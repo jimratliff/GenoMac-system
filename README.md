@@ -66,7 +66,7 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 - [Launch Terminal and grant it full-disk access](#launch-terminal-and-grant-it-full-disk-access)
 - [Manually install Homebrew](#manually-install-homebrew)
 - [Clone this repo to `~/.genomac-system`](#clone-this-repo-to-genomac-system)
-- [Iteratively run the Hypervisor until completion](#run-the-hypervisor)
+- [Iteratively run the Hypervisor until completion](#iteratively-run-the-hypervisor-until-completion)
 ### Make sure you’re logged into the USER_CONFIGURER account
 Make sure you’re logged into the USER_CONFIGURER account, *not* into the USER_VANILLA account.
 ### Establish real-time connection to communicate text back and forth with other devices
