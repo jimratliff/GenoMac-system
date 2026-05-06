@@ -61,7 +61,7 @@ Make sure you’re logged into the USER_CONFIGURER account, *not* into the USER_
 Open a Google Docs document to be used as/if needed for real-time exchange of text, error messages, etc., between the target Mac and other devices.
 - In Safari
   - sign into my standard Google account:
-    - Go to google.com and click “Log in”
+    - Visit google.com and click “Log in”
     - Enter the username of my Google account
     - A QR code will appear. Scan it with my iPhone and complete the authentication.
   - Open the Google Doc document “[Project GenoMac: Text-exchange Document](https://docs.google.com/document/d/1RCbwjLHPidxRJJcvzILKGwtSkKpDrm8dT1fgJxlUdZ4/edit?usp=sharing)]” (Of course, this document is specific to, and accessible by, only me. Make your own!)
