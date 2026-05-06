@@ -164,6 +164,8 @@ When finished with that process, return here to finish the remainder of the syst
 
 ## Create the new users that will reside on this Mac
 
+**WORK IN PROGRESS**
+
 ## Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor
 At this point, all apps have been installed and all systemwide settings have been configured. There is no need to use this repo again on this Mac until any of the following occurs:
 - the passage of time indicates that apps should be upgraded
