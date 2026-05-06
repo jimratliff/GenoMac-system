@@ -148,7 +148,16 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 ✅ No GenoMac warnings or failures detected in this run.
 ```
 
+## Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user
+At this point, the Mac is setup at a system-scoped level, but USER_CONFIGURER is still very primitive as a *user*. We fix that by using GenoMac-user to configure USER_CONFIGURER’s user-scoped settings.
 
+The Hypervisor (the one belonging to GenoMac-system) you’ve already run should have, as its final step, clone the GenoMac-user repository to the `~/.genomac-user` directory in USER_CONFIGURER’s home directory.
+
+Now visit [the README from GenoMac-user](https://github.com/jimratliff/GenoMac-user/blob/main/README.md) and follow its instructions to set up USER_CONFIGURER’s user-scoped settings. 
+
+When finished with that process, return here to finish the remainder of the system-scoped setup: Creating new users.
+
+## 38th Parallel
 
 ## What steps the Hypervisor performs
 - Ensure that the currently running terminal emulator has Full Disk Access (FDA)
@@ -198,7 +207,7 @@ Unlike Homebrew installations, upgrading to new versions is not automatic. Inste
 
 If existing resources are marked for deletion, this would require an appropriate `sudo rm -rf path/to/some_resource` to be deployed and executed on each Mac.
 
-## 38th Parallel
+
 
 ### `make` vs. `just`
 
