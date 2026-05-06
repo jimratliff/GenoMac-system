@@ -64,7 +64,9 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
     - Visit google.com and click “Log in”
     - Enter the username of my Google account
     - A QR code will appear. Scan it with my iPhone and complete the authentication.
-  - Open the Google Doc document “[Project GenoMac: Text-exchange Document](https://docs.google.com/document/d/1RCbwjLHPidxRJJcvzILKGwtSkKpDrm8dT1fgJxlUdZ4/edit?usp=sharing)]” (Of course, this document is specific to, and accessible by, only me. Make your own!)
+  - Open the Google Doc document “[Project GenoMac: Text-exchange Document](https://docs.google.com/document/d/1RCbwjLHPidxRJJcvzILKGwtSkKpDrm8dT1fgJxlUdZ4/edit?usp=sharing)]”[^my_google_doc]
+ 
+[^my_google_doc]: Of course, this document is specific to, and accessible by, only me. Make your own!
 
 ### Launch Terminal and grant it full-disk access
 Perhaps obviously, when beginning this GenoMac-system bootstrapping process the first time, the Mac is pristine. Thus, the macOS-supplied Terminal is the only terminal-emulator application available. We’ll use it at least until the Hypervisor has installed third-party apps.
