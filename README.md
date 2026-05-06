@@ -66,7 +66,7 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 - [Launch Terminal and grant it full-disk access](#launch-terminal-and-grant-it-full-disk-access)
 - [Manually install Homebrew](#manually-install-homebrew)
 - [Clone this repo to `~/.genomac-system`](#clone-this-repo-to-genomac-system)
-- [Run the Hypervisor](#run-the-hypervisor)
+- [Iteratively run the Hypervisor until completion](#run-the-hypervisor)
 ### Make sure you’re logged into the USER_CONFIGURER account
 Make sure you’re logged into the USER_CONFIGURER account, *not* into the USER_VANILLA account.
 ### Establish real-time connection to communicate text back and forth with other devices
@@ -122,7 +122,7 @@ git clone --recurse-submodules https://github.com/jimratliff/GenoMac-system.git 
 
 (The `--recurse-submodules` flag exists because this repo has a submodule (viz., [GenoMac-shared](https://github.com/jimratliff/GenoMac-shared)). The `--recurse-submodules` ensures that the submodule’s code is also cloned, not just a pointer to it.)
 
-### Run the Hypervisor
+### Iteratively run the Hypervisor until completion
 The Hypervisor is a scripting system that manages the system-scoped configuration of the Mac, both (a) for the initial bootstrap and (b) for periodic maintenance.[^Hypervisor_scripts]
 
 [^Hypervisor_scripts]: The entry point to the Hypervisor script is `GenoMac-system/scripts/hypervisor/hypervisor.sh`, which calls, for most of the detailed work, `GenoMac-system/scripts/hypervisor/subdermis.sh`
