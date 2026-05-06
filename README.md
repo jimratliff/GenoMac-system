@@ -157,7 +157,7 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
   - A document will pop up via QuickLook guiding you through the steps
 - Installations via Homebrew[^Specifying_Homebrew_installs]<sup>,</sup>[^Homebrew_not_good_for_fonts]
   - CLI programs (“formulae”)
-  - GUI apps (“casks”) not from Mac App Store
+  - GUI apps (“casks”) not from Mac App Store. (You may be asked, *repeatedly* for your password.[^Casks_ask_for_password]
   - GUI apps from Mac App Store[^mac_is_homebrew]
 - Installations not using Homebrew
   - Apps installed from sources other than Homebrew[^non_homebrew_apps]
@@ -175,10 +175,11 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
   - Display additional info (IP address, hostname, OS version) when clicking on the clock digits of the login window
   - Enable Touch ID authentication for sudo
  
-
 [^Specifying_Homebrew_installs]: The specification of exactly what CLI and GUI apps to install from Homebrew is made in three sub-Brewfile files, all located in `GenoMac-system/homebrew`: (a) `Brewfile.formulae` for CLI programs, (b) `Brewfile.casks` for GUI apps from Homebrew, and (c) `Brewfile.mas` for GUI apps from the Mac App Store.
 
 [^Homebrew_not_good_for_fonts]: At least by default, Homebrew installs fonts *only* for the Homebrew user, not for other users. Thus, for Project GenoMac, I have concluded that Homebrew is not an appropriate method to install fonts. There may be workarounds, see e.g., “[Installed font does not show up in Font Book](https://apple.stackexchange.com/questions/478047/installed-font-does-not-show-up-in-font-book),” Ask Different, January 16, 2025; and “[homebrew-cask-fonts for ‘All Users’](https://github.com/orgs/Homebrew/discussions/4138),” Homebrew/discussions, #4138.
+
+[^Casks_ask_for_password]: There are some items whose installation will ask for your sudo password. This occurs for, and only for, some of the casks (but not the formulae nor the Mac App Store apps), in particular: docker-desktop, google-drive, insta360-link-controller, microsoft-teams, and zoom. This password-querying behavior is usually, if not always, associated with casks that are accompanied by some kind of background process, such as an auto-updater.
 
 [^mac_is_homebrew]: It may seem a terminological error to include “GUI apps from Mac App Store” under “Installations via Homebrew.” However, GUI apps from Mac App Store *are* installed by Homebrew, which uses the [mas](https://github.com/mas-cli/mas) CLI tool.
 
@@ -215,116 +216,14 @@ git pull --recurse-submodules origin main
 
 The `Makefile` provides the interface for the user to effect the functionalities of this repo, such as commanding the execution of (a) installing apps via Homebrew and (b) changing certain systemwide macOS settings using `defaults write` commands.
 
-## Step-by-step implementation
-### Make sure you’re logged into the USER_CONFIGURER account
-Make sure you’re logged into the USER_CONFIGURER account, *not* into the USER_VANILLA account.
-### Establish real-time connection to communicate text back and forth
-Open a Google Docs document to be used as/if needed for real-time exchange of text, error messages, etc., between the target Mac and other devices.
-- In Safari
-  - sign into my standard Google account:
-    - Go to google.com and click “Log in”
-    - Enter the username of my Google account
-    - A QR code will appear. Scan it with my iPhone and complete the authentication.
-  - Open the Google Doc document “[Project GenoMac: Text-exchange Document](https://docs.google.com/document/d/1RCbwjLHPidxRJJcvzILKGwtSkKpDrm8dT1fgJxlUdZ4/edit?usp=sharing)]”
-
-### Grant Terminal full-disk access
-- System Settings
-  - Privacy & Security
-    - Scroll down and click Full Disk Access
-      - Enable for Terminal
-
-### Manually install Homebrew
-Installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
-installation of which will install, among other things, a version of Git, which will permit cloning this repo.
-
-To install Homebrew, launch Terminal:
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-(This is the same command as you would get by going to [brew.sh](https://brew.sh/) and copying the command from near the top of the page under “Install Homebrew.”)
-
-**Do *not* follow Homebrew’s instructions to modify the PATH. This will be dealt with systemwide later.**
-
-### Clone this repo to `~/.genomac-system`
-This public GenoMac-user repo is meant to be cloned locally (using https) to USER_CONFIGURER’s home directory.[^https] 
-More specifically, the local directory to which this repo is to be cloned is the hidden directory `~/.genomac-system`, specified by the environment variable $GENOMAC_SYSTEM_LOCAL_DIRECTORY (which is exported by the script `assign_environment_variables.sh`).
 
 
 
-Copy the following code block and paste into Terminal:
-```shell
-mkdir -p ~/.genomac-system
-cd ~/.genomac-system
-git clone --recurse-submodules https://github.com/jimratliff/GenoMac-system.git .
-```
-**Note the trailing “.” at the end of the `git clone` command.**
 
-(The `--recurse-submodules` flag exists because this repo has a submodule ([GenoMac-shared](https://github.com/jimratliff/GenoMac-shared). The `--recurse-submodules` ensures that the submodule’s code is also cloned, not just a pointer to it.)
 
-### Modify PATH
-Modify systemwide PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications.
-        
-Copy the following code block and paste into Terminal:
-```shell
-cd ~/.genomac-system
-make adjust-path
-```
 
-**You will be automatically logged out, in order that the new PATH be available for what follows.**
 
-### Log into the Mac App Store
-(Note: Needs checking, but presumably the following steps are required only if you’ll be *installing* (rather than merely updating) new apps from the Mac App Store.)
 
-- Launch the Mac App Store
-- Log in, using the Apple Account that purchased the MAS apps to be installed by Homebrew
-
-### Use Homebrew to install applications
-Copy the following code block and paste into Terminal:
-```shell
-cd ~/.genomac-system
-make app-install-via-homebrew
-```
-
-Note: There are some items whose installation will ask for your sudo password. This occurs for, and only for, some of the casks (but not the formulae nor the Mac App Store apps), in particular:
-- docker-desktop
-- google-drive
-- insta360-link-controller
-- microsoft-teams
-- zoom
-
-This password-querying behavior is usually, if not always, associated with casks that are accompanied by some kind of background process, such as an auto-updater.
-
-### Install app(s) not in Homebrew (e.g., from a GitHub repo)
-Copy the following code block and paste into Terminal:
-```shell
-cd ~/.genomac-system
-make app-install-other-than-homebrew
-```
-
-### Install resources (font(s), screensaver(s), and sound(s))
-Copy the following code block and paste into Terminal:
-```shell
-cd ~/.genomac-system
-make resources-install
-```
-This Makefile item combines `make font-install`, `make screensaver-install`, and `sound-install`, which can alternatively be run selectively and separately.
-
-### Implement systemwide settings
-Copy the following code block and paste into Terminal:
-```bash
-cd ~/.genomac-system
-make prefs-systemwide
-```
-
-### Grant iTerm (a) full-disk access and (c) ability to control computer
-- System Settings
-  - Privacy & Security
-    - Accessibility
-      - Add for iTerm
-    - Full Disk Access
-      - Enable for iTerm
-
-Note: The Accessibility setting is meant to address the dialog box that can pop up: “‘iTerm.app’ wants access to control ‘System Events.app’,’ which arises because the scripts I run want to use AppleScript.
 
 ## Clone the GenoMac-user repo for the next step in Project GenoMac
 Copy the following command and paste into Terminal:
