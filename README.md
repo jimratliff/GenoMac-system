@@ -15,7 +15,6 @@ Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provi
 - [Create the new users that will reside on this Mac](#create-the-new-users-that-will-reside-on-this-mac)
 - [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
 - [Appendix](#appendix)
-- 38th Parallel
 - [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
 - [Known issues](#known-issues)
 - [Dev issues](#appendix-dev-issues)
