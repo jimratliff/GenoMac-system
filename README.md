@@ -31,7 +31,7 @@ At a high level, for a particular new Mac, the initial bootstrapping function of
   - using the GenoMac-system repo, run a script, referred to as the Hypervisor, which performs the following, largely autonomously but requiring some interaction at various steps:
     - makes system-level changes to PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications
     - installations
-      - apps and fonts using Homebrew
+      - apps (CLI and GUI) using Homebrew
       - apps from the Mac App Store
       - third-party apps not available via Homebrew (e.g., that can be downloaded from a GitHub repository)
       - other resources: a screensaver and an alert sound
@@ -155,10 +155,16 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 - Gets the ComputerName and LocalHostName for this Mac, and optionally interactively supply a login-window message
 - Sign into the Mac App Store.
   - A document will pop up via QuickLook guiding you through the steps
-- Installations via Homebrew
+- Installations via Homebrew[^Specifying_Homebrew_installs]<sup>,</sup>[^Homebrew_not_good_for_fonts]
   - CLI programs (“formulae”)
   - GUI apps (“casks”) not from Mac App Store
   - GUI apps from Mac App Store
+ 
+
+[^Specifying_Homebrew_installs]: The specification of exactly what CLI and GUI apps to install from Homebrew is made in three sub-Brewfile files, all located in `GenoMac-system/homebrew`: (a) `Brewfile.formulae` for CLI programs, (b) `Brewfile.casks` for GUI apps from Homebrew, and (c) `Brewfile.mas` for GUI apps from the Mac App Store.
+
+[^Homebrew_not_good_for_fonts]: Homebrew installs fonts *only* for the Homebrew user, not for other users, and the old workaround no longer works. Thus, Homebrew is not a good method to install fonts that should be available to all users.
+
 ### `make` vs. `just`
 
 ### Refresh local clone
