@@ -6,7 +6,7 @@ Project GenoMac automates setup and maintenance of multiple Macs, each with mult
 
 [^genomac_shared_purpose]: GenoMac-shared is an externally defined set of common code that specifies some environment variables and defines some helper functions. This common code is incorporated into each of GenoMac-system and GenoMac-user as a submodule located at `external/genomac-shared` of each of the two container repositories. See GenoMac-shared’s [README](https://github.com/jimratliff/GenoMac-shared/blob/main/README.md) for information on how that affects/complicates work flows, particularly when there is a change to GenoMac-shared’s code.
 
-Both GenoMac-system and GenoMac-user are intended to be cloned locally, to provide access to the necessary scripts and other resources. (GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac. GenoMac-user is cloned separately by *each user*.)
+Both GenoMac-system and GenoMac-user are intended to be cloned locally, in order to provide access to the necessary scripts and other resources. (GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac. GenoMac-user is cloned separately by *each user*.)
 
 ## Table of contents
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
