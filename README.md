@@ -141,8 +141,6 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 ✅ No GenoMac warnings or failures detected in this run.
 ```
 
-### Run the Hypervisor
-
 ## 38th Parallel
 
 ### What steps the Hypervisor performs
@@ -158,12 +156,33 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 - Installations via Homebrew[^Specifying_Homebrew_installs]<sup>,</sup>[^Homebrew_not_good_for_fonts]
   - CLI programs (“formulae”)
   - GUI apps (“casks”) not from Mac App Store
-  - GUI apps from Mac App Store
+  - GUI apps from Mac App Store[^mac_is_homebrew]
+- Installations not using Homebrew
+  - Apps installed from sources other than Homebrew[^non_homebrew_apps]
+    - [Alan.app](https://github.com/tylerhall/Alan), crudely highlights the boundary of the current window
+    - [utiluti](https://github.com/scriptingosx/utiluti), used by GenoMac-user to specify what app by default should open a double-clicked file of a given type
+    - [default_browser_cli](https://github.com/macadmins/default-browser), used by GenoMac-user to set the default browser
+  - Resources
+    - [Fira Code Nerd Font](https://github.com/ryanoasis/nerd-fonts)
+    - Monroe Williams’ [Matrix Screensaver](https://github.com/monroewilliams/MatrixDownload)
+    - “Uh oh!” alert sound, provided in this repo at GenoMac-system/resources/sounds/alerts/Uh_oh.aiff
+- Implement system-wide settings[^script_systemwide_settings]
+  - Disable auto-boot when opening the lid or connecting to power on Apple Silicon laptop
+  - Firewall settings: Enable application firewall and enable stealth mode
+  - System-update behavior (Don’t automatically update macOS, but *do* update MAS apps and do download macOS updates when available)
+  - Display additional info (IP address, hostname, OS version) when clicking on the clock digits of the login window
+  - Enable Touch ID authentication for sudo
  
 
 [^Specifying_Homebrew_installs]: The specification of exactly what CLI and GUI apps to install from Homebrew is made in three sub-Brewfile files, all located in `GenoMac-system/homebrew`: (a) `Brewfile.formulae` for CLI programs, (b) `Brewfile.casks` for GUI apps from Homebrew, and (c) `Brewfile.mas` for GUI apps from the Mac App Store.
 
 [^Homebrew_not_good_for_fonts]: At least by default, Homebrew installs fonts *only* for the Homebrew user, not for other users. Thus, for Project GenoMac, I have concluded that Homebrew is not an appropriate method to install fonts. There may be workarounds, see e.g., “[Installed font does not show up in Font Book](https://apple.stackexchange.com/questions/478047/installed-font-does-not-show-up-in-font-book),” Ask Different, January 16, 2025; and “[homebrew-cask-fonts for ‘All Users’](https://github.com/orgs/Homebrew/discussions/4138),” Homebrew/discussions, #4138.
+
+[^mac_is_homebrew]: It may seem a terminological error to include “GUI apps from Mac App Store” under “Installations via Homebrew.” However, GUI apps from Mac App Store *are* installed by Homebrew, which uses the [mas](https://github.com/mas-cli/mas) CLI tool.
+
+[^non_homebrew_apps]: See the script `GenoMac-system/scripts/installations/non_homebrew/install_non_homebrew_apps.sh`.
+
+[^script_systemwide_settings]: See the script `GenoMac-system/scripts/settings/implement_systemwide_settings.sh`.
 
 ### `make` vs. `just`
 
