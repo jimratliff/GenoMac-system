@@ -182,6 +182,8 @@ just run-hypervisor
 ## Appendix
 
 ### What steps the Hypervisor performs
+- Updates the local clone of this repo if the local clone is behind the remote
+- Configures “split remote” for repo: Fetch without authentication using HTTPS but push requires SSH
 - Ensure that the currently running terminal emulator has Full Disk Access (FDA)
   - If not, the Settings » Privacy & Security » Full Disk Access panel is opened (this terminal app
     should already be pre-populated, but un-enabled, on the list of apps), so the user can simply
