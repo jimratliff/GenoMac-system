@@ -10,7 +10,7 @@ function install_tool_via_package_from_github() {
   #
   # Options:
   #   -f  Force update: reinstall even if version/presence checks would skip or no package 
-  #				is specified from which the version of the currently installed tool can be determined.
+  #       is specified from which the version of the currently installed tool can be determined.
   #
   # Arguments:
   #   1: tool_name       – human-readable name, e.g. "default-browser"
