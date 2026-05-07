@@ -48,6 +48,15 @@ function install_app_from_github_zip() {
   # Derive the app's expected version from the tag (strip leading 'v' if present)
   local pinned_app_version="${pinned_tag#v}"
 
+  # Check for newer GitHub release (best-effort)
+  report_action_taken "Checking for newer ${app_name} release on GitHub"
+  local latest_tag
+  latest_tag="$(gh release view --repo "$repo_slug" --json tagName -q .tagName 2>/dev/null || true)"
+
+  if [[ -n "$latest_tag" && "$latest_tag" != "$pinned_tag" ]]; then
+    report_warning "A newer version of ${app_name} is available: ${latest_tag}. You are pinned to ${pinned_tag}."
+  fi
+
   local installed_version=""
 
   if [[ -d "$destination_path" ]]; then
@@ -103,16 +112,6 @@ function install_app_from_github_zip() {
   report_action_taken "Setting permissions and ownership on ${destination_path}"
   sudo chown -R root:wheel "$destination_path" ; success_or_not
   sudo chmod -R go-w "$destination_path" ; success_or_not
-
-  # Check for newer GitHub release (best-effort)
-  report_action_taken "Checking for newer ${app_name} release on GitHub"
-  local latest_tag
-  latest_tag="$(gh release view --repo "$repo_slug" --json tagName -q .tagName 2>/dev/null || true)"
-  success_or_not
-
-  if [[ -n "$latest_tag" && "$latest_tag" != "$pinned_tag" ]]; then
-    report_warning "A newer version of ${app_name} is available: ${latest_tag}. You are pinned to ${pinned_tag}."
-  fi
 
   report_end_phase_standard
   return 0
