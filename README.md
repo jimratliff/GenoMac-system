@@ -78,15 +78,17 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
  
 [^my_google_doc]: Of course, this document is specific to, and accessible by, only me. Make your own!
 
-### Launch Terminal and grant it full-disk access
+### Grant Terminal full-disk access and then launch it
 Because the Mac is pristine when beginning this GenoMac-system bootstrapping process the first time, the macOS-supplied Terminal is the only terminal-emulator application available. We’ll use it until the Hypervisor has installed third-party apps, at which point I switch iTerm.
 
 Terminal will need full-disk access:
-- Launch Terminal
 - System Settings
   - Privacy & Security
     - Scroll down and click Full Disk Access
+      - Hit “+”
+      - In the Open dialog box, find Terminal (e.g., ⇧⌘U to reach /Applications/Utilities, then find Terminal)
       - Enable for Terminal
+- Launch Terminal
 
 ### Manually install Homebrew
 We can’t even clone this repository at this point, because Git doesn’t come out-of-the-box on macOS. We’ll need Homebrew eventually to perform app installations. We install Homebrew now, because doing so has the side benefit that installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
