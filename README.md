@@ -67,7 +67,7 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 - [Iteratively run the Hypervisor until completion](#iteratively-run-the-hypervisor-until-completion)
 ### Make sure you’re logged into the USER_CONFIGURER account
 Make sure you’re logged into the USER_CONFIGURER account, *not* into the USER_VANILLA account.
-### Establish real-time connection to communicate text back and forth with other devices
+### Establish shared textual connection to communicate text back and forth with other devices
 Open a Google Docs document to be used as/if needed for real-time exchange of text, error messages, etc., between the target Mac and other devices.
 - In Safari
   - sign into my standard Google account:
