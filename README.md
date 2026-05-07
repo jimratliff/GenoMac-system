@@ -227,7 +227,7 @@ just run-hypervisor
 
 [^non_homebrew_apps]: See the script `GenoMac-system/scripts/installations/non_homebrew/install_non_homebrew_apps.sh`.
 
-[^install_github_release]: The installation of each GitHub release specifies a deliberately chosend “pinned version.” This is the version installed or upgraded to. If the GitHub repo’s latest release shows a version different than the pinned version, a nonfatal warning is issued as a heads up that maybe you’ll want to update the specification of the pinned version and run Hypervisor again.
+[^install_github_release]: The installation of each GitHub release specifies a deliberately chosen “pinned version.” This is the version installed or upgraded to. If the GitHub repo’s latest release shows a version different than the pinned version, a nonfatal warning is issued as a heads up that maybe you’ll want to update the specification of the pinned version and run Hypervisor again.
 
 [^script_systemwide_settings]: See the script `GenoMac-system/scripts/settings/implement_systemwide_settings.sh`.
 
