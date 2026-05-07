@@ -182,23 +182,26 @@ just run-hypervisor
 ## Appendix
 
 ### What steps the Hypervisor performs
+(Of course, it’s possible that the below list of steps will become out of sync with the actual state of the Hypervisor’s code. So… trust, but verify!)
+
 - Updates the local clone of this repo if the local clone is behind the remote
-- Configures “split remote” for repo: Fetch without authentication using HTTPS but push requires SSH
+- Configures “split remote” for this repo: Fetch without authentication using HTTPS but push requires SSH
 - Ensure that the currently running terminal emulator has Full Disk Access (FDA)
   - If not, the Settings » Privacy & Security » Full Disk Access panel is opened (this terminal app
     should already be pre-populated, but un-enabled, on the list of apps), so the user can simply
     flip the switch for this app.
   - NOTE: This is a potentially interactive step.
-- Adjusts PATH for Homebrew and to make `man` pages available to all users
-- Gets the ComputerName and LocalHostName for this Mac, and optionally interactively supply a login-window message
-- Sign into the Mac App Store.
+- Adjusts PATH for Homebrew and to make `man` pages available to all users (if these steps have not been previously performed)
+- Gets the ComputerName and LocalHostName for this Mac, and optionally interactively supply a login-window message (if these steps have not been previously performed)
+- Sign into the Mac App Store (if this step has not been previously performed)
   - A document will pop up via QuickLook guiding you through the steps
+  - Hypervisor requires that this be done only once. It’s not totally clear to me how long a sign-in to the Mac App Store persists.
 - Installations via Homebrew[^Specifying_Homebrew_installs]<sup>,</sup>[^Homebrew_not_good_for_fonts]
   - CLI programs (“formulae”)
   - GUI apps (“casks”) not from Mac App Store. (You may be asked, *repeatedly* for your password.[^Casks_ask_for_password])
   - GUI apps from Mac App Store[^mac_is_homebrew]
 - Installations not using Homebrew
-  - Apps installed from sources other than Homebrew[^non_homebrew_apps]
+  - Apps installed from GitHub releases[^non_homebrew_apps]<sup>,</sup>[^install_github_release]
     - [Alan.app](https://github.com/tylerhall/Alan), crudely highlights the boundary of the current window
     - [utiluti](https://github.com/scriptingosx/utiluti), used by GenoMac-user to specify what app by default should open a double-clicked file of a given type
     - [default_browser_cli](https://github.com/macadmins/default-browser), used by GenoMac-user to set the default browser
@@ -223,6 +226,8 @@ just run-hypervisor
 [^mac_is_homebrew]: It may seem a terminological error to include “GUI apps from Mac App Store” under “Installations via Homebrew.” However, GUI apps from Mac App Store *are* installed by Homebrew, which uses the [mas](https://github.com/mas-cli/mas) CLI tool.
 
 [^non_homebrew_apps]: See the script `GenoMac-system/scripts/installations/non_homebrew/install_non_homebrew_apps.sh`.
+
+[^install_github_release]: The installation of each GitHub release specifies a deliberately chosend “pinned version.” This is the version installed or upgraded to. If the GitHub repo’s latest release shows a version different than the pinned version, a nonfatal warning is issued as a heads up that maybe you’ll want to update the specification of the pinned version and run Hypervisor again.
 
 [^script_systemwide_settings]: See the script `GenoMac-system/scripts/settings/implement_systemwide_settings.sh`.
 
