@@ -5,8 +5,8 @@ autoload -Uz is-at-least
 
 function version_ge() {
   # Returns 0 iff "$have" >= "$min" (semantic version comparison)
-  local min="$1"
-  local have="$2"
+  local have="$1"
+  local min="$2"
   is-at-least "$min" "$have"
 }
 
@@ -65,7 +65,7 @@ function install_app_from_github_zip() {
         return 0
       fi
 
-      if version_ge "$pinned_app_version" "$installed_version"; then
+      if version_ge "$installed_version" "$pinned_app_version"; then
         # installed_version < pinned_app_version → upgrade
         report_action_taken "Upgrading ${app_name} from ${installed_version} to ${pinned_app_version}"
         success_or_not
