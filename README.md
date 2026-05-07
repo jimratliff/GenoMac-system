@@ -60,7 +60,7 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 
 ## The initial bootstrapping GenoMac-system process
 - [Make sure you’re logged into the USER_CONFIGURER account](#make-sure-youre-logged-into-the-user_configurer-account)
-- [Establish real-time connection to communicate text back and forth with other devices](#establish-real-time-connection-to-communicate-text-back-and-forth-with-other-devices)
+- [Establish shared textual connection to communicate text back and forth with other devices](#establish-shared-textual-connection-to-communicate-text-back-and-forth-with-other-devices)
 - [Launch Terminal and grant it full-disk access](#launch-terminal-and-grant-it-full-disk-access)
 - [Manually install Homebrew](#manually-install-homebrew)
 - [Clone this repo to `~/.genomac-system`](#clone-this-repo-to-genomac-system)
