@@ -9,8 +9,8 @@ function install_tool_via_package_from_github() {
   #   install_tool_via_package_from_github [-f] tool_name repo_slug pinned_version pkg_filename [pkg_id] [binary_path]
   #
   # Options:
-  #   -f  Force update: reinstall even if version/presence checks would skip or no package 
-  #       is specified from which the version of the currently installed tool can be determined.
+  #   -f  Force update: reinstall from pinned package even if version/presence checks would skip.
+  #       This may downgrade if the installed versionis newer than the pinned version.
   #
   # Arguments:
   #   1: tool_name       – human-readable name, e.g. "default-browser"
@@ -135,16 +135,6 @@ function install_tool_via_package_from_github() {
       report_end_phase_standard
       return 1
     fi
-  fi
-
-  # Optional: check for newer GitHub release (best-effort)
-  report_action_taken "Checking for newer ${tool_name} release on GitHub"
-  local latest_tag
-  latest_tag="$(gh release view --repo "$repo_slug" --json tagName -q .tagName 2>/dev/null || true)"
-  success_or_not
-
-  if [[ -n "$latest_tag" && "$latest_tag" != "$pinned_tag" ]]; then
-    report_warning "GitHub reports a different latest release for ${tool_name}: ${latest_tag}. You are pinned to ${pinned_tag}."
   fi
 
   # Clean up temp dir
