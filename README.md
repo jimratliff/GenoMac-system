@@ -137,6 +137,8 @@ make run-hypervisor
 
 When Hypervisor is first launched during a session, it will check automatically for updates to this repo. If any are found, Hypervisor will refresh this repo and relaunch the Hypervisor.
 
+At some early point in the first run of Hypervisor (perhaps immediately after being asked to supply a Computer Name), a dialog box will pop up: “‘Terminal’ wants access to control ‘System Events’. Allowing control will provide access to documents and data in ‘SYstem Events’, and to perform actions within that app.” It will then offer buttons: “Don’t Allow” and “Allow”. Click “Allow”.
+
 At certain points in the process, the Hypervisor will encourage/prompt the user to logout of the user account. When you log in after the logout, simply start the Hypervisor again (type the following into terminal: `make run-hypervisor`). The Hypervisor keeps track of its state, and it will restart where you last left off. Keep logging back in, after each logout, and running `make run-hypervisor` until you see “TTFN,” signaling completion of the fully Hypervisor cycle:
 ```
  _____  _____  _____  _   _  _
