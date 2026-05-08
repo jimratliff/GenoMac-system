@@ -4,7 +4,7 @@
 autoload -Uz is-at-least
 
 function version_ge() {
-  # Returns 0 iff "$have" >= "$min" (semantic version comparison)
+  # Returns 0 iff "$1" >= "$2" using zsh's is-at-least.
   local have="$1"
   local min="$2"
   is-at-least "$min" "$have"
