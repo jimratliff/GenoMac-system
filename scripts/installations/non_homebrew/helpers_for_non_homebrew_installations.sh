@@ -1,15 +1,5 @@
 #!/bin/zsh
 
-# is-at-least is builtin to zsh but must be explicitly loaded before called.
-autoload -Uz is-at-least
-
-function version_ge() {
-  # Returns 0 iff "$1" >= "$2" using zsh's is-at-least.
-  local have="$1"
-  local min="$2"
-  is-at-least "$min" "$have"
-}
-
 function warn_if_github_latest_release_differs_from_pinned() {
   local display_name="$1"
   local repo_slug="$2"
