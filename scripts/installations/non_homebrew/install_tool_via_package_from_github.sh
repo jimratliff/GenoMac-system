@@ -54,6 +54,11 @@ function install_tool_via_package_from_github() {
   local pinned_tag="$pinned_version"
   local pinned_pkg_version="${pinned_version#v}"
 
+  warn_if_github_latest_release_differs_from_pinned \
+    "$tool_name" \
+    "$repo_slug" \
+    "$pinned_tag"
+
   local installed_version=""
 
   # Version-aware idempotence when pkg_id is known
