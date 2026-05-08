@@ -60,6 +60,7 @@
 # or GenoMac-user processes that instruct/direct the user to achieve the local cloning
 # of the repository.
 
+PERM_ALERT_SOUND_HAS_BEEN_INSTALLED="PERM_alert_sound_has_been_installed"
 PERM_GENOMAC_USER_HAS_BEEN_CLONED="PERM_genomac_user_has_been_cloned"
 PERM_HOMEBREW_HAS_INSTALLED_APPS_AT_LEAST_ONCE="PERM_homebrew_has_installed_apps_at_least_once"
 PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED="PERM_homebrew_path_has_been_adjusted"
@@ -78,6 +79,7 @@ SESH_SYSTEMWIDE_SETTINGS_HAVE_BEEN_IMPLEMENTED="SESH_systemwide_settings_have_be
 # Export environment variables to be available in all subsequent shells
 report_action_taken "Exporting environment variables corresponding to states."
 
+export_and_report PERM_ALERT_SOUND_HAS_BEEN_INSTALLED
 export_and_report PERM_GENOMAC_USER_HAS_BEEN_CLONED
 export_and_report PERM_HOMEBREW_HAS_INSTALLED_APPS_AT_LEAST_ONCE
 export_and_report PERM_HOMEBREW_PATH_HAS_BEEN_ADJUSTED
