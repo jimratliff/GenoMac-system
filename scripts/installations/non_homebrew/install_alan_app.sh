@@ -7,7 +7,7 @@ function install_alan_app() {
 
   local app_name="Alan.app"
   local repo_slug="tylerhall/Alan"
-  local pinned_version="v1.0"
+  local pinned_tag="v1.0"
   local zip_filename="Alan.zip"
   local applications_dir="/Applications"
   local bundle_id="BUNDLE_ID_ALAN_APP"     # studio.retina.Alan
@@ -21,7 +21,7 @@ function install_alan_app() {
   install_bundle_from_github_zip \
     "$app_name" \
     "$repo_slug" \
-    "$pinned_version" \
+    "$pinned_tag" \
     "$zip_filename" \
     "$applications_dir" \
     "$bundle_id"
