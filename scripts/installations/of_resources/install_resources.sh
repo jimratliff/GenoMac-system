@@ -28,7 +28,7 @@ function install_resources_systemwide() {
   install_matrix_screensaver_systemwide
 
   report_action_taken "Install ‘Uh oh!’ alert sound"
-  install_uh_oh_sound_systemwide
+  conditionally_install_uh_oh_sound_systemwide
 
   report_end_phase_standard
 }
