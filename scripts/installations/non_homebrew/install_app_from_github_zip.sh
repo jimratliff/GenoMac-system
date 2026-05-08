@@ -15,12 +15,13 @@ function install_app_from_github_zip() {
   #   6: bundle_id        – bundle identifier, e.g. "com.tylerhall.Alan"
   #
   # Behavior:
+  #   - Performs a best-effort GitHub release check
+  #   - If GitHub's latest release tag differs from pinned_tag, warns but does not auto-upgrade.
   #   - If the app is not installed → install pinned version
   #   - If installed, reads version from app's Info.plist
   #     - If installed < pinned  → upgrade to pinned version
   #     - If installed == pinned → skip
   #     - If installed > pinned  → warn and skip; do not downgrade
-  #   - After an install/upgrade, performs a best-effort GitHub release check.
   #   - If GitHub's latest release tag differs from pinned_tag, warns that a different release exists.
   #   - Does not auto-upgrade to GitHub's latest release; upgrading requires deliberately changing pinned_tag.
 
@@ -60,8 +61,8 @@ function install_app_from_github_zip() {
         return 0
       fi
 
-      if version_ge "$installed_version" "$pinned_app_version"; then
-        # installed_version < pinned_app_version → upgrade
+      if version_ge "$pinned_app_version" "$installed_version"; then
+        # pinned_app_version > installed_version → upgrade
         report_action_taken "Upgrading ${app_name} from ${installed_version} to ${pinned_app_version}"
         success_or_not
         # fall through to download + install
