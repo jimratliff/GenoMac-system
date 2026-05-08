@@ -1,5 +1,16 @@
 #!/bin/zsh
 
+function conditionally_install_uh_oh_sound_systemwide() {
+  report_start_phase_standard
+
+  run_if_system_has_not_done \
+    "$PERM_ALERT_SOUND_HAS_BEEN_INSTALLED" \
+    install_uh_oh_sound_systemwide \
+    "Skipping installation of Uh oh! alert sound, because it was installed in the past."
+  
+  report_end_phase_standard
+}
+
 function install_uh_oh_sound_systemwide() {
   # Installs the Uh_oh.aiff alert sound systemwide (all users)
   
