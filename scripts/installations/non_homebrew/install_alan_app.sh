@@ -18,7 +18,7 @@ function install_alan_app() {
     alan_was_running=true
   fi
 
-  install_app_from_github_zip \
+  install_bundle_from_github_zip \
     "$app_name" \
     "$repo_slug" \
     "$pinned_version" \
