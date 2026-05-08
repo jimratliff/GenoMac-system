@@ -29,4 +29,3 @@ function warn_if_github_latest_release_differs_from_pinned() {
     report_warning "Could not check GitHub latest release tag for ${display_name}; continuing with pinned ${pinned_tag}."
   fi
 }
-
