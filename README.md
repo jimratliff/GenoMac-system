@@ -207,7 +207,7 @@ just run-hypervisor
     - [default_browser_cli](https://github.com/macadmins/default-browser), used by GenoMac-user to set the default browser
   - Resources
     - [Fira Code Nerd Font](https://github.com/ryanoasis/nerd-fonts)[^install_Fira_Code_Nerd_Font]
-    - Monroe Williams’ [Matrix Screensaver](https://github.com/monroewilliams/MatrixDownload)
+    - Monroe Williams’ [Matrix Screensaver](https://github.com/monroewilliams/MatrixDownload)[^install_matrix]
     - “Uh oh!” alert sound, provided in this repo at GenoMac-system/resources/sounds/alerts/Uh_oh.aiff
 - Implement system-wide settings[^script_systemwide_settings]
   - Disable auto-boot when opening the lid or connecting to power on Apple Silicon laptop
@@ -230,6 +230,8 @@ just run-hypervisor
 [^install_github_release]: The installation of each GitHub release specifies a deliberately chosen “pinned version.” This is the version installed or upgraded to. If the GitHub repo’s latest release shows a version tag different than the pinned version tag, a nonfatal warning is issued as a heads up that maybe you’ll want to update the specification of the pinned version and run Hypervisor again.
 
 [^install_Fira_Code_Nerd_Font]: Although Fira Code Nerd Font is available on Homebrew, Homebrew doesn’t install fonts to be available by all users (i.e., other than the designated Homebrew user). Instead, the latest version of the font is downloaded by GitHub. If that latest version is different from the installed version, the latest version is copied over the installed version.
+
+[^install_matrix]: The Matrix screensaver is installed from GitHub. The installation specifies a deliberately chosen “pinned version.” This is the version installed or upgraded to. If the GitHub repo’s latest release shows a version tag different than the pinned version tag, a nonfatal warning is issued as a heads up that maybe you’ll want to update the specification of the pinned version and run Hypervisor again.
 
 [^script_systemwide_settings]: See the script `GenoMac-system/scripts/settings/implement_systemwide_settings.sh`.
 
