@@ -206,7 +206,7 @@ just run-hypervisor
     - [utiluti](https://github.com/scriptingosx/utiluti), used by GenoMac-user to specify what app by default should open a double-clicked file of a given type
     - [default_browser_cli](https://github.com/macadmins/default-browser), used by GenoMac-user to set the default browser
   - Resources
-    - [Fira Code Nerd Font](https://github.com/ryanoasis/nerd-fonts)
+    - [Fira Code Nerd Font](https://github.com/ryanoasis/nerd-fonts)[^install_Fira_Code_Nerd_Font]
     - Monroe Williams’ [Matrix Screensaver](https://github.com/monroewilliams/MatrixDownload)
     - “Uh oh!” alert sound, provided in this repo at GenoMac-system/resources/sounds/alerts/Uh_oh.aiff
 - Implement system-wide settings[^script_systemwide_settings]
@@ -227,7 +227,9 @@ just run-hypervisor
 
 [^non_homebrew_apps]: See the script `GenoMac-system/scripts/installations/non_homebrew/install_non_homebrew_apps.sh`.
 
-[^install_github_release]: The installation of each GitHub release specifies a deliberately chosen “pinned version.” This is the version installed or upgraded to. If the GitHub repo’s latest release shows a version different than the pinned version, a nonfatal warning is issued as a heads up that maybe you’ll want to update the specification of the pinned version and run Hypervisor again.
+[^install_github_release]: The installation of each GitHub release specifies a deliberately chosen “pinned version.” This is the version installed or upgraded to. If the GitHub repo’s latest release shows a version tag different than the pinned version tag, a nonfatal warning is issued as a heads up that maybe you’ll want to update the specification of the pinned version and run Hypervisor again.
+
+[^install_Fira_Code_Nerd_Font]: Although Fira Code Nerd Font is available on Homebrew, Homebrew doesn’t install fonts to be available by all users (i.e., other than the designated Homebrew user). Instead, the latest version of the font is downloaded by GitHub. If that latest version is different from the installed version, the latest version is copied over the installed version.
 
 [^script_systemwide_settings]: See the script `GenoMac-system/scripts/settings/implement_systemwide_settings.sh`.
 
