@@ -61,7 +61,7 @@ function install_app_from_github_zip() {
         return 0
       fi
 
-      if version_ge "$pinned_app_version" "$installed_version"; then
+      if is_semantic_version_arg1_at_least_arg2 "$pinned_app_version" "$installed_version"; then
         # pinned_app_version > installed_version → upgrade
         report_action_taken "Upgrading ${app_name} from ${installed_version} to ${pinned_app_version}"
         success_or_not
