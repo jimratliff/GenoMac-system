@@ -1,13 +1,14 @@
 #!/usr/bin/env zsh
 
 # Source the function file(s)
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/helpers_for_non_homebrew_installations.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_alan_app.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_app_from_github_zip.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_tool_via_package_from_github.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_default_browser_cli.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_utiluti.sh"
-source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_visualdiffer.sh"
-source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_witch_prefpane.sh"
+# source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_visualdiffer.sh"
+# source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_witch_prefpane.sh"
 
 function conditionally_install_non_homebrew_apps() {
   report_start_phase_standard
