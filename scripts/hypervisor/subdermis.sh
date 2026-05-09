@@ -35,7 +35,6 @@ function subdermis() {
   interactive_ensure_terminal_has_fda          # GenoMac-shared/scripts/helpers-misc.sh
   conditionally_adjust_path_for_homebrew       # scripts/installations/homebrew/adjust_path_for_homebrew.sh
   conditionally_interactive_get_Mac_names_and_login_window_message # scripts/settings/interactive_get_Mac_names_and_login_window_message.sh
-  force_user_logout                            # GenoMac-shared/scripts/helper-apps.sh
   conditionally_interactive_sign_into_MAS      # scripts/installations/homebrew/interactive_sign_into_MAS.sh
   conditionally_install_via_homebrew           # scripts/installations/homebrew/install_via_homebrew.sh
   conditionally_install_non_homebrew_apps      # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
