@@ -5,31 +5,27 @@
 mas "1Password for Safari",           id: 1569813296
 mas "Amadine: Vector Design and Art", id: 1339198386
 mas "Amazon Kindle",                  id: 302584613
-# mas "Antnotes",                       id: 808734429
 mas "Boxy SVG",                       id: 611658502
-# mas "Duplicate File Finder",          id: 512883891
 mas "Duplicate File Finder Remover",  id: 1032755628
 mas "EagleFiler",                     id: 414232012
 mas "EnvelopeCat",                    id: 506429610
 mas "Key Codes",                      id: 414568915
-mas "Keynote",                        id: 409183694
+mas "Keynote",                        id: 361285480
 mas "Elmedia:universal video player", id: 937759555
 mas "Microsoft Excel",                id: 462058435
 mas "Microsoft PowerPoint",           id: 462062816
 mas "Microsoft Word",                 id: 462054704
 mas "Name Mangler 3",                 id: 603637384
-mas "Numbers",                        id: 409203825
-mas "OmniOutliner 5",                 id: 1142578772
+mas "Numbers",                        id: 361304891
+mas "OmniOutliner 6",                 id: 6474965689
 mas "OmniGraffle 7",                  id: 1142578753
-mas "Pages",                          id: 409201541
-mas "Perplexity: Ask Anything",       id: 6714467650
+mas "Pages",                          id: 361309726
 mas "Pixelmator Pro",                 id: 1289583905
 mas "Plain Text Editor",              id: 1572202501
 mas "ReadKit - Reading Hub",          id: 1615798039
-mas "Screen Ruler - A Desktop Ruler", id: 1352308362
 mas "Simple Menu Bar Stopwatch",      id: 6477624717
 mas "Slack for Desktop",              id: 803453959
-mas "Smart Converter",                id: 447513724  # Failed to install via mas
+mas "Smart Converter",                id: 447513724
 mas "Soulver 3",                      id: 1508732804
 mas "The Unarchiver",                 id: 425424353
 # mas "WordService",                   id: 899972312
