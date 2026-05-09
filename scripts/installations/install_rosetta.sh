@@ -21,7 +21,7 @@ function install_rosetta_if_not_already_installed() {
 
   run_if_system_has_not_done \
     "$PERM_ROSETTA_HAS_BEEN_INSTALLED" \
-    install_rosetta
+    install_rosetta \
     "Skipping installing Rosetta 2 because it’s already been installed."
 
   report_end_phase_standard
