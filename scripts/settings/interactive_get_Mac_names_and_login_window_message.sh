@@ -18,6 +18,7 @@ function conditionally_interactive_get_Mac_names_and_login_window_message() {
 function interactive_get_Mac_names_and_login_window_message() {
   interactive_get_Mac_names
   interactive_get_loginwindow_message
+  force_user_logout
 }
 
 function interactive_get_Mac_names() {
