@@ -198,6 +198,7 @@ just run-hypervisor
 - Sign into the Mac App Store (if this step has not been previously performed)
   - A document will pop up via QuickLook guiding you through the steps
   - Hypervisor requires that this be done only once. It’s not totally clear to me how long a sign-in to the Mac App Store persists.
+- Install Rosetta 2, if desired[^rosetta_installation]
 - Installations via Homebrew[^Specifying_Homebrew_installs]<sup>,</sup>[^Homebrew_not_good_for_fonts]
   - CLI programs (“formulae”)
   - GUI apps (“casks”) not from Mac App Store. (You may be asked, *repeatedly* for your password.[^Casks_ask_for_password])
@@ -220,6 +221,8 @@ just run-hypervisor
 - Clone GenoMac-user to USER_CONFIGURER’s home directory (if it has not already been so cloned)
  
 [^Specifying_Homebrew_installs]: The specification of exactly what CLI and GUI apps to install from Homebrew is made in three sub-Brewfile files, all located in `GenoMac-system/homebrew`: (a) `Brewfile.formulae` for CLI programs, (b) `Brewfile.casks` for GUI apps from Homebrew, and (c) `Brewfile.mas` for GUI apps from the Mac App Store.
+
+[^rosetta_installation]: The current version of EagleFiler requires Rosetta 2, which is slated to sunset in macOS 28. EagleFiler is [anticipated to have a fully Apple Silicon–native version by then](https://forum.c-command.com/t/eaglefiler-future-plans-now-that-rosetta-will-be-phased-out-by-macos28/17491/5).
 
 [^Homebrew_not_good_for_fonts]: At least by default, Homebrew installs fonts *only* for the Homebrew user, not for other users. Thus, for Project GenoMac, I have concluded that Homebrew is not an appropriate method to install fonts. There may be workarounds, see e.g., “[Installed font does not show up in Font Book](https://apple.stackexchange.com/questions/478047/installed-font-does-not-show-up-in-font-book),” Ask Different, January 16, 2025; and “[homebrew-cask-fonts for ‘All Users’](https://github.com/orgs/Homebrew/discussions/4138),” Homebrew/discussions, #4138.
 
@@ -296,16 +299,17 @@ The `Makefile` provides the interface for the user to effect the functionalities
   - The previously known technique is given by Sodiq Olanrewaju, “[How to Change Your Mac’s Lock Screen Background Image](https://www.switchingtomac.com/how-to-change-your-macs-lock-screen-background-image/),” Switching2Mac.com, February 14, 2024.
   - Anticipating being able to implement this in macOS 26 Tahoe, I added to this repo: resources/images/lockedscreen.png
     - If and until this is resolved, this file is vestigial.
-  - Zsh and autocompletion issues
-    - At some early stage, I encountered problems getting zsh-autocomplete to work, so I removed it and use only zsh-autosuggestions.
-    - This may be related to:
-      - I don’t install zsh from Homebrew, using the macOS built-in zsh instead. Homebrew’s zsh appeared to cause trouble for users other than the user that installed Homebrew. (Homebrew doesn’t always adopt the perspective of a multi-user environment.)
-      - https://github.com/casey/just?tab=readme-ov-file#what-are-the-idiosyncrasies-of-make-that-just-avoids:~:text=them%2E-,macOS
-        - If you use Homebrew to install `just`, it will automatically install the most recent copy of the zsh completion script in the Homebrew zsh
-        directory, which the built-in version of zsh doesn't know about by default. It's best to use this copy of the script if possible, since it will
-        be updated whenever you update `just` via Homebrew. Also, many other Homebrew packages use the same location for completion scripts, and the built
-        in zsh doesn't know about those either. To take advantage of `just` completion in zsh in this scenario, you can set `fpath` to the Homebrew
-        location before calling `compinit`
+- Zsh and autocompletion issues
+  - At some early stage, I encountered problems getting zsh-autocomplete to work, so I removed it and use only zsh-autosuggestions.
+  - This may be related to:
+    - I don’t install zsh from Homebrew, using the macOS built-in zsh instead. Homebrew’s zsh appeared to cause trouble for users other than the user that installed Homebrew. (Homebrew doesn’t always adopt the perspective of a multi-user environment.)
+    - https://github.com/casey/just?tab=readme-ov-file#what-are-the-idiosyncrasies-of-make-that-just-avoids:~:text=them%2E-,macOS
+      - If you use Homebrew to install `just`, it will automatically install the most recent copy of the zsh completion script in the Homebrew zsh
+      directory, which the built-in version of zsh doesn't know about by default. It's best to use this copy of the script if possible, since it will
+      be updated whenever you update `just` via Homebrew. Also, many other Homebrew packages use the same location for completion scripts, and the built
+      in zsh doesn't know about those either. To take advantage of `just` completion in zsh in this scenario, you can set `fpath` to the Homebrew
+      location before calling `compinit`
+- EagleFiler currently requires Rosetta 2, although EagleFiler’s developer is working on an Apple Silicon–native version of EagleFiler anticipated to be ready for macOS 28, which is when Rosetta 2 sunsets. Hypervisor optionally installs Rosetta 2. This will either need to be removed for macOS 28, or the version of macOS will need to be checked, or, perhaps, the attempted installation would just fail silently.
    
 ## Appendix: Dev issues
 The preceding content of this README focuses on the “user” experience, i.e., the experience from USER_CONFIGURER’s experience, as a consumer of the repository in its contemperaneous state.
