@@ -68,6 +68,7 @@ function install_bundle_from_github_zip() {
         || defaults read "${destination_path}/Contents/Info" CFBundleVersion 2>/dev/null \
         || true
     )"
+    report "Installed version: $installed_version"
 
     if [[ -n "$installed_version" ]]; then
       if [[ "$installed_version" == "$pinned_bundle_version" ]]; then
@@ -86,7 +87,7 @@ function install_bundle_from_github_zip() {
         return 0
       fi
     else
-      report_warning "${bundle_name} is installed, but its version could not be read; reinstalling pinned ${pinned_tag}"
+      report_warning "${bundle_name} is installed, but its version is not provided; reinstalling pinned ${pinned_tag}"
     fi
   fi
 
