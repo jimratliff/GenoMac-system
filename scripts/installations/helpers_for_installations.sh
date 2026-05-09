@@ -10,6 +10,14 @@ function warn_if_github_latest_release_differs_from_pinned() {
 
   local latest_tag=""
 
+  report_start_phase_standard
+
+  if ! gh_is_authenticated; then
+    report_warning "Skipping check for GitHub latest release tag for ${display_name} because gh isn’t available/authenticated"
+    report_end_phase_standard
+    return 0
+  fi
+
   report_action_taken "Checking GitHub latest release tag for ${display_name}"
   if latest_tag="$(gh release view --repo "$repo_slug" --json tagName -q .tagName 2>/dev/null)"; then
     success_or_not
@@ -18,9 +26,11 @@ function warn_if_github_latest_release_differs_from_pinned() {
       report_warning "GitHub latest release tag for ${display_name} is ${latest_tag}; you are pinned to ${pinned_tag}. To upgrade, review the release, update the pinned tag/version, and run Hypervisor again."
     fi
   else
-    success_or_not
+    success_or_not_NOT
     report_warning "Could not check GitHub latest release tag for ${display_name}; continuing with pinned ${pinned_tag}."
   fi
+  report_end_phase_standard
+  return 0
 }
 
 function install_bundle_from_github_zip() {
