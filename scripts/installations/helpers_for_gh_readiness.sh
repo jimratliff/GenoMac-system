@@ -27,7 +27,7 @@ function set_state_based_on_gh_authentication() {
 }
 
 function gh_availability_indicator(){
-  # Returns 0 if gh is available (though not necessarily authenticated); returns 1 otherwise.
+  # Prints "0" to stdout if gh is available (though not necessarily authenticated); prints "1" otherwise.
   report_start_phase_standard
   if ! command -v gh >/dev/null 2>&1; then
     print -- "1"
@@ -39,7 +39,7 @@ function gh_availability_indicator(){
 }
   
 function gh_authentication_indicator() {
-  # Returns 0 if gh is authenticated; returns 1 otherwise.
+  # Prints "0" to stdout if gh is authenticated; prints "1" otherwise.
   report_start_phase_standard
   if ! gh auth status >/dev/null 2>&1; then
     print -- "1"
