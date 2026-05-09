@@ -2,22 +2,22 @@
 
 function conditionally_interactive_get_Mac_names_and_login_window_message() {
   # If not previously obtained, asks user for computer names and login-window text.
-  # If these were previously obtained, check computername to see whether it’s become mangled. If so, unmangle it.
+  # Check computername to see whether it’s become mangled. If so, unmangle it.
   
   report_start_phase_standard
 
-  if test_genomac_system_state "${PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED}"; then
-    report_action_taken "Skipping asking for computer names and login-window text, because these were obtained in the past."
-    fix_mangled_computername_if_necessary
-  
-  else
-    interactive_get_Mac_names
-    interactive_get_loginwindow_message
-    # Sets this state so the user won’t be asked again to supply answers to these questions
-    set_genomac_system_state "${PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED}"
-  fi
+  run_if_system_has_not_done \
+    "$PERM_MAC_NAMES_AND_LOGIN_WINDOW_MESSAGE_OBTAINED" \
+    interactive_get_Mac_names_and_login_window_message \
+    "Skipping asking for computer names and login-window text, because these were obtained in the past."
 
+  fix_mangled_computername_if_necessary
   report_end_phase_standard
+}
+
+function interactive_get_Mac_names_and_login_window_message() {
+  interactive_get_Mac_names
+  interactive_get_loginwindow_message
 }
 
 function interactive_get_Mac_names() {
