@@ -310,6 +310,13 @@ The `Makefile` provides the interface for the user to effect the functionalities
       in zsh doesn't know about those either. To take advantage of `just` completion in zsh in this scenario, you can set `fpath` to the Homebrew
       location before calling `compinit`
 - EagleFiler currently requires Rosetta 2, although EagleFiler’s developer is working on an Apple Silicon–native version of EagleFiler anticipated to be ready for macOS 28, which is when Rosetta 2 sunsets. Hypervisor optionally installs Rosetta 2. This will either need to be removed for macOS 28, or the version of macOS will need to be checked, or, perhaps, the attempted installation would just fail silently.
+- TODOs
+  - Globally rename:
+    - `test_genomac_user_state` to `test_user_state`
+    - `set_genomac_user_state` to `set_user_state`
+    - `delete_genomac_user_state` to `delete_user_state`
+    - `test_genomac_system_state` to `test_system_state`
+    - `set_genomac_system_state` to `set_system_state`
    
 ## Appendix: Dev issues
 The preceding content of this README focuses on the “user” experience, i.e., the experience from USER_CONFIGURER’s experience, as a consumer of the repository in its contemperaneous state.
