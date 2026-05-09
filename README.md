@@ -317,6 +317,7 @@ The `Makefile` provides the interface for the user to effect the functionalities
     - `delete_genomac_user_state` to `delete_user_state`
     - `test_genomac_system_state` to `test_system_state`
     - `set_genomac_system_state` to `set_system_state`
+    - `_set_state_based_on_yes_no` to `_determine_state_based_on_yes_no`
    
 ## Appendix: Dev issues
 The preceding content of this README focuses on the “user” experience, i.e., the experience from USER_CONFIGURER’s experience, as a consumer of the repository in its contemperaneous state.
