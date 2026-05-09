@@ -9,6 +9,7 @@ function subdermis() {
   safe_source "${GMS_HOMEBREW_INSTALL_SCRIPTS}/install_via_homebrew.sh"
   safe_source "${GMS_HOMEBREW_INSTALL_SCRIPTS}/interactive_sign_into_MAS.sh"
   safe_source "${GMS_INSTALL_SCRIPTS}/helpers_for_installations.sh"
+  safe_source "${GMS_INSTALL_SCRIPTS}/helpers_for_gh_readiness.sh"
   safe_source "${GMS_INSTALL_SCRIPTS}/install_rosetta.sh"
   safe_source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_non_homebrew_apps.sh"
   safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
