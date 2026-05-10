@@ -139,7 +139,7 @@ When Hypervisor is first launched during a session, it will check automatically 
 
 At some early point in the first run of Hypervisor (perhaps immediately after being asked to supply a Computer Name), a dialog box will pop up: “‘Terminal’ wants access to control ‘System Events’. Allowing control will provide access to documents and data in ‘SYstem Events’, and to perform actions within that app.” It will then offer buttons: “Don’t Allow” and “Allow”. Click “Allow”.
 
-At certain points in the process, the Hypervisor will encourage/prompt the user to logout of the user account. When you log in after the logout, simply start the Hypervisor again (type the following into terminal: `make run-hypervisor`). The Hypervisor keeps track of its state, and it will restart where you last left off. Keep logging back in, after each logout, and running `make run-hypervisor` until you see “TTFN,” signaling completion of the fully Hypervisor cycle:
+At certain points in the process, within a single Hypervisor session, the Hypervisor will encourage/prompt the user to logout of the user account to help incorporate the changes so far. When you log in after the logout, simply start the Hypervisor again (type the following into terminal: `make run-hypervisor`). The Hypervisor keeps track of its state, and it will restart where you last left off. Keep logging back in, after each logout, and running `make run-hypervisor` until you see “TTFN,” signaling completion of the fully Hypervisor session:
 ```
  _____  _____  _____  _   _  _
 |_   _||_   _||  ___|| \ | || |
@@ -150,7 +150,6 @@ At certain points in the process, the Hypervisor will encourage/prompt the user 
 
 ℹ️  You will be logged out semi-automatically to fully internalize all the work we’ve done.
    Please log back in.
-   To restart, re-execute just run-hypervisor and we’ll pick up where we left off.
 
 ✅ No GenoMac warnings or failures detected in this run.
 ```
@@ -201,7 +200,7 @@ just run-hypervisor
 - Install Rosetta 2, if desired[^rosetta_installation]
 - Installations via Homebrew[^Specifying_Homebrew_installs]<sup>,</sup>[^Homebrew_not_good_for_fonts]
   - CLI programs (“formulae”)
-  - GUI apps (“casks”) not from Mac App Store. (You may be asked, *repeatedly* for your password.[^Casks_ask_for_password])
+  - GUI apps (“casks”) not from Mac App Store. (You may be asked, *repeatedly* for your password.[^Casks_ask_for_password])<sup>,</sup>[^zoom_is_launched]
   - GUI apps from Mac App Store[^mac_is_homebrew]
 - Installations not using Homebrew
   - Apps installed from GitHub releases[^non_homebrew_apps]<sup>,</sup>[^install_github_release]
@@ -227,6 +226,8 @@ just run-hypervisor
 [^Homebrew_not_good_for_fonts]: At least by default, Homebrew installs fonts *only* for the Homebrew user, not for other users. Thus, for Project GenoMac, I have concluded that Homebrew is not an appropriate method to install fonts. There may be workarounds, see e.g., “[Installed font does not show up in Font Book](https://apple.stackexchange.com/questions/478047/installed-font-does-not-show-up-in-font-book),” Ask Different, January 16, 2025; and “[homebrew-cask-fonts for ‘All Users’](https://github.com/orgs/Homebrew/discussions/4138),” Homebrew/discussions, #4138.
 
 [^Casks_ask_for_password]: There are some items whose installation will ask for your sudo password. This occurs for, and only for, some of the casks (but not the formulae nor the Mac App Store apps), in particular: docker-desktop, google-drive, insta360-link-controller, microsoft-teams, and zoom. This password-querying behavior is usually, if not always, associated with casks that are accompanied by some kind of background process, such as an auto-updater.
+
+[^zoom_is_launched]: When Zoom is installed, (a) a dialog box asks “Allow ‘zoom.us’ to find devices on local networks? This process is needed to enable AirPlay and peer-to-peer mettings in Zoom client.” Unlike any other app installed from a Homebrew cask, the act of installing Zoom causes Zoom to be launched.
 
 [^mac_is_homebrew]: It may seem a terminological error to include “GUI apps from Mac App Store” under “Installations via Homebrew.” However, GUI apps from Mac App Store *are* installed by Homebrew, which uses the [mas](https://github.com/mas-cli/mas) CLI tool.
 
