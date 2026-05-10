@@ -7,14 +7,20 @@ Project GenoMac automates setup and maintenance of multiple Macs, each with mult
 
 Both GenoMac-system and GenoMac-user are intended to be cloned locally, in order to provide access to the necessary scripts and other resources. (GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac. GenoMac-user is cloned separately by *each user*.) GenoMac-user assumes that the Mac has already been configured using GenoMac-system.
 
-If you are not USER_CONFIGURER, go directly to [GenoMac-user](https://github.com/jimratliff/GenoMac-user).
+If you are *not* USER_CONFIGURER, go directly to [GenoMac-user](https://github.com/jimratliff/GenoMac-user).
+
+If you *are* USER_CONFIGURER and:
+- you’re unfamiliar with Project GenoMac, start with [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
+- you’re familiar with Project GenoMac and:
+  - you’re beginning to set up a particular Mac, start with [The initial bootstrapping GenoMac-system process](#the-initial-bootstrapping-genomac-system-process)
+  - you’ve already set up this particular Mac once, go to [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
 
 ## Table of contents
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
 - [The initial bootstrapping GenoMac-system process](#the-initial-bootstrapping-genomac-system-process)
-- [Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#configure-user_configurers-user-scoped-settings-using-genomac-user)
+- [Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user](#configure-user_configurers-user-scoped-settings-using-genomac-user)
 - [Create the new users that will reside on this Mac](#create-the-new-users-that-will-reside-on-this-mac)
-- [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
+- [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
 - [Appendix](#appendix)
 - [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
 - [Known issues](#known-issues)
