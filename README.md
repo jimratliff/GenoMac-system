@@ -17,9 +17,7 @@ If you *are* USER_CONFIGURER and:
 
 ## Table of contents
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
-- [The initial bootstrapping GenoMac-system process](#the-initial-bootstrapping-genomac-system-process)
-- [Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user](#configure-user_configurers-user-scoped-settings-using-genomac-user)
-- [Create the new users that will reside on this Mac](#create-the-new-users-that-will-reside-on-this-mac)
+- [Setting up a new Mac](#setting-up-a-new-mac)
 - [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
 - [Appendix](#appendix)
 - [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
@@ -66,6 +64,10 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 - Every user periodically runs the GenoMac-user Hypervisor to (a) re-implement and/or (b) implement any desired changes in user-scoped preferences.
 
 ## Setting up a new Mac
+
+- [The initial bootstrapping GenoMac-system process](#the-initial-bootstrapping-genomac-system-process)
+- [Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user](#configure-user_configurers-user-scoped-settings-using-genomac-user)
+- [Create the new users that will reside on this Mac](#create-the-new-users-that-will-reside-on-this-mac)
 
 ### The initial bootstrapping GenoMac-system process
 - [Make sure you’re logged into the USER_CONFIGURER account](#make-sure-youre-logged-into-the-user_configurer-account)
