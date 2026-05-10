@@ -145,7 +145,7 @@ cd ~/.genomac-user
 make run-hypervisor
 ```
 
-[^homebrew_via_just]: The first time Hypervisor is run, it uses Homebrew to install many apps/programs, including in particular `just`. At that point, you can use `just` commands instead of the somewhat-less user-friendly `make` commands. In particular, you can then run the Hypervisor with `just run-hypervisor`.
+[^homebrew_via_just]: The first time Hypervisor is run, it uses Homebrew to install many apps/programs, including in particular `just`. At that point, you can use `just` commands instead of the somewhat-less user-friendly `make` commands. In particular, you can then run the Hypervisor with `just run-hypervisor`. The [just command](https://github.com/casey/just) is a “command runner” or “a handy way to save and run project-specific commands.” It is a modern successor to the [make command](https://man7.org/linux/man-pages/man1/make.1.html).
 
 When Hypervisor is first launched during a session, it will check automatically for updates to this repo. If any are found, Hypervisor will refresh this repo and relaunch the Hypervisor.
 
@@ -164,6 +164,14 @@ At certain points in the process, within a single Hypervisor session, the Hyperv
 
 ✅ No GenoMac warnings or failures detected in this run.
 ```
+The Hypervisor produces a *lot* of output, typically many screenfulls. If an important warning is issued, the Hypervisor keeps track of it and redisplays it when it reaches a standard stopping point (either when it urges you to logout or when it completes the entire configuration). If no warnings were detected, the Hypervisor will state that explicitly:
+```
+✅ No GenoMac warnings or failures detected in this run.
+```
+
+By collecting any warnings and repeating them at the end, you’re relieved of the necessity of wading through all of the output to look for anomalies.
+
+Also note that the Hypervisor runs under `set -euo pipefail`, which is designed to make everything come to a crashing halt if there is any error. Thus, it tries to protect you against silent failures that you wouldn’t notice.
 
 ### Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user
 At this point, the Mac is largely setup at a system-scoped level, but USER_CONFIGURER is still very primitive as a *user*: all user-interface settings are at their out-of-the-box defaults. We fix that by using GenoMac-user to configure USER_CONFIGURER’s user-scoped settings.
