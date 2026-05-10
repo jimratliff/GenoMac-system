@@ -65,16 +65,18 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 - USER_CONFIGURER periodically runs the GenoMac-system Hypervisor to (a) use Homebrew to update apps and install/remove any apps that have been added/removed from the specified lists of desired Homebrew apps and (b) to re-implement and/or implement any desired changes in system-scoped preferences.
 - Every user periodically runs the GenoMac-user Hypervisor to (a) re-implement and/or (b) implement any desired changes in user-scoped preferences.
 
-## The initial bootstrapping GenoMac-system process
+## Settings up a new Mac
+
+### The initial bootstrapping GenoMac-system process
 - [Make sure you’re logged into the USER_CONFIGURER account](#make-sure-youre-logged-into-the-user_configurer-account)
 - [Establish shared textual connection to communicate text back and forth with other devices](#establish-shared-textual-connection-to-communicate-text-back-and-forth-with-other-devices)
 - [Grant Terminal full-disk access and then launch it](#grant-terminal-full-disk-access-and-then-launch-it)
 - [Manually install Homebrew](#manually-install-homebrew)
 - [Clone this repo to `~/.genomac-system`](#clone-this-repo-to-genomac-system)
 - [Iteratively run the Hypervisor until completion](#iteratively-run-the-hypervisor-until-completion)
-### Make sure you’re logged into the USER_CONFIGURER account
+#### Make sure you’re logged into the USER_CONFIGURER account
 Make sure you’re logged into the USER_CONFIGURER account, *not* into the USER_VANILLA account.
-### Establish shared textual connection to communicate text back and forth with other devices
+#### Establish shared textual connection to communicate text back and forth with other devices
 Open a Google Docs document to be used as/if needed for real-time exchange of text, error messages, etc., between the target Mac and other devices.
 - In Safari
   - sign into my standard Google account:
@@ -85,7 +87,7 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
  
 [^my_google_doc]: Of course, this document is specific to, and accessible by, only me. Make your own!
 
-### Grant Terminal full-disk access and then launch it
+#### Grant Terminal full-disk access and then launch it
 Because the Mac is pristine when beginning this GenoMac-system bootstrapping process the first time, the macOS-supplied Terminal is the only terminal-emulator application available. We’ll use it until the Hypervisor has installed third-party apps, at which point I switch iTerm.
 
 Terminal will need full-disk access:
@@ -97,7 +99,7 @@ Terminal will need full-disk access:
       - Enable for Terminal
 - Launch Terminal
 
-### Manually install Homebrew
+#### Manually install Homebrew
 We can’t even clone this repository at this point, because Git doesn’t come out-of-the-box on macOS. We’ll need Homebrew eventually to perform app installations. We install Homebrew now, because doing so has the side benefit that installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
 installation of which will install, among other things, a version of Git, which will permit cloning this repo.
 
@@ -109,7 +111,7 @@ To install Homebrew, launch Terminal and paste in the following code snippet:
 
 **Do *not* follow Homebrew’s instructions to modify the PATH. This will be dealt with systemwide later.**
 
-### Clone this repo to `~/.genomac-system`
+#### Clone this repo to `~/.genomac-system`
 This public GenoMac-user repo is meant to be cloned locally (using https) to USER_CONFIGURER’s home directory.[^https] 
 More specifically, the local directory to which this repo is to be cloned is the hidden directory `~/.genomac-system`.[^hidden_dir_env_var]
 
@@ -129,7 +131,7 @@ git clone --recurse-submodules https://github.com/jimratliff/GenoMac-system.git 
 
 (The `--recurse-submodules` flag exists because this repo has a submodule (viz., [GenoMac-shared](https://github.com/jimratliff/GenoMac-shared)). The `--recurse-submodules` ensures that the submodule’s code is also cloned, not just a pointer to it.)
 
-### Iteratively run the Hypervisor until completion
+#### Iteratively run the Hypervisor until completion
 The Hypervisor is a scripting system that manages the system-scoped configuration of the Mac, both (a) for the initial bootstrap and (b) for periodic maintenance.[^Hypervisor_scripts]
 
 [^Hypervisor_scripts]: The entry point to the Hypervisor script is `GenoMac-system/scripts/hypervisor/hypervisor.sh`, which calls, for most of the detailed work, `GenoMac-system/scripts/hypervisor/subdermis.sh`
@@ -160,7 +162,7 @@ At certain points in the process, within a single Hypervisor session, the Hyperv
 ✅ No GenoMac warnings or failures detected in this run.
 ```
 
-## Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user
+### Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user
 At this point, the Mac is largely setup at a system-scoped level, but USER_CONFIGURER is still very primitive as a *user*: all user-interface settings are at their out-of-the-box defaults. We fix that by using GenoMac-user to configure USER_CONFIGURER’s user-scoped settings.
 
 The Hypervisor (the one belonging to GenoMac-system) you’ve already run should have, as its final step, clone the GenoMac-user repository to the `~/.genomac-user` directory in USER_CONFIGURER’s home directory.
@@ -169,7 +171,7 @@ Now visit [the README from GenoMac-user](https://github.com/jimratliff/GenoMac-u
 
 When finished with that process, return here to finish the remainder of the system-scoped setup: Creating new users.
 
-## Create the new users that will reside on this Mac
+### Create the new users that will reside on this Mac
 
 **WORK IN PROGRESS**
 
