@@ -19,10 +19,10 @@ If you *are* USER_CONFIGURER and:
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
 - [Setting up a new Mac](#setting-up-a-new-mac)
 - [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
-- [Appendix](#appendix)
-- [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
-- [Known issues](#known-issues)
-- [Dev issues](#appendix-dev-issues)
+- [Appendices](#appendices)
+  - [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
+  - [Known issues](#known-issues)
+  - [Dev issues](#appendix-dev-issues)
 
 ## Overview of the entire GenoMac process
 Project GenoMac automates setup and maintenance of multiple Macs, each Mac having multiple users. We now focus on a particular Mac (rinse and repeat for each Mac). At this point, we assume the following:
