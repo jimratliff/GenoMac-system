@@ -50,6 +50,13 @@ function hypervisor() {
   # it’s simpler to always do it than to test whether it’s been done before.
   configure_split_remote_URLs_for_GenoMac_system
 
+  ############### BEGIN MIGRATIONS
+  # Provide any migrations here
+  # Example:
+  #   migrate_user_states "MIGRATION_ID_2026_03_11" --delete "$PERM_PREVIEW_BASE_TOOLBAR_HAS_BEEN_SPECIFIED"
+
+  ############### END MIGRATIONS
+
   # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
   subdermis
 
