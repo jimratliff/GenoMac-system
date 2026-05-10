@@ -173,9 +173,11 @@ Now visit [the README from GenoMac-user](https://github.com/jimratliff/GenoMac-u
 
 When finished with that process, return here to finish the remainder of the system-scoped setup: Creating new users.
 
-### Create the new users that will reside on this Mac
+### USER_CONFIGURER creates the new users that will reside on this Mac
 
 **WORK IN PROGRESS**
+
+### Each new user logs into its account and uses GenoMac-user to configure itself
 
 ## Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor
 At this point, all apps have been installed and all systemwide settings have been configured. There is no need to use this repo again on this Mac until any of the following occurs:
