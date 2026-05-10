@@ -36,7 +36,7 @@ Project GenoMac automates setup and maintenance of multiple Macs, each Mac havin
 At a high level, for a particular new Mac, the initial bootstrapping function of Project GenoMac involves the following steps:
 - Systemwide configuration, performed by USER_CONFIGURER
   - manually install Homebrew (which necessarily installs Git, allowing cloning this repository)
-  - manually clone the [GenoMac-system repo](https://github.com/jimratliff/GenoMac-system) to `~/.genomac-system`
+  - manually clone this GenoMac-system repo to `~/.genomac-system`
   - using the GenoMac-system repo, run a script, referred to as the Hypervisor, which performs the following, largely autonomously but requiring some interaction at various steps:
     - makes system-level changes to PATH to make Homebrew-installed apps and man pages available to all users without user-specific modifications
     - installations
