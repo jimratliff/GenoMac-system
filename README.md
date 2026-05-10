@@ -43,14 +43,14 @@ At a high level, for a particular new Mac, the initial bootstrapping function of
       - apps (CLI and GUI) using Homebrew
       - apps from the Mac App Store
       - third-party apps not available via Homebrew (e.g., that can be downloaded from a GitHub repository)
-      - other resources: a screensaver and an alert sound
+      - other resources: a font, a screensaver, and an alert sound
     - implement systemwide settings (e.g., policies regarding firewall and macOS system-update behavior)
 - User-scoped settings for USER_CONFIGURER performed by USER_CONFIGURER
   - using a script from GenoMac-system, clone the [GenoMac-user repo](https://github.com/jimratliff/GenoMac-user) to `~/.genomac-user`
   - using the GenoMac-user repo, USER_CONFIGURER executes a script, also referred to as the Hypervisor, to *inter alia*:
     - “stow” dotfiles
     - implement generic user-scoped macOS settings
-    - implement configurations for native and third-party applications
+    - implement customized preferences for native and third-party applications
     - configure 1Password for authentication with GitHub
     - establish syncing with Dropbox, as a source of shared configuration data and other resources, as well as general-purpose file syncing.
 - USER_CONFIGURER returns to the GenoMac-system repo to use a script to create each of the additional users (and the implied additional volumes).
@@ -60,8 +60,8 @@ At a high level, for a particular new Mac, the initial bootstrapping function of
   - Runs the GenoMac-user Hypervisor to perform the same user-scoped configurations that USER_CONFIGURER performed, described above.
  
 After the above initial bootstrapping, each of GenoMac-system and GenoMac-user uses its respective Hypervisor to maintain the system and users, respectively:
-- USER_CONFIGURER periodically runs the GenoMac-system Hypervisor to (a) use Homebrew to update apps and install/remove any apps that have been added/removed from the specified lists of desired Homebrew apps and (b) to re-implement and/or implement any desired changes in system-scoped preferences.
-- Every user periodically runs the GenoMac-user Hypervisor to (a) re-implement and/or (b) implement any desired changes in user-scoped preferences.
+- USER_CONFIGURER periodically runs the GenoMac-system Hypervisor to (a) to update apps and install/remove any apps that have been added/removed from the specified lists of desired Homebrew apps and (b) to re-implement and/or implement any desired changes in system-scoped preferences.
+- Every user periodically runs the GenoMac-user Hypervisor to re-implement and/or implement any desired changes in user-scoped preferences.
 
 ## Setting up a new Mac
 
