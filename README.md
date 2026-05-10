@@ -12,7 +12,7 @@ If you are *not* USER_CONFIGURER, go directly to [GenoMac-user](https://github.c
 If you *are* USER_CONFIGURER and:
 - you’re unfamiliar with Project GenoMac, start with [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
 - you’re familiar with Project GenoMac and:
-  - you’re beginning to set up a particular Mac, start with [The initial bootstrapping GenoMac-system process](#the-initial-bootstrapping-genomac-system-process)
+  - you’re beginning to set up a particular Mac, start with [Setting up a new Mac](#setting-up-a-new-mac)
   - you’ve already set up this particular Mac once, go to [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
 
 ## Table of contents
