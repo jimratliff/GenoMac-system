@@ -190,7 +190,7 @@ just run-hypervisor
 ```
 
 
-## Appendix
+## Appendices
 
 ### What steps the Hypervisor performs
 (Of course, it’s possible that the below list of steps will become out of sync with the actual state of the Hypervisor’s code. So… trust, but verify!)
