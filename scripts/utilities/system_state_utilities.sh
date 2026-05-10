@@ -12,11 +12,12 @@ echo "Source ${initialization_script}"
 source "${initialization_script}"
 
 function usage() {
+  local script_name="${0:t}"
   cat >&2 <<'EOF'
 Usage:
-  system_states.zsh show
-  system_states.zsh clear-session
-  system_states.zsh clear-all
+  ${script_name} show
+  ${script_name} clear-session
+  ${script_name} clear-all
 EOF
 }
 
