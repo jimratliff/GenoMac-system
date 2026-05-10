@@ -58,7 +58,7 @@ function hypervisor() {
 
   output_hypervisor_departure_banner "$GENOMAC_SCOPE_SYSTEM"
   
-  hypervisor_force_logout
+  hypervisor_force_logout --final
 
   report_end_phase_standard
 }
