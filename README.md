@@ -65,7 +65,7 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 - USER_CONFIGURER periodically runs the GenoMac-system Hypervisor to (a) use Homebrew to update apps and install/remove any apps that have been added/removed from the specified lists of desired Homebrew apps and (b) to re-implement and/or implement any desired changes in system-scoped preferences.
 - Every user periodically runs the GenoMac-user Hypervisor to (a) re-implement and/or (b) implement any desired changes in user-scoped preferences.
 
-## Settings up a new Mac
+## Setting up a new Mac
 
 ### The initial bootstrapping GenoMac-system process
 - [Make sure you’re logged into the USER_CONFIGURER account](#make-sure-youre-logged-into-the-user_configurer-account)
