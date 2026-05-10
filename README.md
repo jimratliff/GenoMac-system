@@ -67,7 +67,8 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 
 - [The initial bootstrapping GenoMac-system process](#the-initial-bootstrapping-genomac-system-process)
 - [Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user](#configure-user_configurers-user-scoped-settings-using-genomac-user)
-- [Create the new users that will reside on this Mac](#create-the-new-users-that-will-reside-on-this-mac)
+- [USER_CONFIGURER creates the new users that will reside on this Mac]([#create-the-new-users-that-will-reside-on-this-mac](#user_configurer-creates-the-new-users-that-will-reside-on-this-mac))
+- [Each new user logs into its account and uses GenoMac-user to configure itself](#each-new-user-logs-into-its-account-and-uses-genomac-user-to-configure-itself)
 
 ### The initial bootstrapping GenoMac-system process
 - [Make sure you’re logged into the USER_CONFIGURER account](#make-sure-youre-logged-into-the-user_configurer-account)
