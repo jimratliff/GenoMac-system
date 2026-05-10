@@ -180,6 +180,10 @@ When finished with that process, return here to finish the remainder of the syst
 
 ### Each new user logs into its account and uses GenoMac-user to configure itself
 
+At this point, you loop through each new user account and:
+- Sign into the user’s account. This creates that user’s home directory (on whatever volume it was specified to reside)
+- Run GenoMac-user’s Hypervisor on that user account to configure the user-scoped settings.
+
 ## Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor
 At this point, all apps have been installed and all systemwide settings have been configured. There is no need to use this repo again on this Mac until any of the following occurs:
 - the passage of time indicates that apps should be upgraded
