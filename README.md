@@ -151,7 +151,7 @@ When Hypervisor is first launched during a session, it will check automatically 
 
 At some early point in the first run of Hypervisor (perhaps immediately after being asked to supply a Computer Name), a dialog box will pop up: “‘Terminal’ wants access to control ‘System Events’. Allowing control will provide access to documents and data in ‘SYstem Events’, and to perform actions within that app.” It will then offer buttons: “Don’t Allow” and “Allow”. Click “Allow”.
 
-At certain points in the process, within a single Hypervisor session, the Hypervisor will encourage/prompt the user to logout of the user account to help incorporate the changes so far. When you log in after the logout, simply start the Hypervisor again (type the following into terminal: `make run-hypervisor`). The Hypervisor keeps track of its state, and it will restart where you last left off. Keep logging back in, after each logout, and running `make run-hypervisor` until you see “TTFN,” signaling completion of the fully Hypervisor session:
+At certain points in the process, within a single Hypervisor session, the Hypervisor will encourage/prompt the user to logout of the user account to help incorporate the changes so far. When you log in after the logout, simply start the Hypervisor again (type the following into terminal: `make run-hypervisor`). The Hypervisor keeps track of its state, and it will restart where you last left off. Keep logging back in, after each logout, and running `make run-hypervisor` until you see “TTFN,” signaling completion of the full Hypervisor session:
 ```
  _____  _____  _____  _   _  _
 |_   _||_   _||  ___|| \ | || |
