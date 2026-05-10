@@ -15,11 +15,13 @@ run-hypervisor:
 
 genomac_system_dir := env_var('HOME') / '.genomac-system'
 
-refresh-repo:
+# Pull latest changes from origin/main, including any submodule updates. Does not require authenticating with GitHub
+refresh-repo-and-module:
     git -C "{{genomac_system_dir}}" pull --recurse-submodules origin main
 
 # Updates genomac-system repo, including genomac-shared submodule, and pushes it back to GitHub.
 # The git diff check detects whether there are staged changes to the submodule and, if so, commits them.
+# Requires authenticating with GitHub (hence the 'dev-' prefix to distinguish from refresh-repo-and-module recipe.
 dev-update-repo-and-submodule:
     git -C "{{genomac_system_dir}}" pull --recurse-submodules origin main
     git -C "{{genomac_system_dir}}" submodule update --remote
@@ -27,9 +29,13 @@ dev-update-repo-and-submodule:
     git -C "{{genomac_system_dir}}" diff --cached --quiet external/genomac-shared || git -C "{{genomac_system_dir}}" commit -m "Update genomac-shared submodule"
     git -C "{{genomac_system_dir}}" push origin main
 
+# Configure remote for HTTPS fetch and SSH push
+# Sets the fetch URL to HTTPS (no auth needed for public repo)
+# Sets the push URL to SSH (uses 1Password SSH agent)
 dev-configure-remote-for-https-fetch-and-ssh-push:
     git -C "{{genomac_system_dir}}" remote set-url origin https://github.com/jimratliff/GenoMac-system.git
     git -C "{{genomac_system_dir}}" remote set-url --push origin git@github.com:jimratliff/GenoMac-system.git
+	git -C "{{genomac_system_dir}}" config pull.rebase false
 
 
 ############### System state utilities
