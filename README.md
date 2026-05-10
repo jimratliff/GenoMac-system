@@ -148,7 +148,6 @@ At certain points in the process, within a single Hypervisor session, the Hyperv
 
 
 ℹ️  You will be logged out semi-automatically to fully internalize all the work we’ve done.
-   Please log back in.
 
 ✅ No GenoMac warnings or failures detected in this run.
 ```
