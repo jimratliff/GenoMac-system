@@ -16,12 +16,12 @@ If you are *not* USER_CONFIGURER, and USER_CONFIGURER has already configured thi
 If you *are* USER_CONFIGURER and:
 - you’re unfamiliar with Project GenoMac, start with [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
 - you’re familiar with Project GenoMac and:
-  - you’re beginning to set up a particular Mac, start with [Step-by-step: Set up a new Mac](#setting-up-a-new-mac)
+  - you’re beginning to set up a particular Mac, start with [Step-by-step: Set up a new Mac](#step-by-step-set-up-a-new-mac)
   - you’ve already set up this particular Mac once, go to [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
 
 ## Table of contents
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
-- [Step-by-step: Set up a new Mac](#setting-up-a-new-mac)
+- [Step-by-step: Set up a new Mac](#step-by-step-set-up-a-new-mac)
 - [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
 - [Appendices](#appendices)
   - [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
