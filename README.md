@@ -16,12 +16,12 @@ If you are *not* USER_CONFIGURER, and USER_CONFIGURER has already configured thi
 If you *are* USER_CONFIGURER and:
 - you’re unfamiliar with Project GenoMac, start with [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
 - you’re familiar with Project GenoMac and:
-  - you’re beginning to set up a particular Mac, start with [Setting up a new Mac](#setting-up-a-new-mac)
+  - you’re beginning to set up a particular Mac, start with [Step-by-step: Set up a new Mac](#setting-up-a-new-mac)
   - you’ve already set up this particular Mac once, go to [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
 
 ## Table of contents
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
-- [Setting up a new Mac](#setting-up-a-new-mac)
+- [Step-by-step: Set up a new Mac](#setting-up-a-new-mac)
 - [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
 - [Appendices](#appendices)
   - [What steps the Hypervisor performs](#what-steps-the-hypervisor-performs)
@@ -67,7 +67,7 @@ After the above initial bootstrapping, each of GenoMac-system and GenoMac-user u
 - USER_CONFIGURER periodically runs the GenoMac-system Hypervisor to (a) to update apps and install/remove any apps that have been added/removed from the specified lists of desired Homebrew apps and (b) to re-implement and/or implement any desired changes in system-scoped preferences.
 - Every user periodically runs the GenoMac-user Hypervisor to re-implement and/or implement any desired changes in user-scoped preferences.
 
-## Setting up a new Mac
+## Step-by-step: Set up a new Mac
 
 - [The initial bootstrapping GenoMac-system process](#the-initial-bootstrapping-genomac-system-process)
 - [Configure USER_CONFIGURER’s user-scoped settings using GenoMac-user](#configure-user_configurers-user-scoped-settings-using-genomac-user)
