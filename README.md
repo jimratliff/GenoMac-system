@@ -32,6 +32,7 @@ If you *are* USER_CONFIGURER and:
   - [Determining the `defaults write` commands that correspond to desired changes in settings](https://github.com/jimratliff/GenoMac-user/blob/main/docs/defaults_detective.md)
 - At GenoMac-shared:
   - [The two types of operations in Project GenoMac and their corresponding families of states](https://github.com/jimratliff/GenoMac-shared/blob/main/docs/States_migration_operations.md)
+  - [Dev issues common to both GenoMac-system and GenoMac-user](https://github.com/jimratliff/GenoMac-shared/blob/main/docs/shared_dev_issues.md)
 
 
 ## Overview of the entire GenoMac process
