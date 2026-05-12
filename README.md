@@ -23,12 +23,13 @@ If you *are* USER_CONFIGURER and:
 - [Overview of the entire GenoMac process](#overview-of-the-entire-genomac-process)
 - [Step-by-step: Set up a new Mac](#step-by-step-set-up-a-new-mac)
 - [Maintaining the Mac’s system-scoped settings by periodically re-running the Hypervisor](#maintaining-the-macs-system-scoped-settings-by-periodically-re-running-the-hypervisor)
-- [Appendices](#appendices)
-  - [Known issues](#known-issues)
-  - [Dev issues](#appendix-dev-issues)
+- [Known issues](#known-issues)
+- [Dev issues](#appendix-dev-issues)
 
 **Other documentation files**
 - [What Hypervisor does and what settings/configurations it implements](https://github.com/jimratliff/GenoMac-user/blob/main/docs/what_hypervisor_does.md)
+- At GenoMac-user:
+  - [Determining the `defaults write` commands that correspond to desired changes in settings](https://github.com/jimratliff/GenoMac-user/blob/main/docs/defaults_detective.md)
 - At GenoMac-shared:
   - [The two types of operations in Project GenoMac and their corresponding families of states](https://github.com/jimratliff/GenoMac-shared/blob/main/docs/States_migration_operations.md)
 
@@ -268,7 +269,7 @@ The `Makefile` provides the interface for the user to effect the functionalities
 
 
 
-### Known issues
+## Known issues
 - Assumption of an Apple Silicon Mac rather than an Intel Mac:
   - `adjust_path_for_homebrew` in GenoMac-system/scripts/prefs_scripts/adjust_path_for_homebrew.sh
 - Defining a separate lockscreen.png (i.e., separate from a user’s wallpaper) is not working.
@@ -295,7 +296,7 @@ The `Makefile` provides the interface for the user to effect the functionalities
     - `set_genomac_system_state` to `set_system_state`
     - `_set_state_based_on_yes_no` to `_determine_state_based_on_yes_no`
    
-## Appendix: Dev issues
+## Dev issues
 The preceding content of this README focuses on the “user” experience, i.e., the experience from USER_CONFIGURER’s experience, as a consumer of the repository in its contemperaneous state.
 
 In contrast, the present appendix addresses issues about how this repo can be changed and those changes propagated and used by USER_CONFIGURER (even if USER_CONFIGURER is the entity making those changes).
