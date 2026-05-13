@@ -10,8 +10,8 @@ function install_utiluti() {
 
   local tool_name="utiluti"
   local repo_slug="scriptingosx/utiluti"
-  local pinned_version="v1.3"
-  local pkg_filename="utiluti-1.3.pkg"
+  local pinned_version="v1.5"
+  local pkg_filename="utiluti-1.5.pkg"
   local pkg_id="com.scriptingosx.utiluti"
   local binary_path="/usr/local/bin/utiluti"
 
