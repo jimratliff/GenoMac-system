@@ -9,7 +9,7 @@ The Hypervisor keeps track of state across time, i.e., whether it has *ever* don
 
 [^coerce_migration]: If such a one-time-only operation should nevertheless be performed again, this can be achieved by deleting the appropriate state file. Then, the next time Hypervisor runs, it will not remember that it had previously performed this operation and will perform it again.
 
-The Hypervisor also keeps of state within a session, i.e., so that if the session is interrupted (for example, if the Hypervisor tells the user to logout, log back in, and restart the Hypervisor), the Hypervisor will know where to pick back up.[^avoid_infinite_loop] The state files corresponding to these across-time states all begin the prefix `SESH_`, which stands for “session.”[^clear_session_states]
+The Hypervisor also keeps track of state within a session, i.e., so that if the session is interrupted (for example, if the Hypervisor tells the user to logout, log back in, and restart the Hypervisor), the Hypervisor will know where to pick back up.[^avoid_infinite_loop] The state files corresponding to these across-time states all begin the prefix `SESH_`, which stands for “session.”[^clear_session_states]
 
 [^avoid_infinite_loop]: Otherwise, the Hypervisor could get caught in an infinite loop of performing an operation, being forced to log out, and rerunning the Hypervisor from the beginning.
 
