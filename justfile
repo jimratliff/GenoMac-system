@@ -25,6 +25,17 @@ genomac_push_url := 'git@github.com:' + genomac_github_owner + '/' + genomac_rem
 refresh-repo-and-module:
     git -C "{{genomac_local_dir}}" pull --recurse-submodules origin main
 
+# Destructively make the local clone match origin/main.
+# This discards local commits and tracked-file changes.
+# It does not remove untracked files.
+conform-local-to-remote:
+    git -C "{{genomac_local_dir}}" fetch origin main
+    git -C "{{genomac_local_dir}}" reset --hard origin/main
+    git -C "{{genomac_local_dir}}" submodule sync --recursive
+    git -C "{{genomac_local_dir}}" submodule update --init --recursive
+
+# Below this point, the ability to authenticate with GitHub is required
+
 # Updates this repo, including genomac-shared submodule, and pushes it back to GitHub
 # The git diff check detects whether there are staged changes to the submodule and, if so, commits them.
 # Requires authenticating with GitHub (hence the 'dev-' prefix to distinguish from refresh-repo-and-module recipe).
