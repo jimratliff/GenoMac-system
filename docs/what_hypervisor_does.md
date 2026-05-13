@@ -1,6 +1,6 @@
 # What Hypervisor does
 - The Hypervisor keeps track of state across time and within a session
-- The programmatically implemented settings
+- [The programmatically implemented settings](#the-programmatically-implemented-settings)
 
 ## The Hypervisor keeps track of state across time and within a session
 The Hypervisor maintains a memory of *states* in a hidden directory, `~/.genomac-user-state`, which can contain empty files with a `.state` prefix. Each such file corresponds to a particular state identified by the file name (ignoring the `.state` extension) of that state file. If a state’s file exists, the state is true; if the file doesn’t exist, the state if false.
