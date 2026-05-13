@@ -3,9 +3,9 @@
 - [The programmatically implemented settings](#the-programmatically-implemented-settings)
 
 ## The Hypervisor keeps track of state across time and within a session
-The Hypervisor maintains a memory of *states* in a hidden directory, `~/.genomac-user-state`, which can contain empty files with a `.state` prefix. Each such file corresponds to a particular state identified by the file name (ignoring the `.state` extension) of that state file. If a state’s file exists, the state is true; if the file doesn’t exist, the state if false.
+The Hypervisor maintains a memory of *states* in a hidden directory, `~/.genomac-system-state`, which can contain empty files with a `.state` prefix. Each such file corresponds to a particular state identified by the file name (ignoring the `.state` extension) of that state file. If a state’s file exists, the state is true; if the file doesn’t exist, the state if false.
 
-The Hypervisor keeps track of state across time, i.e., whether it has *ever* done a particular operation. This way it ensures that, for some operations, it performs that operation exactly once but no more. Examples of such operations are (a) Configuring 1Password’s SSH Agent, (b) signing into Dropbox and configuring it to sync a particular local `Dropbox` directory, and (c) creating additional Mission Control Spaces. The state files corresponding to these across-time states all begin the prefix `PERM_`, which stands for “permanent.”[^coerce_migration]
+The Hypervisor keeps track of state across time, i.e., whether it has *ever* done a particular operation. This way it ensures that, for some operations, it performs that operation exactly once but no more. Examples of such operations are (a) adjusting the PATH after installing Homebrew and (b) installing a custom alert sound. The state files corresponding to these across-time states all begin the prefix `PERM_`, which stands for “permanent.”[^coerce_migration]
 
 [^coerce_migration]: If such a one-time-only operation should nevertheless be performed again, this can be achieved by deleting the appropriate state file. Then, the next time Hypervisor runs, it will not remember that it had previously performed this operation and will perform it again.
 
