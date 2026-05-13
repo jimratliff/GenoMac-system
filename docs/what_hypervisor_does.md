@@ -1,4 +1,21 @@
 # What Hypervisor does
+- The Hypervisor keeps track of state across time and within a session
+- The programmatically implemented settings
+
+## The Hypervisor keeps track of state across time and within a session
+The Hypervisor maintains a memory of *states* in a hidden directory, `~/.genomac-user-state`, which can contain empty files with a `.state` prefix. Each such file corresponds to a particular state identified by the file name (ignoring the `.state` extension) of that state file. If a state’s file exists, the state is true; if the file doesn’t exist, the state if false.
+
+The Hypervisor keeps track of state across time, i.e., whether it has *ever* done a particular operation. This way it ensures that, for some operations, it performs that operation exactly once but no more. Examples of such operations are (a) Configuring 1Password’s SSH Agent, (b) signing into Dropbox and configuring it to sync a particular local `Dropbox` directory, and (c) creating additional Mission Control Spaces. The state files corresponding to these across-time states all begin the prefix `PERM_`, which stands for “permanent.”[^coerce_migration]
+
+[^coerce_migration]: If such a one-time-only operation should nevertheless be performed again, this can be achieved by deleting the appropriate state file. Then, the next time Hypervisor runs, it will not remember that it had previously performed this operation and will perform it again.
+
+The Hypervisor also keeps of state within a session, i.e., so that if the session is interrupted (for example, if the Hypervisor tells the user to logout, log back in, and restart the Hypervisor), the Hypervisor will know where to pick back up.[^avoid_infinite_loop] The state files corresponding to these across-time states all begin the prefix `SESH_`, which stands for “session.”[^clear_session_states]
+
+[^avoid_infinite_loop]: Otherwise, the Hypervisor could get caught in an infinite loop of performing an operation, being forced to log out, and rerunning the Hypervisor from the beginning.
+
+[^clear_session_states]: At the end of a session, i.e., when Hypervisor reaches its end, it deletes all of the `SESH_` state files, so that its session memory will start blank the next time Hypervisor is run.
+
+## The programmatically implemented settings
 
 (This is part of the documentation for the [GenoMac-system repository](https://github.com/jimratliff/GenoMac-system).)
 
