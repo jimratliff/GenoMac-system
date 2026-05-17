@@ -1,5 +1,14 @@
 #!/usr/bin/env zsh
 
+# DEPRECATED: This is the wrong formulation:
+# - sysadminctl_adduser() doesn’t care whether the user’s home-directory location “exists”
+#   at the time the user’s account is defined.
+# - When a user first logs into a new account, the path of the home directory matters, but
+#   the *container* doesn’t. The volume must be mounted before the user first logs in, but
+#   volume “V” is volume “V” regardless of what container contains it.
+# - It will need to be the user’s responsibility that its home-directory volume is mounted
+#   before the user logs into its account.
+
 function ensure_encrypted_apfs_volume_exists() {
   # Ensure an encrypted APFS volume exists.
   #
