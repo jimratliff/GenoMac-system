@@ -47,7 +47,8 @@ and use parent_of_users_home_directories_from_volume_name()
 A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely
 look up a passphrase, and (c) volume key to a volume name.
 
-The volume_name is either (a) `::startup_volume::` (which is not a valid volume name, due to the colons) or
+The volume_name is either (a) `::startup_volume::` (which is not a valid volume name, due to the colons) 
+(referenceable with the environment variable STARTUP_VOLUME_SIGNIFIER) or
 (b) a volume name. When volume_name is `::startup_volume::`, this implies --startup-volume in the sense of parent_of_users_home_directories().
 
 ```
