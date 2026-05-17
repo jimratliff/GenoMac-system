@@ -4,8 +4,11 @@ function sysadminctl_adduser() {
   # An interface to the addUser subcommand of sysadminctl.
   #
   # Creates a new user via sysadminctl -addUser, including enabling Secure Token.
+  #
+  # Must be run with sudo. (The --admin-user-name is for an admin user with a Secure
+  # Token. It doesn’t provide authority to create a user without sudo.)
   # 
-  # Intended usage is to provide the password for (each of (a) the new user and (b) an
+  # Intended usage: Provide the password for (each of (a) the new user and (b) an
   # existing admin user with a Secure Token) by providing the name of a 1Password vault
   # and the name of the password items in that vault that contain those two passwords.
   # (This reduces the security exposure relative to passing cleartext passwords between
@@ -22,19 +25,22 @@ function sysadminctl_adduser() {
   # If Secure Token is not confirmed to be enabled, the function fails.
   #
   # NOTE: The --home path does *not* need to exist in order for the user to be created.
-  #       The *volume* will need to exist when this user first logs into the account.
+  #       The *volume* will need to exist and be mounted when this user first logs into the account.
   #       However, the /Users directory need not exist when the user first logs into the
   #       account. It will be created along with the user’s home directory at that time.
   #
   # Parameters:
-  #   --short-name                mandatory  <string> short user name
-  #   --full-name                            <string> full user name
-  #   --uid                       mandatory  <integer> UID
+  #   --short-name                mandatory  <string> short user name for new user
+  #   --full-name                 optional   <string> full user name for new user
+  #   --uid                       mandatory  <integer> UID for new user
   #   --home                      mandatory  <string> full path to home directory
-  #   --avatar-path                          <string> full path to avatar file
+  #   --avatar-path               optional   <string> full path to avatar file
   #   --admin-user-name           mandatory  <string> short name of existing admin user
+  #   --hint                      optional   <string> password hint
+  #   --not-an-admin              optional   If supplied, new user will NOT be an admin.
+  #                                          Default: new user WILL be an admin.
   #
-  #   PASSWORD SPECIFICATIONS:
+  #   PASSWORD SPECIFICATIONS:    mandatory
   #   Specify either:
   #     (a) 1Password vault + password-type item names for both new-user and admin-user passwords
   #   or
@@ -48,11 +54,6 @@ function sysadminctl_adduser() {
   #   CLEARTEXT (insecure; testing only):
   #   --cleartext-password-user              <string> password for --short-name
   #   --cleartext-password-admin             <string> password for --admin-user-name
-  #
-  #   --hint                                 <string> password hint
-  #
-  #   --not-an-admin                         If supplied, new user will NOT be an admin.
-  #                                          Default: new user WILL be an admin.
 
   report_start_phase_standard
   report_argument_vector "$@"
