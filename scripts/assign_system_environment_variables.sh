@@ -56,6 +56,23 @@ GMS_USER_SPAWNING_SCRIPTS="${GMS_SCRIPTS}/spawn"
 # Holds narrow-focused scripts to be individually accessed by make recipes
 GMS_UTILITIES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/utilities"
 
+#############################################
+#                  Other
+
+############### Related to spawning new user accounts
+
+# Specify the local directory in which user login pictures are stored to be
+# accessed by GenoMac-system when it creates user accounts.
+GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
+
+# Directory (relative to current volume) in which all user home directories reside
+# NOTE: The prefixing `/` is part of the string. This simplifies constructing the path in the case that the
+#       home directory is located at the root of the volume.
+DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="/Users"
+
+# String to signify the current startup volume
+STARTUP_VOLUME_SIGNIFIER="::startup_volume::"
+
 ############### 1Password-related
 # Name of 1Password vault that stores items related to user creation
 ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION="GenoMac-user-creation"
@@ -68,19 +85,6 @@ ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="GenoMac-system-specs-of-users-to
 
 # Name of 1Password item that stores a fake password for testing purposes
 ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD="TEST_PASSWORD"
-
-###
-
-############### Related to spawning new user accounts
-
-# Specify the local directory in which user login pictures are stored to be
-# accessed by GenoMac-system when it creates user accounts.
-GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
-
-# Directory (relative to current volume) in which all user home directories reside
-# NOTE: The prefixing `/` is part of the string. This simplifies constructing the path in the case that the
-#       home directory is located at the root of the volume.
-DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="/Users"
 
 ###
 
@@ -105,4 +109,5 @@ export_and_report ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD
 export_and_report ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
 export_and_report ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
 export_and_report ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+export_and_report STARTUP_VOLUME_SIGNIFIER
 
