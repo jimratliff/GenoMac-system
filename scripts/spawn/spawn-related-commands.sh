@@ -41,15 +41,15 @@ function main() {
       interactive_test_for_user_existence
       ;;
 
-    what-is-startup-container)
-      report_action_taken "Determine name of startup-volume container"
-      determine_startup_container
-      ;;
-
-    ensure-volume-exists)
-      report_action_taken "Interactively ensure volume exists"
-      interactive_ensure_encrypted_apfs_volume_exists
-      ;;
+  #      what-is-startup-container)
+  #        report_action_taken "Determine name of startup-volume container"
+  #        determine_startup_container
+  #        ;;
+  #  
+  #      ensure-volume-exists)
+  #        report_action_taken "Interactively ensure volume exists"
+  #        interactive_ensure_encrypted_apfs_volume_exists
+  #        ;;
 
     test-home-directories-parent)
       report_action_taken "Interactively test path to parent of users’ home directories"
