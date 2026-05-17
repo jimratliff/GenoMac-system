@@ -15,8 +15,6 @@ typeset -gA volume_name_from_volume_key
 
 function create_user_accounts_for_this_Mac() {
   # Creates specific user accounts for this Mac.
-  # When a user to be created is specified to reside on (i.e., its home directory inhabits) a volume
-  #   that doesn’t currently exist, that APFS volume is created.
   #
   # It’s assumed that this process is being executed by USER_CONFIGURER, which user already exists, as does
   #   a "vanilla" account. Thus, the users being created are anticipated to be the third and subsequent
