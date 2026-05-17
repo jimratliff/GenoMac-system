@@ -47,8 +47,8 @@ and use parent_of_users_home_directories_from_volume_name()
 A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely
 look up a passphrase, and (c) volume key to a volume name.
 
-The volume_key "startup_volume" is special. It does *not* map to a volume name. Instead, it maps to 
---startup-volume in the sense of parent_of_users_home_directories()
+The volume_name is either (a) `::startup_volume::` (which is not a valid volume name, due to the colons) or
+(b) a volume name. When volume_name is `::startup_volume::`, this implies --startup-volume in the sense of parent_of_users_home_directories().
 
 ```
   {
@@ -67,7 +67,7 @@ The volume_key "startup_volume" is special. It does *not* map to a volume name. 
       "auxiliary_volume": "AUX_PASSWORD"
     },
     "volume_name_from_volume_key": {
-      "startup_volume": "Volume_for_Startup",
+      "startup_volume": "::startup_volume::",
       "personal_volume": "Volume_for_Personal_Users",
       "work_volume": "Volume_for_Work_Users",
       "auxiliary_volume": "Volume_for_Auxiliary_Users"
