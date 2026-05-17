@@ -18,7 +18,8 @@ Each user to be created is specified by:
   - Relative path to image file for the user’s avatar, e.g., "Betty.png"
   - The path is expressed relative to GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
     - Hint: GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
-  
+
+```
   {
     "users_to_create": [
       {
@@ -36,6 +37,7 @@ Each user to be created is specified by:
       }
     ]
   }
+```
   
 To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory
 is `some_volume/Users/some_user`.
@@ -47,7 +49,8 @@ look up a passphrase, and (c) volume key to a volume name.
 
 The volume_key "startup_volume" is special. It does *not* map to a volume name. Instead, it maps to 
 --startup-volume in the sense of parent_of_users_home_directories()
-  
+
+```
   {
     "volume_key_from_user_class": {
       "simple_admin": "startup_volume",
@@ -70,4 +73,4 @@ The volume_key "startup_volume" is special. It does *not* map to a volume name. 
       "auxiliary_volume": "Volume_for_Auxiliary_Users"
     },
   }
-  #
+```
