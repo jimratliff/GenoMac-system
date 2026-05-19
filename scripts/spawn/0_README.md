@@ -1,4 +1,9 @@
 # About spawning new users for this Mac
+## The volume, user, and password architecture of Project GenoMac
+- Each user has a home directory, which can reside either (a) on the startup volume or (b) a different volume.
+- Each user has a password
+- Each volume is encrypted with an encryption passphrase.Notes
+- Because a user’s password is also intended to be the encyrption password for the volume on which the user’s home directory resides, for a given volume V, all users whose home directory resides on V must share a common password P.
 
 ## Specification of users to be created
 ### `users_to_create`
@@ -14,8 +19,7 @@ Each user to be created is specified by:
 - "user-class"
   - a string key, e.g., "simple_admin", "implementor", "unsullied", "personal", "work", "auxiliary"
   - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
-  - Notes
-    - Because a user’s password is also intended to be the encyrption password for the volume on which the user’s home directory resides, for a given volume V, all users whose home directory resides on V must share a common password P.
+  - 
     - The current structure doesn’t permit the home directories of users of a given user-class to be split over multiple volumes. This result could be achieved by splitting a user-class (e.g., into "personal-1", "personal-2", etc.) such that the newly split classes mapped to a common password but to different volumes.
 - "avatar" (optional)
   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png" expressed relative to
