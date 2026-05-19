@@ -1,10 +1,15 @@
 # About spawning new users for this Mac
 ## The volume, user, and password architecture of Project GenoMac
+- There are typically multiple volumes:
+  - a startup volume, encrypted using File Vault
+  - perhaps multiple other volumes, each encrypted (not part of File Vault) with an encryption passphrase.
+- There are multiple users
 - Each user has a home directory, which can reside either (a) on the startup volume or (b) a different volume.
-  - The startup volume is referenced distinctly from other volumes in the sense that the startup volume is not referenced by name but rather by the environment variable `STARTUP_VOLUME_SIGNIFIER="::startup_volume::"`. This distinction in reference mode arises because the path to a home directory on the startup volume is `/Users/some_user`, where the path to a home directory on another volume is `/Volumes/some_volume/Users/some_user`.
+  - The startup volume is referenced distinctly from other volumes in the sense that the startup volume is not referenced by name but rather by the environment variable `STARTUP_VOLUME_SIGNIFIER="::startup_volume::"`.[^why_startup_is_different]
 - Each user has a user password
-- Each volume is encrypted with an encryption passphrase.
 - Because a user’s password is also intended to be the encyrption password for the volume on which the user’s home directory resides, for a given volume V, all users whose home directory resides on V must share a common password P.
+
+[^why_startup_is_different]: This distinction in how a startup volume is referenced vis-à-vis how another volume is referenced arises because the path to a home directory on the startup volume is `/Users/some_user`, whereas the path to a home directory on another volume is `/Volumes/some_volume/Users/some_user`. Thus, the path to a user home directory on the startup volume doesn’t explicitly reference the volume name of the startup volume.
 
 Project GenoMac defines multiple user-classes.
 - A user-class includes all users, and only those users, that share both (a) a common user password and (b) a common volume for the users home directories.
