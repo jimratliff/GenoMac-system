@@ -63,7 +63,7 @@ GMS_UTILITIES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/utilities"
 
 # Specify the local directory in which user login pictures are stored to be
 # accessed by GenoMac-system when it creates user accounts.
-GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
+GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
 
 # Directory (relative to current volume) in which all user home directories reside
 # NOTE: The prefixing `/` is part of the string. This simplifies constructing the path in the case that the
