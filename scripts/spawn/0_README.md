@@ -14,9 +14,13 @@ Each user to be created is specified by:
 - "user-class"
   - a string key, e.g., "simple_admin", "implementor", "unsullied", "personal", "work", "auxiliary"
   - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
+  - Notes
+    - Because a user’s password is also intended to be the encyrption password for the volume on which the user’s home directory resides, for a given volume V, all users whose home directory resides on V must share a common password P.
+    - The current structure doesn’t permit the home directories of users of a given user-class to be split over multiple volumes. This result could be achieved by splitting a user-class (e.g., into "personal-1", "personal-2", etc.) such that the newly split classes mapped to a common password but to different volumes.
 - "avatar" (optional)
   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png" expressed relative to
     USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
+  - The user picture at that path is referenced at the time the user account is created, at which point the data from the user picture is incorporated into the user’s profile. The user picture does not need to remain accessible at that path after the user account is created.
 
 ```
   {
