@@ -17,7 +17,7 @@ Each user to be created is specified by:
 - "avatar" (optional)
   - Relative path to image file for the user’s avatar, e.g., "Betty.png"
   - The path is expressed relative to GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
-    - Hint: GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
+    - Hint: GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
 
 ```
   {
