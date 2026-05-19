@@ -15,9 +15,8 @@ Each user to be created is specified by:
   - a string key, e.g., "simple_admin", "implementor", "unsullied", "personal", "work", "auxiliary"
   - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
 - "avatar" (optional)
-  - Relative path to image file for the user’s avatar, e.g., "Betty.png"
-  - The path is expressed relative to USER_PICTURE_DIRECTORY
-    - Hint: USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
+  - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png" expressed relative to
+    USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
 
 ```
   {
