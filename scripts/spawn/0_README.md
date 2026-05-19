@@ -16,8 +16,8 @@ Each user to be created is specified by:
   - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
 - "avatar" (optional)
   - Relative path to image file for the user’s avatar, e.g., "Betty.png"
-  - The path is expressed relative to GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
-    - Hint: GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
+  - The path is expressed relative to USER_PICTURE_DIRECTORY
+    - Hint: USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
 
 ```
   {
