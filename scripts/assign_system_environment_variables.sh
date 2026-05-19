@@ -63,7 +63,7 @@ GMS_UTILITIES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/utilities"
 
 # Specify the local directory in which user login pictures are stored to be
 # accessed by GenoMac-system when it creates user accounts.
-GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
+USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
 
 # Directory (relative to current volume) in which all user home directories reside
 # NOTE: The prefixing `/` is part of the string. This simplifies constructing the path in the case that the
@@ -96,7 +96,6 @@ export_and_report GMS_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_HOMEBREW
 export_and_report GMS_HYPERVISOR_SCRIPTS
 export_and_report GMS_INSTALL_SCRIPTS
-export_and_report GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
 export_and_report GMS_NON_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_RESOURCE_INSTALL_SCRIPTS
 export_and_report GMS_RESOURCES
@@ -110,4 +109,5 @@ export_and_report ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
 export_and_report ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
 export_and_report ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
 export_and_report STARTUP_VOLUME_SIGNIFIER
+export_and_report USER_PICTURE_DIRECTORY
 
