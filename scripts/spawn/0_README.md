@@ -6,7 +6,8 @@
 - Each volume is encrypted with an encryption passphrase.
 - Because a user’s password is also intended to be the encyrption password for the volume on which the user’s home directory resides, for a given volume V, all users whose home directory resides on V must share a common password P.
 
-Project GenoMac defines multiple user-classes. A user-class includes all users, and only those users, that share both (a) a common user password and (b) a common volume for the users home directories. (
+Project GenoMac defines multiple user-classes.
+- A user-class includes all users, and only those users, that share both (a) a common user password and (b) a common volume for the users home directories.
 
 ## Specification of users to be created
 ### `users_to_create`
