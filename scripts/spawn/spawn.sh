@@ -35,7 +35,7 @@ function create_user_accounts_for_this_Mac() {
   #   - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
   # - "avatar" (optional)
   #   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to 
-  #     GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
+  #     USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
   #
   #   {
   #     "users_to_create": [
@@ -301,7 +301,7 @@ function get_users_to_create_from_1password() {
 
 function prompt_configurer_to_supply_login_pictures_if_desired() {
   # Asks USER_CONFIGURER whether login pictures are desired when creating user accounts. If so, prompts USER_CONFIGURER
-  # to confirm that the desired login pictures reside in GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
+  # to confirm that the desired login pictures reside in USER_PICTURE_DIRECTORY
   # If login pictures are desired, but their existence isn’t confirmed by USER_CONFIGURER, the user-creation process is
   # aborted.
   
@@ -314,11 +314,11 @@ function prompt_configurer_to_supply_login_pictures_if_desired() {
   fi
 
   report_action_taken "Creating, if necessary, directory for users’ login pictures"
-  mkdir -p "$GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY" ; success_or_not
+  mkdir -p "$USER_PICTURE_DIRECTORY" ; success_or_not
 
-  report "The login picture for each user must be in: $GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY"
+  report "The login picture for each user must be in: $USER_PICTURE_DIRECTORY"
   report_action_taken "I am opening this directory for you to inspect its contents"
-  open "$GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY" ; success_or_not
+  open "$USER_PICTURE_DIRECTORY" ; success_or_not
   if ! get_yes_no_answer_to_question "Answer “yes” if you’re satisfied the login pics are in the folder. Answer “no” to cancel."; then
     report "You want login pictures, but you haven’t confirmed you’ve supplied them.${NEWLINE}I am aborting. Feel free to try again later."
     return 1
