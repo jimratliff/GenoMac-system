@@ -34,9 +34,8 @@ function create_user_accounts_for_this_Mac() {
   #   - a string key, e.g., "simple_admin", "implementor", "unsullied", "personal", "work", "auxiliary"
   #   - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
   # - "avatar" (optional)
-  #   - Relative path to image file for the user’s avatar, e.g., "Betty.png"
-  #   - The path is expressed relative to GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY
-  #     - Hint: GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
+  #   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to 
+  #     GMS_LOGIN_PICTURES_FOR_USER_CREATION_DIRECTORY="$HOME/.genomac-system-login-pictures-for-user-creation"
   #
   #   {
   #     "users_to_create": [
