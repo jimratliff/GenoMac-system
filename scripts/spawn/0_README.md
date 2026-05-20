@@ -1,12 +1,32 @@
 # About spawning new users for this Mac
 ## The volume, user, and password architecture of Project GenoMac
-- Volumes
-  - Let V be the set of volumes
-  - V = {v<sup>†</sup> , v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
-  - Each volume v∈V has a unique passphrase v.p.[^unique_password_for_volume]
-  - For each *non-startup* volume v∈V\\{v<sup>†</sup>}, v is encrypted (*not* using File Vault) using passphrase v.p.
-  - The *startup* volume v<sup>†</sup> is encrypted using File Vault.[^file_vault_mounted_by]
-- Users
+The startup volume, by design, has no highly sensitive data. It is home only to infrastructural/utility users. All substantive users have their home directories on volumes other than the startup volume. Each of these other volumes is independently encrypted.
+
+The first step for a substantive user to boot the Mac and log into to its actual/substantive account is: (a) boot the Mac, (b) log into one of the infrastructural/utility user’s account, (c) mount the encrypted volume on which the substantive user’s home directory resides (which requires entering the substantive user’s passphrase, because that is also the passphrase of that volume), (d)
+
+There are two major groups of users:
+- infrastructural/utility users: These users exists only to help manage the Mac itself. Their home directories reside on the startup volume. They all have Secure Tokens for the File Vault–protected startup volume and hence can mount the startup volume.
+- substantive users: These are the important users who do important things. Each substantive user has a home directory that resides on an independently encrypted volume other than the startup volume.
+
+The process for a substantive user to boot the Mac and log into its account:
+- Boot the Mac
+- Log in as any of the infrastructural/utility users. This mounts the startup volume.
+- A dialog box will be presented for each other (non-startup volume), offering to take the passphrase for that volume and mount it.
+- Enter the passphrase for the volume on which this substantive user has their home directory. (Note that, by design, this passphrase is the same as the account password for this substantive user.) Decline the dialog boxes for all other volumes.
+- Log out of the infrastructual/utility user’s account, returning to the login window.
+- Log into the substantive user’s account (using the same passphrase as was used to mount this non-startup volume.
+
+- Each user belongs to a user class.
+- Each user class is assigned a volume (on which the user’s home directory resides).
+- Each volume is assigned a passphrase.
+- Every user must know the credentials for an “infrastructure user,” i.e., one whose home directory resides on the startup volume, in order that, at boot, the user
+### Volumes
+- Let V be the set of volumes
+- V = {v<sup>†</sup> , v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
+- Each volume v∈V has a unique passphrase v.p.[^unique_password_for_volume]
+- For each *non-startup* volume v∈V\\{v<sup>†</sup>}, v is encrypted (*not* using File Vault) using passphrase v.p.
+- The *startup* volume v<sup>†</sup> is encrypted using File Vault.[^file_vault_mounted_by]
+### Users
   - Let U be the set of users
   - User classes
     - Let U<sup>§</sup> be the set of user classes such that U<sup>§</sup>={U<sub>1</sub>, U<sub>2</sub>, … , U<sub>n</sub>} partitions U.
@@ -16,14 +36,10 @@
   - Each user u is assigned (a) a volume u.v and (b) a passphrase u.p by inheritance from the user’s user class
     - ∀U<sub>i</sub>∈U<sup>§</sup>, ∀u∈U<sub>i</sub>
       - u.v=U<sub>i</sub>.v
+        - The volume u.v is the volume that contains the user’s home directory
       - u.p=U<sub>i</sub>.p
-
-
-
-  - a startup volume, encrypted using File Vault
-  - perhaps multiple other volumes, each encrypted (not part of File Vault) with an encryption passphrase.
+        - The passphrase u.p serves both as (a) the passphrase by which the user can decrypt/mount the volume u.v that contains the user’s home directory and (b) the password by which the user logs into the user’s account.
  
-
 [^unique_password_for_volume]: ∀v,v′∈V, (v≠v′) ⇒ (v.p≠v′.p.)
 
 [^file_vault_mounted_by]: The startup volume will be mounted when any user with a Secure Token for that volume logs in.
