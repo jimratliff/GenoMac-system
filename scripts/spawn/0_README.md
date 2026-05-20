@@ -6,10 +6,15 @@
   - Each volume v∈V has a unique passphrase v.p.[^unique_password_for_volume]
 - Users
   - Let U be the set of users
-  - Let U<sup>§</sup> be the set of user classes such that U<sup>§</sup>={U<sub>1</sub>, U<sub>2</sub>, … , U<sub>n</sub>} partitions U.
-  - Each user class U<sub>i</sub> is assigned a unique volume U<sub>i</sub>.v.[^unique_volume]
-  - Each user class U<sub>i</sub> is assigned a unique passphrase[^unique_password_for_user_class] U<sub>i</sub>.p via inheritance from the user class’s volume
-    - ∀U<sub>i</sub>∈U<sup>§</sup>, U<sub>i</sub>.p=(U<sub>i</sub>.v).p
+  - User classes
+    - Let U<sup>§</sup> be the set of user classes such that U<sup>§</sup>={U<sub>1</sub>, U<sub>2</sub>, … , U<sub>n</sub>} partitions U.
+    - Each user class U<sub>i</sub> is assigned a unique volume U<sub>i</sub>.v.[^unique_volume]
+    - Each user class U<sub>i</sub> is assigned a unique passphrase[^unique_password_for_user_class] U<sub>i</sub>.p via inheritance from the user class’s volume
+      - ∀U<sub>i</sub>∈U<sup>§</sup>, U<sub>i</sub>.p=(U<sub>i</sub>.v).p
+  - Each user u is assigned (a) a volume u.vand (b) a passphrase u.p by inheritance from the user’s user class
+    - ∀U<sub>i</sub>∈U<sup>§</sup>, ∀u∈U<sub>i</sub>
+      - u.v=U<sub>i</sub>.v
+      - u.p=U<sub>i</sub>.p
 
 
 
