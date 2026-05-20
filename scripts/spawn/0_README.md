@@ -1,8 +1,16 @@
 # About spawning new users for this Mac
 ## The volume, user, and password architecture of Project GenoMac
-- There are typically multiple volumes:
+- Let V be the set of volumes
+- V = {v<sup>*</sup>, v<sub>1</sub>, v<sub>2</sub>, …}
+
+
+
   - a startup volume, encrypted using File Vault
   - perhaps multiple other volumes, each encrypted (not part of File Vault) with an encryption passphrase.
+ 
+
+
+
 - There are multiple users
 - Each user has a home directory, which can reside either (a) on the startup volume or (b) a different volume.
   - The startup volume is referenced distinctly from other volumes in the sense that the startup volume is not referenced by name but rather by the environment variable `STARTUP_VOLUME_SIGNIFIER="::startup_volume::"`.[^why_startup_is_different]
