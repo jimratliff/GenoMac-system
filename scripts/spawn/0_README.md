@@ -1,6 +1,10 @@
 # About spawning new users for this Mac
 ## The volume, user, and password architecture of Project GenoMac
 ### High-level overview
+We focus on a particular Mac.[^multiple_macs]
+
+[^multiple_macs]: Project GenoMac does consider multiple Macs in the following context: Each Mac is approximately a replica of the other Macs including the set of users. The idea is not multiple Macs, each used by a separate person than each other Mac but rather the same person operates all the Macs. Although each Mac has multiple “users” in the macOS sense, all of those users are typically the same human.
+
 There is (a) the startup volume (protected by File Vault) and (b) other, independently encrypted (non-startup and non–File Vault) volumes.
 
 There are two major groups of users:
