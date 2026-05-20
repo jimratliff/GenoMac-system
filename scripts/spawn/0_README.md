@@ -3,7 +3,7 @@
 - Volumes
   - Let V be the set of volumes
   - V = {v<sup>†</sup> ,v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
-  - Each volume v∈V has a unique passphrase v.p
+  - Each volume v∈V has a unique passphrase v.p.[^unique_password]
 - Users
 
 
@@ -12,7 +12,7 @@
   - perhaps multiple other volumes, each encrypted (not part of File Vault) with an encryption passphrase.
  
 
-
+[^unique_password]: ∀v,v′∈V, v≠v′, v.p≠v′.p.
 
 - There are multiple users
 - Each user has a home directory, which can reside either (a) on the startup volume or (b) a different volume.
