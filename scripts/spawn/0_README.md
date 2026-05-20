@@ -1,7 +1,7 @@
 # About spawning new users for this Mac
 ## The volume, user, and password architecture of Project GenoMac
 - Let V be the set of volumes
-- V = {v<sup>*</sup>, v<sub>1</sub>, v<sub>2</sub>, …}
+- V = {v<sup>*</sup>, v,v<sub>1</sub>, v<sub>2</sub>, …}
 
 
 
