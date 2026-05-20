@@ -3,11 +3,13 @@
 - Volumes
   - Let V be the set of volumes
   - V = {v<sup>†</sup> ,v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
-  - Each volume v∈V has a unique passphrase v.p.[^unique_password]
+  - Each volume v∈V has a unique passphrase v.p.[^unique_password_for_volume]
 - Users
   - Let U be the set of users
   - Let U<sup>§</sup> be the set of user classes such that U<sup>§</sup>={U<sub>1</sub>, U<sub>2</sub>, … , U<sub>n</sub>} partitions U.
   - Each user class U<sub>i</sub> is assigned a unique volume U<sub>i</sub>.v.[^unique_volume]
+  - Each user class U<sub>i</sub> is assigned a unique passphrase[^unique_password_for_user_class] U<sub>i</sub>.p via inheritance from the user class’s volume
+  - ∀U<sub>i</sub>∈U<sup>§</sup>, U<sub>i</sub>.p=(U<sub>i</sub>.v).p
 
 
 
@@ -15,9 +17,11 @@
   - perhaps multiple other volumes, each encrypted (not part of File Vault) with an encryption passphrase.
  
 
-[^unique_password]: ∀v,v′∈V, v≠v′, v.p≠v′.p.
+[^unique_password_for_volume]: ∀v,v′∈V, v≠v′, v.p≠v′.p.
 
 [^unique_volume]: ∀U<sub>i</sub>, U<sub>j</sub>∈U<sup>§</sup>, U<sub>i</sub>≠U<sub>j</sub>, U<sub>i</sub>.v≠U<sub>j</sub>.v.
+
+[^unique_password_for_user_class]: ∀U<sub>i</sub>, U<sub>j</sub>∈U<sup>§</sup>, U<sub>i</sub>.p≠U<sub>j</sub>.p.
 
 - There are multiple users
 - Each user has a home directory, which can reside either (a) on the startup volume or (b) a different volume.
