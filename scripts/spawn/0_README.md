@@ -6,7 +6,7 @@
   - Each volume v∈V has a unique passphrase v.p.[^unique_password]
 - Users
   - Let U be the set of users
-  - Let U<sup>§</sup> be the set of user classes such that 
+  - Let U<sup>§</sup> be the set of user classes such that U<sup>§</sup>={U<sub>1</sub>, U<sub>2</sub>, … , U<sub>n</sub>} partitions U.
 
 
 
