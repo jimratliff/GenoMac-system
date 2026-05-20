@@ -1,7 +1,7 @@
 # About spawning new users for this Mac
 ## The volume, user, and password architecture of Project GenoMac
 ### High-level overview
-There is (a) the startup volume (protected by File Vault) and (b) other, independently encrypted volumes.
+There is (a) the startup volume (protected by File Vault) and (b) other, independently encrypted (non-startup and non–File Vault) volumes.
 
 There are two major groups of users:
 - infrastructural/utility users: These users exists only to help manage the Mac itself. Their home directories reside on the startup volume and don’t contain highly sensitive information. These users all have Secure Tokens for the File Vault–protected startup volume and hence can mount the startup volume.
