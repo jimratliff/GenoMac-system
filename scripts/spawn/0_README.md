@@ -2,7 +2,7 @@
 ## The volume, user, and password architecture of Project GenoMac
 - Volumes
   - Let V be the set of volumes
-  - V = {v<sup>†</sup> ,v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
+  - V = {v<sup>†</sup> , v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
   - Each volume v∈V has a unique passphrase v.p.[^unique_password_for_volume]
   - For each *non-startup* volume v∈V\{v<sup>†</sup>}, v is encrypted (*not* using File Vault) using passphrase v.p.
   - The *startup* volume v<sup>†</sup> is encrypted using File Vault.[^file_vault_mounted_by]
