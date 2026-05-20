@@ -7,6 +7,7 @@
 - Users
   - Let U be the set of users
   - Let U<sup>§</sup> be the set of user classes such that U<sup>§</sup>={U<sub>1</sub>, U<sub>2</sub>, … , U<sub>n</sub>} partitions U.
+  - Each user class U<sub>i</sub> is assigned a unique volume U<sub>i</sub>.v.[^unique_volume]
 
 
 
@@ -15,6 +16,8 @@
  
 
 [^unique_password]: ∀v,v′∈V, v≠v′, v.p≠v′.p.
+
+[^unique_volume]: ∀U<sub>i</sub>, U<sub>j</sub>∈U<sup>§</sup>, U<sub>i</sub>≠U<sub>j</sub>, U<sub>i</sub>.v≠U<sub>j</sub>.v.
 
 - There are multiple users
 - Each user has a home directory, which can reside either (a) on the startup volume or (b) a different volume.
