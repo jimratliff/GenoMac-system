@@ -8,18 +8,18 @@ We focus on a particular Mac.[^multiple_macs] Each Mac has multiple volumes.[^co
 [^container_structure]: For the most part, if not entirely, Project GenoMac doesn’t concern itself with *containers* but only *volumes*. It matters what volumes are mounted. Once mounted, the volume’s name identifies that volume, without regard to the container on which it resides.
 
 There are two major groups of users:
-- infrastructural/utility users: These users exists only to help manage the Mac itself. Their home directories reside on the startup volume and don’t contain highly sensitive information. These users all have Secure Tokens for the File Vault–protected startup volume and hence can mount the startup volume.
-- substantive users: These are the important users who do important things. Each substantive user has a home directory that resides on an independently encrypted volume other than the startup volume.
+- superintendant-class users: These users exists only to help manage the Mac itself and facilitate its use by “resident users.” The home directories of the superintendant-class users reside on the startup volume and don’t contain highly sensitive information. These users all have Secure Tokens for the File Vault–protected startup volume and hence can mount the startup volume.
+- resident users: These are the important users who do important things. Each resident user has a home directory that resides on an independently encrypted volume other than the startup volume.
 
-Substantive users need to know *two* sets of credentials: (a) their own, of course, but also (b) the credentials for one of the infrastructual/utility users—in order to be able to boot the Mac into the infrastructural/utility user’s account, from which to mount the volume where the substantive user’s home directory resides.
+Each resident user needs to know *two* sets of credentials: (a) their own, of course, but also (b) the credentials for one of the superintendent-class users—in order to be able to boot the Mac into the superintendent-class user’s account, from which to mount the volume where the resident user’s home directory resides.
 
-The process for a substantive user to boot the Mac and log into its account:
+The process for a resident user to boot the Mac and log into its account:
 - Boot the Mac
 - Log in as any of the infrastructural/utility users. This mounts the startup volume.
 - A dialog box will be presented for each other (non-startup volume), offering to take the passphrase for that volume and mount it.
-- Enter the passphrase for the volume on which this substantive user has their home directory. (Note that, by design, this passphrase is the same as the account password for this substantive user.) Decline the dialog boxes for all other volumes.
+- Enter the passphrase for the volume on which this resident user has their home directory. (Note that, by design, this passphrase is the same as the account password for this resident user.) Decline the dialog boxes for all other volumes.
 - Log out of the infrastructual/utility user’s account, returning to the login window.
-- Log into the substantive user’s account (using the same passphrase as was used to mount this non-startup volume.
+- Log into the resident user’s account (using the same passphrase as was used to mount this non-startup volume.
 
 - Each user belongs to a user class.
 - Each user class is assigned a volume (on which the user’s home directory resides).
