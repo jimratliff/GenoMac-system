@@ -1,12 +1,13 @@
 # About spawning new users for this Mac
 ## The volume, user, and password architecture of Project GenoMac
-The startup volume, by design, has no highly sensitive data. It is home only to infrastructural/utility users. All substantive users have their home directories on volumes other than the startup volume. Each of these other volumes is independently encrypted.
-
-The first step for a substantive user to boot the Mac and log into to its actual/substantive account is: (a) boot the Mac, (b) log into one of the infrastructural/utility user’s account, (c) mount the encrypted volume on which the substantive user’s home directory resides (which requires entering the substantive user’s passphrase, because that is also the passphrase of that volume), (d)
+### High-level overview
+There is (a) the startup volume (protected by File Vault) and (b) other, independently encrypted volumes.
 
 There are two major groups of users:
-- infrastructural/utility users: These users exists only to help manage the Mac itself. Their home directories reside on the startup volume. They all have Secure Tokens for the File Vault–protected startup volume and hence can mount the startup volume.
+- infrastructural/utility users: These users exists only to help manage the Mac itself. Their home directories reside on the startup volume and don’t contain highly sensitive information. These users all have Secure Tokens for the File Vault–protected startup volume and hence can mount the startup volume.
 - substantive users: These are the important users who do important things. Each substantive user has a home directory that resides on an independently encrypted volume other than the startup volume.
+
+Substantive users need to know *two* sets of credentials: (a) their own, of course, but also (b) the credentials for one of the infrastructual/utility users—in order to be able to boot the Mac into the infrastructural/utility user’s account, from which to mount the volume where the substantive user’s home directory resides.
 
 The process for a substantive user to boot the Mac and log into its account:
 - Boot the Mac
