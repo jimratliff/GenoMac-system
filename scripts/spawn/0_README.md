@@ -21,7 +21,7 @@ The process for a resident user to boot the Mac and log into its account:
 - A dialog box will be presented for each other not previously mounted volume, offering to take the passphrase for that volume and mount it.
 - Enter the passphrase for the volume on which this resident user has their home directory. (Note that, by design, this passphrase is the same as the account password for this resident user.) Decline the dialog boxes for all other volumes.
 - Log out of the superintendent-class user’s account, returning to the login window.
-- Log into the resident user’s account (using the same passphrase as was used to mount this non-startup volume.
+- Log into the resident user’s account (using the same passphrase as was used to mount this non-startup volume).
 
 - Each user belongs to a user class.
 - Each user class is assigned a volume (on which the user’s home directory resides).
