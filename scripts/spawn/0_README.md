@@ -49,6 +49,9 @@ Within the group of resident users:
     - Let U<sup>§</sup> be the set of user classes such that U<sup>§</sup>={U<sub>S</sub>, U<sub>1</sub>, U<sub>2</sub>, … , U<sub>n</sub>} partitions U.
     - Each user class U<sub>i</sub> is assigned a unique volume U<sub>i</sub>.v.[^unique_volume]
       - In particular, the superintendent user class U<sub>S</sub> is assigned the startup volume v<sup>†</sup>, i.e., U<sub>S</sub>.v = v<sup>†</sup>.
+    - The user’s volume determines the path to the user’s home directory. Suppose the user’s short name is 'some_user':
+      - If the user’s user class is 'superintendent',[^other_reason_startup] the user’s home directory is `/Users/some_user`
+      - If the user’s user class isn’t 'superintendent', the user’s home directory is `/Volumes/some_volume/Users/some_user`, where "some_volume" is the volume assigned to the user’s user class.
     - Each user class U<sub>i</sub> is assigned a unique passphrase[^unique_password_for_user_class] U<sub>i</sub>.p via inheritance from the user class’s volume
       - ∀U<sub>i</sub>∈U<sup>§</sup>, U<sub>i</sub>.p = (U<sub>i</sub>.v).p
   - Each user u is assigned (a) a volume u.v and (b) a passphrase u.p by inheritance from the user’s user class
@@ -61,6 +64,8 @@ Within the group of resident users:
 [^unique_password_for_volume]: ∀v,v′∈V, (v ≠ v′) ⇒ (v.p ≠ v′.p.)
 
 [^file_vault_mounted_by]: The startup volume will be mounted when any user with a Secure Token for that volume logs in. The startup volume *does* have a passphrase, but no human user knows it. Instead, any user with a Secure Token, by logging into that user’s account, internally decrypts that passphrase, which is then used to mount the startup volume.
+
+[^other_reason_startup]: Or if the user’s volume is "::startup_volume::" even if the user’s user class isn’t "superintendent" (though I haven’t thought of a use case for this).
 
 [^unique_volume]: ∀U<sub>i</sub>,U<sub>j</sub>∈U<sup>§</sup>, (U<sub>i</sub> ≠ U<sub>j</sub>) ⇒ (U<sub>i</sub>.v ≠ U<sub>j</sub>.v).
 
