@@ -1,7 +1,7 @@
 # About spawning new users for this Mac
 ## The volume, user, and password architecture of Project GenoMac
 ### High-level overview
-We focus on a particular Mac.[^multiple_macs] Each Mac has multiple volumes.[^container_structure] There is (a) the startup volume (protected by File Vault) and (b) other, independently encrypted (non-startup and non–File Vault) volumes.
+We focus on a particular Mac.[^multiple_macs] Each Mac has multiple volumes.[^container_structure] There is (a) the startup volume (protected by File Vault) and (b) other, independently encrypted (non-startup and non–File Vault) volumes. Each volume has a unique passphrase.
 
 [^multiple_macs]: The use case that motivates Project GenoMac does include multiple Macs in the following context: Each Mac is approximately a replica of the other Macs including the set of users. The idea is not that each Mac is used by a separate person than each other Mac but rather the same person operates all the Macs. Although each Mac has multiple “users” in the macOS sense, all of those users are typically the same human.
 
@@ -23,9 +23,11 @@ The process for a resident user to boot the Mac and log into its account:
 - Log out of the superintendent-class user’s account, returning to the login window.
 - Log into the resident user’s account (using the same passphrase as was used to mount this non-startup volume).
 
+Within the group of resident users:
 - Each user belongs to a user class.
-- Each user class is assigned a volume (on which the user’s home directory resides).
-- Each volume is assigned a passphrase.
+- Each user class is assigned a volume (on which the home directories of the users of this user class reside).
+- The user class is assigned a passphrase that is identical to the passphrase assigned to the user class’s volume.
+- Each user of the user class is assigned a passphrase that is the same as the user class’s passphrase.
 - Every user must know the credentials for an superintendent-class, i.e., one whose home directory resides on the startup volume, in order that, at boot, the user
 ### Volumes
 - Let V be the set of volumes
