@@ -14,9 +14,11 @@ There are two major groups of users:
 [^no_sensitive_info]: Here, no “highly sensitive information” means, for example, no client-confidential or personal financial information. The sensitive information that *is* on the startup volume is limited to passwords or passphrases, but even those are stored in independently encrypted password-management vaults (themselves within the File Vault–protected startup volume).
 
 More granular than the above two groups, Project GenoMac defines multiple user-classes.
-- A user-class includes all users, and only those users, that share both (a) a common user password and (b) a common volume for the users home directories.
+- A user-class includes all users, and only those users, that share both (a) a common user password and (b) a common volume for the users home directories.[user-class-can’t-span-volumes]
 - The superintendent class is a user class. All superintendent-class users have their home directories on the startup volume.
 - The group of resident users can span multiple other (non–superintendent) user classes.
+
+[user-class-can’t-span-volumes]: The current structure doesn’t permit home directories of some users of a given user-class to be on a different volume than the home directories of other users of that user class.
 
 Each resident user needs to know *two* sets of credentials: (a) their own, of course, but also (b) the credentials for one of the superintendent-class users—in order to be able to boot the Mac into the superintendent-class user’s account, from which to mount the volume where the resident user’s home directory resides.
 
@@ -78,10 +80,8 @@ Each user to be created is specified by:
   - (Project GenoMac excludes IDs 501–509 here, even though they are legit user IDs, in order to prevent
     conflicts with preexisting users.)
 - "user-class"
-  - a string key, e.g., "simple_admin", "implementor", "unsullied", "personal", "work", "auxiliary"
+  - a string key, e.g., "superintendent", "personal", "work", "auxiliary"
   - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
-  - 
-    - The current structure doesn’t permit the home directories of users of a given user-class to be split over multiple volumes. This result could be achieved by splitting a user-class (e.g., into "personal-1", "personal-2", etc.) such that the newly split classes mapped to a common password but to different volumes.
 - "avatar" (optional)
   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png" expressed relative to
     USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
