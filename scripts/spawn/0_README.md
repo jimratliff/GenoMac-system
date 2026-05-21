@@ -13,6 +13,11 @@ There are two major groups of users:
 
 [^no_sensitive_info]: Here, no “highly sensitive information” means, for example, no client-confidential or personal financial information. The sensitive information that *is* on the startup volume is limited to passwords or passphrases, but even those are stored in independently encrypted password-management vaults (themselves within the File Vault–protected startup volume).
 
+More granular than the above two groups, Project GenoMac defines multiple user-classes.
+- A user-class includes all users, and only those users, that share both (a) a common user password and (b) a common volume for the users home directories.
+- The superintendent class is a user class. All superintendent-class users have their home directories on the startup volume.
+- The group of resident users can span multiple other (non–superintendent) user classes.
+
 Each resident user needs to know *two* sets of credentials: (a) their own, of course, but also (b) the credentials for one of the superintendent-class users—in order to be able to boot the Mac into the superintendent-class user’s account, from which to mount the volume where the resident user’s home directory resides.
 
 The process for a resident user to boot the Mac and log into its account:
@@ -60,9 +65,6 @@ Within the group of resident users:
 [^unique_password_for_user_class]: ∀U<sub>i</sub>,U<sub>j</sub>∈U<sup>§</sup>, (U<sub>i</sub> ≠ U<sub>j</sub>) ⇒ (U<sub>i</sub>.p ≠ U<sub>j</sub>.p).
 
 [^why_startup_is_different]: The startup volume is referenced distinctly from other volumes in the sense that the startup volume is not referenced by name but rather by the environment variable `STARTUP_VOLUME_SIGNIFIER="::startup_volume::"`. This distinction in how a startup volume is referenced vis-à-vis how another volume is referenced arises because the path to a home directory on the startup volume is `/Users/some_user`, whereas the path to a home directory on another volume is `/Volumes/some_volume/Users/some_user`. Thus, the path to a user home directory on the startup volume doesn’t explicitly reference the volume name of the startup volume.
-
-Project GenoMac defines multiple user-classes.
-- A user-class includes all users, and only those users, that share both (a) a common user password and (b) a common volume for the users home directories.
 
 ## Specification of users to be created
 ### `users_to_create`
