@@ -24,11 +24,11 @@ The process for a resident user to boot the Mac and log into its account:
 - Log into the resident user’s account (using the same passphrase as was used to mount this non-startup volume).
 
 Within the group of resident users:
-- Each user belongs to a user class.
+- Each user belongs to a user class (other than the superintendent class).
 - Each user class is assigned a volume (on which the home directories of the users of this user class reside).
-- The user class is assigned a passphrase that is identical to the passphrase assigned to the user class’s volume.
-- Each user of the user class is assigned a passphrase that is the same as the user class’s passphrase.
-- Every user must know the credentials for an superintendent-class, i.e., one whose home directory resides on the startup volume, in order that, at boot, the user
+- The users of this user class are each assigned as their login password the passphrase assigned to the user class’s volume.
+- Thus, each user’s login password is the same as the passphrase required to mount the volume on which the user’s home directory resides.
+- Every user must know the credentials for a superintendent-class user, i.e., one whose home directory resides on the startup volume, in order that, at boot, the user can mount the volume holding the user’s home directory.
 ### Volumes
 - Let V be the set of volumes
 - V = {v<sup>†</sup> , v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
