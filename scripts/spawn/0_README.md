@@ -31,7 +31,7 @@ Within the group of resident users:
 - Every user must know the credentials for a superintendent-class user, i.e., one whose home directory resides on the startup volume, in order that, at boot, the user can mount the volume holding the user’s home directory.
 ### Volumes
 - Let V be the set of volumes
-- V = {v<sup>†</sup> , v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
+- V = {v<sup>†</sup>, v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
 - Each volume v∈V has a unique passphrase v.p.[^unique_password_for_volume]
 - For each *non-startup* volume v∈V\\{v<sup>†</sup>}, v is encrypted (*not* using File Vault) using passphrase v.p.
 - The *startup* volume v<sup>†</sup> is encrypted using File Vault.[^file_vault_mounted_by]
@@ -41,6 +41,7 @@ Within the group of resident users:
     - Let U<sub>S</sub> be the superintendent class.
     - Let U<sup>§</sup> be the set of user classes such that U<sup>§</sup>={U<sub>S</sub>, U<sub>1</sub>, U<sub>2</sub>, … , U<sub>n</sub>} partitions U.
     - Each user class U<sub>i</sub> is assigned a unique volume U<sub>i</sub>.v.[^unique_volume]
+      - In particular, the superintendent user class U<sub>S</sub> is assigned the startup volume v<sup>†</sup>.
     - Each user class U<sub>i</sub> is assigned a unique passphrase[^unique_password_for_user_class] U<sub>i</sub>.p via inheritance from the user class’s volume
       - ∀U<sub>i</sub>∈U<sup>§</sup>, U<sub>i</sub>.p=(U<sub>i</sub>.v).p
   - Each user u is assigned (a) a volume u.v and (b) a passphrase u.p by inheritance from the user’s user class
