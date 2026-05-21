@@ -43,12 +43,12 @@ Within the group of resident users:
     - Each user class U<sub>i</sub> is assigned a unique volume U<sub>i</sub>.v.[^unique_volume]
       - In particular, the superintendent user class U<sub>S</sub> is assigned the startup volume v<sup>†</sup>, i.e., U<sub>S</sub>.v = v<sup>†</sup>.
     - Each user class U<sub>i</sub> is assigned a unique passphrase[^unique_password_for_user_class] U<sub>i</sub>.p via inheritance from the user class’s volume
-      - ∀U<sub>i</sub>∈U<sup>§</sup>, U<sub>i</sub>.p=(U<sub>i</sub>.v).p
+      - ∀U<sub>i</sub>∈U<sup>§</sup>, U<sub>i</sub>.p = (U<sub>i</sub>.v).p
   - Each user u is assigned (a) a volume u.v and (b) a passphrase u.p by inheritance from the user’s user class
     - ∀U<sub>i</sub>∈U<sup>§</sup>, ∀u∈U<sub>i</sub>
-      - u.v=U<sub>i</sub>.v
+      - u.v = U<sub>i</sub>.v
         - The volume u.v is the volume that contains the user’s home directory
-      - u.p=U<sub>i</sub>.p
+      - u.p = U<sub>i</sub>.p
         - The passphrase u.p serves both as (a) the passphrase by which the user can decrypt/mount the volume u.v that contains the user’s home directory and (b) the password by which the user logs into the user’s account.
  
 [^unique_password_for_volume]: ∀v,v′∈V, (v ≠ v′) ⇒ (v.p ≠ v′.p.)
