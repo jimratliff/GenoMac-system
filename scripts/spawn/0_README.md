@@ -83,9 +83,10 @@ Each user to be created is specified by:
   - a string key, e.g., "superintendent", "personal", "work", "auxiliary"
   - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
 - "avatar" (optional)
-  - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png" expressed relative to
-    USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
+  - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to USER_PICTURE_DIRECTORY.[^user_picture_directory]
   - The user picture at that path is referenced at the time the user account is created, at which point the data from the user picture is incorporated into the user’s profile. The user picture does not need to remain accessible at that path after the user account is created.
+ 
+[^user_picture_directory]: `USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"`, where `GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="${LOCAL_DROPBOX_DIRECTORY}/Preferences_common"`, where `LOCAL_DROPBOX_DIRECTORY="$HOME/Library/CloudStorage/Dropbox"`.
 
 ```
   {
