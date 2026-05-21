@@ -90,8 +90,11 @@ Each user to be created is specified by:
 - "avatar" (optional)
   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to USER_PICTURE_DIRECTORY.[^user_picture_directory]
   - The user picture at that path is referenced at the time the user account is created, at which point the data from the user picture is incorporated into the user’s profile. The user picture does not need to remain accessible at that path after the user account is created.
+- optional additional arbitrary attributes to guide later user provisioning[^arbitrary_attributes_guide_provisioning]
  
 [^user_picture_directory]: `USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"`, where `GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="${LOCAL_DROPBOX_DIRECTORY}/Preferences_common"`, where `LOCAL_DROPBOX_DIRECTORY="$HOME/Library/CloudStorage/Dropbox"`.
+
+[^arbitrary_attributes_guide_provisioning]: Note that, at the time of user creation, any additional attributes (which by definition aren’t required for creating the user) can’t be stored/recorded in that user’s home directory because that home directory will not exist until it is created at the later time that the user first logs in. Instead, the attribute could be recorded as a system-level state file. E.g., a system-level state file "USER_ATTRIBUTE_wilma_pristine" would indicate that user "wilma" has the attribute "pristine". GenoMac-user can test whether that system state file exists.
 
 ```
   {
@@ -108,6 +111,12 @@ Each user to be created is specified by:
         "full_name": "Wilma Flintstone",
         "uid": 512,
         "user_class": "work"
+        "attributes": {
+          "pristine": true,
+          "configurer": true,
+          "emailer": false,
+          "chess-player": false,
+          "developer": false
       }
     ]
   }
