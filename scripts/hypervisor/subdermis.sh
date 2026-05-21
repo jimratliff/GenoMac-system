@@ -31,6 +31,7 @@ function subdermis() {
   # Only USER_CONFIGURER runs GenoMac-system, therefore this user is USER_CONFIGURER
   # Use the *user*-state management system to leave a state for this user that will
   # tell GenoMac-user to configure this user as a USER_CONFIGURER user.
+  # NOTE: TODO: This doesn’t seem to be used by GenoMac-user
   set_genomac_user_state   "$PERM_THIS_USER_IS_A_USER_CONFIGGER"
   
   interactive_ensure_terminal_has_fda          # GenoMac-shared/scripts/helpers-misc.sh
