@@ -18,9 +18,9 @@ safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn.sh"
 function usage() {
   cat >&2 <<'EOF'
 Usage:
-  spawn-related-commands.sh test-user
-  spawn-related-commands.sh ?????????
-  spawn-related-commands.sh ?????????
+  spawn-related-commands.sh add-user
+  spawn-related-commands.sh test-user-exists
+  spawn-related-commands.sh test-home-directories-parent
 EOF
 }
 
