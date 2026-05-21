@@ -51,7 +51,7 @@ Within the group of resident users:
  
 [^unique_password_for_volume]: ∀v,v′∈V, (v ≠ v′) ⇒ (v.p ≠ v′.p.)
 
-[^file_vault_mounted_by]: The startup volume will be mounted when any user with a Secure Token for that volume logs in.
+[^file_vault_mounted_by]: The startup volume will be mounted when any user with a Secure Token for that volume logs in. The startup volume *does* have a passphrase, but no human user knows it. Instead, any user with a Secure Token, by logging into that user’s account, internally decrypts that passphrase, which is then used to mount the startup volume.
 
 [^unique_volume]: ∀U<sub>i</sub>,U<sub>j</sub>∈U<sup>§</sup>, (U<sub>i</sub> ≠ U<sub>j</sub>) ⇒ (U<sub>i</sub>.v ≠ U<sub>j</sub>.v).
 
