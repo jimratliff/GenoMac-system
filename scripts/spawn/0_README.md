@@ -94,7 +94,7 @@ Each user to be created is specified by:
  
 [^user_picture_directory]: `USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"`, where `GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="${LOCAL_DROPBOX_DIRECTORY}/Preferences_common"`, where `LOCAL_DROPBOX_DIRECTORY="$HOME/Library/CloudStorage/Dropbox"`.
 
-[^arbitrary_attributes_guide_provisioning]: Note that, at the time of user creation, any additional attributes (which by definition aren’t required for creating the user) can’t be stored/recorded in that user’s home directory because that home directory will not exist until it is created at the later time when the user first logs in. Instead, the attribute could be recorded as a system-level state file. E.g., a system-level state file "USER_ATTRIBUTE_wilma_pristine" would indicate that user "wilma" has the attribute "pristine". GenoMac-user can test whether that system state file exists.
+[^arbitrary_attributes_guide_provisioning]: Note that, at the time of user creation, any additional attributes (which by definition aren’t required for creating the user) can’t be stored/recorded in that user’s home directory because that home directory will not exist until it is created at the later time when the user first logs in. Instead, the attribute could be recorded as a system-level state file. E.g., a system-level state file "USER_ATTRIBUTE_wilma_pristine" would indicate that user "wilma" has the attribute "pristine". GenoMac-user can test whether that system state file exists. (Note: `GENOMAC_STATE_USER_ATTRIBUTE_PREFIX="USER_ATTRIBUTE_"`.)
 
 ```
   {
@@ -122,17 +122,14 @@ Each user to be created is specified by:
   }
 ```
   
-To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory
-is `some_volume/Users/some_user`.
+To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory is `some_volume/Users/some_user`.
 See environment variable: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="Users"
 and use parent_of_users_home_directories_from_volume_name()
   
-A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely
-look up a passphrase, and (c) volume key to a volume name.
+A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely look up a passphrase, and (c) volume key to a volume name.
 
 The volume_name is either (a) `::startup_volume::` (which is not a valid volume name, due to the colons) 
-(referenceable with the environment variable STARTUP_VOLUME_SIGNIFIER) or
-(b) a volume name. When volume_name is `::startup_volume::`, this implies --startup-volume in the sense of parent_of_users_home_directories().
+(referenceable with the environment variable STARTUP_VOLUME_SIGNIFIER) or (b) a volume name. When volume_name is `::startup_volume::`, this implies --startup-volume in the sense of parent_of_users_home_directories().
 
 ```
   {
