@@ -30,8 +30,8 @@ Within the group of resident users:
 - Thus, each user’s login password is the same as the passphrase required to mount the volume on which the user’s home directory resides.
 - Every user must know the credentials for a superintendent-class user, i.e., one whose home directory resides on the startup volume, in order that, at boot, the user can mount the volume holding the user’s home directory.
 ### Volumes
-- Let V be the set of volumes
-- V = {v<sup>†</sup>, v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume, and each v<sub>i</sub> is a distinct non–startup volume.
+- Let V be the set of volumes.
+- V = {v<sup>†</sup>, v<sub>1</sub>, v<sub>2</sub>, …}, where v<sup>†</sup> is the startup volume,[^why_startup_is_different] and each v<sub>i</sub> is a distinct non–startup volume.
 - Each volume v∈V has a unique passphrase v.p.[^unique_password_for_volume]
 - For each *non-startup* volume v∈V\\{v<sup>†</sup>}, v is encrypted (*not* using File Vault) using passphrase v.p.
 - The *startup* volume v<sup>†</sup> is encrypted using File Vault.[^file_vault_mounted_by]
@@ -59,13 +59,7 @@ Within the group of resident users:
 
 [^unique_password_for_user_class]: ∀U<sub>i</sub>,U<sub>j</sub>∈U<sup>§</sup>, (U<sub>i</sub> ≠ U<sub>j</sub>) ⇒ (U<sub>i</sub>.p ≠ U<sub>j</sub>.p).
 
-- There are multiple users
-- Each user has a home directory, which can reside either (a) on the startup volume or (b) a different volume.
-  - The startup volume is referenced distinctly from other volumes in the sense that the startup volume is not referenced by name but rather by the environment variable `STARTUP_VOLUME_SIGNIFIER="::startup_volume::"`.[^why_startup_is_different]
-- Each user has a user password
-- Because a user’s password is also intended to be the encyrption password for the volume on which the user’s home directory resides, for a given volume V, all users whose home directory resides on V must share a common password P.
-
-[^why_startup_is_different]: This distinction in how a startup volume is referenced vis-à-vis how another volume is referenced arises because the path to a home directory on the startup volume is `/Users/some_user`, whereas the path to a home directory on another volume is `/Volumes/some_volume/Users/some_user`. Thus, the path to a user home directory on the startup volume doesn’t explicitly reference the volume name of the startup volume.
+[^why_startup_is_different]: The startup volume is referenced distinctly from other volumes in the sense that the startup volume is not referenced by name but rather by the environment variable `STARTUP_VOLUME_SIGNIFIER="::startup_volume::"`. This distinction in how a startup volume is referenced vis-à-vis how another volume is referenced arises because the path to a home directory on the startup volume is `/Users/some_user`, whereas the path to a home directory on another volume is `/Volumes/some_volume/Users/some_user`. Thus, the path to a user home directory on the startup volume doesn’t explicitly reference the volume name of the startup volume.
 
 Project GenoMac defines multiple user-classes.
 - A user-class includes all users, and only those users, that share both (a) a common user password and (b) a common volume for the users home directories.
