@@ -49,13 +49,13 @@ Within the group of resident users:
       - u.p=U<sub>i</sub>.p
         - The passphrase u.p serves both as (a) the passphrase by which the user can decrypt/mount the volume u.v that contains the user’s home directory and (b) the password by which the user logs into the user’s account.
  
-[^unique_password_for_volume]: ∀v,v′∈V, (v≠v′) ⇒ (v.p≠v′.p.)
+[^unique_password_for_volume]: ∀v,v′∈V, (v ≠ v′) ⇒ (v.p ≠ v′.p.)
 
 [^file_vault_mounted_by]: The startup volume will be mounted when any user with a Secure Token for that volume logs in.
 
-[^unique_volume]: ∀U<sub>i</sub>,U<sub>j</sub>∈U<sup>§</sup>, (U<sub>i</sub>≠U<sub>j</sub>) ⇒ (U<sub>i</sub>.v≠U<sub>j</sub>.v).
+[^unique_volume]: ∀U<sub>i</sub>,U<sub>j</sub>∈U<sup>§</sup>, (U<sub>i</sub> ≠ U<sub>j</sub>) ⇒ (U<sub>i</sub>.v ≠ U<sub>j</sub>.v).
 
-[^unique_password_for_user_class]: ∀U<sub>i</sub>,U<sub>j</sub>∈U<sup>§</sup>, (U<sub>i</sub>≠U<sub>j</sub>) ⇒ (U<sub>i</sub>.p≠U<sub>j</sub>.p).
+[^unique_password_for_user_class]: ∀U<sub>i</sub>,U<sub>j</sub>∈U<sup>§</sup>, (U<sub>i</sub> ≠ U<sub>j</sub>) ⇒ (U<sub>i</sub>.p ≠ U<sub>j</sub>.p).
 
 - There are multiple users
 - Each user has a home directory, which can reside either (a) on the startup volume or (b) a different volume.
