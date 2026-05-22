@@ -134,15 +134,13 @@ The volume_name is either (a) `::startup_volume::` (which is not a valid volume 
 ```
   {
     "volume_key_from_user_class": {
-      "simple_admin": "startup_volume",
-      "implementor": "startup_volume",
-      "unsullied": "startup_volume",
+      "superintendent": "::startup_volume::",
       "personal": "personal_volume",
       "work": "work_volume",
       "auxiliary": "auxiliary_volume"
     },
     "onepassword_key_for_passphrase_from_volume_key": {
-      "startup_volume": "THE_STARTUP_PASSWORD",
+      "::startup_volume::": "THE_STARTUP_PASSWORD",
       "personal_volume": "PERSONAL_PASSWORD",
       "work_volume": "WORK_PASSWORD",
       "auxiliary_volume": "AUX_PASSWORD"
