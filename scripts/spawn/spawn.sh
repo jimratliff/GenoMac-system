@@ -27,64 +27,78 @@ function create_user_accounts_for_this_Mac() {
   # - "full_name" (optional)
   #   - a string, e.g., "Betty Rubble")
   # - "uid"
-  #   - the user’s ID, in the range 510–999, which macOS uses to distinguish users (rather than by user name)
-  #   - (Project GenoMac excludes IDs 501–509 here, even though they are legit user IDs, in order to prevent
-  #     conflicts with preexisting users.)
+  #   - the user’s ID, in the range 510–999, which macOS uses to distinguish users (rather 
+  #     than by user name)
+  #   - (Project GenoMac excludes IDs 501–509 here, even though they are legit user IDs, in 
+  #     order to prevent conflicts with preexisting users.)
   # - "user-class"
-  #   - a string key, e.g., "simple_admin", "implementor", "unsullied", "personal", "work", "auxiliary"
-  #   - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
+  #   - a string key, e.g., "superintendent", "personal", "work", "auxiliary"
+  #   - Determines (a) the volume on which the user’s home directory resides and 
+  #     (b) the passphrase that is both (1) the user’s password and (2) the encryption 
+  #     passphrase for the volume.
   # - "avatar" (optional)
-  #   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to 
-  #     USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"
+  #   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed 
+  #     relative to USER_PICTURE_DIRECTORY.
+  #   - The user picture at that path is referenced at the time the user account is created, 
+  #     at which point the data from the user picture is incorporated into the user’s profile. 
+  #     The user picture does not need to remain accessible at that path after the user 
+  #     account is created.
+  # - optional additional arbitrary attributes to guide later user provisioning
   #
-  #   {
-  #     "users_to_create": [
-  #       {
-  #         "short_name": "betty",
-  #         "full_name": "Betty Rubble",
-  #         "uid": 511,
-  #         "user_class": "personal",
-  #         "avatar": "Betty.png"
-  #       },
-  #       {
-  #         "short_name": "wilma",
-  #         "full_name": "Wilma Flintstone",
-  #         "uid": 512,
-  #         "user_class": "work"
-  #       }
-  #     ]
-  #   }
+  # {
+  # 	"users_to_create": [
+  # 		{
+  # 			"short_name": "betty",
+  # 			"full_name": "Betty Rubble",
+  # 			"uid": 511,
+  # 			"user_class": "personal",
+  # 			"avatar": "Betty.png"
+  # 		},
+  # 		{
+  # 			"short_name": "wilma",
+  # 			"full_name": "Wilma Flintstone",
+  # 			"uid": 512,
+  # 			"user_class": "work"
+  # 			"attributes": {
+  # 				"pristine": true,
+  # 				"configurer": true,
+  # 				"emailer": false,
+  # 				"chess-player": false,
+  # 				"developer": false
+  # 		}
+  # 	]
+  # }
   #
-  # To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory
-  # is `some_volume/Users/some_user`.
-  # See environment variable: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="Users"
-  # and use parent_of_users_home_directories_from_volume_name()
+  # To be clear, "user-class" implies the *volume* of the home directory but the actual path 
+  # to the home directory is either (a) `Users/some_user` if the home directory resides on 
+  # the startup volume or (b) `some_volume/Users/some_user` if the home directory resides 
+  # on the volume `some_volume`. See environment variable: 
+  # `DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="Users"`
+  # and use `parent_of_users_home_directories_from_volume_name()`.
+  #   
+  # A pair of associative arrays maps, respectively, (a) "user-class" to a volume name and 
+  # (b) "user-class" to a 1password key to securely look up a passphrase.
+  # 
+  # The volume_name is either (a) `::startup_volume::` (which is not a valid volume name, 
+  # due to the colons) (referenceable with the environment variable STARTUP_VOLUME_SIGNIFIER) 
+  # or (b) a volume name. When volume_name is `::startup_volume::`, this implies 
+  # --startup-volume in the sense of parent_of_users_home_directories().
   #
-  # A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely
-  # look up a passphrase, and (c) volume key to a volume name.
-  #
-  #   {
-  #     "volume_key_from_user_class": {
-  #       "simple_admin": "startup_volume",
-  #       "implementor": "startup_volume",
-  #       "unsullied": "startup_volume",
-  #       "personal": "personal_volume",
-  #       "work": "work_volume",
-  #       "auxiliary": "auxiliary_volume"
-  #     },
-  #     "onepassword_key_for_passphrase_from_volume_key": {
-  #       "startup_volume": "THE_STARTUP_PASSWORD",
-  #       "personal_volume": "PERSONAL_PASSWORD",
-  #       "work_volume": "WORK_PASSWORD",
-  #       "auxiliary_volume": "AUX_PASSWORD"
-  #     },
-  #     "volume_name_from_volume_key": {
-  #       "startup_volume": "Volume_for_Startup",
-  #       "personal_volume": "Volume_for_Personal_Users",
-  #       "work_volume": "Volume_for_Work_Users",
-  #       "auxiliary_volume": "Volume_for_Auxiliary_Users"
-  #     },
-  #   }
+  # {
+  # 	"volume_name_from_user_class": {
+  # 		"superintendent": "::startup_volume::",
+  # 		"personal": "some_personal_volume",
+  # 		"work": "some_work_volume",
+  # 		"auxiliary": "some_auxiliary_volume"
+  # 	},
+  # {
+  # 	"onepassword_key_from_user_class": {
+  # 		"superintendent": "THE_STARTUP_PASSWORD",
+  # 		"personal": "PERSONAL_PASSWORD",
+  # 		"work": "WORK_PASSWORD",
+  # 		"auxiliary": "AUX_PASSWORD"
+  # 	},
+  # }
   #
   # This function assumes that:
   # - GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
@@ -92,10 +106,10 @@ function create_user_accounts_for_this_Mac() {
   #   - This sources (a) helpers and cross-repo environment variables from GenoMac-shared and
   #     (b) repo-specific environment variables.
   # - The following environment variables have been defined:
-  #   - ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
-  #   - ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
-  #   - ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
-  #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES
+  #   - ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION      ("GenoMac-user-creation")
+  #   - ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG          ("GenoMac-system-user-spawn-config-json")
+  #   - ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE   ("GenoMac-system-specs-of-users-to-create")
+  #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES       ("/Users")
   
   report_start_phase_standard
   print_banner_text "BEGIN USER CREATION"
@@ -211,8 +225,8 @@ function create_local_user_account() {
 }
 
 function get_user_spawn_config_associative_arrays() {
-  # Get values for associative arrays volume_key_from_user_class,
-  # onepassword_key_for_passphrase_from_volume_key, and volume_name_from_volume_key
+  # Get values for associative arrays volume_name_from_user_class and
+  # onepassword_key_from_user_class
 
   report_start_phase_standard
   local user_spawn_config_json
