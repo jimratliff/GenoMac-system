@@ -86,7 +86,7 @@ Each user to be created is specified by:
     conflicts with preexisting users.)
 - "user-class"
   - a string key, e.g., "superintendent", "personal", "work", "auxiliary"
-  - Determines (a) the user’s password and (b) the volume on which the user’s home directory resides.
+  - Determines (a) the volume on which the user’s home directory resides and (b) the passphrase that is both (1) the user’s password and (2) the encryption passphrase for the volume.
 - "avatar" (optional)
   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to USER_PICTURE_DIRECTORY.[^user_picture_directory]
   - The user picture at that path is referenced at the time the user account is created, at which point the data from the user picture is incorporated into the user’s profile. The user picture does not need to remain accessible at that path after the user account is created.
@@ -122,34 +122,29 @@ Each user to be created is specified by:
   }
 ```
   
-To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory is `some_volume/Users/some_user`.
-See environment variable: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="Users"
-and use parent_of_users_home_directories_from_volume_name()
+To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory is either (a) `Users/some_user` if the home directory resides on the startup volume or (b) `some_volume/Users/some_user` if the home directory resides on the volume `some_volume`.
+See environment variable: `DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="Users"`
+and use `parent_of_users_home_directories_from_volume_name()`.
   
-A separate configuration file maps (a) "user-class" to a volume key, (b) volume key to a 1password key to securely look up a passphrase, and (c) volume key to a volume name.
+A pair of associative arrays maps, respectively, (a) "user-class" to a volume name and (b) "user-class" to a 1password key to securely look up a passphrase.
 
 The volume_name is either (a) `::startup_volume::` (which is not a valid volume name, due to the colons) 
 (referenceable with the environment variable STARTUP_VOLUME_SIGNIFIER) or (b) a volume name. When volume_name is `::startup_volume::`, this implies --startup-volume in the sense of parent_of_users_home_directories().
 
 ```
   {
-    "volume_key_from_user_class": {
+    "volume_name_from_user_class": {
       "superintendent": "::startup_volume::",
-      "personal": "personal_volume",
-      "work": "work_volume",
-      "auxiliary": "auxiliary_volume"
+      "personal": "some_personal_volume",
+      "work": "some_work_volume",
+      "auxiliary": "some_auxiliary_volume"
     },
-    "onepassword_key_for_passphrase_from_volume_key": {
-      "::startup_volume::": "THE_STARTUP_PASSWORD",
-      "personal_volume": "PERSONAL_PASSWORD",
-      "work_volume": "WORK_PASSWORD",
-      "auxiliary_volume": "AUX_PASSWORD"
-    },
-    "volume_name_from_volume_key": {
-      "startup_volume": "::startup_volume::",
-      "personal_volume": "Volume_for_Personal_Users",
-      "work_volume": "Volume_for_Work_Users",
-      "auxiliary_volume": "Volume_for_Auxiliary_Users"
+  {
+    "onepassword_key_from_user_class": {
+      "superintendent": "THE_STARTUP_PASSWORD",
+      "personal": "PERSONAL_PASSWORD",
+      "work": "WORK_PASSWORD",
+      "auxiliary": "AUX_PASSWORD"
     },
   }
 ```
