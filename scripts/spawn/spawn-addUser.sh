@@ -18,8 +18,8 @@ function sysadminctl_adduser() {
   # This function requires credentials for an existing admin user with a Secure Token,
   # referred to as the “authorizing admin.”
   #
-  # The new user is referred to as “user,” even though that user is also often an admin-level
-  # user.
+  # The new user is referred to as “user,” even though that user is also by default an 
+  # admin-level user.
   #
   # After creation, this function confirms that Secure Token is enabled for the new user.
   # If Secure Token is not confirmed to be enabled, the function fails.
@@ -157,7 +157,7 @@ function sysadminctl_adduser() {
   fi
 
   if [[ "$using_1password" == true && "$using_cleartext" == true ]]; then
-    report_fail "Specify passwords either via 1Password parameters or via cleartext parameters, not both."
+    report_fail "Specify passwords *either* via 1Password parameters *or* via cleartext parameters, *not* both."
     return 1
   fi
 
@@ -199,6 +199,8 @@ function sysadminctl_adduser() {
     admin_password="$cleartext_password_admin"
   fi
 
+  # Build the sysadminctl command as an array
+
   cmd=(
     sudo sysadminctl
     -addUser "$short_name"
@@ -234,6 +236,7 @@ function sysadminctl_adduser() {
   fi
 
   # Note: Do not log/print the full command, because it contains passwords in argv.
+  # Execute constructed command and test its success
   if ! "${cmd[@]}"; then
     report_fail "sysadminctl failed while creating user ${short_name}."
     return 1
