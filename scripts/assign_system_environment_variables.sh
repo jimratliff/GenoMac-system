@@ -59,7 +59,8 @@ GMS_UTILITIES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/utilities"
 #############################################
 #                  Other
 
-############### Related to spawning new user accounts
+#############################################
+#                  Related to spawning new user accounts
 
 # Specify the local directory in which user login pictures are stored to be
 # accessed by GenoMac-system when it creates user accounts.
@@ -86,11 +87,17 @@ ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="GenoMac-system-specs-of-users-to
 # Name of 1Password item that stores a fake password for testing purposes
 ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD="TEST_PASSWORD"
 
+############### State-management for volume creation
+GMS_STATE_VOLUME_IS_CREATED_PREFIX="VOLUME_CREATION_IS_COMPLETE_"
+GMS_STATE_VOLUME_IS_PENDING_PREFIX="VOLUME_CREATION_IS_PENDING_"
+
 ###
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
 export_and_report DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES
+export_and_report GMS_STATE_VOLUME_IS_CREATED_PREFIX
+export_and_report GMS_STATE_VOLUME_IS_PENDING_PREFIX
 export_and_report GMS_DOCS_TO_DISPLAY
 export_and_report GMS_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_HOMEBREW
