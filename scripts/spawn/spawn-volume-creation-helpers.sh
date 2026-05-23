@@ -6,13 +6,28 @@ function record_volume_and_1Password_item_key(){
   report_start_phase_standard
   local volume_name="$1"
   local op_item_key="$2"
-  
+  local state_string
+
+  if test_whether_volume_is_already_created "$volume_name" "$op_item_key"; then
+    report "The volume “$volume_name” has already been created. Nothing further to record."
+    report_end_phase_standard
+    return 0
+  fi
+
+  if test_whether_volume_is_pending "$volume_name" "$op_item_key"; then
+    report "The volume “$volume_name” is already pending. Nothing further to record."
+    report_end_phase_standard
+    return 0
+  fi
+
+  state_string=$(_construct_state_string_for_volume_1password_key "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_PENDING_PREFIX")
+  set_genomac_system_state "$state_string"
+
   report_end_phase_standard
+  return 0
 }
 
-
-
-function test_volume_is_already_complete(){
+function test_whether_volume_is_already_created(){
   # Tests whether state exist asserting the given volume has already been created.
   local volume_name="${1:?missing/empty volume_name}"
   local op_item_key="${2:?missing/empty op_item_key}"
@@ -23,8 +38,8 @@ function test_volume_is_already_complete(){
   return "$result"
 }
 
-function test_volume_is_pending(){
-  # Tests whether state exist asserting the given volume has already been created.
+function test_whether_volume_is_pending(){
+  # Tests whether state exists asserting the given volume has been noted as pending (needing creation).
   local volume_name="${1:?missing/empty volume_name}"
   local op_item_key="${2:?missing/empty op_item_key}"
   local result
