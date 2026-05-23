@@ -121,20 +121,70 @@ function _construct_state_string_for_volume_1password_key(){
   #   'some_volume' is the name of a volume
   #   'PERSONAL_PASSWORD' is a 1Password item key
   #
+  # The return value is printed to stdout
+  #
   # - $3 is expected to be either GMS_STATE_VOLUME_IS_CREATED_PREFIX or GMS_STATE_VOLUME_IS_PENDING_PREFIX
+  #
+  # - Use optional switch --volume-only to return a state string that can be used to search for all
+  #   states for the given volume without regard to the 1Password item key.
+  #
   # - The first delimiter (between the the state_string_prefix and the volume name) is GENOMAC_STATE_STRING_DELIMITER_A
   #   - GENOMAC_STATE_STRING_DELIMITER_A="∞§¶"
   # - The second delimiter (between the volume name and the 1Password item key) is GENOMAC_STATE_STRING_DELIMITER_B
   #   - GENOMAC_STATE_STRING_DELIMITER_B="¶§∞"
+  #
+  # Usage:
+  #   _construct_state_string_for_volume_1password_key [--volume-only] volume_name op_item_key state_string_prefix
+  #
+  # The --volume-only switch may appear anywhere.
+
   report_start_phase_standard
-  local volume_name="$1"
-  local op_item_key="$2"
-  local state_string_prefix="$3"
+
+  local wants_volume_only=false
+  local -a positional_args=()
+
+  while (( $# )); do
+    case "$1" in
+      --volume-only)
+        wants_volume_only=true
+        shift
+        ;;
+
+      --)
+        shift
+        positional_args+=("$@")
+        break
+        ;;
+
+      --*)
+        report_fail "Unknown option: $1"
+        return 64
+        ;;
+
+      *)
+        positional_args+=("$1")
+        shift
+        ;;
+    esac
+  done
+
+  local volume_name="${positional_args[1]:?missing/empty volume_name}"
+  local op_item_key="${positional_args[2]:?missing/empty op_item_key}"
+  local state_string_prefix="${positional_args[3]:?missing/empty state_string_prefix}"
   local state_string
 
-  state_string="${state_string_prefix}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}${op_item_key}"
+  if (( ${#positional_args[@]} > 3 )); then
+    report_fail "Too many arguments: ${positional_args[*]}"
+    return 64
+  fi
+
+  state_string="${state_string_prefix}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
+  if ! [[ "$wants_volume_only" == true ]]; then
+    state_string="${state_string}{$op_item_key}"
+  fi
+
   print -- "$state_string"
-  
+
   report_end_phase_standard
 }
 
