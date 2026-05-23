@@ -10,10 +10,26 @@ function record_volume_and_1Password_item_key(){
   report_end_phase_standard
 }
 
-function test_volume_as_already_complete(){
-  # Template for a Zsh function in Project GenoMac
-  report_start_phase_standard
+function test_volume_is_already_complete(){
+  # Tests whether state exist asserting the given volume has already been created.
+  local volume_name="${1:?missing/empty volume_name}"
+  local op_item_key="${2:?missing/empty op_item_key}"
+  local result
+  _test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_CREATED_PREFIX"
+  result=$?
   report_end_phase_standard
+  return "$result"
+}
+
+function test_volume_is_pending(){
+  # Tests whether state exist asserting the given volume has already been created.
+  local volume_name="${1:?missing/empty volume_name}"
+  local op_item_key="${2:?missing/empty op_item_key}"
+  local result
+  _test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_PENDING_PREFIX"
+  result=$?
+  report_end_phase_standard
+  return "$result"
 }
 
 function _test_volume_1Password_key_state_was_found_without_mismatch(){
