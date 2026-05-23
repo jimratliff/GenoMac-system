@@ -1,5 +1,21 @@
 #!/usr/bin/env zsh
 
+function record_volume_and_1Password_item_key(){
+  # Takes the volume and 1Password item key for a new user and appropriately record
+  # whether this volume needs to be created.
+  report_start_phase_standard
+  local volume_name="$1"
+  local op_item_key="$2"
+  
+  report_end_phase_standard
+}
+
+function test_volume_as_already_complete(){
+  # Template for a Zsh function in Project GenoMac
+  report_start_phase_standard
+  report_end_phase_standard
+}
+
 function _test_volume_1Password_key_state_was_found_without_mismatch(){
   # Tests whether exactly one state exists for the desired volume/1Password key.
   #
