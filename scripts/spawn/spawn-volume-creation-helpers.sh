@@ -115,18 +115,32 @@ function _test_volume_1Password_key_state_was_found_without_mismatch(){
 }
 
 function _construct_state_string_for_volume_1password_key(){
-  # Constructs a state string of the form 'VOLUME_CREATION_IS_COMPLETE_∞§¶some_volume¶§∞PERSONAL_PASSWORD'
-  # where:
-  #   'VOLUME_CREATION_IS_COMPLETE_' could instead be 'VOLUME_CREATION_IS_PENDING_'
-  #   'some_volume' is the name of a volume
-  #   'PERSONAL_PASSWORD' is a 1Password item key
+  # Constructs a state string of the form:
+  #   VOLUME_CREATION_IS_COMPLETE_∞§¶some_volume¶§∞PERSONAL_PASSWORD
+  #   where:
+  #     'VOLUME_CREATION_IS_COMPLETE_' could instead be 'VOLUME_CREATION_IS_PENDING_'
+  #        These are the environment variables GMS_STATE_VOLUME_IS_CREATED_PREFIX or
+  #        GMS_STATE_VOLUME_IS_PENDING_PREFIX, respectively.
+  #     'some_volume' is the name of a volume
+  #     'PERSONAL_PASSWORD' is a 1Password item key
+  #
+  # With --volume-only, constructs a state-string prefix of the form:
+  #   VOLUME_CREATION_IS_COMPLETE_∞§¶some_volume¶§∞
+  # This returns a state string that can be used to search for all states for the given volume
+  # without regard to the 1Password item key.
   #
   # The return value is printed to stdout
   #
-  # - $3 is expected to be either GMS_STATE_VOLUME_IS_CREATED_PREFIX or GMS_STATE_VOLUME_IS_PENDING_PREFIX
+  # Usage:
+  #   _construct_state_string_for_volume_1password_key [--volume-only] state_string_prefix volume_name [op_item_key]
   #
-  # - Use optional switch --volume-only to return a state string that can be used to search for all
-  #   states for the given volume without regard to the 1Password item key.
+  # Without --volume-only:
+  #   Requires: state_string_prefix volume_name op_item_key
+  #
+  # With --volume-only:
+  #   Requires: state_string_prefix volume_name
+  #
+  # The --volume-only switch may appear anywhere.
   #
   # - The first delimiter (between the the state_string_prefix and the volume name) is GENOMAC_STATE_STRING_DELIMITER_A
   #   - GENOMAC_STATE_STRING_DELIMITER_A="∞§¶"
@@ -168,19 +182,27 @@ function _construct_state_string_for_volume_1password_key(){
     esac
   done
 
-  local volume_name="${positional_args[1]:?missing/empty volume_name}"
-  local op_item_key="${positional_args[2]:?missing/empty op_item_key}"
-  local state_string_prefix="${positional_args[3]:?missing/empty state_string_prefix}"
-  local state_string
-
-  if (( ${#positional_args[@]} > 3 )); then
-    report_fail "Too many arguments: ${positional_args[*]}"
-    return 64
+  if [[ "$wants_volume_only" == true ]]; then
+    if (( ${#positional_args[@]} != 2 )); then
+      report_fail "Expected 2 arguments with --volume-only: state_string_prefix volume_name"
+      return 64
+    fi
+  else
+    if (( ${#positional_args[@]} != 3 )); then
+      report_fail "Expected 3 arguments: state_string_prefix volume_name op_item_key"
+      return 64
+    fi
   fi
 
+  local state_string_prefix="${positional_args[1]:?missing/empty state_string_prefix}"
+  local volume_name="${positional_args[2]:?missing/empty volume_name}"
+  local op_item_key="${positional_args[3]-}"
+  local state_string
+
   state_string="${state_string_prefix}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
+
   if ! [[ "$wants_volume_only" == true ]]; then
-    state_string="${state_string}{$op_item_key}"
+    state_string="${state_string}${op_item_key}"
   fi
 
   print -- "$state_string"
