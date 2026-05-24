@@ -96,27 +96,27 @@ function parent_of_users_home_directories() {
   print -- "$path_of_parent_of_home_directories"
 }
 
-get_short_name_from_user_spec_json() {
+function get_short_name_from_user_spec_json() {
   local user_spec_json="$1"
   jq -r '.short_name' <<<"$user_spec_json"
 }
 
-get_full_name_from_user_spec_json() {
+function get_full_name_from_user_spec_json() {
   local user_spec_json="$1"
   jq -r '.full_name' <<<"$user_spec_json"
 }
 
-get_uid_from_user_spec_json() {
+function get_uid_from_user_spec_json() {
   local user_spec_json="$1"
   jq -r '.uid' <<<"$user_spec_json"
 }
 
-get_user_class_from_user_spec_json() {
+function get_user_class_from_user_spec_json() {
   local user_spec_json="$1"
   jq -r '.user_class' <<<"$user_spec_json"
 }
 
-get_avatar_subpath_from_user_spec_json() {
+function get_avatar_subpath_from_user_spec_json() {
   local user_spec_json="$1"
   jq -r '.avatar // empty' <<<"$user_spec_json"
 }
