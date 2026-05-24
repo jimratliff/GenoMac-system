@@ -78,8 +78,9 @@ function interactive_adduser() {
   esac
 
   hint="$(get_nonblank_answer_to_question "Hint for new-user password (or “none”)")"
-  [[ "${hint:l}" == "none" ]] && hint=""
-  adduser_args+=(--hint "$hint")
+  if [[ "${hint:l}" != "none" ]]; then
+    adduser_args+=(--hint "$hint")
+  fi
 
   if ! get_yes_no_answer_to_question "Should the new user have admin-level rights?"; then
     adduser_args+=(--not-an-admin)
