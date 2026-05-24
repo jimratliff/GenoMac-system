@@ -1,8 +1,10 @@
 #!/usr/bin/env zsh
 
 function record_volume_and_1Password_item_key(){
-  # Takes the volume and 1Password item key for a new user and appropriately record
+  # Takes the volume and 1Password item key for a new user and appropriately records
   # whether this volume needs to be created.
+  #
+  # 
   report_start_phase_standard
   local volume_name="$1"
   local op_item_key="$2"
@@ -15,12 +17,13 @@ function record_volume_and_1Password_item_key(){
   fi
 
   if test_whether_volume_is_pending "$volume_name" "$op_item_key"; then
-    report "The volume “$volume_name” is already pending. Nothing further to record."
+    report "The volume “$volume_name” is already recorded as pending. Nothing further to record."
     report_end_phase_standard
     return 0
   fi
 
-  state_string=$(_construct_state_string_for_volume_1password_key "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_PENDING_PREFIX")
+  report_action_taken "Recording that volume ${volume_name} needs to be created and encrypted using 1Password item key ${op_item_key}."
+  state_string=$(_construct_state_string_for_volume_1password_key "$GMS_STATE_VOLUME_IS_PENDING_PREFIX" "$volume_name" "$op_item_key")
   set_genomac_system_state "$state_string"
 
   report_end_phase_standard
