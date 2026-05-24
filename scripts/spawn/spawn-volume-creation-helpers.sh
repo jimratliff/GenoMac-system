@@ -15,7 +15,7 @@ function record_volume_and_1Password_item_key(){
   local op_item_key="$2"
   local state_string
 
-  if test_whether_volume_is_already_created "$volume_name" "$op_item_key"; then
+  if test_whether_volume_is_marked_created "$volume_name" "$op_item_key"; then
     report "The volume “$volume_name” has already been created. Nothing further to record."
     report_end_phase_standard
     return 0
@@ -23,7 +23,7 @@ function record_volume_and_1Password_item_key(){
 
   report "Volume “$volume_name” hasn’t been recorded as having been created"
 
-  if test_whether_volume_is_pending "$volume_name" "$op_item_key"; then
+  if test_whether_volume_is_marked_pending "$volume_name" "$op_item_key"; then
     report "The volume “$volume_name” is already recorded as pending. Nothing further to record."
     report_end_phase_standard
     return 0
@@ -39,7 +39,7 @@ function record_volume_and_1Password_item_key(){
   return 0
 }
 
-function test_whether_volume_is_already_created(){
+function test_whether_volume_is_marked_created(){
   # Tests whether state exist asserting the given volume has already been created.
   local volume_name="${1:?missing/empty volume_name}"
   local op_item_key="${2:?missing/empty op_item_key}"
@@ -50,7 +50,7 @@ function test_whether_volume_is_already_created(){
   return "$result"
 }
 
-function test_whether_volume_is_pending(){
+function test_whether_volume_is_marked_pending(){
   # Tests whether state exists asserting the given volume has been noted as pending (needing creation).
   local volume_name="${1:?missing/empty volume_name}"
   local op_item_key="${2:?missing/empty op_item_key}"
