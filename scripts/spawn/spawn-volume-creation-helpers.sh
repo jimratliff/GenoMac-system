@@ -4,9 +4,10 @@ function record_volume_and_1Password_item_key(){
   # Takes the volume and 1Password item key for a new user and appropriately records
   # whether this volume needs to be created.
   #
-  # Takes no action if either:
+  # Takes no action if any of:
   # - volume_name is already marked as having been created
   # - volume_name is already marked as pending
+  # - volume_name is mounted
   #
   # Otherwise sets system state with prefix GMS_STATE_VOLUME_IS_PENDING_PREFIX for this volume.
   
@@ -30,6 +31,12 @@ function record_volume_and_1Password_item_key(){
   fi
 
   report "Volume “$volume_name” hasn’t been recorded as being pending."
+
+  if volume_is_mounted "$volume_name"; then
+    report "The volume “$volume_name” is mounted. Nothing further to record."
+    report_end_phase_standard
+    return 0
+  fi
 
   report_action_taken "Set state to record that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
   state_string=$(_construct_state_string_for_volume_1password_key "$GMS_STATE_VOLUME_IS_PENDING_PREFIX" "$volume_name" "$op_item_key")
