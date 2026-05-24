@@ -115,44 +115,59 @@ function _test_volume_1Password_key_state_was_found_without_mismatch(){
 }
 
 function _construct_state_string_for_volume_1password_key(){
-  # Constructs a state string of the form:
+  # Constructs a state string that encodes (a) volume name and (b) 1Password item key.
+  #
+  # Positional arguments:
+  #   $1: state_string_prefix
+  #   $2: volume_name
+  #   $3: op_item_key
+  #
+  # Without --volume-only:
+  #   Requires exactly:
+  #     state_string_prefix volume_name op_item_key
+  #
+  # With --volume-only:
+  #   Requires:
+  #     state_string_prefix volume_name
+  #
+  #   Allows, but ignores:
+  #     op_item_key
+  #
+  # The first positional argument is the initial string of the resulting state string and is
+  # intended to be either:
+  # - 'VOLUME_CREATION_IS_COMPLETE_' (environment variable: GMS_STATE_VOLUME_IS_CREATED_PREFIX)
+  # - 'VOLUME_CREATION_IS_PENDING_' (environment variable: GMS_STATE_VOLUME_IS_CREATED_PREFIX)
+  #
+  # In the default form (i.e., without --volume-only), constructs a state string of the form:
   #   VOLUME_CREATION_IS_COMPLETE_∞§¶some_volume¶§∞PERSONAL_PASSWORD
   #   where:
   #     'VOLUME_CREATION_IS_COMPLETE_' could instead be 'VOLUME_CREATION_IS_PENDING_'
-  #        These are the environment variables GMS_STATE_VOLUME_IS_CREATED_PREFIX or
-  #        GMS_STATE_VOLUME_IS_PENDING_PREFIX, respectively.
   #     'some_volume' is the name of a volume
   #     'PERSONAL_PASSWORD' is a 1Password item key
   #
-  # With --volume-only, constructs a truncated form of the state string that omits the
-  # trailing 1Password key, e.g.,
+  # With --volume-only, constructs a truncated version where the trailing 
+  # 1Password item key is omitted, e.g.,
   #   VOLUME_CREATION_IS_COMPLETE_∞§¶some_volume¶§∞
-  # This returns a partial state string that can be used to search for all states for the given volume
-  # without regard to the 1Password item key (that begin with the specified 
+  # This can be used as a prefix to search for all states for the given volume
+  # without regard to the 1Password item key (that begin with the specified
+  # 
+  # (That trailing GENOMAC_STATE_STRING_DELIMITER_B in the --volume-only case is intentional.
+  # It allows exact-prefix searching for all states for a given volume without also matching 
+  # similarly named volumes, e.g. "volume_1" should not match "volume_11".)
   #
-  # The return value is printed to stdout
+  # Delimiters:
+  #   '∞§¶' (environment variable GENOMAC_STATE_STRING_DELIMITER_A) is between the state_string_prefix and volume name.
+  #   '¶§∞' (environment variable GENOMAC_STATE_STRING_DELIMITER_B) is between the volume name and 1Password item key.
   #
-  # Usage:
-  #   _construct_state_string_for_volume_1password_key [--volume-only] state_string_prefix volume_name [op_item_key]
+  # Neither (a) the volume name nor (b) the 1Password item key may contain either GENOMAC_STATE_STRING_DELIMITER_A or
+  # GENOMAC_STATE_STRING_DELIMITER_B.
   #
-  # Without --volume-only:
-  #   Requires: state_string_prefix volume_name op_item_key
+  # Usage forms:
+  #   _construct_state_string_for_volume_1password_key state_string_prefix volume_name op_item_key
+  #   _construct_state_string_for_volume_1password_key --volume-only state_string_prefix volume_name [op_item_key]
   #
-  # With --volume-only:
-  #   Requires: state_string_prefix volume_name
-  #
-  # The --volume-only switch may appear anywhere.
-  #
-  # - The first delimiter (between the the state_string_prefix and the volume name) is GENOMAC_STATE_STRING_DELIMITER_A
-  #   - GENOMAC_STATE_STRING_DELIMITER_A="∞§¶"
-  # - The second delimiter (between the volume name and the 1Password item key) is GENOMAC_STATE_STRING_DELIMITER_B
-  #   - GENOMAC_STATE_STRING_DELIMITER_B="¶§∞"
-  #
-  # Usage:
-  #   _construct_state_string_for_volume_1password_key [--volume-only] volume_name op_item_key state_string_prefix
-  #
-  # The --volume-only switch may appear anywhere.
-
+  # The --volume-only switch may appear anywhere before a literal --.
+  
   report_start_phase_standard
 
   local wants_volume_only=false
@@ -184,8 +199,13 @@ function _construct_state_string_for_volume_1password_key(){
   done
 
   if [[ "$wants_volume_only" == true ]]; then
-    if (( ${#positional_args[@]} != 2 )); then
-      report_fail "Expected 2 arguments with --volume-only: state_string_prefix volume_name"
+    if (( ${#positional_args[@]} < 2 )); then
+      report_fail "Too few arguments with --volume-only: expected state_string_prefix volume_name [op_item_key]"
+      return 64
+    fi
+
+    if (( ${#positional_args[@]} > 3 )); then
+      report_fail "Too many arguments with --volume-only: expected state_string_prefix volume_name [op_item_key]"
       return 64
     fi
   else
@@ -197,9 +217,13 @@ function _construct_state_string_for_volume_1password_key(){
 
   local state_string_prefix="${positional_args[1]:?missing/empty state_string_prefix}"
   local volume_name="${positional_args[2]:?missing/empty volume_name}"
-  local op_item_key="${positional_args[3]-}"
-  local state_string
+  local op_item_key=""
 
+  if ! [[ "$wants_volume_only" == true ]]; then
+    op_item_key="${positional_args[3]:?missing/empty op_item_key}"
+  fi
+
+  local state_string
   state_string="${state_string_prefix}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
 
   if ! [[ "$wants_volume_only" == true ]]; then
