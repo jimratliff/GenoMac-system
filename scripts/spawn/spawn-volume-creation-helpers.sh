@@ -4,7 +4,12 @@ function record_volume_and_1Password_item_key(){
   # Takes the volume and 1Password item key for a new user and appropriately records
   # whether this volume needs to be created.
   #
-  # 
+  # Takes no action if either:
+  # - volume_name is already marked as having been created
+  # - volume_name is already marked as pending
+  #
+  # Otherwise sets system state with prefix GMS_STATE_VOLUME_IS_PENDING_PREFIX for this volume.
+  
   report_start_phase_standard
   local volume_name="$1"
   local op_item_key="$2"
