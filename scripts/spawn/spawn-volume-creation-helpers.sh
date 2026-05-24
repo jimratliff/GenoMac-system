@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
-function record_volume_and_1Password_item_key(){
-  # Takes the volume and 1Password item key for a new user and appropriately records
-  # whether this volume needs to be created.
+function conditionally_mark_volume_as_pending_creation(){
+  # Takes the volume and 1Password item key for a new user and, when appropriate, marks
+  # that this volume needs to be created.
   #
   # Takes no action if any of:
   # - volume_name is already marked as having been created
@@ -17,7 +17,7 @@ function record_volume_and_1Password_item_key(){
   local state_string
 
   if test_whether_volume_is_marked_created "$volume_name" "$op_item_key"; then
-    report "The volume “$volume_name” has already been created. Nothing further to record."
+    report "The volume “$volume_name” has been marked created. Nothing further to record."
     report_end_phase_standard
     return 0
   fi
@@ -25,7 +25,7 @@ function record_volume_and_1Password_item_key(){
   report "Volume “$volume_name” hasn’t been recorded as having been created"
 
   if test_whether_volume_is_marked_pending "$volume_name" "$op_item_key"; then
-    report "The volume “$volume_name” is already recorded as pending. Nothing further to record."
+    report "The volume “$volume_name” is already marked as pending. Nothing further to record."
     report_end_phase_standard
     return 0
   fi
@@ -33,13 +33,13 @@ function record_volume_and_1Password_item_key(){
   report "Volume “$volume_name” hasn’t been recorded as being pending."
 
   if volume_is_mounted "$volume_name"; then
-    report "The volume “$volume_name” is mounted. Nothing further to record."
+    report "The volume “$volume_name” is currently mounted. Nothing further to record."
     report_end_phase_standard
     return 0
   fi
 
-  report_action_taken "Set state to record that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
-  state_string=$(_construct_state_string_for_volume_1password_key "$GMS_STATE_VOLUME_IS_PENDING_PREFIX" "$volume_name" "$op_item_key")
+  report_action_taken "Set state to mark that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
+  state_string=$(construct_state_string_for_volume_1password_key "$GMS_STATE_VOLUME_IS_PENDING_PREFIX" "$volume_name" "$op_item_key")
   set_genomac_system_state "$state_string"
 
   report_end_phase_standard
@@ -51,7 +51,7 @@ function test_whether_volume_is_marked_created(){
   local volume_name="${1:?missing/empty volume_name}"
   local op_item_key="${2:?missing/empty op_item_key}"
   local result
-  _test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_CREATED_PREFIX"
+  test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_CREATED_PREFIX"
   result=$?
   report_end_phase_standard
   return "$result"
@@ -62,14 +62,14 @@ function test_whether_volume_is_marked_pending(){
   local volume_name="${1:?missing/empty volume_name}"
   local op_item_key="${2:?missing/empty op_item_key}"
   local result
-  _test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_PENDING_PREFIX"
+  test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_PENDING_PREFIX"
   result=$?
   report_end_phase_standard
   return "$result"
 }
 
-function _test_volume_1Password_key_state_was_found_without_mismatch(){
-  # Tests whether exactly one state exists for the desired volume/1Password key.
+function test_volume_1Password_key_state_was_found_without_mismatch(){
+  # Tests whether exactly one state exists for the desired volume/1Password key for given prefix.
   #
   # Returns:
   #   0 if exactly one matching state exists and its 1Password key matches the desired key
@@ -91,7 +91,7 @@ function _test_volume_1Password_key_state_was_found_without_mismatch(){
   local matching_state_string
   local -a matching_state_strings
 
-  volume_search_prefix="$(_construct_state_string_for_volume_1password_key --volume-only "${state_string_prefix}" "${volume_name}")"
+  volume_search_prefix="$(construct_state_string_for_volume_1password_key --volume-only "${state_string_prefix}" "${volume_name}")"
 
   # Collects all state strings for this volume (with $state_string_prefix)
   _state_strings_with_prefix "$volume_search_prefix" "$GENOMAC_SCOPE_SYSTEM" || exit 70
@@ -107,7 +107,7 @@ function _test_volume_1Password_key_state_was_found_without_mismatch(){
     1)
       # Exactly one existing state for this volume (with $state_string_prefix)
       # Test that the 1Password key of the existing state matches the desired key
-      desired_state_string="$(_construct_state_string_for_volume_1password_key "${state_string_prefix}" "${volume_name}" "${op_item_key}")"
+      desired_state_string="$(construct_state_string_for_volume_1password_key "${state_string_prefix}" "${volume_name}" "${op_item_key}")"
       if [[ "${matching_state_strings[1]}" == "${desired_state_string}" ]]; then
         report_end_phase_standard
         return 0
@@ -133,7 +133,7 @@ function _test_volume_1Password_key_state_was_found_without_mismatch(){
   esac
 }
 
-function _construct_state_string_for_volume_1password_key(){
+function construct_state_string_for_volume_1password_key(){
   # Constructs a state string that encodes (a) volume name and (b) 1Password item key.
   #
   # Positional arguments:
@@ -158,7 +158,7 @@ function _construct_state_string_for_volume_1password_key(){
   # - 'VOLUME_CREATION_IS_PENDING_' (environment variable: GMS_STATE_VOLUME_IS_CREATED_PREFIX)
   #
   # In the default form (i.e., without --volume-only), constructs a state string of the form:
-  #   VOLUME_CREATION_IS_COMPLETE_∞§¶some_volume¶§∞PERSONAL_PASSWORD
+  #   VOLUME_CREATION_IS_COMPLETE_∞§¶some_volume¶§∞PERSONAL_PASSWORD§∞¶
   #   where:
   #     'VOLUME_CREATION_IS_COMPLETE_' could instead be 'VOLUME_CREATION_IS_PENDING_'
   #     'some_volume' is the name of a volume
@@ -177,13 +177,14 @@ function _construct_state_string_for_volume_1password_key(){
   # Delimiters:
   #   '∞§¶' (environment variable GENOMAC_STATE_STRING_DELIMITER_A) is between the state_string_prefix and volume name.
   #   '¶§∞' (environment variable GENOMAC_STATE_STRING_DELIMITER_B) is between the volume name and 1Password item key.
+  #   '§∞¶' (environment variable GENOMAC_STATE_STRING_DELIMITER_C) comes after 1Password item key.
   #
-  # Neither (a) the volume name nor (b) the 1Password item key may contain either GENOMAC_STATE_STRING_DELIMITER_A or
-  # GENOMAC_STATE_STRING_DELIMITER_B.
+  # Neither (a) the volume name nor (b) the 1Password item key may contain either GENOMAC_STATE_STRING_DELIMITER_A,
+  # GENOMAC_STATE_STRING_DELIMITER_B, or GENOMAC_STATE_STRING_DELIMITER_C.
   #
   # Usage forms:
-  #   _construct_state_string_for_volume_1password_key state_string_prefix volume_name op_item_key
-  #   _construct_state_string_for_volume_1password_key --volume-only state_string_prefix volume_name [op_item_key]
+  #   construct_state_string_for_volume_1password_key state_string_prefix volume_name op_item_key
+  #   construct_state_string_for_volume_1password_key --volume-only state_string_prefix volume_name [op_item_key]
   #
   # The --volume-only switch may appear anywhere before a literal --.
   
@@ -246,7 +247,7 @@ function _construct_state_string_for_volume_1password_key(){
   state_string="${state_string_prefix}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
 
   if ! [[ "$wants_volume_only" == true ]]; then
-    state_string="${state_string}${op_item_key}"
+    state_string="${state_string}${op_item_key}${GENOMAC_STATE_STRING_DELIMITER_C}"
   fi
 
   print -- "$state_string"
