@@ -4,6 +4,10 @@ function conditionally_mark_volume_as_pending_creation(){
   # Takes the volume and 1Password item key for a new user and, when appropriate, marks
   # that this volume needs to be created.
   #
+  # Parameters:
+  # - $1: volume name
+  # - $2: name of 1Password item key
+  #
   # Takes no action if any of:
   # - volume_name is already marked as having been created
   # - volume_name is already marked as pending
