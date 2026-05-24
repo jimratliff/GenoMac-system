@@ -124,10 +124,11 @@ function _construct_state_string_for_volume_1password_key(){
   #     'some_volume' is the name of a volume
   #     'PERSONAL_PASSWORD' is a 1Password item key
   #
-  # With --volume-only, constructs a state-string prefix of the form:
+  # With --volume-only, constructs a truncated form of the state string that omits the
+  # trailing 1Password key, e.g.,
   #   VOLUME_CREATION_IS_COMPLETE_∞§¶some_volume¶§∞
-  # This returns a state string that can be used to search for all states for the given volume
-  # without regard to the 1Password item key.
+  # This returns a partial state string that can be used to search for all states for the given volume
+  # without regard to the 1Password item key (that begin with the specified 
   #
   # The return value is printed to stdout
   #
