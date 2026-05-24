@@ -32,7 +32,7 @@ function conditionally_mark_volume_as_pending_creation(){
 
   report "Volume “$volume_name” hasn’t been recorded as being pending."
 
-  if volume_is_mounted "$volume_name"; then
+  if volume_name_is_mounted "$volume_name"; then
     report "The volume “$volume_name” is currently mounted. Nothing further to record."
     report_end_phase_standard
     return 0
