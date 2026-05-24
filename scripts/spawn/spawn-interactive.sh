@@ -96,6 +96,16 @@ function interactive_adduser() {
   report_action_taken "Creating new user"
   sysadminctl_adduser "${adduser_args[@]}"
   success_or_not
+
+  # When appropriate, set state to indicate that this volume needs to be created
+  # If user resides on startup volume, that volume necessarily exists
+  local op_key="${onepassword_user_password_item_name:-NON_EXISTENT_1PASSWORD_KEY}"
+  if [[ "$parent_of_home" == /Volumes/*/Users ]]; then
+    volume_name="${parent_of_home#/Volumes/}"
+    volume_name="${volume_name%/Users}"
+    conditionally_mark_volume_as_pending_creation "$volume_name" "$op_key"
+  fi
+  
   report_end_phase_standard
 }
 
