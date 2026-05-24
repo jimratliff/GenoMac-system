@@ -158,8 +158,8 @@ function construct_state_string_for_volume_1password_key(){
   #
   # The first positional argument is the initial string of the resulting state string and is
   # intended to be either:
-  # - 'VOLUME_CREATION_IS_COMPLETE_' (environment variable: GMS_STATE_VOLUME_IS_CREATED_PREFIX)
-  # - 'VOLUME_CREATION_IS_PENDING_' (environment variable: GMS_STATE_VOLUME_IS_CREATED_PREFIX)
+  # - 'VOLUME_CREATION_IS_COMPLETE' (environment variable: GMS_STATE_VOLUME_IS_CREATED_PREFIX)
+  # - 'VOLUME_CREATION_IS_PENDING' (environment variable: GMS_STATE_VOLUME_IS_CREATED_PREFIX)
   #
   # In the default form (i.e., without --volume-only), constructs a state string of the form:
   #   VOLUME_CREATION_IS_COMPLETE_∞§¶some_volume¶§∞PERSONAL_PASSWORD§∞¶
