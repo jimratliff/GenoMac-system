@@ -66,16 +66,16 @@ function _test_volume_1Password_key_state_was_found_without_mismatch(){
   local volume_name="${1:?missing/empty volume_name}"
   local op_item_key="${2:?missing/empty op_item_key}"
   local state_string_prefix="${3:?missing/empty state_string_prefix}"
-  local state_string_prefix_with_volume_name
+  local volume_search_prefix
   local desired_state_string
   local failure_message
   local matching_state_string
   local -a matching_state_strings
 
-  state_string_prefix_with_volume_name="${state_string_prefix}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
+  volume_search_prefix="$(_construct_state_string_for_volume_1password_key --volume-only "${state_string_prefix}" "${volume_name}")"
 
   # Collects all state strings for this volume (with $state_string_prefix)
-  _state_strings_with_prefix "$state_string_prefix_with_volume_name" "$GENOMAC_SCOPE_SYSTEM" || exit 70
+  _state_strings_with_prefix "$volume_search_prefix" "$GENOMAC_SCOPE_SYSTEM" || exit 70
   matching_state_strings=("${reply[@]}")
 
   case "${#matching_state_strings[@]}" in
@@ -88,7 +88,7 @@ function _test_volume_1Password_key_state_was_found_without_mismatch(){
     1)
       # Exactly one existing state for this volume (with $state_string_prefix)
       # Test that the 1Password key of the existing state matches the desired key
-      desired_state_string="${state_string_prefix_with_volume_name}${op_item_key}"
+      desired_state_string="$(_construct_state_string_for_volume_1password_key "${state_string_prefix}" "${volume_name}" "${op_item_key}")"
       if [[ "${matching_state_strings[1]}" == "${desired_state_string}" ]]; then
         report_end_phase_standard
         return 0
