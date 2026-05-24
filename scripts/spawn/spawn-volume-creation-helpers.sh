@@ -16,13 +16,17 @@ function record_volume_and_1Password_item_key(){
     return 0
   fi
 
+  report "Volume “$volume_name” hasn’t been recorded as having been created"
+
   if test_whether_volume_is_pending "$volume_name" "$op_item_key"; then
     report "The volume “$volume_name” is already recorded as pending. Nothing further to record."
     report_end_phase_standard
     return 0
   fi
 
-  report_action_taken "Recording that volume ${volume_name} needs to be created and encrypted using 1Password item key ${op_item_key}."
+  report "Volume “$volume_name” hasn’t been recorded as being pending."
+
+  report_action_taken "Set state to record that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
   state_string=$(_construct_state_string_for_volume_1password_key "$GMS_STATE_VOLUME_IS_PENDING_PREFIX" "$volume_name" "$op_item_key")
   set_genomac_system_state "$state_string"
 
