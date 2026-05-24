@@ -23,84 +23,7 @@ function create_user_accounts_for_this_Mac() {
   #
   # The users to be created are specified in a "users_to_create" JSON object.
   #
-  # Each user to be created is specified by:
-  # - "short_name"
-  #   - a string, e.g., "Betty")
-  # - "full_name" (optional)
-  #   - a string, e.g., "Betty Rubble")
-  # - "uid"
-  #   - the user’s ID, in the range 510–999, which macOS uses to distinguish users (rather 
-  #     than by user name)
-  #   - (Project GenoMac excludes IDs 501–509 here, even though they are legit user IDs, in 
-  #     order to prevent conflicts with preexisting users.)
-  # - "user-class"
-  #   - a string key, e.g., "superintendent", "personal", "work", "auxiliary"
-  #   - Determines (a) the volume on which the user’s home directory resides and 
-  #     (b) the passphrase that is both (1) the user’s password and (2) the encryption 
-  #     passphrase for the volume.
-  # - "avatar" (optional)
-  #   - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed 
-  #     relative to USER_PICTURE_DIRECTORY.
-  #   - The user picture at that path is referenced at the time the user account is created, 
-  #     at which point the data from the user picture is incorporated into the user’s profile. 
-  #     The user picture does not need to remain accessible at that path after the user 
-  #     account is created.
-  # - optional additional arbitrary attributes to guide later user provisioning
-  #
-  # {
-  # 	"users_to_create": [
-  # 		{
-  # 			"short_name": "betty",
-  # 			"full_name": "Betty Rubble",
-  # 			"uid": 511,
-  # 			"user_class": "personal",
-  # 			"avatar": "Betty.png"
-  # 		},
-  # 		{
-  # 			"short_name": "wilma",
-  # 			"full_name": "Wilma Flintstone",
-  # 			"uid": 512,
-  # 			"user_class": "work"
-  # 			"attributes": {
-  # 				"pristine": true,
-  # 				"configurer": true,
-  # 				"emailer": false,
-  # 				"chess-player": false,
-  # 				"developer": false
-  # 		}
-  # 	]
-  # }
-  #
-  # To be clear, "user-class" implies the *volume* of the home directory but the actual path 
-  # to the home directory is either (a) `Users/some_user` if the home directory resides on 
-  # the startup volume or (b) `some_volume/Users/some_user` if the home directory resides 
-  # on the volume `some_volume`. See environment variable: 
-  # `DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="Users"`
-  # and use `parent_of_users_home_directories_from_volume_name()`.
-  #   
-  # A pair of associative arrays maps, respectively, (a) "user-class" to a volume name and 
-  # (b) "user-class" to a 1password key to securely look up a passphrase.
-  # 
-  # The volume_name is either (a) `::startup_volume::` (which is not a valid volume name, 
-  # due to the colons) (referenceable with the environment variable STARTUP_VOLUME_SIGNIFIER) 
-  # or (b) a volume name. When volume_name is `::startup_volume::`, this implies 
-  # --startup-volume in the sense of parent_of_users_home_directories().
-  #
-  # {
-  # 	"volume_name_from_user_class": {
-  # 		"superintendent": "::startup_volume::",
-  # 		"personal": "some_personal_volume",
-  # 		"work": "some_work_volume",
-  # 		"auxiliary": "some_auxiliary_volume"
-  # 	},
-  # {
-  # 	"onepassword_key_from_user_class": {
-  # 		"superintendent": "THE_STARTUP_PASSWORD",
-  # 		"personal": "PERSONAL_PASSWORD",
-  # 		"work": "WORK_PASSWORD",
-  # 		"auxiliary": "AUX_PASSWORD"
-  # 	},
-  # }
+  # See scripts/spawn/0_README.md for a description of the "users_to_create" JSON object.
   #
   # This function assumes that:
   # - GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
@@ -125,7 +48,7 @@ function create_user_accounts_for_this_Mac() {
 
   keep_sudo_alive
   
-  prompt_configurer_to_supply_login_pictures_if_desired
+  # prompt_configurer_to_supply_login_pictures_if_desired
 
   create_users
   
@@ -315,32 +238,34 @@ function get_users_to_create_from_1password() {
   print -- "$users_to_create_json"
 }
 
-function prompt_configurer_to_supply_login_pictures_if_desired() {
-  # Asks USER_CONFIGURER whether login pictures are desired when creating user accounts. If so, prompts USER_CONFIGURER
-  # to confirm that the desired login pictures reside in USER_PICTURE_DIRECTORY
-  # If login pictures are desired, but their existence isn’t confirmed by USER_CONFIGURER, the user-creation process is
-  # aborted.
-  
-  report_start_phase_standard
+############### Below this line, the code is DEPRECATED
 
-  if ! get_yes_no_answer_to_question "Do you want the new users to be specified with login pictures?"; then
-    report "I won’t create a directory for login pictures, since you don’t want to use them"
-	report_end_phase_standard
-    return 0
-  fi
-
-  report_action_taken "Creating, if necessary, directory for users’ login pictures"
-  mkdir -p "$USER_PICTURE_DIRECTORY" ; success_or_not
-
-  report "The login picture for each user must be in: $USER_PICTURE_DIRECTORY"
-  report_action_taken "I am opening this directory for you to inspect its contents"
-  open "$USER_PICTURE_DIRECTORY" ; success_or_not
-  if ! get_yes_no_answer_to_question "Answer “yes” if you’re satisfied the login pics are in the folder. Answer “no” to cancel."; then
-    report "You want login pictures, but you haven’t confirmed you’ve supplied them.${NEWLINE}I am aborting. Feel free to try again later."
-    return 1
-  fi
-
-  report_success "You have confirmed the existence of the desired login pictures. Moving on to create new users."
-  
-  report_end_phase_standard
-}
+#  function prompt_configurer_to_supply_login_pictures_if_desired() {
+#    # Asks USER_CONFIGURER whether login pictures are desired when creating user accounts. If so, 
+#    # prompts USER_CONFIGURER to confirm that the desired login pictures reside in USER_PICTURE_DIRECTORY
+#    # If login pictures are desired, but their existence isn’t confirmed by USER_CONFIGURER, 
+#    # the user-creation process is aborted.
+#    
+#    report_start_phase_standard
+#  
+#    if ! get_yes_no_answer_to_question "Do you want the new users to be specified with login pictures?"; then
+#      report "I won’t create a directory for login pictures, since you don’t want to use them"
+#  	report_end_phase_standard
+#      return 0
+#    fi
+#  
+#    report_action_taken "Creating, if necessary, directory for users’ login pictures"
+#    mkdir -p "$USER_PICTURE_DIRECTORY" ; success_or_not
+#  
+#    report "The login picture for each user must be in: $USER_PICTURE_DIRECTORY"
+#    report_action_taken "I am opening this directory for you to inspect its contents"
+#    open "$USER_PICTURE_DIRECTORY" ; success_or_not
+#    if ! get_yes_no_answer_to_question "Answer “yes” if you’re satisfied the login pics are in the folder. Answer “no” to cancel."; then
+#      report "You want login pictures, but you haven’t confirmed you’ve supplied them.${NEWLINE}I am aborting. Feel free to try again later."
+#      return 1
+#    fi
+#  
+#    report_success "You have confirmed the existence of the desired login pictures. Moving on to create new users."
+#    
+#    report_end_phase_standard
+#  }
