@@ -50,39 +50,6 @@ function create_user_accounts_for_this_Mac() {
   #   - ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION           ("GenoMac-user-creation")
   
   report_start_phase_standard
-  print_banner_text "BEGIN USER CREATION"
-  report_action_taken "Beginning process to create users"
-
-  report "Sign into 1Password (if necessary)"
-  op signin
-
-  # Populate associative arrays volume_name_from_user_class and onepassword_key_from_user_class by reading
-  # from plain-text item of 1Password vault.
-  # These arrays are *not* local, because they are referenced by functions called later within this shell
-  get_user_spawn_config_associative_arrays
-
-  # Get JSON object from plain-text item in 1Password vault
-  # This JSON object is *not* local, because it is referenced by functions called later within this shell
-  users_to_create_json="$(get_users_to_create_from_1password)" || return 1
-
-  keep_sudo_alive
-  create_users
-
-
-  # ############### TODO WORK IN PROGRESS
-
-  report_end_phase_standard
-}
-
-function create_users() {
-  # Creates user accounts specified in users_to_create_json JSON object, making use of nonlocal associative
-  # arrays volume_name_from_user_class and onepassword_key_from_user_class
-  #
-  # If a specified user to create has a short name that already has a user account, that user is skipped
-  # without error. However, if a specified user to create has a novel short name but has a uid that
-  # corresponds to an existing user, a fatal error is raised.
-  
-  report_start_phase_standard
 
   local admin_user_name
   local avatar
@@ -99,75 +66,85 @@ function create_users() {
   local user_class
   local user_spec_json
   local volume_name
+  
+  print_banner_text "BEGIN USER CREATION"
+  report_action_taken "Beginning process to create users"
+
+  report "Sign into 1Password (if necessary)"
+  op signin
+
+  # Populate associative arrays volume_name_from_user_class and onepassword_key_from_user_class by reading
+  # from plain-text item of 1Password vault.
+  # These arrays are *not* local, because they are referenced by functions called later within this shell
+  get_user_spawn_config_associative_arrays
 
   op_vault="$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION"
   admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
   onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
 
+  # Get JSON object specifying users to create from plain-text item in 1Password vault
+  # This JSON object is *not* local, because it is referenced by functions called later within this shell
+  users_to_create_json="$(get_users_to_create_from_1password)" || return 1
+
   # User loop
+  keep_sudo_alive
   while IFS= read -r user_spec_json; do
-    # user_spec_json is the specification for a single user
-    
-    short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
-    if does_user_name_exist "$short_name"; then
-      report_warning "User ($short_name) already exists; skipping creation of this user."
-      continue
-    fi
-  
-    full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
-    
-    uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
-    if does_user_uid_exist $uid; then
-      conflicting_short_names="$(string_of_short_names_with_uid $uid)"
-      report_fail "Proposed uid $uid for user $short_name already exists as one (or more) different user(s):${NEWLINE}${conflicting_short_names}"
-      return 1
-    fi
-    
-    avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")" || return 1
-    avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
-    
-    user_class="$(get_user_class_from_user_spec_json "$user_spec_json")" || return 1
-    op_item_user_password="${onepassword_key_from_user_class[$user_class]}"
-  
-    volume_name="${volume_name_from_user_class[$user_class]}"
-    parent_of_home_directory="$(parent_of_users_home_directories "$volume_name")"
-    home_directory="${parent_of_home_directory}/${user_name}"
-    
-    sysadminctl_adduser \
-      --short-name             "$short_name" \
-      --full-name              "$full_name" \
-      --uid                    "$uid" \
-      --home                   "$home_directory" \
-      --avatar-path            "$avatar_path" \
-      --admin-user-name        "$admin_user_name" \
-      --hint                   "$user_class" \
-      --op-vault               "$op_vault" \
-      --op-item-user-password  "$op_item_user_password" \
-      --op-item-admin-password "$onepassword_admin_password_item_name"
-
-    record_completion_of_user_creation_in_system_states "$short_name" "$volume_name" "$op_item_user_password"
-    
+    create_user_account "$user_spec_json"
   done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
-  
+
+
+  # ############### TODO WORK IN PROGRESS
+
   report_end_phase_standard
 }
 
-function create_local_user_account(){
-  # Template for a Zsh function in Project GenoMac
+function create_user_account(){
+  # Creates a single user account, specified by user_spec_json
   report_start_phase_standard
+  local user_spec_json
+  local user_spec_json="$1"
+  
+  short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
+  if does_user_name_exist "$short_name"; then
+    report_warning "User ($short_name) already exists; skipping creation of this user."
+    continue
+  fi
 
+  full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
+  
+  uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
+  if does_user_uid_exist $uid; then
+    conflicting_short_names="$(string_of_short_names_with_uid $uid)"
+    report_fail "Proposed uid $uid for user $short_name already exists as one (or more) different user(s):${NEWLINE}${conflicting_short_names}"
+    return 1
+  fi
+  
+  avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")" || return 1
+  avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
+  
+  user_class="$(get_user_class_from_user_spec_json "$user_spec_json")" || return 1
+  op_item_user_password="${onepassword_key_from_user_class[$user_class]}"
+
+  volume_name="${volume_name_from_user_class[$user_class]}"
+  parent_of_home_directory="$(parent_of_users_home_directories "$volume_name")"
+  home_directory="${parent_of_home_directory}/${user_name}"
+  
   sysadminctl_adduser \
-  --short-name      "$short_name" \
-  --full-name       "$full_name" \
-  --uid             "$uid" \
-  --home            "$home" \                          ############### WARNING: NEEDS TO BE CONSTRUCTED
-  --avatar-path     "$avatar_path" \                   ############### WARNING: NEEDS TO BE CONSTRUCTED
-  --admin-user-name "$secret_token_giving_admin_short_name" \ ############### WARNING: NEEDS TO BE DEFINED
+    --short-name             "$short_name" \
+    --full-name              "$full_name" \
+    --uid                    "$uid" \
+    --home                   "$home_directory" \
+    --avatar-path            "$avatar_path" \
+    --admin-user-name        "$admin_user_name" \
+    --hint                   "$user_class" \
+    --op-vault               "$op_vault" \
+    --op-item-user-password  "$op_item_user_password" \
+    --op-item-admin-password "$onepassword_admin_password_item_name"
+
+  record_in_system_states_completion_of_user_creation "$short_name" "$volume_name" "$op_item_user_password"
   
   report_end_phase_standard
 }
-
-
 
 function get_user_spawn_config_associative_arrays() {
   # Get values for associative arrays volume_name_from_user_class and onepassword_key_from_user_class
@@ -247,6 +224,18 @@ function get_users_to_create_from_1password() {
 
   report_end_phase_standard
   print -- "$users_to_create_json"
+}
+
+function record_in_system_states_completion_of_user_creation(){
+  # Records, in system-scoped states, completion of creating this user to support later steps.
+  report_start_phase_standard
+  local short_name="$1"
+  local volume_name="$2"
+  local op_item_user_password="$3"
+
+  ############### WIP TODO ###############
+  
+  report_end_phase_standard
 }
 
 ############### Below this line, the code is DEPRECATED
