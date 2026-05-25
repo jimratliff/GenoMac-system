@@ -14,7 +14,9 @@ typeset -gA volume_name_from_user_class
 typeset -gA onepassword_key_from_user_class
 
 function create_user_accounts_for_this_Mac() {
-  # Creates specific user accounts for this Mac.
+  # Creates user accounts specified in users_to_create_json JSON object, making use of nonlocal associative
+  # arrays volume_name_from_user_class and onepassword_key_from_user_class, where these specifications are
+  # stored securely in a 1Password vault.
   #
   # It’s assumed that this process is being executed by USER_CONFIGURER, which user already exists, as does
   # a "vanilla" account. Thus, the users being created are anticipated to be the third and subsequent
@@ -24,6 +26,10 @@ function create_user_accounts_for_this_Mac() {
   # of a 1Password vault. The script also references two associative arrays (a) volume_name_from_user_class
   # and (b)onepassword_key_from_user_class stored in a different plain-text item in the same 1Password
   # vault.
+  #
+  # If a specified user to create has a short name that already has a user account, that user is skipped
+  # without error. However, if a specified user to create has a novel short name but has a uid that
+  # corresponds to an existing user, a fatal error is raised.
   #
   # See scripts/spawn/0_README.md for a description of:
   # - the users_to_create JSON object
@@ -60,7 +66,6 @@ function create_user_accounts_for_this_Mac() {
   users_to_create_json="$(get_users_to_create_from_1password)" || return 1
 
   keep_sudo_alive
-  create_users
 
 
   # ############### TODO WORK IN PROGRESS
