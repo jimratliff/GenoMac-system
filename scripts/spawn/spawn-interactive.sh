@@ -156,7 +156,7 @@ function interactive_test_of_parent_of_users_home_directories() {
 }
 
 function interactive_test_for_user_existence() {
-  # Interactive front end for iteratively running does_user_exist
+  # Interactive front end for iteratively running does_user_name_exist
   # Also runs confirm_secure_token_was_enabled_for_user
 
   report_start_phase_standard
@@ -172,7 +172,7 @@ function interactive_test_for_user_existence() {
       return 0
     fi
 
-    does_user_exist "$user_short_name" || true
+    does_user_name_exist "$user_short_name" || true
     confirm_secure_token_was_enabled_for_user "$user_short_name" || true
 
   done
