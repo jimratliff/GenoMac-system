@@ -66,6 +66,7 @@ function create_user_accounts_for_this_Mac() {
   users_to_create_json="$(get_users_to_create_from_1password)" || return 1
 
   keep_sudo_alive
+  create_users
 
 
   # ############### TODO WORK IN PROGRESS
@@ -143,6 +144,8 @@ function create_users() {
       --op-vault               "$op_vault" \
       --op-item-user-password  "$op_item_user_password" \
       --op-item-admin-password "$onepassword_admin_password_item_name"
+
+    record_completion_of_user_creation_in_system_states "$short_name" "$volume_name" "$op_item_user_password"
     
   done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
   
