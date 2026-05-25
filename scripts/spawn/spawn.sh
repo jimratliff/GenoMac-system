@@ -10,9 +10,8 @@ safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation-helpers.sh"
 
 # Global associative arrays to be populated from item ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
 # of 1Password vault ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
-typeset -gA volume_key_from_user_class
-typeset -gA onepassword_key_for_passphrase_from_volume_key
-typeset -gA volume_name_from_volume_key
+typeset -gA volume_name_from_user_class
+typeset -gA onepassword_key_from_user_class
 
 function create_user_accounts_for_this_Mac() {
   # Creates specific user accounts for this Mac.
@@ -40,7 +39,6 @@ function create_user_accounts_for_this_Mac() {
   print_banner_text "BEGIN USER CREATION"
   report_action_taken "Beginning process to create users"
 
-  # Sign into 1Password
   report "Sign into 1Password (if necessary)"
   op signin
 
