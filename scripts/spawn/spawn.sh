@@ -195,28 +195,19 @@ function populate_user_spawn_associative_arrays_from_json() {
 
 	if ! populate_associative_array_from_json_object \
 		"$json_input" \
-		'.volume_key_from_user_class' \
-		volume_key_from_user_class
+		'.volume_name_from_user_class' \
+		volume_name_from_user_class
 	then
-		report_fail "Failed to populate volume_key_from_user_class."
+		report_fail "Failed to populate volume_name_from_user_class."
 		return 1
 	fi
 
 	if ! populate_associative_array_from_json_object \
 		"$json_input" \
-		'.onepassword_key_for_passphrase_from_volume_key' \
-		onepassword_key_for_passphrase_from_volume_key
+		'.onepassword_key_from_user_class' \
+		onepassword_key_from_user_class
 	then
-		report_fail "Failed to populate onepassword_key_for_passphrase_from_volume_key."
-		return 1
-	fi
-
-	if ! populate_associative_array_from_json_object \
-		"$json_input" \
-		'.volume_name_from_volume_key' \
-		volume_name_from_volume_key
-	then
-		report_fail "Failed to populate volume_name_from_volume_key."
+		report_fail "Failed to populate onepassword_key_from_user_class."
 		return 1
 	fi
 
