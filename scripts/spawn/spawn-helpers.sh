@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-function does_user_exist() {
+function does_user_name_exist() {
   # Returns success (exit status 0) iff user with the given short name $1 exists;
   # otherwise returns exit status 1.
   
@@ -8,14 +8,51 @@ function does_user_exist() {
   local user_name_to_test="$1"
 
   if id -u "$user_name_to_test" >/dev/null 2>&1; then
-	report_warning "User $user_name_to_test already exists. Moving on…"
+	# User name exists
     report_end_phase_standard
     return 0
   fi
 
-  report "User $user_name_to_test does NOT already exist"
+  # User name does not exist
   report_end_phase_standard
   return 1
+}
+
+function does_user_uid_exist() {
+  # Returns success (exit status 0) iff a user with the given UID $1 exists;
+  # otherwise returns exit status 1.
+
+  report_start_phase_standard
+  local uid_to_test="${1:?missing uid}"
+
+  local users_with_uid_to_test
+  # Ask Directory Services for user records under /Users whose UniqueID attribute
+  # equals $uid_to_test, and store any matching output
+  users_with_uid_to_test="$(dscl . -search /Users UniqueID "$uid_to_test" 2>/dev/null)"
+
+  if [[ -n "$users_with_uid_to_test" ]]; then
+    # UID exists
+    report_end_phase_standard
+    return 0
+  fi
+
+  # UID does not exist
+  report_end_phase_standard
+  return 1
+}
+
+function string_of_short_names_with_uid() {
+  # Prints a comma-separated string to stdout of short names whose UniqueID equals $1.
+
+  local uid_to_test="${1:?missing uid}"
+  local -a short_names
+
+  short_names=("${(@f)$(
+    dscl . -search /Users UniqueID "$uid_to_test" 2>/dev/null \
+      | awk '{print $1}'
+  )}")
+
+  print -- "${(j:, :)short_names}"
 }
 
 function confirm_secure_token_was_enabled_for_user() {
