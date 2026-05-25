@@ -17,10 +17,13 @@ function create_user_accounts_for_this_Mac() {
   # Creates specific user accounts for this Mac.
   #
   # It’s assumed that this process is being executed by USER_CONFIGURER, which user already exists, as does
-  #   a "vanilla" account. Thus, the users being created are anticipated to be the third and subsequent
-  #   users.
+  # a "vanilla" account. Thus, the users being created are anticipated to be the third and subsequent
+  # users.
   #
-  # The users to be created are specified in a "users_to_create" JSON object.
+  # The users to be created are specified in a "users_to_create" JSON object stored in a plain-text item
+  # of a 1Password vault. The script also references two associative arrays (a) volume_name_from_user_class
+  # and (b)onepassword_key_from_user_class stored in a different plain-text item in the same 1Password
+  # vault.
   #
   # See scripts/spawn/0_README.md for a description of:
   # - the users_to_create JSON object
@@ -47,8 +50,13 @@ function create_user_accounts_for_this_Mac() {
   report "Sign into 1Password (if necessary)"
   op signin
 
+  # Populate associative arrays volume_name_from_user_class and onepassword_key_from_user_class by reading
+  # from plain-text item of 1Password vault.
+  # These arrays are *not* local, because they are referenced by functions called later within this shell
   get_user_spawn_config_associative_arrays
-  
+
+  # Get JSON object from plain-text item in 1Password vault
+  # This JSON object is *not* local, because it is referenced by functions called later within this shell
   users_to_create_json="$(get_users_to_create_from_1password)" || return 1
 
   keep_sudo_alive
@@ -61,6 +69,13 @@ function create_user_accounts_for_this_Mac() {
 }
 
 function create_users() {
+  # Creates user accounts specified in users_to_create_json JSON object, making use of nonlocal associative
+  # arrays volume_name_from_user_class and onepassword_key_from_user_class
+  #
+  # If a specified user to create has a short name that already has a user account, that user is skipped
+  # without error. However, if a specified user to create has a novel short name but has a uid that
+  # corresponds to an existing user, a fatal error is raised.
+  
   report_start_phase_standard
 
   local admin_user_name
@@ -81,16 +96,24 @@ function create_users() {
   op_vault="$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION"
   admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
   onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
-	
+
+  # User loop
   while IFS= read -r user_spec_json; do
+    # user_spec_json is the specification for a single user
+    
     short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
     if does_user_name_exist "$short_name"; then
-  	report_warning "User ($short_name) already exists; skipping creation of this user."
-  	continue
+  	  report_warning "User ($short_name) already exists; skipping creation of this user."
+  	  continue
     fi
   
     full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
+    
     uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
+    if does_user_uid_exist $uid; then
+      report_fail "Proposed uid $uid for user $short_name already exists as a different user."
+      return 1
+    fi
     
     avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")" || return 1
     avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
@@ -113,17 +136,6 @@ function create_users() {
       --op-vault               "$op_vault" \
       --op-item-user-password  "$op_item_user_password" \
       --op-item-admin-password "$onepassword_admin_password_item_name"
-
-    
-	
-	  report "Need to create user: $short_name ($full_name), uid=$uid, class=$user_class, avatar=$avatar"
-
-	  create_local_user_account \
-  		--short-name      "$short_name" \
-  		--full-name       "$full_name" \
-  		--uid             "$uid" \
-      --user-class      "$user_class" \
-      --avatar          "$avatar" 
 	  
 	done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
   
@@ -148,8 +160,8 @@ function create_local_user_account(){
 
 
 function get_user_spawn_config_associative_arrays() {
-  # Get values for associative arrays volume_name_from_user_class and
-  # onepassword_key_from_user_class
+  # Get values for associative arrays volume_name_from_user_class and onepassword_key_from_user_class
+  # by reading from plain-text item of 1Password vault.
 
   report_start_phase_standard
   local user_spawn_config_json
