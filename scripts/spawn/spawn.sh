@@ -141,7 +141,9 @@ function create_user_account(){
     --op-item-user-password  "$op_item_user_password" \
     --op-item-admin-password "$onepassword_admin_password_item_name"
 
-  record_in_system_states_completion_of_user_creation "$short_name" "$volume_name" "$op_item_user_password"
+  conditionally_mark_volume_as_pending_creation "$volume_name" "$op_item_user_password"
+
+  # record_in_system_states_completion_of_user_creation "$short_name" "$volume_name" "$op_item_user_password"
   
   report_end_phase_standard
 }
