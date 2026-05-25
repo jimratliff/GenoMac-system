@@ -33,10 +33,12 @@ function create_user_accounts_for_this_Mac() {
   #   - This sources (a) helpers and cross-repo environment variables from GenoMac-shared and
   #     (b) repo-specific environment variables.
   # - The following environment variables have been defined:
-  #   - ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION      ("GenoMac-user-creation")
-  #   - ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG          ("GenoMac-system-user-spawn-config-json")
-  #   - ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE   ("GenoMac-system-specs-of-users-to-create")
-  #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES       ("/Users")
+  #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES            ("/Users")
+  #   - ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     ("GenoMac-system-authorizing-admin-user-name")
+  #   - ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD ("THE_STARTUP_PASSWORD")
+  #   - ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        ("GenoMac-system-specs-of-users-to-create")
+  #   - ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG               ("GenoMac-system-user-spawn-config-json")
+  #   - ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION           ("GenoMac-user-creation")
   
   report_start_phase_standard
   print_banner_text "BEGIN USER CREATION"
@@ -50,9 +52,6 @@ function create_user_accounts_for_this_Mac() {
   users_to_create_json="$(get_users_to_create_from_1password)" || return 1
 
   keep_sudo_alive
-  
-  # prompt_configurer_to_supply_login_pictures_if_desired
-
   create_users
 
 
@@ -64,24 +63,61 @@ function create_user_accounts_for_this_Mac() {
 function create_users() {
   report_start_phase_standard
 
-	local user_spec_json
-	local short_name
+  local admin_user_name
+	local avatar
+  local avatar_path
 	local full_name
+  local home_directory
+  local onepassword_admin_password_item_name
+  local op_item_user_password
+  local op_vault
+  local parent_of_home_directory
+	local short_name
 	local uid
 	local user_class
-	local avatar
+	local user_spec_json
+  local volume_name
+
+  op_vault="$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION"
+  admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
+  onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
 	
 	while IFS= read -r user_spec_json; do
 	  short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
+	  if does_user_name_exist "$short_name"; then
+	    report_warning "User ($short_name) already exists; skipping creation of this user."
+	    continue
+	  fi
+    
 	  full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
 	  uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
 	  user_class="$(get_user_class_from_user_spec_json "$user_spec_json")" || return 1
 	  avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")" || return 1
-	
-	  if does_user_exist "$short_name"; then
-	    report_warning "User ($short_name) already exists; skipping creation of this user."
-	    continue
-	  fi
+
+    # Fill in the gap:
+
+    volume_name="${volume_name_from_user_class[$user_class]}"
+    parent_of_home_directory="$(parent_of_users_home_directories "$volume_name")"
+    home_directory="${parent_of_home_directory}/${user_name}"
+
+    op_item_user_password="${onepassword_key_from_user_class[$user_class]}"
+    
+    avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
+
+
+    sysadminctl_adduser \
+      --short-name             "$short_name" \
+      --full-name              "$full_name" \
+      --uid                    "$uid" \
+      --home                   "$home_directory" \
+      --avatar-path            "$avatar_path" \
+      --admin-user-name        "$admin_user_name" \
+      --hint                   "$user_class" \
+      --op-vault               "$op_vault" \
+      --op-item-user-password  "$op_item_user_password" \
+      --op-item-admin-password "$onepassword_admin_password_item_name"
+
+    
 	
 	  report "Need to create user: $short_name ($full_name), uid=$uid, class=$user_class, avatar=$avatar"
 
