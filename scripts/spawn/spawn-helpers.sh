@@ -102,60 +102,6 @@ function parent_of_users_home_directories() {
   print -- "$path_of_parent_of_home_directories"
 }
 
-function parent_of_users_home_directories_old() {
-  # Constructs the path of the parent of users’ home directories.
-  # Takes either:
-  #   --startup-volume
-  #     resulting in "/Users"
-  #   --volume-name <volume_name>
-  #     resulting in "/Volumes/volume_name/Users"
-  # using the environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES.
-  # NOTE: The environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES
-  #       is assumed to *include* the leading `/`.
-  # HINT: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="/Users"
-  
-  local is_startup_volume=false
-  local is_not_startup_volume=false
-  local volume_name=""
-  local path_of_parent_of_home_directories
-
-  while (( $# > 0 )); do
-    case "$1" in
-      --startup-volume)
-        is_startup_volume=true
-        shift
-        ;;
-      --volume-name)
-        is_not_startup_volume=true
-        volume_name=$(required_value_for_option "$1" "${2-}") || return 1
-        shift 2
-        ;;
-      *)
-        report_fail "Unknown parameter: $1"
-        return 1
-        ;;
-    esac
-  done
-
-  if [[ "$is_startup_volume" == true && "$is_not_startup_volume" == true ]]; then
-    report_fail "Specify EITHER --startup-volume or --volume-name, but NOT both."
-    return 1
-  fi
-
-  if [[ "$is_startup_volume" != true && "$is_not_startup_volume" != true ]]; then
-    report_fail "You must specify EITHER --startup-volume or --volume-name.${NEWLINE}is_startup_volume: ${is_startup_volume} is_not_startup_volume: ${is_not_startup_volume}."
-    return 1
-  fi
-
-  if [[ "$is_startup_volume" == true ]]; then
-    path_of_parent_of_home_directories="${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
-  else
-    path_of_parent_of_home_directories="/Volumes/${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
-  fi
-  
-  print -- "$path_of_parent_of_home_directories"
-}
-
 function get_short_name_from_user_spec_json() {
   local user_spec_json="$1"
   jq -r '.short_name' <<<"$user_spec_json"
