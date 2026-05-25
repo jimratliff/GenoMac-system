@@ -2,13 +2,14 @@
 
 function conditionally_mark_volume_as_pending_creation(){
   # Takes the volume and 1Password item key for a new user and, when appropriate, marks
-  # that this volume needs to be created.
+  # in a system state that this volume needs to be created with the indicated passphrase.
   #
   # Parameters:
   # - $1: volume name
   # - $2: name of 1Password item key
   #
   # Takes no action if any of:
+  # - volume_name is STARTUP_VOLUME_SIGNIFIER="::startup_volume::"
   # - volume_name is already marked as having been created
   # - volume_name is already marked as pending
   # - volume_name is mounted
@@ -73,16 +74,26 @@ function test_whether_volume_is_marked_pending(){
 }
 
 function test_volume_1Password_key_state_was_found_without_mismatch(){
-  # Tests whether exactly one state exists for the desired volume/1Password key for given prefix.
+  # Tests whether exactly one state exists for the desired volume and given prefix.
+  # If so, crashes if the existing 1Password key doesn’t match the desired 1Password key supplied.
+  #
+  # Parameters:
+  #   $1: volume name
+  #   $2: 1Password item key for the desired passphrase for this volume
+  #   $3: state-string prefix
   #
   # Returns:
   #   0 if exactly one matching state exists and its 1Password key matches the desired key
   #     (If the 1Password key of the existing state is different, exits/bombs)
-  #   1 if no matching state exists
-  #   exits/bombs if multiple matching states exist
-  #     Multiple matching states implies that the same volume is assigned multiple
-  #     1Password item keys, which is a conflict, because a volume can have only a
-  #     single encryption passphrase.
+  #   1 if no state matches the volume/prefix
+  #
+  #   Exits/bombs with exit code 70 if:
+  #   - multiple matching states exist
+  #       Multiple matching states implies that the same volume is assigned multiple
+  #       1Password item keys, which is a conflict, because a volume can have only a
+  #       single encryption passphrase.
+  #   - one state matches the volume/prefix, but its 1Password key is different from the
+  #     supplied as the desired 1Password key
 
   report_start_phase_standard
 
