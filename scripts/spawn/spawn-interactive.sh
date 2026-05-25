@@ -119,6 +119,8 @@ function interactive_get_parent_of_users_home_directories() {
   local option=""
   local volume_name=""
   local parent=""
+
+  report_fail "interactive_get_parent_of_users_home_directories hasn’t been updated to reflect the current API"
   
   option="$(
     get_value_from_numbered_choices \
