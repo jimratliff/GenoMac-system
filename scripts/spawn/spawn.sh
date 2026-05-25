@@ -82,29 +82,26 @@ function create_users() {
   admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
   onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
 	
-	while IFS= read -r user_spec_json; do
-	  short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
-	  if does_user_name_exist "$short_name"; then
-	    report_warning "User ($short_name) already exists; skipping creation of this user."
-	    continue
-	  fi
+  while IFS= read -r user_spec_json; do
+    short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
+    if does_user_name_exist "$short_name"; then
+  	report_warning "User ($short_name) already exists; skipping creation of this user."
+  	continue
+    fi
+  
+    full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
+    uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
     
-	  full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
-	  uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
-	  user_class="$(get_user_class_from_user_spec_json "$user_spec_json")" || return 1
-	  avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")" || return 1
-
-    # Fill in the gap:
-
+    avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")" || return 1
+    avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
+    
+    user_class="$(get_user_class_from_user_spec_json "$user_spec_json")" || return 1
+    op_item_user_password="${onepassword_key_from_user_class[$user_class]}"
+  
     volume_name="${volume_name_from_user_class[$user_class]}"
     parent_of_home_directory="$(parent_of_users_home_directories "$volume_name")"
     home_directory="${parent_of_home_directory}/${user_name}"
-
-    op_item_user_password="${onepassword_key_from_user_class[$user_class]}"
     
-    avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
-
-
     sysadminctl_adduser \
       --short-name             "$short_name" \
       --full-name              "$full_name" \
