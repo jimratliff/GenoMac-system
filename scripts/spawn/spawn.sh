@@ -79,18 +79,18 @@ function create_users() {
   report_start_phase_standard
 
   local admin_user_name
-	local avatar
+  local avatar
   local avatar_path
-	local full_name
+  local full_name
   local home_directory
   local onepassword_admin_password_item_name
   local op_item_user_password
   local op_vault
   local parent_of_home_directory
-	local short_name
-	local uid
-	local user_class
-	local user_spec_json
+  local short_name
+  local uid
+  local user_class
+  local user_spec_json
   local volume_name
 
   op_vault="$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION"
@@ -103,8 +103,8 @@ function create_users() {
     
     short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
     if does_user_name_exist "$short_name"; then
-  	  report_warning "User ($short_name) already exists; skipping creation of this user."
-  	  continue
+      report_warning "User ($short_name) already exists; skipping creation of this user."
+      continue
     fi
   
     full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
@@ -136,8 +136,8 @@ function create_users() {
       --op-vault               "$op_vault" \
       --op-item-user-password  "$op_item_user_password" \
       --op-item-admin-password "$onepassword_admin_password_item_name"
-	  
-	done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
+    
+  done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
   
   report_end_phase_standard
 }
@@ -147,13 +147,13 @@ function create_local_user_account(){
   report_start_phase_standard
 
   sysadminctl_adduser \
-	--short-name      "$short_name" \
-	--full-name       "$full_name" \
-	--uid             "$uid" \
-	--home            "$home" \            					    ############### WARNING: NEEDS TO BE CONSTRUCTED
-	--avatar-path     "$avatar_path" \     					    ############### WARNING: NEEDS TO BE CONSTRUCTED
-	--admin-user-name "$secret_token_giving_admin_short_name" \ ############### WARNING: NEEDS TO BE DEFINED
-	
+  --short-name      "$short_name" \
+  --full-name       "$full_name" \
+  --uid             "$uid" \
+  --home            "$home" \                          ############### WARNING: NEEDS TO BE CONSTRUCTED
+  --avatar-path     "$avatar_path" \                   ############### WARNING: NEEDS TO BE CONSTRUCTED
+  --admin-user-name "$secret_token_giving_admin_short_name" \ ############### WARNING: NEEDS TO BE DEFINED
+  
   report_end_phase_standard
 }
 
@@ -183,45 +183,45 @@ function get_user_spawn_config_associative_arrays() {
 
 function get_user_spawn_config_from_1password() {
 
-	report_start_phase_standard
-	local user_spawn_config_json
+  report_start_phase_standard
+  local user_spawn_config_json
 
-	if ! user_spawn_config_json="$(
-		read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG"
-	)"; then
-		report_fail "Failed to read user spawn config from 1Password."
-		return 1
-	fi
+  if ! user_spawn_config_json="$(
+    read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG"
+  )"; then
+    report_fail "Failed to read user spawn config from 1Password."
+    return 1
+  fi
 
-	report_end_phase_standard
-	print -- "$user_spawn_config_json"
+  report_end_phase_standard
+  print -- "$user_spawn_config_json"
 }
 
 function populate_user_spawn_associative_arrays_from_json() {
-	report_start_phase_standard
+  report_start_phase_standard
 
-	local json_input
-	json_input="$(cat)"
+  local json_input
+  json_input="$(cat)"
 
-	if ! populate_associative_array_from_json_object \
-		"$json_input" \
-		'.volume_name_from_user_class' \
-		volume_name_from_user_class
-	then
-		report_fail "Failed to populate volume_name_from_user_class."
-		return 1
-	fi
+  if ! populate_associative_array_from_json_object \
+    "$json_input" \
+    '.volume_name_from_user_class' \
+    volume_name_from_user_class
+  then
+    report_fail "Failed to populate volume_name_from_user_class."
+    return 1
+  fi
 
-	if ! populate_associative_array_from_json_object \
-		"$json_input" \
-		'.onepassword_key_from_user_class' \
-		onepassword_key_from_user_class
-	then
-		report_fail "Failed to populate onepassword_key_from_user_class."
-		return 1
-	fi
+  if ! populate_associative_array_from_json_object \
+    "$json_input" \
+    '.onepassword_key_from_user_class' \
+    onepassword_key_from_user_class
+  then
+    report_fail "Failed to populate onepassword_key_from_user_class."
+    return 1
+  fi
 
-	report_end_phase_standard
+  report_end_phase_standard
 }
 
 function get_users_to_create_from_1password() {
@@ -229,7 +229,7 @@ function get_users_to_create_from_1password() {
   local users_to_create_json
 
   if ! users_to_create_json="$(
-	read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
+  read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
   )"; then
     report_fail "Failed to read users-to-create JSON from 1Password."
     return 1
@@ -309,7 +309,7 @@ function get_users_to_create_from_1password() {
 #  
 #    if ! get_yes_no_answer_to_question "Do you want the new users to be specified with login pictures?"; then
 #      report "I won’t create a directory for login pictures, since you don’t want to use them"
-#  	report_end_phase_standard
+#    report_end_phase_standard
 #      return 0
 #    fi
 #  
