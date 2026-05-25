@@ -22,7 +22,10 @@ function create_user_accounts_for_this_Mac() {
   #
   # The users to be created are specified in a "users_to_create" JSON object.
   #
-  # See scripts/spawn/0_README.md for a description of the "users_to_create" JSON object.
+  # See scripts/spawn/0_README.md for a description of:
+  # - the users_to_create JSON object
+  # - the volume_name_from_user_class associative array
+  # - the onepassword_key_from_user_class associative array
   #
   # This function assumes that:
   # - GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
@@ -82,10 +85,30 @@ function create_users() {
 	
 	  report "Need to create user: $short_name ($full_name), uid=$uid, class=$user_class, avatar=$avatar"
 
-	  create_local_user_account
+	  create_local_user_account \
+  		--short-name      "$short_name" \
+  		--full-name       "$full_name" \
+  		--uid             "$uid" \
+      --user-class      "$user_class" \
+      --avatar          "$avatar" 
 	  
 	done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
   
+  report_end_phase_standard
+}
+
+function create_local_user_account(){
+  # Template for a Zsh function in Project GenoMac
+  report_start_phase_standard
+
+  sysadminctl_adduser \
+	--short-name      "$short_name" \
+	--full-name       "$full_name" \
+	--uid             "$uid" \
+	--home            "$home" \            					    ############### WARNING: NEEDS TO BE CONSTRUCTED
+	--avatar-path     "$avatar_path" \     					    ############### WARNING: NEEDS TO BE CONSTRUCTED
+	--admin-user-name "$secret_token_giving_admin_short_name" \ ############### WARNING: NEEDS TO BE DEFINED
+	
   report_end_phase_standard
 }
 
