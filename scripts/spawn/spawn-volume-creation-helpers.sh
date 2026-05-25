@@ -39,6 +39,7 @@ function conditionally_mark_volume_as_pending_creation(){
 
   if volume_name_is_mounted "$volume_name"; then
     report "The volume “$volume_name” is currently mounted. Nothing further to record."
+    report_warning "Although volume “$volume_name” is currently mounted, I can’t guarantee its passphrase."
     report_end_phase_standard
     return 0
   fi
