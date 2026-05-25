@@ -41,9 +41,11 @@ function create_user_accounts_for_this_Mac() {
   report_action_taken "Beginning process to create users"
 
   # Sign into 1Password
+  report "Sign into 1Password (if necessary)"
   op signin
 
   get_user_spawn_config_associative_arrays
+  
   users_to_create_json="$(get_users_to_create_from_1password)" || return 1
 
   keep_sudo_alive
@@ -51,9 +53,7 @@ function create_user_accounts_for_this_Mac() {
   # prompt_configurer_to_supply_login_pictures_if_desired
 
   create_users
-  
 
-  # startup_container="$(determine_startup_container)"
 
   # ############### TODO WORK IN PROGRESS
 
