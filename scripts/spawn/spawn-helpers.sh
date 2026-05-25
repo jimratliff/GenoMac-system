@@ -80,6 +80,29 @@ function confirm_secure_token_was_enabled_for_user() {
 }
 
 function parent_of_users_home_directories() {
+  # Constructs the path of the parent of users’ home directories given the volume name
+  # 
+  # The one argument must be either
+  # - the volume name, if the volume is *not* the startup volume, 
+  #   - resulting in "/Volumes/volume_name/Users"
+  # - '::startup_volume::' (environment variable: STARTUP_VOLUME_SIGNIFIER) if the volume *is* the startup volume
+  #   - resulting in "/Users"
+  # using the environment variable DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES.
+  # HINT: DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="/Users" (note that it *includes* the leading `/`)
+
+  local volume_name="$1"
+  local path_of_parent_of_home_directories
+
+  if [[ "$volume_name" == "$STARTUP_VOLUME_SIGNIFIER" ]]; then
+    path_of_parent_of_home_directories="${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
+  else
+    path_of_parent_of_home_directories="/Volumes/${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
+  fi
+  
+  print -- "$path_of_parent_of_home_directories"
+}
+
+function parent_of_users_home_directories_old() {
   # Constructs the path of the parent of users’ home directories.
   # Takes either:
   #   --startup-volume
