@@ -81,6 +81,7 @@ function create_users() {
   local admin_user_name
   local avatar
   local avatar_path
+  local conflicting_short_names
   local full_name
   local home_directory
   local onepassword_admin_password_item_name
@@ -111,7 +112,8 @@ function create_users() {
     
     uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
     if does_user_uid_exist $uid; then
-      report_fail "Proposed uid $uid for user $short_name already exists as a different user."
+      conflicting_short_names="$(string_of_short_names_with_uid $uid)"
+      report_fail "Proposed uid $uid for user $short_name already exists as one (or more) different user(s):${NEWLINE}${conflicting_short_names}"
       return 1
     fi
     
