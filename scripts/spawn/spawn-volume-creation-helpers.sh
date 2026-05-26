@@ -21,21 +21,11 @@ function conditionally_mark_volume_as_pending_creation(){
   local op_item_key="$2"
   local state_string
 
-  if test_whether_volume_is_marked_created "$volume_name" "$op_item_key"; then
-    report "The volume “$volume_name” has been marked created. Nothing further to record."
+  if "$volume_name" == "$STARTUP_VOLUME_SIGNIFIER"; then
+    report "The “volume name” “$volume_name” signifies the startup volume, which necessarily exists.${NEWLINE}Nothing further to record."
     report_end_phase_standard
     return 0
   fi
-
-  report "Volume “$volume_name” hasn’t been recorded as having been created"
-
-  if test_whether_volume_is_marked_pending "$volume_name" "$op_item_key"; then
-    report "The volume “$volume_name” is already marked as pending. Nothing further to record."
-    report_end_phase_standard
-    return 0
-  fi
-
-  report "Volume “$volume_name” hasn’t been recorded as being pending."
 
   if volume_name_is_mounted "$volume_name"; then
     report "The volume “$volume_name” is currently mounted. Nothing further to record."
@@ -43,6 +33,20 @@ function conditionally_mark_volume_as_pending_creation(){
     report_end_phase_standard
     return 0
   fi
+
+  if test_whether_volume_is_marked_created "$volume_name" "$op_item_key"; then
+    report "The volume “$volume_name” has been marked created. Nothing further to record."
+    report_end_phase_standard
+    return 0
+  fi
+  report "Volume “$volume_name” hasn’t been recorded as having been created"
+
+  if test_whether_volume_is_marked_pending "$volume_name" "$op_item_key"; then
+    report "The volume “$volume_name” is already marked as pending. Nothing further to record."
+    report_end_phase_standard
+    return 0
+  fi
+  report "Volume “$volume_name” hasn’t been recorded as being pending."
 
   report_action_taken "Set state to mark that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
   state_string=$(construct_state_string_for_volume_1password_key "$GMS_STATE_VOLUME_IS_PENDING_PREFIX" "$volume_name" "$op_item_key")
