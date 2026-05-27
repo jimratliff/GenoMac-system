@@ -16,6 +16,7 @@ function subdermis() {
   safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
   safe_source "${GMS_USER_SCOPE_SCRIPTS}/clone_genomac_user_repo.sh"
+  safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn.sh"
 
   # TODO:
   # - Consider adding environment variable SESH_FORCED_LOGOUT_DIRTY to avoid
