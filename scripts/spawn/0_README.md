@@ -110,14 +110,14 @@ Each user to be created is specified by:
         "short_name": "wilma",
         "full_name": "Wilma Flintstone",
         "uid": 512,
-        "user_class": "work"
-        "attributes": {
-          "pristine": true,
-          "configurer": true,
-          "emailer": false,
-          "chess-player": false,
-          "developer": false
-      }
+        "user_class": "work",
+        "attributes": [
+          "pristine",
+          "configurer",
+          "emailer",
+          "chess-player",
+          "developer"
+      ]
     ]
   }
 ```
