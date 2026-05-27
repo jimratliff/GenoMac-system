@@ -234,7 +234,10 @@ function get_users_to_create_from_1password() {
 function attribute_names_from_user_spec_json() {
   local user_spec_json="${1:?missing user_spec_json}"
 
-  jq -r '.attributes[]?' <<<"$user_spec_json"
+  jq -r '
+    (.attributes // [])
+    | .[]
+  ' <<<"$user_spec_json"
 }
 
 ############### Below this line, the code is DEPRECATED
