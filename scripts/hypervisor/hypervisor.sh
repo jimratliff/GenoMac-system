@@ -37,6 +37,7 @@ function hypervisor() {
       set_genomac_system_state "$SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"
       report_action_taken "Re-execute Hypervisor using updated repo code"
       report_end_phase_standard
+	  # Restart the Hypervisor
       exec "$0"
 	else
       set_genomac_system_state "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES"
@@ -53,7 +54,7 @@ function hypervisor() {
   ############### BEGIN MIGRATIONS
   # Provide any migrations here
   # Example:
-  #   migrate_user_states "MIGRATION_ID_2026_03_11" --delete "$PERM_PREVIEW_BASE_TOOLBAR_HAS_BEEN_SPECIFIED"
+  #   migrate_system_states "MIGRATION_ID_2026_03_11" --delete "$PERM_PREVIEW_BASE_TOOLBAR_HAS_BEEN_SPECIFIED"
 
   ############### END MIGRATIONS
 
