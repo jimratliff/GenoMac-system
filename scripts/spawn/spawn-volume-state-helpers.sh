@@ -40,8 +40,6 @@ function conditionally_mark_volume_as_pending_creation(){
   return 0
 }
 
-
-
 function test_whether_volume_is_marked_pending(){
   # Tests whether state exists asserting the given volume has been noted as pending (needing creation).
   local volume_name="${1:?missing/empty volume_name}"
@@ -244,3 +242,64 @@ function construct_state_string_for_volume_1password_key_pending_creation(){
 
   report_end_phase_standard
 }
+
+
+
+#############################################
+#        EVERYTHING BELOW THIS IS DEPRECATED
+function conditionally_mark_volume_as_pending_creation_DEPRECATED(){
+  # Takes the volume and 1Password item key for a new user and, when appropriate, marks
+  # in a system state that this volume needs to be created with the indicated passphrase.
+  #
+  # Parameters:
+  # - $1: volume name
+  # - $2: name of 1Password item key
+  #
+  # Takes no action if any of:
+  # - volume_name is STARTUP_VOLUME_SIGNIFIER="::startup_volume::"
+  # - volume_name is already marked as having been created
+  # - volume_name is already marked as pending
+  # - volume_name is mounted
+  #
+  # Otherwise sets system state with prefix GMS_STATE_VOLUME_IS_PENDING_PREFIX for this volume.
+  
+  report_start_phase_standard
+  local volume_name="$1"
+  local op_item_key="$2"
+  local state_string
+
+  if "$volume_name" == "$STARTUP_VOLUME_SIGNIFIER"; then
+    report "The “volume name” “$volume_name” signifies the startup volume, which necessarily exists.${NEWLINE}Nothing further to record."
+    report_end_phase_standard
+    return 0
+  fi
+
+  if volume_name_is_mounted "$volume_name"; then
+    report "The volume “$volume_name” is currently mounted. Nothing further to record."
+    report_warning "Although volume “$volume_name” is currently mounted, I can’t guarantee its passphrase."
+    report_end_phase_standard
+    return 0
+  fi
+
+  if test_whether_volume_is_marked_created "$volume_name" "$op_item_key"; then
+    report "The volume “$volume_name” has been marked created. Nothing further to record."
+    report_end_phase_standard
+    return 0
+  fi
+  report "Volume “$volume_name” hasn’t been recorded as having been created"
+
+  if test_whether_volume_is_marked_pending "$volume_name" "$op_item_key"; then
+    report "The volume “$volume_name” is already marked as pending. Nothing further to record."
+    report_end_phase_standard
+    return 0
+  fi
+  report "Volume “$volume_name” hasn’t been recorded as being pending."
+
+  report_action_taken "Set state to mark that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
+  state_string=$(construct_state_string_for_volume_1password_key_pending_creation "$volume_name" "$op_item_key")
+  set_genomac_system_state "$state_string"
+
+  report_end_phase_standard
+  return 0
+}
+
