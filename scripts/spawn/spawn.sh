@@ -99,9 +99,10 @@ function create_user_accounts_for_this_Mac() {
 }
 
 function create_user_account(){
-  # Creates a single user account, specified by user_spec_json
+  # Creates a single user account, specified by user_spec_json, which is passed as only argument.
+  # Sets states to record that the user has been created and is in need of initial configuration.
+  # Sets state to record that the volume (if non-startup) needs to be created/encrypted).
   report_start_phase_standard
-  local user_spec_json
   local user_spec_json="$1"
   
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
@@ -141,6 +142,7 @@ function create_user_account(){
     --op-item-user-password  "$op_item_user_password" \
     --op-item-admin-password "$onepassword_admin_password_item_name"
 
+  mark_user_as_created_and_in_need_of_initial_config "$short_name"
   conditionally_mark_volume_as_pending_creation "$volume_name" "$op_item_user_password"
 
   # record_in_system_states_completion_of_user_creation "$short_name" "$volume_name" "$op_item_user_password"
