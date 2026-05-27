@@ -142,10 +142,9 @@ function create_user_account(){
     --op-item-user-password  "$op_item_user_password" \
     --op-item-admin-password "$onepassword_admin_password_item_name"
 
+  mark_user_as_created "$short_name"
   mark_user_as_created_and_in_need_of_initial_config "$short_name"
   conditionally_mark_volume_as_pending_creation "$volume_name" "$op_item_user_password"
-
-  # record_in_system_states_completion_of_user_creation "$short_name" "$volume_name" "$op_item_user_password"
   
   report_end_phase_standard
 }
@@ -228,18 +227,6 @@ function get_users_to_create_from_1password() {
 
   report_end_phase_standard
   print -- "$users_to_create_json"
-}
-
-function record_in_system_states_completion_of_user_creation(){
-  # Records, in system-scoped states, completion of creating this user to support later steps.
-  report_start_phase_standard
-  local short_name="$1"
-  local volume_name="$2"
-  local op_item_user_password="$3"
-
-  ############### WIP TODO ###############
-  
-  report_end_phase_standard
 }
 
 ############### Below this line, the code is DEPRECATED
