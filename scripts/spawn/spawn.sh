@@ -13,7 +13,7 @@ safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation-helpers.sh"
 typeset -gA volume_name_from_user_class
 typeset -gA onepassword_key_from_user_class
 
-function create_user_accounts_for_this_Mac() {
+function conditionally_create_user_accounts_for_this_Mac() {
   # Creates user accounts specified in users_to_create_json JSON object, making use of nonlocal associative
   # arrays volume_name_from_user_class and onepassword_key_from_user_class, where these specifications are
   # stored securely in a 1Password vault.
@@ -78,13 +78,13 @@ function create_user_accounts_for_this_Mac() {
   # User loop
   keep_sudo_alive
   while IFS= read -r user_spec_json; do
-    create_user_account "$user_spec_json"
+    conditionally_create_user_account "$user_spec_json"
   done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
 
   report_end_phase_standard
 }
 
-function create_user_account(){
+function conditionally_create_user_account(){
   # Creates a single user account, specified by user_spec_json, which is passed as only argument.
   # Sets system-scoped states to record:
   # - that the user has been created
