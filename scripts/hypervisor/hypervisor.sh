@@ -36,8 +36,9 @@ function hypervisor() {
     "$GENOMAC_SYSTEM_REPO_NAME" \
     "$GENOMAC_SYSTEM_LOCAL_DIRECTORY"
 
-  # Although the following needs to be performed only once,
-  # it’s simpler to always do it than to test whether it’s been done before.
+  # Locally configures clone of public GitHub repo to (a) fetch without authentication 
+  # using HTTPS but (b) push using SSH. (Although the following needs to be performed only once,
+  # it’s simpler to always do it than to test whether it’s been done before.)
   configure_split_remote_URLs_for_GenoMac_system
 
   ############### BEGIN MIGRATIONS
