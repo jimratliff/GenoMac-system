@@ -92,9 +92,6 @@ function create_user_accounts_for_this_Mac() {
     create_user_account "$user_spec_json"
   done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
 
-
-  # ############### TODO WORK IN PROGRESS
-
   report_end_phase_standard
 }
 
@@ -147,8 +144,9 @@ function create_user_account(){
     --op-item-admin-password "$onepassword_admin_password_item_name"
 
   mark_user_as_created "$short_name"
-  mark_user_as_created_and_in_need_of_initial_config "$short_name"
+  mark_user_as_in_need_of_initial_config "$short_name"
   conditionally_mark_volume_as_pending_creation "$volume_name" "$op_item_user_password"
+  set_system_states_for_user_attributes "$user_spec_json"
   
   report_end_phase_standard
 }
@@ -231,6 +229,12 @@ function get_users_to_create_from_1password() {
 
   report_end_phase_standard
   print -- "$users_to_create_json"
+}
+
+function attribute_names_from_user_spec_json() {
+  local user_spec_json="${1:?missing user_spec_json}"
+
+  jq -r '.attributes[]?' <<<"$user_spec_json"
 }
 
 ############### Below this line, the code is DEPRECATED
