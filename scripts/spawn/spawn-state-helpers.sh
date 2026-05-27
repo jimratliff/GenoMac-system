@@ -1,11 +1,29 @@
 #!/usr/bin/env zsh
 
-function get_1Password_key_from_delimited_state_string(){
+function mark_user_as_created(){
+  # Set system-scoped state to mark user as having been created.
+  # 
+  # As of 5/26/2026, there’s no known use case for this system-scoped state. It’s being
+  # created here because it’s easier to create at user-creation than to retrofit later.
+  report_start_phase_standard
+  local short_name="$1"
+  local state_string
+
+  state_string="${GENOMAC_STATE_USER_EXISTS_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${user_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
+  set_genomac_system_state "$state_string"
+  
+  report_end_phase_standard
+}
+
+function get_1Password_key_from_delimited_state_string_DEPRECATED(){
   # Get the 1Password item key from a delimited volume-1Pkey state string
   # See construct_state_string_for_volume_1password_key_pending_creation() for background
   report_start_phase_standard
   local state_string="$1"
   local op_key
+
+  report_fail "Doesn’t conform to new delimiter system"
+  return 1
 
   op_key="${state_string##*${GENOMAC_STATE_STRING_DELIMITER_B}}"
 
