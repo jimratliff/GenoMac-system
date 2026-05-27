@@ -52,20 +52,9 @@ function create_user_accounts_for_this_Mac() {
   report_start_phase_standard
 
   local admin_user_name
-  local avatar
-  local avatar_path
-  local conflicting_short_names
-  local full_name
-  local home_directory
   local onepassword_admin_password_item_name
-  local op_item_user_password
   local op_vault
-  local parent_of_home_directory
-  local short_name
-  local uid
-  local user_class
   local user_spec_json
-  local volume_name
   
   print_banner_text "BEGIN USER CREATION"
   report_action_taken "Beginning process to create users"
@@ -80,11 +69,11 @@ function create_user_accounts_for_this_Mac() {
 
   op_vault="$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION"
   admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
-  onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
+  onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD")"
 
   # Get JSON object specifying users to create from plain-text item in 1Password vault
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
-  users_to_create_json="$(get_users_to_create_from_1password)" || return 1
+  users_to_create_json="$(get_users_to_create_from_1password)"
 
   # User loop
   keep_sudo_alive
@@ -105,11 +94,24 @@ function create_user_account(){
 
   report_start_phase_standard
   local user_spec_json="$1"
+
+  local avatar
+  local avatar_path
+  local conflicting_short_names
+  local full_name
+  local home_directory
+  local op_item_user_password
+  local parent_of_home_directory
+  local short_name
+  local uid
+  local user_class
+  local volume_name
   
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
   if does_user_name_exist "$short_name"; then
     report_warning "User ($short_name) already exists; skipping creation of this user."
-    continue
+    report_end_phase_standard
+    return 0
   fi
 
   full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
@@ -129,7 +131,7 @@ function create_user_account(){
 
   volume_name="${volume_name_from_user_class[$user_class]}"
   parent_of_home_directory="$(parent_of_users_home_directories "$volume_name")"
-  home_directory="${parent_of_home_directory}/${user_name}"
+  home_directory="${parent_of_home_directory}/${short_name}"
   
   sysadminctl_adduser \
     --short-name             "$short_name" \
