@@ -1,15 +1,17 @@
 #!/usr/bin/env zsh
 
 function mark_user_as_created(){
-  # Set system-scoped state to mark user as having been created.
+  # Set system-scoped state to mark user as having been created, with supplied volume of
+  # user’s home directory.
   # 
   # As of 5/26/2026, there’s no known use case for this system-scoped state. It’s being
   # created here because it’s easier to create at user-creation than to retrofit later.
   report_start_phase_standard
   local short_name="$1"
+  local volume_name="$2"
   local state_string
 
-  state_string="${GENOMAC_STATE_USER_EXISTS_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${user_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
+  state_string="${GENOMAC_STATE_USER_EXISTS_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${user_name}${GENOMAC_STATE_STRING_DELIMITER_B}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_C}"
   set_genomac_system_state "$state_string"
   
   report_end_phase_standard
