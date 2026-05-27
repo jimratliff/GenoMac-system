@@ -145,7 +145,7 @@ function create_user_account(){
     --op-item-user-password  "$op_item_user_password" \
     --op-item-admin-password "$onepassword_admin_password_item_name"
 
-  mark_user_as_created "$short_name"
+  mark_user_as_created "$short_name" "$volume_name"
   mark_user_as_in_need_of_initial_config "$short_name"
   conditionally_mark_volume_as_pending_creation "$volume_name" "$op_item_user_password"
   set_system_states_for_user_attributes "$user_spec_json"
