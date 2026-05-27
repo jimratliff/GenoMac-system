@@ -35,6 +35,8 @@ function set_system_states_for_user_attributes(){
   report_end_phase_standard
 }
 
+#############################################
+#        EVERYTHING BELOW THIS IS DEPRECATED
 function get_1Password_key_from_delimited_state_string_DEPRECATED(){
   # Get the 1Password item key from a delimited volume-1Pkey state string
   # See construct_state_string_for_volume_1password_key_pending_creation() for background
