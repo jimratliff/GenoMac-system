@@ -100,8 +100,12 @@ function create_user_accounts_for_this_Mac() {
 
 function create_user_account(){
   # Creates a single user account, specified by user_spec_json, which is passed as only argument.
-  # Sets states to record that the user has been created and is in need of initial configuration.
-  # Sets state to record that the volume (if non-startup) needs to be created/encrypted).
+  # Sets system-scoped states to record:
+  # - that the user has been created
+  # - that the user is in need of initial configuration
+  # - each of the attributes of the user
+  # - that the volume (if non-startup) needs to be created/encrypted by a particular passphrase
+
   report_start_phase_standard
   local user_spec_json="$1"
   
