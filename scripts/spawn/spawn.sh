@@ -5,7 +5,6 @@ set -euo pipefail
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-addUser.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-interactive.sh"
-safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-related-commands.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-state-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation-helpers.sh"
 
