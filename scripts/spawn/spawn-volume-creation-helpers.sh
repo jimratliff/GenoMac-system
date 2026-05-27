@@ -211,14 +211,14 @@ function construct_state_string_for_volume_1password_key_pending_creation(){
   #     op_item_key
   #
   # In the default form (i.e., without --volume-only), constructs a state string of the form:
-  #   VOLUME_CREATION_IS_PENDING_∞§¶some_volume¶§∞PERSONAL_PASSWORD§∞¶
+  #   VOLUME_CREATION_IS_PENDING∞§¶some_volume¶§∞PERSONAL_PASSWORD§∞¶
   #   where:
   #     'some_volume' is the name of a volume
   #     'PERSONAL_PASSWORD' is a 1Password item key
   #
   # With --volume-only, constructs a truncated version where the trailing 
   # 1Password item key is omitted, e.g.,
-  #   VOLUME_CREATION_IS_PENDING_∞§¶some_volume¶§∞
+  #   VOLUME_CREATION_IS_PENDING∞§¶some_volume¶§∞
   # This can be used as a prefix to search for all states for the given volume
   # without regard to the 1Password item key.
   # 
