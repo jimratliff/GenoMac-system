@@ -127,6 +127,18 @@ function get_avatar_subpath_from_user_spec_json() {
   jq -r '.avatar // empty' <<<"$user_spec_json"
 }
 
+function print_attributes_from_user_spec_json() {
+  local user_spec_json="${1:?missing user_spec_json}"
+
+  jq -r '
+    (.attributes // [])
+    | .[]
+    | if type == "string" then .
+      else error("user attribute is not a string")
+      end
+  ' <<<"$user_spec_json"
+}
+
 ############### Warning: DEPRECATED
 # determine_startup_container() is DEPRECATED because irrelevant
 
