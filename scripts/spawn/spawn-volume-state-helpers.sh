@@ -40,6 +40,21 @@ function conditionally_mark_volume_as_pending_creation(){
   return 0
 }
 
+function collect_state_strings_for_volumes_pending_creation(){
+  # Sets reply to an array of state strings of system-scoped states that assert
+  # that a volume name is pending creation.
+
+  report_start_phase_standard
+  local pattern
+  local -a matching_state_paths
+  
+  pattern="${GMS_STATE_VOLUME_IS_PENDING_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}"
+  matching_state_paths=("${GENOMAC_SYSTEM_LOCAL_STATE_DIRECTORY}"/"${pattern}"*."${GENOMAC_STATE_FILE_EXTENSION}"(N:t:r))
+  reply=("${matching_state_paths[@]}")
+  
+  report_end_phase_standard
+}
+
 function test_whether_volume_is_marked_pending(){
   # Tests whether state exists asserting the given volume has been noted as pending (needing creation).
   local volume_name="${1:?missing/empty volume_name}"
