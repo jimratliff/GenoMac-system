@@ -79,6 +79,27 @@ function conditionally_mark_volume_as_pending_creation(){
   return 0
 }
 
+function unmark_volume_as_pending_creation(){
+  # Unset (i.e., delete) system-scoped state to indicate that a volume needs to be created and encrypted
+  # with a particular passphrase
+  #
+  # Parameters:
+  # - $1: volume name
+  # - $2: name of 1Password item key.
+  
+  report_start_phase_standard
+  local volume_name="$1"
+  local op_item_key="$2"
+  local state_string="$GMS_STATE_VOLUME_IS_PENDING_PREFIX"
+
+  report_action_taken "Delete state that marked that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
+  state_string=$(construct_state_string_for_volume_1password_key_pending_creation "$volume_name" "$op_item_key")
+  delete_genomac_system_state "$state_string"
+
+  report_end_phase_standard
+  return 0
+}
+
 function collect_state_strings_for_volumes_pending_creation(){
   # Sets reply to an array of state strings of system-scoped states that assert
   # that a volume name is pending creation.
