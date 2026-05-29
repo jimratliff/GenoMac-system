@@ -3,7 +3,7 @@
 # The format of a system-scoped state that asserts that a volume_name is pending creation
 # (and should be encrypted using the passphrase associated with 1Password item op_item_key)
 # is:
-#   ${GMS_STATE_VOLUME_IS_PENDING_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"${op_item_key}${GENOMAC_STATE_STRING_DELIMITER_C}"
+#   ${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"${op_item_key}${GENOMAC_STATE_STRING_DELIMITER_C}"
 
 function volume_name_from_pending_volume_state_string(){
   # Prints the volume_name encoded in supplied pending-volume state string.
@@ -63,7 +63,7 @@ function conditionally_mark_volume_as_necessary(){
   report_start_phase_standard
   local volume_name="$1"
   local op_item_key="$2"
-  local state_string="$GMS_STATE_VOLUME_IS_PENDING_PREFIX"
+  local state_string="$GMS_STATE_VOLUME_IS_NECESSARY_PREFIX"
 
   if volume_name_is_startup_volume_signifier "$volume_name"; then
     report "The “volume name” “$volume_name” signifies the startup volume, which necessarily exists.${NEWLINE}Nothing further to record."
@@ -93,7 +93,7 @@ function unmark_volume_as_pending_creation(){
   report_start_phase_standard
   local volume_name="$1"
   local op_item_key="$2"
-  local state_string="$GMS_STATE_VOLUME_IS_PENDING_PREFIX"
+  local state_string="$GMS_STATE_VOLUME_IS_NECESSARY_PREFIX"
 
   report_action_taken "Delete state that marked that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
   state_string=$(construct_state_string_for_volume_1password_key_pending_creation "$volume_name" "$op_item_key")
@@ -111,7 +111,7 @@ function collect_state_strings_for_volumes_pending_creation(){
   local pattern
   local -a matching_state_paths
   
-  pattern="${GMS_STATE_VOLUME_IS_PENDING_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}"
+  pattern="${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}"
   matching_state_paths=("${GENOMAC_SYSTEM_LOCAL_STATE_DIRECTORY}"/"${pattern}"*."${GENOMAC_STATE_FILE_EXTENSION}"(N:t:r))
   reply=("${matching_state_paths[@]}")
   
@@ -123,7 +123,7 @@ function test_whether_volume_is_marked_pending(){
   local volume_name="${1:?missing/empty volume_name}"
   local op_item_key="${2:?missing/empty op_item_key}"
   local result
-  test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_PENDING_PREFIX"
+  test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_NECESSARY_PREFIX"
   result=$?
   report_end_phase_standard
   return "$result"
@@ -154,7 +154,7 @@ function test_volume_1Password_key_state_was_found_without_mismatch(){
 
   local volume_name="${1:?missing/empty volume_name}"
   local op_item_key="${2:?missing/empty op_item_key}"
-  local state_string_prefix="$GMS_STATE_VOLUME_IS_PENDING_PREFIX"
+  local state_string_prefix="$GMS_STATE_VOLUME_IS_NECESSARY_PREFIX"
   local volume_search_prefix
   local desired_state_string
   local failure_message
@@ -307,7 +307,7 @@ function construct_state_string_for_volume_1password_key_pending_creation(){
   fi
 
   local state_string
-  state_string="${GMS_STATE_VOLUME_IS_PENDING_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
+  state_string="${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
 
   if ! [[ "$wants_volume_only" == true ]]; then
     # Appends 1Password item key to previously computed volume-only state string
@@ -337,7 +337,7 @@ function conditionally_mark_volume_as_pending_creation_DEPRECATED(){
   # - volume_name is already marked as pending
   # - volume_name is mounted
   #
-  # Otherwise sets system state with prefix GMS_STATE_VOLUME_IS_PENDING_PREFIX for this volume.
+  # Otherwise sets system state with prefix GMS_STATE_VOLUME_IS_NECESSARY_PREFIX for this volume.
   
   report_start_phase_standard
   local volume_name="$1"
