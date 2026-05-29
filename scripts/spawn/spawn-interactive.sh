@@ -104,7 +104,7 @@ function interactive_adduser() {
   if [[ "$parent_of_home" == /Volumes/*/Users ]]; then
     volume_name="${parent_of_home#/Volumes/}"
     volume_name="${volume_name%/Users}"
-    conditionally_mark_volume_as_necessary "$volume_name" "$op_key"
+    conditionally_mark_volume_is_necessary "$volume_name" "$op_key"
   fi
   
   report_end_phase_standard
