@@ -38,3 +38,30 @@ function volume_name_is_startup_volume_signifier() {
   report_end_phase_standard
   return 1
 }
+
+function determine_startup_container() {
+  # Determines the container of the startup volume.
+  # This container will be used for all subsequent new volumes for user home directories
+  
+  report_start_phase_standard
+  local container_ref
+
+  if ! container_ref="$(
+    "$PLISTBUDDY_PATH" -c 'Print :APFSContainerReference' /dev/stdin \
+        <<<"$(diskutil info -plist /)"
+  )"; then
+    report_fail "Failed to determine APFS container for startup volume."
+    return 1
+  fi
+
+  # Normalize to form diskutil apfs addVolume accepts comfortably.
+  # If the plist already includes /dev/, leave it alone.
+  container_ref="/dev/${container_ref#/dev/}"
+
+  report "Container of startup volume is: ${container_ref}"
+
+  # “Return” value
+  print -- "$container_ref"
+
+  report_end_phase_standard
+}
