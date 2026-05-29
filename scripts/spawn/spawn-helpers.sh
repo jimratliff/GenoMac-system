@@ -93,7 +93,7 @@ function parent_of_users_home_directories() {
   local volume_name="$1"
   local path_of_parent_of_home_directories
 
-  if [[ "$volume_name" == "$STARTUP_VOLUME_SIGNIFIER" ]]; then
+  if volume_name_is_startup_volume_signifier "$volume_name" ; then
     path_of_parent_of_home_directories="${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
   else
     path_of_parent_of_home_directories="/Volumes/${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
