@@ -36,15 +36,19 @@ function conditionally_interactive_create_volumes_for_user_home_directories() {
 
 function conditionally_interactive_create_a_volume_for_user_home_directories() {
   # Create specified volume, encrypted by passphrase referenced by 1Password item.
+  
   report_start_phase_standard
   local volume_name="${1;?missing volume_name}"
   local op_item_key="${2:?missing op_item_key}"
+  
+  local container_name
   local startup_container
 
   if volume_name_is_startup_volume_signifier "$volume_name"; then
     # NOTE: This shouldn’t be reached, because the is-pending state never should have been created for the
     #       the startup volume.
-    report "The “volume name” “$volume_name” signifies the startup volume, which necessarily exists.${NEWLINE}Nothing further to record."
+    report "The volume name “$volume_name” signifies the startup volume, which necessarily exists.${NEWLINE}Nothing further to record."
+    report_warning "PROGRAMMER ERROR?? Volume name “$volume_name” shouldn’t have been flagged as pending creation"
     unmark_volume_as_pending_creation “$volume_name” "$op_item_key"
     report_end_phase_standard
     return 0
@@ -58,7 +62,7 @@ function conditionally_interactive_create_a_volume_for_user_home_directories() {
     return 0
   fi
 
-  report "The “volume name” “$volume_name” is marked as needing to be created and encrypted using the passphrase referenced by the 1Password item “$op_item_key”."
+  report "The “volume name” “$volume_name” is marked as needing to be created and${NEWLINE}encrypted using the passphrase referenced by the 1Password item “$op_item_key”."
   startup_container="$(determine_startup_container)"
   volume_creation_mode="$(get_value_from_numbered_choices \
     "How do you want to deal with the pending-to-create volume “$volume_name”?" \
@@ -66,14 +70,36 @@ function conditionally_interactive_create_a_volume_for_user_home_directories() {
     "Create and encrypt the volume on a different container" "CREATE_ON_DIFFERENT_CONTAINER" \
     "PUNT. Leave it pending for now, move on, and I’ll deal with it later" "PUNT"
     )"
-  
 
-  
-
-
-
-  
+  case "$volume_creation_mode" in
+    CREATE_ON_STARTUP_CONTAINER)
+      # Create and encrypt the volume on the startup container.
+      container_name="$startup_container"
+      create_and_encrypt_volume_on_container "$volume_name" "$op_item_key" "$container_name"
+      unmark_volume_as_pending_creation “$volume_name” "$op_item_key"
+      ;;
+    
+    CREATE_ON_DIFFERENT_CONTAINER)
+      # Create and encrypt the volume on a different container.
+      report "It’s your responsibility to create (now, if not before) the container you want to use."
+      container_name="$(get_confirmed_answer_to_question "Name of container?")"
+      create_and_encrypt_volume_on_container "$volume_name" "$op_item_key" "$container_name"
+      unmark_volume_as_pending_creation “$volume_name” "$op_item_key"
+      ;;
+    
+    PUNT)
+      # Leave the volume pending for now and move on.
+      report_end_phase_standard
+      return 0
+      ;;
+    
+    *)
+      report_fail "Unrecognized volume-creation choice: “${volume_creation_mode}”"
+      return 1
+      ;;
+  esac
   report_end_phase_standard
+  return 0
 }
 
 function construct_map_from_volume_name_to_op_item_key_from_pending_creation_state_strings() {
