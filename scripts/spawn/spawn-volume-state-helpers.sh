@@ -1,5 +1,44 @@
 #!/usr/bin/env zsh
 
+# The format of a system-scoped state that asserts that a volume_name is pending creation
+# (and should be encrypted using the passphrase associated with 1Password item op_item_key)
+# is:
+#   ${GMS_STATE_VOLUME_IS_PENDING_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"${op_item_key}${GENOMAC_STATE_STRING_DELIMITER_C}"
+
+function volume_name_from_pending_volume_state_string(){
+  # Prints the volume_name encoded in supplied pending-volume state string.
+  report_start_phase_standard
+  local state_string="${1:?missing/empty state_string}"
+  local volume_name
+  volume_name="$(
+    nonempty_content_between_delimiters \
+      "$state_string" \
+      "$GENOMAC_STATE_STRING_DELIMITER_A" \
+      "$GENOMAC_STATE_STRING_DELIMITER_B"
+    )"
+
+  print -r -- "$volume_name"
+  
+  report_end_phase_standard
+}
+
+function op_item_key_from_pending_volume_state_string(){
+  # Prints the op_item_key encoded in supplied pending-volume state string.
+  report_start_phase_standard
+  local state_string="${1:?missing/empty state_string}"
+  local op_item_key
+  op_item_key="$(
+    nonempty_content_between_delimiters \
+      "$state_string" \
+      "$GENOMAC_STATE_STRING_DELIMITER_B" \
+      "$GENOMAC_STATE_STRING_DELIMITER_C"
+    )"
+
+  print -r -- "$op_item_key_from_pending_volume_state_string"
+  
+  report_end_phase_standard
+}
+
 function conditionally_mark_volume_as_pending_creation(){
   # Set system-scoped state to indicate that a volume needs to be created and encrypted
   # with a particular passphrase
@@ -239,14 +278,12 @@ function construct_state_string_for_volume_1password_key_pending_creation(){
   local volume_name="${positional_args[1]:?missing/empty volume_name}"
   local op_item_key=""
 
-  local state_string_prefix="${GMS_STATE_VOLUME_IS_PENDING_PREFIX}"
-
   if ! [[ "$wants_volume_only" == true ]]; then
     op_item_key="${positional_args[2]:?missing/empty op_item_key}"
   fi
 
   local state_string
-  state_string="${state_string_prefix}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
+  state_string="${GMS_STATE_VOLUME_IS_PENDING_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
 
   if ! [[ "$wants_volume_only" == true ]]; then
     # Appends 1Password item key to previously computed volume-only state string
