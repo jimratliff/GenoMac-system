@@ -9,14 +9,23 @@ function create_and_encrypt_volume_on_container() {
   local op_item_key="${2? missing 1Password item}"
   local container_name="${3? missing container name}"
 
+  local passphrase
+  local op_vault
+
   # If volume already exists on container, do nothing
   if $volume_exists_on_container "$volume_name" "$container_name"; then
     report "Volume “$volume_name” already exists in container “$container_name”; Moving on…"
     report_warning "I can’t guarantee that volume “$volume_name” is encrypted by the desired passphrase."
     report_end_phase_standard
     return 0
-
+  fi
   
+  op_vault=$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+  passphrase="$(read_1password_item_password "$op_vault" "$op_item_key")"
+  # Optional volume-level encryption of an APFS volume from inception using the 
+  # `diskutil apfs addVolume -passphrase` verb.
+  printf '%s' "$passphrase" | diskutil apfs addVolume "$container_name" APFS "$volume_name" -stdinpassphrase
+
   report_end_phase_standard
 }
 
