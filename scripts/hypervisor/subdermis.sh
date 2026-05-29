@@ -46,6 +46,7 @@ function subdermis() {
   conditionally_implement_systemwide_settings     # scripts/settings/implement_systemwide_settings.sh
   conditionally_clone_genomac_user_using_HTTPS    # scripts/user_scope/clone_genomac_user_repo.sh
   conditionally_create_user_accounts_for_this_Mac # scripts/spawn/spawn.sh
+  conditionally_interactive_create_volumes_for_user_home_directories # scripts/spawn/spawn-volume-creation.sh
 
   # TODO
   # Report volumes that are pending creation, and walk through to create them
