@@ -5,10 +5,14 @@ function conditionally_interactive_create_volumes_for_user_home_directories(){
   report_start_phase_standard
 
   local -a pending_volume_state_strings
+  local -A op_item_key_from_volume_name
+  local number_of_pending_volumes
+  local volume_name
+  local op_item_key
+  
   collect_state_strings_for_volumes_pending_creation
   pending_volume_state_strings=("${reply[@]}")
 
-  local number_of_pending_volumes
   number_of_pending_volumes=${#pending_volume_state_strings[@]}
 
   if (( ! $number_of_pending_volumes )); then
@@ -16,23 +20,42 @@ function conditionally_interactive_create_volumes_for_user_home_directories(){
     report_end_phase_standard
     return 0
   fi
-  print report "There is/are $number_of_pending_volumes volume(s) pending creation."
+  report "There is/are $number_of_pending_volumes volume(s) pending creation."
 
-  construct_map_from_volume_key_to_open_item_key_from_pending_creation_state_strings
+  construct_map_from_volume_name_to_op_item_key_from_pending_creation_state_strings "${pending_volume_state_strings[@]}"
+  op_item_key_from_volume_name=("${reply[@]}")
 
-
+  for volume_name in "${(@k)op_item_key_from_volume_name}"; do
+    op_item_key="${op_item_key_from_volume_name[$volume_name]}"
+    interactive_create_volume_for_user_home_directories "$volume_name" "$op_item_key"
+  done
+  
   report_end_phase_standard
 }
 
-function construct_map_from_volume_key_to_open_item_key_from_pending_creation_state_strings(){
+function interactive_create_volume_for_user_home_directories(){
+  # Create specified volume, encrypted by passphrase referenced by 1Password item.
+  report_start_phase_standard
+  local volume_name="${1;?missing volume_name}"
+  local op_item_key="${2:?missing op_item_key}"
+
+  
+
+
+
+  
+  report_end_phase_standard
+}
+
+function construct_map_from_volume_name_to_op_item_key_from_pending_creation_state_strings(){
   # Returns associative array from array of volumes-pending-creation state strings, where
   # the associative array maps volume_name to op_item_key.
   #
   # If multiple state strings share a common volume_name, generate fatal error.
   
   report_start_phase_standard
-  local pending_volume_state_strings
-  pending_volume_state_strings="$1"
+  local -a pending_volume_state_strings
+  pending_volume_state_strings=("$@")
 
   local -A op_item_key_from_volume_name
   local state_string
@@ -51,7 +74,7 @@ function construct_map_from_volume_key_to_open_item_key_from_pending_creation_st
 
     op_item_key_from_volume_name[$volume_name]="$op_item_key"
   done
-  reply=("${op_item_key_from_volume_name[@]}")
+  reply=("${(@kv)op_item_key_from_volume_name}")
   
   report_end_phase_standard
 }
