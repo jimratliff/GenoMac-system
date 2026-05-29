@@ -39,7 +39,7 @@ function op_item_key_from_pending_volume_state_string(){
   report_end_phase_standard
 }
 
-function conditionally_mark_volume_as_necessary(){
+function conditionally_mark_volume_is_necessary(){
   # Set system-scoped state to indicate that given non-startup volume must exist
   # and be encrypted with a particular passphrase
   #
