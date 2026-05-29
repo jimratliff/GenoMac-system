@@ -320,7 +320,7 @@ function conditionally_mark_volume_as_pending_creation_DEPRECATED(){
   local op_item_key="$2"
   local state_string
 
-  if "$volume_name" == "$STARTUP_VOLUME_SIGNIFIER"; then
+  if volume_name_is_startup_volume_signifier "$volume_name"; then
     report "The “volume name” “$volume_name” signifies the startup volume, which necessarily exists.${NEWLINE}Nothing further to record."
     report_end_phase_standard
     return 0
