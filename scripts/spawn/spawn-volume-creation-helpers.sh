@@ -1,5 +1,42 @@
 #!/usr/bin/env zsh
 
+function create_and_encrypt_volume_on_container() {
+  # Creates volume on container, encrypting it with passphrase referenced by a
+  # 1Password item
+  
+  report_start_phase_standard
+  local volume_name="${1? missing volume name}"
+  local op_item_key="${2? missing 1Password item}"
+  local container_name="${3? missing container name}"
+
+  # If volume already exists on container, do nothing
+  if $volume_exists_on_container "$volume_name" "$container_name"; then
+    report "Volume “$volume_name” already exists in container “$container_name”; Moving on…"
+    report_warning "I can’t guarantee that volume “$volume_name” is encrypted by the desired passphrase."
+    report_end_phase_standard
+    return 0
+
+  
+  report_end_phase_standard
+}
+
+function volume_exists_on_container() {
+  # Returns 0 if volume already exists on given container
+  
+  report_start_phase_standard
+  local volume_name="${1? missing volume name}"
+  local container_name="${2? missing container name}"
+
+  if diskutil apfs list "$container_name" | grep -Fq "Name: ${volume_name} "; then
+    report "Volume “$volume_name” already exists in container “$container_name”; Moving on…"
+    report_warning "I can’t guarantee that volume “$volume_name” is encrypted by the desired passphrase."
+    report_end_phase_standard
+    return 0
+  fi
+  report_end_phase_standard
+  return 1
+}
+
 function volume_name_is_mounted() {
   # Tests whether a non-startup volume with the given volume name is currently mounted.
   #
