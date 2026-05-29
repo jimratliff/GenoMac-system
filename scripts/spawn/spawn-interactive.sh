@@ -182,8 +182,6 @@ function interactive_test_for_user_existence() {
   done
 }
 
-############### WARNING: This function is DEPRECATED, because 
-#                        ensure_encrypted_apfs_volume_exists is DEPRECATED
 function interactive_ensure_encrypted_apfs_volume_exists() {
   # Interactive front end for ensure_encrypted_apfs_volume_exists
   
