@@ -39,9 +39,9 @@ function op_item_key_from_pending_volume_state_string(){
   report_end_phase_standard
 }
 
-function conditionally_mark_volume_as_pending_creation(){
-  # Set system-scoped state to indicate that a volume needs to be created and encrypted
-  # with a particular passphrase
+function conditionally_mark_volume_as_necessary(){
+  # Set system-scoped state to indicate that given non-startup volume must exist
+  # and be encrypted with a particular passphrase
   #
   # Parameters:
   # - $1: volume name
@@ -54,11 +54,11 @@ function conditionally_mark_volume_as_pending_creation(){
   # because the startup volume necessarily already exists.
   #
   # This operation is idempotent if a non-startup volume has already been marked as
-  # pending creation with the same passphrase.
+  # necessary with the same passphrase.
   #
-  # If marked as pending twice, but with different passphrases, this will result in two
+  # If marked as necessary twice, but with different passphrases, this will result in two
   # states for the same volume but with different passphrases. This isn’t caught at this
-  # stage; instead, it’s caught when the list of pending volumes is reviewed.
+  # stage; instead, it’s caught when the list of necessary volumes is reviewed.
   
   report_start_phase_standard
   local volume_name="$1"
@@ -71,7 +71,7 @@ function conditionally_mark_volume_as_pending_creation(){
     return 0
   fi
 
-  report_action_taken "Set state to mark that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
+  report_action_taken "Set state to mark that volume “${volume_name}” must exist and be encrypted using 1Password item key “${op_item_key}”."
   state_string=$(construct_state_string_for_volume_1password_key_pending_creation "$volume_name" "$op_item_key")
   set_genomac_system_state "$state_string"
 
@@ -80,6 +80,9 @@ function conditionally_mark_volume_as_pending_creation(){
 }
 
 function unmark_volume_as_pending_creation(){
+  #
+  # WARNING: THIS IS VESTIGIAL
+  #
   # Unset (i.e., delete) system-scoped state to indicate that a volume needs to be created and encrypted
   # with a particular passphrase
   #
