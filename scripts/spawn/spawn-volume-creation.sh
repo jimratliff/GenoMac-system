@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-function conditionally_interactive_create_volumes_for_user_home_directories(){
+function conditionally_interactive_create_volumes_for_user_home_directories() {
   # Template for a Zsh function in Project GenoMac
   report_start_phase_standard
 
@@ -9,6 +9,7 @@ function conditionally_interactive_create_volumes_for_user_home_directories(){
   local number_of_pending_volumes
   local volume_name
   local op_item_key
+  local volume_creation_mode
   
   collect_state_strings_for_volumes_pending_creation
   pending_volume_state_strings=("${reply[@]}")
@@ -27,17 +28,45 @@ function conditionally_interactive_create_volumes_for_user_home_directories(){
 
   for volume_name in "${(@k)op_item_key_from_volume_name}"; do
     op_item_key="${op_item_key_from_volume_name[$volume_name]}"
-    interactive_create_volume_for_user_home_directories "$volume_name" "$op_item_key"
+    conditionally_interactive_create_a_volume_for_user_home_directories "$volume_name" "$op_item_key"
   done
   
   report_end_phase_standard
 }
 
-function interactive_create_volume_for_user_home_directories(){
+function conditionally_interactive_create_a_volume_for_user_home_directories() {
   # Create specified volume, encrypted by passphrase referenced by 1Password item.
   report_start_phase_standard
   local volume_name="${1;?missing volume_name}"
   local op_item_key="${2:?missing op_item_key}"
+  local startup_container
+
+  if volume_name_is_startup_volume_signifier "$volume_name"; then
+    # NOTE: This shouldn’t be reached, because the is-pending state never should have been created for the
+    #       the startup volume.
+    report "The “volume name” “$volume_name” signifies the startup volume, which necessarily exists.${NEWLINE}Nothing further to record."
+    unmark_volume_as_pending_creation “$volume_name” "$op_item_key"
+    report_end_phase_standard
+    return 0
+  fi
+
+  if volume_name_is_mounted "$volume_name"; then
+    report "The “volume name” “$volume_name” is currently mounted, and therefore exists.${NEWLINE}Nothing further to record."
+    report_warning "Although “volume name” “$volume_name” is currently mounted, I can’t guarantee it’s encrypted${NEWLINE}by the passphrase referenced by the 1Password item “$op_item_key”. That’s for you to ensure."
+    unmark_volume_as_pending_creation “$volume_name” "$op_item_key"
+    report_end_phase_standard
+    return 0
+  fi
+
+  report "The “volume name” “$volume_name” is marked as needing to be created and encrypted using the passphrase referenced by the 1Password item “$op_item_key”."
+  startup_container="$(determine_startup_container)"
+  volume_creation_mode="$(get_value_from_numbered_choices \
+    "How do you want to deal with the pending-to-create volume “$volume_name”?" \
+    "Create and encrypt the volume on the startup container (${startup_container})" "CREATE_ON_STARTUP_CONTAINER" \
+    "Create and encrypt the volume on a different container" "CREATE_ON_DIFFERENT_CONTAINER" \
+    "PUNT. Leave it pending for now, move on, and I’ll deal with it later" "PUNT"
+    )"
+  
 
   
 
@@ -47,7 +76,7 @@ function interactive_create_volume_for_user_home_directories(){
   report_end_phase_standard
 }
 
-function construct_map_from_volume_name_to_op_item_key_from_pending_creation_state_strings(){
+function construct_map_from_volume_name_to_op_item_key_from_pending_creation_state_strings() {
   # Returns associative array from array of volumes-pending-creation state strings, where
   # the associative array maps volume_name to op_item_key.
   #
