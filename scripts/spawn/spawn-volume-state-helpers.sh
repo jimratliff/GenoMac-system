@@ -104,17 +104,18 @@ function unmark_volume_as_pending_creation(){
 }
 
 function collect_state_strings_for_volumes_pending_creation(){
-  # Sets reply to an array of state strings of system-scoped states that assert
-  # that a volume name is pending creation.
+  # Sets reply to an array of system-scoped state strings that assert
+  # that a volume is pending creation.
 
   report_start_phase_standard
-  local pattern
-  local -a matching_state_paths
-  
-  pattern="${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}"
-  matching_state_paths=("${GENOMAC_SYSTEM_LOCAL_STATE_DIRECTORY}"/"${pattern}"*."${GENOMAC_STATE_FILE_EXTENSION}"(N:t:r))
-  reply=("${matching_state_paths[@]}")
-  
+  local -a state_strings
+
+  _state_strings_with_prefix \
+    "${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}" \
+    "system"
+  state_strings=("${reply[@]}")
+  reply=("${state_strings[@]}")
+
   report_end_phase_standard
 }
 
