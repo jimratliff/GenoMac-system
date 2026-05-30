@@ -34,6 +34,12 @@
 #     - ${GENOMAC_STATE_STRING_DELIMITER_B}
 #
 
+function create_volume_name() {
+  # Template for a Zsh function in Project GenoMac
+  report_start_phase_standard
+  report_end_phase_standard
+}
+
 function volume_name_from_pending_volume_state_string(){
   # Prints the volume_name encoded in supplied pending-volume state string.
   report_start_phase_standard
