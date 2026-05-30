@@ -38,6 +38,7 @@ function conditionally_interactive_create_a_volume() {
   
   local container_name
   local startup_container
+  local volume_creation_mode
 
   if volume_name_is_startup_volume_signifier "$volume_name"; then
     # NOTE: This shouldn’t be reached, because the is-necessary state never should have been created for the
@@ -62,6 +63,7 @@ function conditionally_interactive_create_a_volume() {
     "How do you want to deal with the pending-to-create volume “$volume_name”?" \
     "Create and encrypt the volume on the startup container (${startup_container})" "CREATE_ON_STARTUP_CONTAINER" \
     "Create and encrypt the volume on a different container" "CREATE_ON_DIFFERENT_CONTAINER" \
+    "I’ve already created and encrypted this volume. Mark this task as complete." "MARK_VOLUME_COMPLETE" \
     "PUNT. Leave it pending for now, move on, and I’ll deal with it later" "PUNT"
     )"
 
@@ -70,7 +72,7 @@ function conditionally_interactive_create_a_volume() {
       # Create and encrypt the volume on the startup container.
       container_name="$startup_container"
       create_and_encrypt_volume_on_container "$volume_name" "$op_item_key" "$container_name"
-      unmark_volume_as_pending_creation “$volume_name” "$op_item_key"
+      mark_volume_as_created “$volume_name” "$op_item_key"
       ;;
     
     CREATE_ON_DIFFERENT_CONTAINER)
@@ -78,7 +80,13 @@ function conditionally_interactive_create_a_volume() {
       report "It’s your responsibility to create (now, if not before) the container you want to use."
       container_name="$(get_confirmed_answer_to_question "Name of container?")"
       create_and_encrypt_volume_on_container "$volume_name" "$op_item_key" "$container_name"
-      unmark_volume_as_pending_creation “$volume_name” "$op_item_key"
+      mark_volume_as_created “$volume_name” "$op_item_key"
+      ;;
+    
+    MARK_VOLUME_COMPLETE)
+      # I’ve already created and encrypted this volume. Mark this task as complete.
+      report_action_taken "I am marking volume “$volume_name” as already created."
+      mark_volume_as_created “$volume_name” "$op_item_key"
       ;;
     
     PUNT)
@@ -95,6 +103,9 @@ function conditionally_interactive_create_a_volume() {
   report_end_phase_standard
   return 0
 }
+
+############################## DEPRECATED ##############################
+# Everything below here is DEPRECATED
 
 # DEPRECATED, replaced by construct_map_from_volume_name_to_op_item_key()
 # function construct_map_from_volume_name_to_op_item_key_from_pending_creation_state_strings() {
