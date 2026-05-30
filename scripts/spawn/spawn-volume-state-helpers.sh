@@ -36,28 +36,31 @@
 #     - ${GENOMAC_STATE_STRING_DELIMITER_B}
 #
 
-function create_volume_name_op_item_key_pairs_for_volumes_pending_creation() {
-  # Returns a «list of (volume_name, op_item_pairs)», one pair for each volume that
-  # is (a) necessary but (b) not yet created.
+function collect_volume_name_op_item_key_pairs_for_volumes_pending_certified_creation() {
+  # Sets reply to a flat array of alternating volume/op_item_key elements, one pair for
+  # each volume that is (a) necessary but (b) not yet marked as having been created.
 
   report_start_phase_standard
 
-  local number_of_necessary_volumes
   local op_item_key
   local volume_name
+
+  local -i number_of_necessary_volumes
   
   local -a necessary_volume_state_strings
+  local -a volume_name_op_item_key_pairs_to_create
   local -A op_item_key_from_volume_name
+
+  reply=()
 
   collect_state_strings_for_necessary_volumes
   necessary_volume_state_strings=("${reply[@]}")
 
   number_of_necessary_volumes=${#necessary_volume_state_strings[@]}
-  if (( ! $number_of_necessary_volumes )); then
-    # There are zero necessary non-startup volumes
-    # This can happen if all user accounts reside on the startup volume
+  if (( ! number_of_necessary_volumes )); then
+    # There are zero necessary non-startup volumes.
+    # This can happen if all user accounts reside on the startup volume.
     report "There are no non-startup volumes required: No volumes to create."
-    reply="" ############### IS THIS THE RIGHT WAY TO DEFINE reply in this instance?
     report_end_phase_standard
     return 0
   fi
@@ -67,9 +70,12 @@ function create_volume_name_op_item_key_pairs_for_volumes_pending_creation() {
   op_item_key_from_volume_name=("${reply[@]}")
 
   for volume_name in "${(@k)op_item_key_from_volume_name}"; do
-    op_item_key="${op_item_key_from_volume_name[$volume_name]}"
-    conditionally_interactive_create_a_volume_for_user_home_directories "$volume_name" "$op_item_key"
+    if ! volume_is_marked_created "$volume_name"; then
+      op_item_key="${op_item_key_from_volume_name[$volume_name]}"
+      volume_name_op_item_key_pairs_to_create+=("$volume_name" "$op_item_key")
+    fi
   done
+  reply=("${volume_name_op_item_key_pairs_to_create[@]}")
   
   report_end_phase_standard
 }
