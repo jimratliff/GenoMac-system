@@ -80,6 +80,22 @@ function collect_volume_name_op_item_key_pairs_for_volumes_pending_certified_cre
   report_end_phase_standard
 }
 
+function collect_state_strings_for_necessary_volumes(){
+  # Sets reply to an array of system-scoped state strings that assert
+  # that a volume is pending creation.
+
+  report_start_phase_standard
+  local -a state_strings
+
+  _state_strings_with_prefix \
+    "${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}" \
+    "system"
+  state_strings=("${reply[@]}")
+  reply=("${state_strings[@]}")
+
+  report_end_phase_standard
+}
+
 function construct_map_from_volume_name_to_op_item_key() {
   # Returns associative array from array of necessary-volume state strings, where
   # the associative array maps volume_name to op_item_key.
@@ -161,22 +177,6 @@ function construct_state_string_for_volume_is_created_state() {
   state_string="${GMS_STATE_VOLUME_IS_CREATED_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
 
   print -- "$state_string"
-  report_end_phase_standard
-}
-
-function collect_state_strings_for_necessary_volumes(){
-  # Sets reply to an array of system-scoped state strings that assert
-  # that a volume is pending creation.
-
-  report_start_phase_standard
-  local -a state_strings
-
-  _state_strings_with_prefix \
-    "${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}" \
-    "system"
-  state_strings=("${reply[@]}")
-  reply=("${state_strings[@]}")
-
   report_end_phase_standard
 }
 
