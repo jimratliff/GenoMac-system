@@ -1,9 +1,38 @@
 #!/usr/bin/env zsh
 
-# The format of a system-scoped state that asserts that a volume_name is pending creation
-# (and should be encrypted using the passphrase associated with 1Password item op_item_key)
-# is:
-#   ${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"${op_item_key}${GENOMAC_STATE_STRING_DELIMITER_C}"
+# Two sets of states are used to manage the creation of volumes on which to house
+# the home directories of users created by GenoMac-system.
+#
+# - "VOLUME_CREATION_is_necessary"
+#   - Environment variable: $GMS_STATE_VOLUME_IS_NECESSARY_PREFIX
+#   - One state for each non-startup volume
+#   - Encodes both
+#     - the volume name and
+#     - the name of a 1Password vault item containing the passphrase for this volume
+#       - The name of the 1Password vault itself is "GenoMac-user-creation", stored in the
+#         environment variable ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+#   - If a misspecification of user parameters results in multiple states for the same
+#     volume, this would indicate that the same volume has multiple distinct passphrases,
+#     which is an error.
+#   - The state string is the concatenation of:
+#     - ${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}
+#     - ${GENOMAC_STATE_STRING_DELIMITER_A}
+#     - ${volume_name}
+#     - ${GENOMAC_STATE_STRING_DELIMITER_B}
+#     - "${op_item_key}
+#     - ${GENOMAC_STATE_STRING_DELIMITER_C}"
+# - "VOLUME_CREATION_is_completed"
+#   - Environment variable: $GMS_STATE_VOLUME_IS_CREATED_PREFIX
+#   - One state for each of the “necessary” volumes that have been created.
+#   - Encodes only the volume name
+#   - It is assumed that the created volume was encrypted using the passphrase specified
+#     by the "VOLUME_CREATION_is_necessary" state for that volume.
+#   - The state string is the concatenation of:
+#     - ${GMS_STATE_VOLUME_IS_CREATED_PREFIX}
+#     - ${GENOMAC_STATE_STRING_DELIMITER_A}
+#     - ${volume_name}
+#     - ${GENOMAC_STATE_STRING_DELIMITER_B}
+#
 
 function volume_name_from_pending_volume_state_string(){
   # Prints the volume_name encoded in supplied pending-volume state string.
