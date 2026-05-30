@@ -51,7 +51,7 @@ function conditionally_interactive_create_a_volume() {
   if volume_name_is_mounted "$volume_name"; then
     report "The “volume name” “$volume_name” is currently mounted, and therefore exists.${NEWLINE}Nothing further to record."
     report_warning "Although “volume name” “$volume_name” is currently mounted, I can’t guarantee it’s encrypted${NEWLINE}by the passphrase referenced by the 1Password item “$op_item_key”. That’s for you to ensure."
-    unmark_volume_as_pending_creation “$volume_name” "$op_item_key"
+    mark_volume_as_created “$volume_name” "$op_item_key"
     report_end_phase_standard
     return 0
   fi
