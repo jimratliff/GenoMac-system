@@ -25,6 +25,8 @@
 #   - Environment variable: $GMS_STATE_VOLUME_IS_CREATED_PREFIX
 #   - One state for each of the “necessary” volumes that have been created.
 #   - Encodes only the volume name
+#     - Thus, there is no danger of passphrase multiplicity; the "VOLUME_CREATION_is_necessary"
+#       states are the single source of truth about what passphrase is associated with what volume.
 #   - It is assumed that the created volume was encrypted using the passphrase specified
 #     by the "VOLUME_CREATION_is_necessary" state for that volume.
 #   - The state string is the concatenation of:
@@ -104,6 +106,55 @@ function construct_map_from_volume_name_to_op_item_key() {
   done
   reply=("${(@kv)op_item_key_from_volume_name}")
   
+  report_end_phase_standard
+}
+
+function volume_is_marked_created() {
+  # Returns 0 if volume_name is included in the "VOLUME_CREATION_is_completed" states.
+  # Returns 1 otherwise.
+
+  report_start_phase_standard
+  local volume_name="${1:?missing volume_name}"
+  
+  local return_code
+  local state_string
+  
+  state_string="$(construct_state_string_for_volume_is_created_state "$volume_name")"
+  
+  test_genomac_system_state "$state_string"
+  return_code=$?
+  
+  report_end_phase_standard
+  return "$return_code"
+}
+
+function mark_volume_as_created() {
+  # Sets "VOLUME_CREATION_is_completed" state for supplied volume name.
+  
+  report_start_phase_standard
+  local volume_name="${1:?missing volume_name}"
+
+  local return_code
+  local state_string
+  
+  state_string="$(construct_state_string_for_volume_is_created_state "$volume_name")"
+  
+  set_genomac_system_state "$state_string"
+  return_code=$?
+  
+  report_end_phase_standard
+  return "$return_code"
+}
+
+function construct_state_string_for_volume_is_created_state() {
+  # Template for a Zsh function in Project GenoMac
+  report_start_phase_standard
+
+  local volume_name="${1:?missing volume_name}"
+  local state_string
+  state_string="${GMS_STATE_VOLUME_IS_CREATED_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_B}"
+
+  print -- "$state_string"
   report_end_phase_standard
 }
 
