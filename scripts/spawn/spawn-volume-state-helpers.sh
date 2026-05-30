@@ -254,16 +254,7 @@ function conditionally_mark_volume_is_necessary(){
   return 0
 }
 
-function test_whether_volume_is_marked_pending(){
-  # Tests whether state exists asserting the given volume has been noted as pending (needing creation).
-  local volume_name="${1:?missing/empty volume_name}"
-  local op_item_key="${2:?missing/empty op_item_key}"
-  local result
-  test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_NECESSARY_PREFIX"
-  result=$?
-  report_end_phase_standard
-  return "$result"
-}
+
 
 function test_volume_1Password_key_state_was_found_without_mismatch(){
   # Tests whether exactly one volume-creation-is-pending state exists for the desired volume.
@@ -517,6 +508,17 @@ function conditionally_mark_volume_as_pending_creation_DEPRECATED(){
 
 ############################## DEPRECATED ##############################
 # Everything below here is DEPRECATED
+
+function test_whether_volume_is_marked_pending(){
+  # Tests whether state exists asserting the given volume has been noted as pending (needing creation).
+  local volume_name="${1:?missing/empty volume_name}"
+  local op_item_key="${2:?missing/empty op_item_key}"
+  local result
+  test_volume_1Password_key_state_was_found_without_mismatch "$volume_name" "$op_item_key" "$GMS_STATE_VOLUME_IS_NECESSARY_PREFIX"
+  result=$?
+  report_end_phase_standard
+  return "$result"
+}
 
 #  function test_whether_volume_is_marked_created(){
 #    # Tests whether state exist asserting the given volume has already been created.
