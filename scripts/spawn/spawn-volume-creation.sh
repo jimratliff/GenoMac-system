@@ -1,40 +1,35 @@
 #!/usr/bin/env zsh
 
 function conditionally_interactive_create_volumes_for_user_home_directories() {
-  # Template for a Zsh function in Project GenoMac
+  # Creates new volumes to house users’ home directories.
+  
   report_start_phase_standard
 
-  local -a pending_volume_state_strings
-  local -A op_item_key_from_volume_name
-  local number_of_pending_volumes
-  local volume_name
   local op_item_key
-  local volume_creation_mode
+  local volume_name
+
+  local -i i
+
+  local -a volume_name_op_item_key_pairs_to_create
   
-  collect_state_strings_for_volumes_pending_creation
-  pending_volume_state_strings=("${reply[@]}")
-
-  number_of_pending_volumes=${#pending_volume_state_strings[@]}
-
-  if (( ! $number_of_pending_volumes )); then
-    report "There are no volumes pending creation. Moving on…"
-    report_end_phase_standard
+  collect_volume_name_op_item_key_pairs_for_volumes_pending_certified_creation
+  volume_name_op_item_key_pairs_to_create=("${reply[@]}")
+  
+  if (( ! ${#volume_name_op_item_key_pairs_to_create[@]} )); then
+    report "No volumes need to be created."
     return 0
   fi
-  report "There is/are $number_of_pending_volumes volume(s) pending creation."
-
-  construct_map_from_volume_name_to_op_item_key_from_pending_creation_state_strings "${pending_volume_state_strings[@]}"
-  op_item_key_from_volume_name=("${reply[@]}")
-
-  for volume_name in "${(@k)op_item_key_from_volume_name}"; do
-    op_item_key="${op_item_key_from_volume_name[$volume_name]}"
-    conditionally_interactive_create_a_volume_for_user_home_directories "$volume_name" "$op_item_key"
+  
+  for (( i = 1; i <= ${#volume_name_op_item_key_pairs_to_create[@]}; i += 2 )); do
+    volume_name="${volume_name_op_item_key_pairs_to_create[i]}"
+    op_item_key="${volume_name_op_item_key_pairs_to_create[i+1]}"
+    conditionally_interactive_create_a_volume "$volume_name" "$op_item_key"
   done
   
   report_end_phase_standard
 }
 
-function conditionally_interactive_create_a_volume_for_user_home_directories() {
+function conditionally_interactive_create_a_volume() {
   # Create specified volume, encrypted by passphrase referenced by 1Password item.
   
   report_start_phase_standard
