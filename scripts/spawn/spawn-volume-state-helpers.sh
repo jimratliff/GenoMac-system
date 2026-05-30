@@ -254,30 +254,6 @@ function conditionally_mark_volume_is_necessary(){
   return 0
 }
 
-function unmark_volume_as_pending_creation(){
-  #
-  # WARNING: THIS IS VESTIGIAL
-  #
-  # Unset (i.e., delete) system-scoped state to indicate that a volume needs to be created and encrypted
-  # with a particular passphrase
-  #
-  # Parameters:
-  # - $1: volume name
-  # - $2: name of 1Password item key.
-  
-  report_start_phase_standard
-  local volume_name="$1"
-  local op_item_key="$2"
-  local state_string="$GMS_STATE_VOLUME_IS_NECESSARY_PREFIX"
-
-  report_action_taken "Delete state that marked that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
-  state_string=$(construct_state_string_for_volume_1password_key_pending_creation "$volume_name" "$op_item_key")
-  delete_genomac_system_state "$state_string"
-
-  report_end_phase_standard
-  return 0
-}
-
 function test_whether_volume_is_marked_pending(){
   # Tests whether state exists asserting the given volume has been noted as pending (needing creation).
   local volume_name="${1:?missing/empty volume_name}"
@@ -539,6 +515,9 @@ function conditionally_mark_volume_as_pending_creation_DEPRECATED(){
   return 0
 }
 
+############################## DEPRECATED ##############################
+# Everything below here is DEPRECATED
+
 #  function test_whether_volume_is_marked_created(){
 #    # Tests whether state exist asserting the given volume has already been created.
 #    local volume_name="${1:?missing/empty volume_name}"
@@ -549,3 +528,27 @@ function conditionally_mark_volume_as_pending_creation_DEPRECATED(){
 #    report_end_phase_standard
 #    return "$result"
 #  }
+
+# function unmark_volume_as_pending_creation(){
+#   #
+#   # WARNING: THIS IS VESTIGIAL
+#   #
+#   # Unset (i.e., delete) system-scoped state to indicate that a volume needs to be created and encrypted
+#   # with a particular passphrase
+#   #
+#   # Parameters:
+#   # - $1: volume name
+#   # - $2: name of 1Password item key.
+#   
+#   report_start_phase_standard
+#   local volume_name="$1"
+#   local op_item_key="$2"
+#   local state_string="$GMS_STATE_VOLUME_IS_NECESSARY_PREFIX"
+# 
+#   report_action_taken "Delete state that marked that volume “${volume_name}” needs to be created and encrypted using 1Password item key “${op_item_key}”."
+#   state_string=$(construct_state_string_for_volume_1password_key_pending_creation "$volume_name" "$op_item_key")
+#   delete_genomac_system_state "$state_string"
+# 
+#   report_end_phase_standard
+#   return 0
+# }
