@@ -34,14 +34,97 @@
 #     - ${GENOMAC_STATE_STRING_DELIMITER_B}
 #
 
-function create_volume_name() {
-  # Template for a Zsh function in Project GenoMac
+function create_volume_name_op_item_key_pairs_for_volumes_pending_creation() {
+  # Returns a «list of (volume_name, op_item_pairs)», one pair for each volume that
+  # is (a) necessary but (b) not yet created.
+
   report_start_phase_standard
+
+  local number_of_necessary_volumes
+  local op_item_key
+  local volume_name
+  
+  local -a necessary_volume_state_strings
+  local -A op_item_key_from_volume_name
+
+  collect_state_strings_for_necessary_volumes
+  necessary_volume_state_strings=("${reply[@]}")
+
+  number_of_necessary_volumes=${#necessary_volume_state_strings[@]}
+  if (( ! $number_of_necessary_volumes )); then
+    # There are zero necessary non-startup volumes
+    # This can happen if all user accounts reside on the startup volume
+    report "There are no non-startup volumes required: No volumes to create."
+    reply="" ############### IS THIS THE RIGHT WAY TO DEFINE reply in this instance?
+    report_end_phase_standard
+    return 0
+  fi
+  report "There is/are $number_of_necessary_volumes non-startup volume(s) required for user home directories."
+
+  construct_map_from_volume_name_to_op_item_key "${necessary_volume_state_strings[@]}"
+  op_item_key_from_volume_name=("${reply[@]}")
+
+  for volume_name in "${(@k)op_item_key_from_volume_name}"; do
+    op_item_key="${op_item_key_from_volume_name[$volume_name]}"
+    conditionally_interactive_create_a_volume_for_user_home_directories "$volume_name" "$op_item_key"
+  done
+  
   report_end_phase_standard
 }
 
-function volume_name_from_pending_volume_state_string(){
-  # Prints the volume_name encoded in supplied pending-volume state string.
+function construct_map_from_volume_name_to_op_item_key() {
+  # Returns associative array from array of necessary-volume state strings, where
+  # the associative array maps volume_name to op_item_key.
+  #
+  # If multiple state strings share a common volume_name, generate fatal error
+  # (because this would imply that a single volume was encrypted using multiple
+  # passphrases).
+  
+  report_start_phase_standard
+  
+  local -a necessary_volume_state_strings
+  necessary_volume_state_strings=("$@")
+
+  local -A op_item_key_from_volume_name
+  local state_string
+  local volume_name
+  local op_item_key
+
+  for state_string in "${necessary_volume_state_strings[@]}"; do
+    volume_name=$(volume_name_from_necessary_volume_state_string "$state_string")
+    op_item_key=$(op_item_key_from_necessary_volume_state_string "$state_string")
+
+    if [[ -v 'op_item_key_from_volume_name[$volume_name]' ]]; then
+      # A second state existed for the same volume, with a necessarily different op_item_key
+      report_fail "Multiple states for necessary volume ${volume_name} imply multiple passphrases."
+      return 1
+    fi
+
+    op_item_key_from_volume_name[$volume_name]="$op_item_key"
+  done
+  reply=("${(@kv)op_item_key_from_volume_name}")
+  
+  report_end_phase_standard
+}
+
+function collect_state_strings_for_necessary_volumes(){
+  # Sets reply to an array of system-scoped state strings that assert
+  # that a volume is pending creation.
+
+  report_start_phase_standard
+  local -a state_strings
+
+  _state_strings_with_prefix \
+    "${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}" \
+    "system"
+  state_strings=("${reply[@]}")
+  reply=("${state_strings[@]}")
+
+  report_end_phase_standard
+}
+
+function volume_name_from_necessary_volume_state_string(){
+  # Prints the volume_name encoded in supplied necessary-volume state string.
   report_start_phase_standard
   local state_string="${1:?missing/empty state_string}"
   local volume_name
@@ -57,8 +140,8 @@ function volume_name_from_pending_volume_state_string(){
   report_end_phase_standard
 }
 
-function op_item_key_from_pending_volume_state_string(){
-  # Prints the op_item_key encoded in supplied pending-volume state string.
+function op_item_key_from_necessary_volume_state_string(){
+  # Prints the op_item_key encoded in supplied necessary-volume state string.
   report_start_phase_standard
   local state_string="${1:?missing/empty state_string}"
   local op_item_key
@@ -69,7 +152,7 @@ function op_item_key_from_pending_volume_state_string(){
       "$GENOMAC_STATE_STRING_DELIMITER_C"
     )"
 
-  print -r -- "$op_item_key_from_pending_volume_state_string"
+  print -r -- "$op_item_key"
   
   report_end_phase_standard
 }
@@ -136,22 +219,6 @@ function unmark_volume_as_pending_creation(){
 
   report_end_phase_standard
   return 0
-}
-
-function collect_state_strings_for_volumes_pending_creation(){
-  # Sets reply to an array of system-scoped state strings that assert
-  # that a volume is pending creation.
-
-  report_start_phase_standard
-  local -a state_strings
-
-  _state_strings_with_prefix \
-    "${GMS_STATE_VOLUME_IS_NECESSARY_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}" \
-    "system"
-  state_strings=("${reply[@]}")
-  reply=("${state_strings[@]}")
-
-  report_end_phase_standard
 }
 
 function test_whether_volume_is_marked_pending(){
