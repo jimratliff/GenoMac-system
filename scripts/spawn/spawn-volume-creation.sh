@@ -40,8 +40,8 @@ function conditionally_interactive_create_a_volume() {
   local startup_container
 
   if volume_name_is_startup_volume_signifier "$volume_name"; then
-    # NOTE: This shouldn’t be reached, because the is-pending state never should have been created for the
-    #       the startup volume.
+    # NOTE: This shouldn’t be reached, because the is-necessary state never should have been created for the
+    #       the startup volume. (Function conditionally_mark_volume_is_necessary() tests for startup volume.)
     report "The volume name “$volume_name” signifies the startup volume, which necessarily exists.${NEWLINE}Nothing further to record."
     report_warning "PROGRAMMER ERROR?? Volume name “$volume_name” shouldn’t have been flagged as pending creation"
     unmark_volume_as_pending_creation “$volume_name” "$op_item_key"
