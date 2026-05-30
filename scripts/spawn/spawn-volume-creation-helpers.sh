@@ -64,7 +64,9 @@ function volume_name_is_mounted() {
   report_start_phase_standard
 
   local volume_name="${1:?missing/empty volume_name}"
-  local mount_point="/Volumes/${volume_name}"
+
+  local mount_point
+  mount_point="/Volumes/${volume_name}"
 
   [[ -d "${mount_point}" ]] || return 1
   mount | grep -Fq " on ${mount_point} "
