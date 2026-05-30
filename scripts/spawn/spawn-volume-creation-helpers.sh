@@ -37,8 +37,6 @@ function volume_exists_on_container() {
   local container_name="${2? missing container name}"
 
   if diskutil apfs list "$container_name" | grep -Fq "Name: ${volume_name} "; then
-    report "Volume “$volume_name” already exists in container “$container_name”; Moving on…"
-    report_warning "I can’t guarantee that volume “$volume_name” is encrypted by the desired passphrase."
     report_end_phase_standard
     return 0
   fi
