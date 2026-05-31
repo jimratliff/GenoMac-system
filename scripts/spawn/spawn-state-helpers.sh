@@ -24,12 +24,18 @@ function set_system_states_for_user_attributes(){
   local user_spec_json="${1:?missing user_spec_json}"
 
   local short_name
-  short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
+  local user_class
+  
+  short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
+  user_class="$(get_user_class_from_user_spec_json "$user_spec_json")"
+
+  report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with user class $user_class"
+  set_system_state_for_user_class "$short_name" "$user_class"
 
   local attribute_name
   while IFS= read -r attribute_name; do
     report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with attribute $attribute_name"
-    set_system_state_for_user_attribute "$short_name" "$attribute_name" || return 1
+    set_system_state_for_user_attribute "$short_name" "$attribute_name"
   done < <(attribute_names_from_user_spec_json "$user_spec_json")
 
   report_end_phase_standard
