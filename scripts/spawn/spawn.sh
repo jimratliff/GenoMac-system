@@ -3,6 +3,7 @@
 set -euo pipefail
 
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-addUser.sh"
+safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-default_attributes_for_user_configurer.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-interactive.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-state-helpers.sh"
