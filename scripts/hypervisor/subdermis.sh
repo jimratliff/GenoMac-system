@@ -44,7 +44,13 @@ function subdermis() {
   conditionally_install_non_homebrew_apps         # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
   conditionally_install_resources_systemwide      # scripts/installations/of_resources/install_resources.sh
   conditionally_implement_systemwide_settings     # scripts/settings/implement_systemwide_settings.sh
+
+  # Default attributes for USER_CONFIGURER must be set before USER_CONFIGURER uses GenoMac-user to configure
+  # USER_CONFIGURER’s user-scoped settings. Therefore we do it before GenoMac-user is even locally cloned
+  # in order to enforce this condition.
+  conditionally_set_default_attributes_for_USER_CONFIGURER # scripts/spawn/default_attributes_for_user_configurer.sh
   conditionally_clone_genomac_user_using_HTTPS    # scripts/user_scope/clone_genomac_user_repo.sh
+  
   conditionally_create_user_accounts_for_this_Mac # scripts/spawn/spawn.sh
   conditionally_interactive_create_volumes_for_user_home_directories # scripts/spawn/spawn-volume-creation.sh
 
