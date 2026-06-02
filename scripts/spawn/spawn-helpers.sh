@@ -102,6 +102,73 @@ function parent_of_users_home_directories() {
   print -- "$path_of_parent_of_home_directories"
 }
 
+function display_users_to_be_initially_configured() {
+  # Prints list of users still awaiting initial configuration.
+  
+  report_start_phase_standard
+  
+  local number_of_awaiting_users
+  local report_string=""
+  local user_short_name
+
+  local -a user_short_names
+  
+  get_array_of_users_to_be_initially_configured
+  user_short_names=("${reply[@]}")
+
+  number_of_awaiting_users=${#user_short_names[@]}
+
+  if (( ! number_of_awaiting_users )); then
+    report "There are no users awaiting their initial configuration by GenoMac-user."
+  else
+    report "The following $number_of_awaiting_users user(s) is/are awaiting their initial configuration by GenoMac-user:"
+    for user_short_name in "${user_short_names[@]}"; do
+      report_string+="${user_short_name}${NEWLINE}"
+    done
+    report "$report_string"
+  fi
+  
+  report_end_phase_standard
+}
+
+function get_array_of_users_to_be_initially_configured() {
+  # Return array of newly created users who haven’t yet been initially configured by GenoMac-user.
+  #
+  # See GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh »
+  #    				construct_system_state_string_for_user_in_need_of_initial_config()
+  # for the format of the relevant state strings.
+  
+  report_start_phase_standard
+  local short_name
+  local state_string
+  local state_string_prefix
+
+  local -a state_strings
+  local -a user_short_names=()
+
+  # Collect state strings, one for each user awaiting initial configuration
+  state_string_prefix="${GENOMAC_STATE_USER_IS_PENDING_INITIAL_CONFIGURATION_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}"
+  _state_strings_with_prefix \
+    "${state_string_prefix}" \
+    "system"
+  state_strings=("${reply[@]}")
+
+  # Construct array of user short-names that are awaiting initial configuration
+
+  for state_string in "${state_strings[@]}"; do
+    short_name="$(
+	    nonempty_content_between_delimiters \
+	      "$state_string" \
+        "$GENOMAC_STATE_STRING_DELIMITER_A" \
+        "$GENOMAC_STATE_STRING_DELIMITER_B"
+    )"
+	user_short_names+=("$short_name")
+  done
+  reply=("${user_short_names[@]}")
+  
+  report_end_phase_standard
+}
+
 function get_short_name_from_user_spec_json() {
   local user_spec_json="$1"
   jq -r '.short_name' <<<"$user_spec_json"
