@@ -9,9 +9,13 @@
 #          environment variables). Because this is a bootstrap script, the paths
 #          are hard-wired rather than referring to those environment variables.
 
-
 # Fail early on unset variables or command failure
 set -euo pipefail
+
+# Create log file to capture all output
+export GMS_LOGS_DIRECTORY="$HOME/.genomac-system-logs"
+mkdir -p -- "$GMS_LOGS_DIRECTORY"
+export GMS_LOG_FILE="${GMS_LOGS_DIRECTORY}/genomac-system-$(date '+%Y-%m-%d_%H-%M-%S')-$$.log"
 
 # Get path of THIS script, even when sourced
 # Explanation:
