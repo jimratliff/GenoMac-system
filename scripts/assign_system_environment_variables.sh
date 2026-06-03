@@ -97,11 +97,15 @@ ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD="TEST_PASSWORD"
 GMS_STATE_VOLUME_IS_NECESSARY_PREFIX="VOLUME_CREATION_is_necessary"
 GMS_STATE_VOLUME_IS_CREATED_PREFIX="VOLUME_CREATION_is_completed"
 
+############### VERBOSE reporting
+GENOMAC_VERBOSE="true"
+
 ###
 
 report_action_taken "Export environment variables to be available in all subsequent shells."
 
 export_and_report DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES
+export_and_report GENOMAC_VERBOSE
 export_and_report GMS_DOCS_TO_DISPLAY
 export_and_report GMS_HOMEBREW_INSTALL_SCRIPTS
 export_and_report GMS_HOMEBREW
