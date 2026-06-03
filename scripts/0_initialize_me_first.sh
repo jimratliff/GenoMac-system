@@ -13,9 +13,13 @@
 set -euo pipefail
 
 # Create log file to capture all output
-export GMS_LOGS_DIRECTORY="$HOME/.genomac-system-logs"
-mkdir -p -- "$GMS_LOGS_DIRECTORY"
-export GMS_LOG_FILE="${GMS_LOGS_DIRECTORY}/genomac-system-$(date '+%Y-%m-%d_%H-%M-%S')-$$.log"
+# Note that the names of these environment variables (GM_LOGS_DIRECTORY and GM_LOG_FILE)
+# are the same for both GenoMac-system and GenoMac-system repos. However, the values of
+# these environment variables *are* specific to the repo. (The name uniformity simplifies
+# code in GenoMac-shared.)
+export GM_LOGS_DIRECTORY="$HOME/.genomac-system-logs"
+mkdir -p -- "$GM_LOGS_DIRECTORY"
+export GM_LOG_FILE="${GM_LOGS_DIRECTORY}/genomac-system-$(date '+%Y-%m-%d_%H-%M-%S')-$$.log"
 
 # Get path of THIS script, even when sourced
 # Explanation:
