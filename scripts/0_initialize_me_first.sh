@@ -12,6 +12,7 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
+############### GM_LOG_FILE
 # Create log file to capture all output
 # Note that the names of these environment variables (GM_LOGS_DIRECTORY and GM_LOG_FILE)
 # are the same for both GenoMac-system and GenoMac-system repos. However, the values of
