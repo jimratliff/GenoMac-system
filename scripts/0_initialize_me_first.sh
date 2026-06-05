@@ -15,28 +15,32 @@ set -euo pipefail
 echo "Inside /scripts/0_initialize_me_first.sh"
 
 # NOTE: REPO_SHORT_NAME is defined here only to be used in the following
-#       “Duplicatively log all output to GM_LOG_FILE” code, in order that that
-#       code block can be identical (for copy/paste) across both GenoMac-system
-#       and GenoMac-user repositories
+#       “Logging output to GM_LOG_FILE” code, in order that that code block can be
+#       identical (for copy/paste) across both GenoMac-system and GenoMac-user
+#       repositories.
 REPO_SHORT_NAME="genomac-system"
 
-############### Duplicatively log all output to GM_LOG_FILE ##############################
+############### Logging output to GM_LOG_FILE ##############################
 # Note that the names of these environment variables (GM_LOGS_DIRECTORY and GM_LOG_FILE)
 # are the same for both GenoMac-system and GenoMac-user repos. However, the values of
 # these environment variables *are* specific to the repo. (The name uniformity simplifies
 # code in GenoMac-shared.)
 
 # Create GM_LOG_FILE
-export GM_LOGS_DIRECTORY="${HOME}/.${REPO_SHORT_NAME}-logs"
-mkdir -p -- "$GM_LOGS_DIRECTORY"
-export GM_LOG_FILE="${GM_LOGS_DIRECTORY}/${REPO_SHORT_NAME}-$(date '+%Y-%m-%d_%H-%M-%S')-$$.log"
+if [[ "${GM_LOG_FILE_HAS_BEEN_INITIALIZED:-false}" != true ]]; then
+  export GM_LOGS_DIRECTORY="${HOME}/.${REPO_SHORT_NAME}-logs"
+  mkdir -p -- "$GM_LOGS_DIRECTORY"
+  export GM_LOG_FILE="${GM_LOGS_DIRECTORY}/${REPO_SHORT_NAME}-$(date '+%Y-%m-%d_%H-%M-%S')-$$.log"
+  export GM_LOG_FILE_HAS_BEEN_INITIALIZED=true
+fi
 
-# Recognize that tee-capturing is turned on. This informs _report (and its callers) when and
-# when not it should print to GM_LOG_FILE
-export GM_STDOUT_STDERR_NOW_BEING_SENT_TO_GM_LOG_FILE=true
-
-# Capture all stdout and stderr output to GM_LOG_FILE
-exec > >(tee -a "$GM_LOG_FILE") 2>&1
+# Send all stdout and stderr output to GM_LOG_FILE
+if [[ "${GM_STDOUT_STDERR_NOW_BEING_SENT_TO_GM_LOG_FILE:-false}" != true ]]; then
+  # GM_STDOUT_STDERR_NOW_BEING_SENT_TO_GM_LOG_FILE (a) prevents double-sourcing and
+  # (b) informs _report when and when not it should print to GM_LOG_FILE.
+  export GM_STDOUT_STDERR_NOW_BEING_SENT_TO_GM_LOG_FILE=true
+  exec > >(tee -a "$GM_LOG_FILE") 2>&1
+fi
 
 ###
 
