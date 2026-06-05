@@ -18,7 +18,7 @@ echo "Inside /scripts/0_initialize_me_first.sh
 #       “Duplicatively log all output to GM_LOG_FILE” code, in order that that
 #       code block can be identical (for copy/paste) across both GenoMac-system
 #       and GenoMac-user repositories
-REPO_SHORT_NAME="genomac-system
+REPO_SHORT_NAME="genomac-system"
 
 ############### Duplicatively log all output to GM_LOG_FILE ##############################
 # Note that the names of these environment variables (GM_LOGS_DIRECTORY and GM_LOG_FILE)
