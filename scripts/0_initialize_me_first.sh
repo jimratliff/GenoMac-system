@@ -12,15 +12,33 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-############### GM_LOG_FILE
-# Create log file to capture all output
+echo "Inside /scripts/0_initialize_me_first.sh
+
+# NOTE: REPO_SHORT_NAME is defined here only to be used in the following
+#       “Duplicatively log all output to GM_LOG_FILE” code, in order that that
+#       code block can be identical (for copy/paste) across both GenoMac-system
+#       and GenoMac-user repositories
+REPO_SHORT_NAME="genomac-system"
+
+############### Duplicatively log all output to GM_LOG_FILE ##############################
 # Note that the names of these environment variables (GM_LOGS_DIRECTORY and GM_LOG_FILE)
-# are the same for both GenoMac-system and GenoMac-system repos. However, the values of
+# are the same for both GenoMac-system and GenoMac-user repos. However, the values of
 # these environment variables *are* specific to the repo. (The name uniformity simplifies
 # code in GenoMac-shared.)
-export GM_LOGS_DIRECTORY="$HOME/.genomac-system-logs"
+
+# Create GM_LOG_FILE
+export GM_LOGS_DIRECTORY="${HOME}/.${REPO_SHORT_NAME}-logs"
 mkdir -p -- "$GM_LOGS_DIRECTORY"
-export GM_LOG_FILE="${GM_LOGS_DIRECTORY}/genomac-system-$(date '+%Y-%m-%d_%H-%M-%S')-$$.log"
+export GM_LOG_FILE="${GM_LOGS_DIRECTORY}/${REPO_SHORT_NAME}-$(date '+%Y-%m-%d_%H-%M-%S')-$$.log"
+
+# Recognize that tee-capturing is turned on. This informs _report (and its callers) when and
+# when not it should print to GM_LOG_FILE
+export GM_STDOUT_STDERR_NOW_BEING_SENT_TO_GM_LOG_FILE=true
+
+# Capture all stdout and stderr output to GM_LOG_FILE
+exec > >(tee -a "$GM_LOG_FILE") 2>&1
+
+###
 
 # Get path of THIS script, even when sourced
 # Explanation:
