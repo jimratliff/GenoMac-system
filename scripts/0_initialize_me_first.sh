@@ -12,7 +12,7 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-echo "Inside /scripts/0_initialize_me_first.sh
+echo "Inside /scripts/0_initialize_me_first.sh"
 
 # NOTE: REPO_SHORT_NAME is defined here only to be used in the following
 #       “Duplicatively log all output to GM_LOG_FILE” code, in order that that
