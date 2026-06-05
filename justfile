@@ -1,15 +1,25 @@
 # For syntax/behavior of just, see https://github.com/casey/just
 
+# Set default shell for just to Zsh
+set shell := ["zsh", "-cu"]
+
 # use `just --choose` to be presented with an interactive chooser to select the particular recipe
 
 # Typing only 'just' will run this default recipe, displaying interactive chooser.
 default:
 	@just --choose
 
-############### Run the Hypervisor
+############### Hypervisor
 
 run-hypervisor:
     zsh scripts/run_hypervisor.sh
+
+# Open the most-recent log file
+# The most-recently created log file is alphabetically last (because time-stamped)
+open-log:
+	logs=("$GM_LOGS_DIRECTORY"/*(.N))
+  (( ${#logs[@]} )) || { print -u2 -- "No log files found in $GM_LOGS_DIRECTORY"; exit 1; }
+  open "${logs[-1]}"
 
 ############### Repo-specific configuration
 genomac_local_dir := env_var('HOME') / '.genomac-system'
