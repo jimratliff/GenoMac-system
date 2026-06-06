@@ -57,7 +57,7 @@ function subdermis() {
   
   conditionally_create_user_accounts_for_this_Mac                    # scripts/spawn/spawn.sh
   conditionally_interactive_create_volumes_for_user_home_directories # scripts/spawn/spawn-volume-creation.sh
-  display_users_to_be_initially_configured                           # scripts/spawn/spawn-helpers.sh
+  display_users_to_be_initially_configured                           # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
 
   # TODO: Report to USER_CONFIGURER the list of user/volume combos that are in need of initial configuration
   
