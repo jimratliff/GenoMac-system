@@ -9,17 +9,10 @@ set shell := ["zsh", "-c"]
 default:
 	@just --choose
 
-############### Hypervisor
+############### Run the Hypervisor
 
 run-hypervisor:
     zsh scripts/run_hypervisor.sh
-
-# Open the most-recent log file
-# The most-recently created log file is alphabetically last (because time-stamped)
-open-log:
-	logs=("$GM_LOGS_DIRECTORY"/*(.N))
-  (( ${#logs[@]} )) || { print -u2 -- "No log files found in $GM_LOGS_DIRECTORY"; exit 1; }
-  open "${logs[-1]}"
 
 ############### Repo-specific configuration
 genomac_local_dir := env_var('HOME') / '.genomac-system'
@@ -64,7 +57,6 @@ dev-configure-remote-for-https-fetch-and-ssh-push:
     git -C "{{genomac_local_dir}}" remote set-url --push origin "{{genomac_push_url}}"
     git -C "{{genomac_local_dir}}" config pull.rebase false
 
-
 ############### System state utilities
 
 system-states command:
@@ -78,6 +70,17 @@ system-states-clear-session-states:
 
 system-states-clear-all-states:
     just system-states clear-all
+
+############### Logging utilities
+
+logging command:
+    zsh scripts/utilities/logging_utilities.sh '{{command}}'
+
+logging-show-latest:
+    just logging show-latest
+
+logging-show-directory:
+    just logging show-directory
 
 ############### Spawn-related commands
 
