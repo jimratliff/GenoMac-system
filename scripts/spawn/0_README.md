@@ -85,7 +85,7 @@ Each user to be created is specified by:
 - "uid"
   - the user’s ID, in the range 510–999, which macOS uses to distinguish users (rather than by user name)
   - (Project GenoMac excludes IDs 501–509 here, even though they are legit user IDs, in order to prevent
-    conflicts with preexisting users.)
+    conflicts with any preexisting users.)
 - "user-class"
   - a string key, e.g., "superintendent", "personal", "work", "auxiliary"
   - Determines (a) the volume on which the user’s home directory resides and (b) the passphrase that is both (1) the user’s password and (2) the encryption passphrase for the volume.
