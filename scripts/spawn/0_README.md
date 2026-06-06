@@ -43,7 +43,7 @@ Within the group of resident users:
 - For each *non-startup* volume v∈V\\{v<sup>†</sup>}, v is encrypted (*not* using File Vault) using passphrase v.p.
 - The *startup* volume v<sup>†</sup> is encrypted using File Vault.[^file_vault_mounted_by]
 ### Users
-  - Let U be the set of users
+  - Let U be the set of users[^PREEXISTING_USERS]
   - User classes
     - Let U<sub>S</sub> be the superintendent class.
     - Let U<sup>§</sup> be the set of user classes such that U<sup>§</sup>={U<sub>S</sub>, U<sub>1</sub>, U<sub>2</sub>, … , U<sub>n</sub>} partitions U.
@@ -60,6 +60,8 @@ Within the group of resident users:
         - The volume u.v is the volume that contains the user’s home directory
       - u.p = U<sub>i</sub>.p
         - The passphrase u.p serves both as (a) the passphrase by which the user can decrypt/mount the volume u.v that contains the user’s home directory and (b) the password by which the user logs into the user’s account.
+       
+[^PREEXISTING_USERS]: The focus here is on users that are managed, and frequently created, by Project GenoMac. However, it is assumed that USER_VANILLA exists prior to the creation of USER_CONFIGURER. Thus, USER_VANILLA is neither created nor managed by Project GenoMac. Nevertheless, USER_VANILLA belongs to the superintendent user class by virtue of residing on the startup volume.
  
 [^unique_password_for_volume]: ∀v,v′∈V, (v ≠ v′) ⇒ (v.p ≠ v′.p.)
 
