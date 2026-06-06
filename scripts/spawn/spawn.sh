@@ -29,8 +29,8 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # and (b)onepassword_key_from_user_class stored in a different plain-text item in the same 1Password
   # vault.
   #
-  # If a specified user to create has a short name that already has a user account, that user is skipped
-  # without error. However, if a specified user to create has a novel short name but has a uid that
+  # If a specified user-to-create has a short name that already has a user account, that user is skipped
+  # without error. However, if a specified user-to-create has a novel short name but has a uid that
   # corresponds to an existing user, a fatal error is raised.
   #
   # See scripts/spawn/0_README.md for a description of:
