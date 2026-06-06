@@ -90,7 +90,7 @@ Each user to be created is specified by:
   - a string key, e.g., "superintendent", "personal", "work", "auxiliary"
   - Determines (a) the volume on which the user’s home directory resides and (b) the passphrase that is both (1) the user’s password and (2) the encryption passphrase for the volume.
 - "avatar" (optional)
-  - Terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to USER_PICTURE_DIRECTORY.[^user_picture_directory]
+  - The terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to USER_PICTURE_DIRECTORY.[^user_picture_directory]
   - The user picture at that path is referenced at the time the user account is created, at which point the data from the user picture is incorporated into the user’s profile. The user picture does not need to remain accessible at that path after the user account is created.
 - optional additional arbitrary attributes to guide later user provisioning[^arbitrary_attributes_guide_provisioning]
  
