@@ -150,4 +150,16 @@ The volume_name is either (a) `::startup_volume::` (which is not a valid volume 
       "auxiliary": "AUX_PASSWORD"
     },
   }
+  {
+    "user_attributes_from_user_class": {
+      "superintendent": [
+        "sysadmin",
+        "developer",
+        "dropbox"
+       ],
+      "personal": "PERSONAL_PASSWORD",
+      "work": "WORK_PASSWORD",
+      "auxiliary": "AUX_PASSWORD"
+    },
+  }
 ```
