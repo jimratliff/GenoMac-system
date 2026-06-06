@@ -125,7 +125,7 @@ Each user to be created is specified by:
   }
 ```
   
-To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory is either (a) `Users/some_user` if the home directory resides on the startup volume or (b) `some_volume/Users/some_user` if the home directory resides on the volume `some_volume`.
+To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory is either (a) `Users/some_user` if the home directory resides on the startup volume or (b) `/Volumes/some_volume/Users/some_user` if the home directory resides on the non-startup volume `some_volume`.
 See environment variable: `DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="Users"`
 and use `parent_of_users_home_directories()`.
   
