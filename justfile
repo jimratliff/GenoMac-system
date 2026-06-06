@@ -1,7 +1,7 @@
 # For syntax/behavior of just, see https://github.com/casey/just
 
 # Set default shell for just to Zsh
-set shell := ["zsh", "-cu"]
+set shell := ["zsh", "-c"]
 
 # use `just --choose` to be presented with an interactive chooser to select the particular recipe
 
