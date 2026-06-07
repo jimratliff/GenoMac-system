@@ -50,13 +50,14 @@ function attribute_names_from_user_spec_json() {
 }
 
 function attribute_names_from_user_class() {
-  local user_spawn_config_json="${1:?missing user_spawn_config_json}"
-  local user_class="${2:?missing user_class}"
+  # Prints each attribute associated with a user_class, one per line.
 
-  jq -r --arg user_class "$user_class" '
-    (.user_attributes_from_user_class[$user_class] // [])
-    | .[]
-  ' <<<"$user_spawn_config_json"
+  local user_class="${1:?missing user_class}"
+  local attributes_json
+
+  attributes_json="${user_attributes_from_user_class[$user_class]-[]}"
+
+  jq -r '.[]' <<<"$attributes_json"
 }
 
 #############################################
