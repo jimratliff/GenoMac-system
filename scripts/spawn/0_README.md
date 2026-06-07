@@ -142,24 +142,30 @@ The volume_name is either (a) `::startup_volume::` (which is not a valid volume 
       "work": "some_work_volume",
       "auxiliary": "some_auxiliary_volume"
     },
-  {
     "onepassword_key_from_user_class": {
       "superintendent": "THE_STARTUP_PASSWORD",
       "personal": "PERSONAL_PASSWORD",
       "work": "WORK_PASSWORD",
       "auxiliary": "AUX_PASSWORD"
     },
-  }
-  {
     "user_attributes_from_user_class": {
       "superintendent": [
         "sysadmin",
         "developer",
         "dropbox"
-       ],
-      "personal": "PERSONAL_PASSWORD",
-      "work": "WORK_PASSWORD",
-      "auxiliary": "AUX_PASSWORD"
-    },
+      ],
+      "personal": [
+        "dropbox"
+      ],
+      "work": [
+        "dropbox",
+        "sync_com",
+        "microsoft_word"
+      ],
+      "auxiliary": [
+        "dropbox",
+        "sync_com"
+      ]
+    }
   }
 ```
