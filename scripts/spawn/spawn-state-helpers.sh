@@ -17,8 +17,8 @@ function mark_user_as_created(){
 
 function set_system_states_for_user_attributes(){
   # Sets a system-scoped state for each attribute of user, whose user_spec_json is supplied as $1.
-  report_start_phase_standard
   
+  report_start_phase_standard
   local user_spec_json="${1:?missing user_spec_json}"
 
   local short_name
@@ -28,15 +28,25 @@ function set_system_states_for_user_attributes(){
   user_class="$(get_user_class_from_user_spec_json "$user_spec_json")"
 
   report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with user class $user_class"
-  set_system_state_for_user_class "$short_name" "$user_class"
+  set_system_state_for_user_class "$short_name" "$user_class" # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
 
+  # Gets .attributes from user spec and then iterates over each attribute
   local attribute_name
   while IFS= read -r attribute_name; do
     report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with attribute $attribute_name"
-    set_system_state_for_user_attribute "$short_name" "$attribute_name"
+    set_system_state_for_user_attribute "$short_name" "$attribute_name" # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
   done < <(attribute_names_from_user_spec_json "$user_spec_json")
 
   report_end_phase_standard
+}
+
+function attribute_names_from_user_spec_json() {
+  local user_spec_json="${1:?missing user_spec_json}"
+
+  jq -r '
+    (.attributes // [])
+    | .[]
+  ' <<<"$user_spec_json"
 }
 
 #############################################
