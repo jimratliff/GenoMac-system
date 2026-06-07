@@ -77,22 +77,23 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
   users_to_create_json="$(get_users_to_create_from_1password)"
 
-  # User loop
+  # Iterate through users_to_create_json, user by user
   keep_sudo_alive
   while IFS= read -r user_spec_json; do
-    conditionally_create_user_account "$user_spec_json"
+    create_user_account "$user_spec_json"
   done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
 
   report_end_phase_standard
 }
 
-function conditionally_create_user_account(){
+function create_user_account(){
   # Creates a single user account, specified by user_spec_json, which is passed as only argument.
   # Sets system-scoped states to record:
   # - that the user has been created
   # - that the user is in need of initial configuration
   # - each of the attributes of the user
   # - that the volume (if non-startup) needs to be created/encrypted by a particular passphrase
+  #   referenced by name of item in 1Password vault
 
   report_start_phase_standard
   local user_spec_json="$1"
@@ -109,26 +110,26 @@ function conditionally_create_user_account(){
   local user_class
   local volume_name
   
-  short_name="$(get_short_name_from_user_spec_json "$user_spec_json")" || return 1
+  short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
   if does_user_name_exist "$short_name"; then
     report_warning "User ($short_name) already exists; skipping creation of this user."
     report_end_phase_standard
     return 0
   fi
 
-  full_name="$(get_full_name_from_user_spec_json "$user_spec_json")" || return 1
+  full_name="$(get_full_name_from_user_spec_json "$user_spec_json")"
   
-  uid="$(get_uid_from_user_spec_json "$user_spec_json")" || return 1
+  uid="$(get_uid_from_user_spec_json "$user_spec_json")"
   if does_user_uid_exist $uid; then
     conflicting_short_names="$(string_of_short_names_with_uid $uid)"
     report_fail "Proposed uid $uid for user $short_name already exists as one (or more) different user(s):${NEWLINE}${conflicting_short_names}"
     return 1
   fi
   
-  avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")" || return 1
+  avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")"
   avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
   
-  user_class="$(get_user_class_from_user_spec_json "$user_spec_json")" || return 1
+  user_class="$(get_user_class_from_user_spec_json "$user_spec_json")"
   op_item_user_password="${onepassword_key_from_user_class[$user_class]}"
 
   volume_name="${volume_name_from_user_class[$user_class]}"
@@ -156,8 +157,8 @@ function conditionally_create_user_account(){
 }
 
 function get_user_spawn_config_associative_arrays() {
-  # Get values for associative arrays volume_name_from_user_class and onepassword_key_from_user_class
-  # by reading from plain-text item of 1Password vault.
+  # Get values for associative arrays (a) volume_name_from_user_class, (b) onepassword_key_from_user_class,
+  # and (c) user_attributes_from_user_class from JSON object in plain-text item of 1Password vault.
 
   report_start_phase_standard
   local user_spawn_config_json
@@ -178,6 +179,11 @@ function get_user_spawn_config_associative_arrays() {
 }
 
 function get_user_spawn_config_from_1password() {
+  # Get plain-text item $ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG from 1Password vaule
+  # $ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+  #
+  # Hint: ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+  # Hint: ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="GenoMac-system-user-spawn-config-json"
 
   report_start_phase_standard
   local user_spawn_config_json
