@@ -49,6 +49,16 @@ function attribute_names_from_user_spec_json() {
   ' <<<"$user_spec_json"
 }
 
+function attribute_names_from_user_class() {
+  local user_spawn_config_json="${1:?missing user_spawn_config_json}"
+  local user_class="${2:?missing user_class}"
+
+  jq -r --arg user_class "$user_class" '
+    (.user_attributes_from_user_class[$user_class] // [])
+    | .[]
+  ' <<<"$user_spawn_config_json"
+}
+
 #############################################
 #        EVERYTHING BELOW THIS IS DEPRECATED
 function get_1Password_key_from_delimited_state_string_DEPRECATED(){
