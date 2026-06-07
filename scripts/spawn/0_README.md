@@ -100,29 +100,30 @@ Each user to be created is specified by:
 [^arbitrary_attributes_guide_provisioning]: Note that, at the time of user creation, any additional attributes (which by definition aren’t required for creating the user) can’t be stored/recorded in that user’s home directory because that home directory will not exist until it is created at the later time when the user first logs in. Instead, the attribute is recorded as a system-level state file. E.g., a system-level state file "USER_ATTRIBUTE∞§¶wilma¶§∞dropbox§∞¶" would indicate that user "wilma" has the attribute "dropbox". GenoMac-user transfers these system-scoped state files to become user-scoped state files using the function `transfer_system_scoped_user_attribute_states_to_user_scoped`. (Note: `GENOMAC_STATE_USER_ATTRIBUTE_PREFIX="USER_ATTRIBUTE"`.)
 
 ```
-  {
-    "users_to_create": [
-      {
-        "short_name": "betty",
-        "full_name": "Betty Rubble",
-        "uid": 511,
-        "user_class": "personal",
-        "avatar": "Betty.png"
-      },
-      {
-        "short_name": "wilma",
-        "full_name": "Wilma Flintstone",
-        "uid": 512,
-        "user_class": "work",
-        "attributes": [
-          "pristine",
-          "configurer",
-          "emailer",
-          "chess-player",
-          "developer"
+{
+  "users_to_create": [
+    {
+      "short_name": "betty",
+      "full_name": "Betty Rubble",
+      "uid": 511,
+      "user_class": "personal",
+      "avatar": "Betty.png"
+    },
+    {
+      "short_name": "wilma",
+      "full_name": "Wilma Flintstone",
+      "uid": 512,
+      "user_class": "work",
+      "attributes": [
+        "pristine",
+        "configurer",
+        "emailer",
+        "chessplayer",
+        "developer"
       ]
-    ]
-  }
+    }
+  ]
+}
 ```
   
 To be clear, "user-class" implies the *volume* of the home directory but the actual path to the home directory is either (a) `Users/some_user` if the home directory resides on the startup volume or (b) `/Volumes/some_volume/Users/some_user` if the home directory resides on the non-startup volume `some_volume`.
