@@ -14,6 +14,7 @@ safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-state-helpers.sh"
 # of 1Password vault ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
 typeset -gA volume_name_from_user_class
 typeset -gA onepassword_key_from_user_class
+typeset -gA user_attributes_from_user_class
 
 function conditionally_create_user_accounts_for_this_Mac() {
   # Creates user accounts specified in users_to_create_json JSON object, making use of nonlocal associative
@@ -94,6 +95,9 @@ function create_user_account(){
   # - each of the attributes of the user
   # - that the volume (if non-startup) needs to be created/encrypted by a particular passphrase
   #   referenced by name of item in 1Password vault
+  #
+  # Relies on associative arrays volume_name_from_user_class, onepassword_key_from_user_class
+  # [[and user_attributes_from_user_class]] being available and populated by caller.
 
   report_start_phase_standard
   local user_spec_json="$1"
@@ -204,6 +208,9 @@ function populate_user_spawn_associative_arrays_from_json() {
 
   local json_input
   json_input="$(cat)"
+
+  # NOTE: populate_associative_array_from_json_object() is defined in
+  #       GenoMac-shared/scripts/helpers-json.sh
 
   if ! populate_associative_array_from_json_object \
     "$json_input" \
