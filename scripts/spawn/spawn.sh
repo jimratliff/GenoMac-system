@@ -209,10 +209,10 @@ function populate_user_spawn_associative_arrays_from_json() {
   local json_input
   json_input="$(cat)"
 
-  # NOTE: populate_associative_array_from_json_object() is defined in
+  # NOTE: populate_associative_array_of_scalars_from_json_object() is defined in
   #       GenoMac-shared/scripts/helpers-json.sh
 
-  if ! populate_associative_array_from_json_object \
+  if ! populate_associative_array_of_scalars_from_json_object \
     "$json_input" \
     '.volume_name_from_user_class' \
     volume_name_from_user_class
@@ -221,7 +221,7 @@ function populate_user_spawn_associative_arrays_from_json() {
     return 1
   fi
 
-  if ! populate_associative_array_from_json_object \
+  if ! populate_associative_array_of_scalars_from_json_object \
     "$json_input" \
     '.onepassword_key_from_user_class' \
     onepassword_key_from_user_class
