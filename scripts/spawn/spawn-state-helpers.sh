@@ -16,22 +16,31 @@ function mark_user_as_created(){
 }
 
 function set_system_states_for_user_attributes(){
-  # Sets a system-scoped state for each attribute of user, whose user_spec_json is supplied as $1.
+  # Sets a system-scoped state for each attribute of user, first those inherited from the
+  # user’s user-class and then those user-specific attributes specified in the user’s 
+  # user_spec_json, which is supplied as $1.
   
   report_start_phase_standard
   local user_spec_json="${1:?missing user_spec_json}"
 
+  local attribute_name
   local short_name
   local user_class
   
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
   user_class="$(get_user_class_from_user_spec_json "$user_spec_json")"
 
+  # Sets system-scoped state for special-case attribute equal to the user’s user-class
   report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with user class $user_class"
   set_system_state_for_user_class "$short_name" "$user_class" # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
 
-  # Gets .attributes from user spec and then iterates over each attribute
-  local attribute_name
+  # Sets system-scoped states for attributes inherited from the user’s user-class
+  while IFS= read -r attribute_name; do
+    report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with user-class-derived attribute $attribute_name"
+    set_system_state_for_user_attribute "$short_name" "$attribute_name"
+  done < <(attribute_names_from_user_class "$user_class")
+
+  # Sets system-scoped states for attributes specific to the user
   while IFS= read -r attribute_name; do
     report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with attribute $attribute_name"
     set_system_state_for_user_attribute "$short_name" "$attribute_name" # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
