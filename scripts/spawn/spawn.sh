@@ -209,8 +209,9 @@ function populate_user_spawn_associative_arrays_from_json() {
   local json_input
   json_input="$(cat)"
 
-  # NOTE: populate_associative_array_from_json_object_of_scalars() is defined in
-  #       GenoMac-shared/scripts/helpers-json.sh
+  # NOTE: populate_associative_array_from_json_object_of_scalars() and
+  # populate_associative_array_from_json_object_of_string_arrays() are
+  # defined in GenoMac-shared/scripts/helpers-json.sh
 
   if ! populate_associative_array_from_json_object_of_scalars \
     "$json_input" \
@@ -227,6 +228,15 @@ function populate_user_spawn_associative_arrays_from_json() {
     onepassword_key_from_user_class
   then
     report_fail "Failed to populate onepassword_key_from_user_class."
+    return 1
+  fi
+
+  if ! populate_associative_array_from_json_object_of_string_arrays \
+    "$json_input" \
+    '.user_attributes_from_user_class' \
+    user_attributes_from_user_class
+  then
+    report_fail "Failed to populate user_attributes_from_user_class."
     return 1
   fi
 
