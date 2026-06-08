@@ -72,21 +72,3 @@ function attribute_names_from_user_class() {
   jq -r '.[]' <<<"$attributes_json"
 }
 
-#############################################
-#        EVERYTHING BELOW THIS IS DEPRECATED
-function get_1Password_key_from_delimited_state_string_DEPRECATED(){
-  # Get the 1Password item key from a delimited volume-1Pkey state string
-  # See construct_state_string_for_volume_1password_key_pending_creation() for background
-  report_start_phase_standard
-  local state_string="$1"
-  local op_key
-
-  report_fail "Doesn’t conform to new delimiter system"
-  return 1
-
-  op_key="${state_string##*${GENOMAC_STATE_STRING_DELIMITER_B}}"
-
-  print -- "$op_key"
-  
-  report_end_phase_standard
-}
