@@ -65,8 +65,8 @@ function conditionally_create_user_accounts_for_this_Mac() {
   report "Sign into 1Password (if necessary)"
   op signin
 
-  # Populate associative arrays volume_name_from_user_class and onepassword_key_from_user_class by reading
-  # from plain-text item of 1Password vault.
+  # Populate associative arrays (a) volume_name_from_user_class, (b) onepassword_key_from_user_class,
+  # and (c) user_attributes_from_user_class by reading from plain-text item of 1Password vault.
   # These arrays are *not* local, because they are referenced by functions called later within this shell
   get_user_spawn_config_associative_arrays
 
@@ -214,8 +214,8 @@ function populate_user_spawn_associative_arrays_from_json() {
   json_input="$(cat)"
 
   # NOTE: populate_associative_array_from_json_object_of_scalars() and
-  # populate_associative_array_from_json_object_of_string_arrays() are
-  # defined in GenoMac-shared/scripts/helpers-json.sh
+  #       populate_associative_array_from_json_object_of_string_arrays()
+  #       are defined in GenoMac-shared/scripts/helpers-json.sh
 
   if ! populate_associative_array_from_json_object_of_scalars \
     "$json_input" \
@@ -252,8 +252,8 @@ function get_users_to_create_from_1password() {
   local users_to_create_json
 
   if ! users_to_create_json="$(
-  read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
-  )"; then
+    read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
+    )"; then
     report_fail "Failed to read users-to-create JSON from 1Password."
     return 1
   fi
