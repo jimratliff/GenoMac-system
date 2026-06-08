@@ -113,6 +113,11 @@ function create_user_account(){
   local uid
   local user_class
   local volume_name
+
+  # Set states for user attributes for this user BEFORE the user is created and BEFORE the
+  # check whether this user already exists. This way, this function will update the user’s
+  # attributes every time GenoMac-system’s Hypervisor is run.
+  set_system_states_for_user_attributes "$user_spec_json" # scripts/spawn/spawn-state-helpers.sh
   
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
   if does_user_name_exist "$short_name"; then
@@ -155,7 +160,6 @@ function create_user_account(){
   mark_user_as_created "$short_name" "$volume_name"       # scripts/spawn/spawn-state-helpers.sh
   mark_user_as_in_need_of_initial_config "$short_name"    # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
   conditionally_mark_volume_is_necessary "$volume_name" "$op_item_user_password" # scripts/spawn/spawn-volume-state-helpers.sh
-  set_system_states_for_user_attributes "$user_spec_json" # scripts/spawn/spawn-state-helpers.sh
   
   report_end_phase_standard
 }
