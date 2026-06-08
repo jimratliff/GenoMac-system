@@ -26,7 +26,7 @@ function set_system_states_for_user_attributes(){
 
   local attribute_name
   local short_name
-  local state_string_has_attribute
+  # local state_string_has_attribute
   local user_class
   local user_only_prefix
   
@@ -42,26 +42,26 @@ function set_system_states_for_user_attributes(){
   delete_all_system_states_matching_prefix "$user_only_prefix"
 
   # Listen for existence of any attributes
-  local is_at_least_one_attribute=false
+  # local is_at_least_one_attribute=false
 
   # Sets system-scoped states for attributes inherited from the user’s user-class
   while IFS= read -r attribute_name; do
     report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with user-class-derived attribute $attribute_name"
     set_system_state_for_user_attribute "$short_name" "$attribute_name"
-    is_at_least_one_attribute=true
+    # is_at_least_one_attribute=true
   done < <(attribute_names_from_user_class "$user_class")
 
   # Sets system-scoped states for attributes specific to the user
   while IFS= read -r attribute_name; do
     report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with attribute $attribute_name"
     set_system_state_for_user_attribute "$short_name" "$attribute_name" # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
-    is_at_least_one_attribute=true
+    # is_at_least_one_attribute=true
   done < <(attribute_names_from_user_spec_json "$user_spec_json")
 
-  if [[ "$is_at_least_one_attribute" == "true" ]]; then
-    state_string_has_attribute=$(construct_state_string_for_user_has_attribute "$short_name")
-    set_genomac_system_state "$state_string_has_attribute"
-  fi
+  # if [[ "$is_at_least_one_attribute" == "true" ]]; then
+  #   state_string_has_attribute=$(construct_state_string_for_user_has_attribute "$short_name")
+  #   set_genomac_system_state "$state_string_has_attribute"
+  # fi
 
   report_end_phase_standard
 }
