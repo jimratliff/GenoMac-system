@@ -19,7 +19,7 @@ function set_system_states_for_user_attributes(){
   # Sets a system-scoped state for each attribute of user:
   # - First, those inherited from the user’s user-class
   # - Second, those user-specific attributes specified in the user’s user_spec_json, which is supplied as $1.
-  # - Third, a state (prefix: $GENOMAC_STATE_USER_CLASS_PREFIX) for the user’s user-class.
+  # - Third, a special-case-attribute state (prefix: $GENOMAC_STATE_USER_CLASS_PREFIX) for the user’s user-class.
   
   report_start_phase_standard
   local user_spec_json="${1:?missing user_spec_json}"
@@ -27,15 +27,18 @@ function set_system_states_for_user_attributes(){
   local attribute_name
   local short_name
   local user_class
+  local user_only_prefix
   
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
   user_class="$(get_user_class_from_user_spec_json "$user_spec_json")"
 
-  # TODO: Delete all system-scoped attribute states for this user so that they will be assigned on a clean state.
-
-  # Sets system-scoped state for special-case attribute equal to the user’s user-class
+  # Sets system-scoped state asserting this user belongs to given user-class
   report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with user class $user_class"
   set_system_state_for_user_class "$short_name" "$user_class" # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
+
+  # Delete all system-scoped attribute states for this user so that they will be assigned on a clean state.
+  user_only_prefix="$(construct_state_string_for_user_and_attribute "$short_name" --user-only )
+  delete_all_system_states_matching_prefix "$user_only_prefix"
 
   # Sets system-scoped states for attributes inherited from the user’s user-class
   while IFS= read -r attribute_name; do
