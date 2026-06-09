@@ -116,7 +116,8 @@ function create_user_account(){
 
   # Set states for user attributes for this user BEFORE the user is created and BEFORE the
   # check whether this user already exists. This way, this function will update the user’s
-  # attributes every time GenoMac-system’s Hypervisor is run.
+  # attributes every time GenoMac-system’s Hypervisor is run, even after the user has been
+  # created.
   set_system_states_for_user_attributes "$user_spec_json" # scripts/spawn/spawn-state-helpers.sh
   
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
