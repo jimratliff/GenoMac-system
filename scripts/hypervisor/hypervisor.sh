@@ -32,7 +32,7 @@ function hypervisor() {
   refresh_repo_from_remote_and_reexecute_hypervisor_if_updated \
     test_genomac_system_state \
     set_genomac_system_state \
-    "SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES" \
+    "$SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES" \
     "$GENOMAC_SYSTEM_REPO_NAME" \
     "$GENOMAC_SYSTEM_LOCAL_DIRECTORY"
 
