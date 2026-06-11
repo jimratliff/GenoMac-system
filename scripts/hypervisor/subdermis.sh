@@ -37,16 +37,18 @@ function subdermis() {
   # TODO: Consider refactoring in light of the user-attribute helpers.
   
   set_genomac_user_state   "$PERM_THIS_USER_IS_A_USER_CONFIGGER"
+
+  mark_current_user_as_user_configger
   
-  interactive_ensure_terminal_has_fda             # GenoMac-shared/scripts/helpers-misc.sh
-  conditionally_adjust_path_for_homebrew          # scripts/installations/homebrew/adjust_path_for_homebrew.sh
+  interactive_ensure_terminal_has_fda                      # GenoMac-shared/scripts/helpers-misc.sh
+  conditionally_adjust_path_for_homebrew                   # scripts/installations/homebrew/adjust_path_for_homebrew.sh
   conditionally_interactive_get_Mac_names_and_login_window_message # scripts/settings/interactive_get_Mac_names_and_login_window_message.sh
-  conditionally_interactive_sign_into_MAS         # scripts/installations/homebrew/interactive_sign_into_MAS.sh
-  conditionally_install_rosetta                   # scripts/installations/install_rosetta.sh
-  conditionally_install_via_homebrew              # scripts/installations/homebrew/install_via_homebrew.sh
-  conditionally_install_non_homebrew_apps         # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
-  conditionally_install_resources_systemwide      # scripts/installations/of_resources/install_resources.sh
-  conditionally_implement_systemwide_settings     # scripts/settings/implement_systemwide_settings.sh
+  conditionally_interactive_sign_into_MAS                  # scripts/installations/homebrew/interactive_sign_into_MAS.sh
+  conditionally_install_rosetta                            # scripts/installations/install_rosetta.sh
+  conditionally_install_via_homebrew                       # scripts/installations/homebrew/install_via_homebrew.sh
+  conditionally_install_non_homebrew_apps                  # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
+  conditionally_install_resources_systemwide               # scripts/installations/of_resources/install_resources.sh
+  conditionally_implement_systemwide_settings              # scripts/settings/implement_systemwide_settings.sh
 
   # Default attributes for USER_CONFIGURER must be set before USER_CONFIGURER uses GenoMac-user to configure
   # USER_CONFIGURER’s user-scoped settings. Therefore we do it before GenoMac-user is even locally cloned
@@ -55,9 +57,9 @@ function subdermis() {
   conditionally_set_default_attributes_for_USER_CONFIGURER # scripts/spawn/default_attributes_for_user_configurer.sh
   conditionally_clone_genomac_user_using_HTTPS             # scripts/user_scope/clone_genomac_user_repo.sh
   
-  conditionally_create_user_accounts_for_this_Mac                    # scripts/spawn/spawn.sh
-  conditionally_interactive_create_volumes_for_user_home_directories # scripts/spawn/spawn-volume-creation.sh
-  display_users_to_be_initially_configured                           # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
+  conditionally_create_user_accounts_for_this_Mac          # scripts/spawn/spawn.sh
+  conditionally_interactive_create_volumes_for_user_home_directories    # scripts/spawn/spawn-volume-creation.sh
+  display_users_to_be_initially_configured                 # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
 
   # TODO: Report to USER_CONFIGURER the list of user/volume combos that are in need of initial configuration
   
