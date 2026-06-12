@@ -19,9 +19,7 @@ function clone_genomac_user_repo_using_HTTPS() {
 
   report_start_phase_standard
 
-  clone_public_genomac_repo_using_HTTPS_if_necessary \
-    "$GENOMAC_USER_REPO_NAME" \
-    "$GENOMAC_USER_LOCAL_DIRECTORY"
+  clone_public_genomac_repo_using_HTTPS "$GENOMAC_USER_REPO_NAME" "$GENOMAC_USER_LOCAL_DIRECTORY"
 
   local status=$?
 
