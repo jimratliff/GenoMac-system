@@ -92,6 +92,7 @@ function conditionally_interactive_create_a_volume() {
     
     PUNT)
       # Leave the volume pending for now and move on.
+      report_warning "You have deferred the creation of volume “$volume_name”, which is necessary for one or more users."
       report_end_phase_standard
       return 0
       ;;
