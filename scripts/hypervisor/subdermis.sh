@@ -55,14 +55,13 @@ function subdermis() {
   # USER_CONFIGURER’s user-scoped settings. Therefore we do it before GenoMac-user is even locally cloned
   # in order to enforce this condition.
   conditionally_set_default_attributes_for_USER_CONFIGURER # scripts/spawn/default_attributes_for_user_configurer.sh
-  
+
+  # Clone GenoMac-user to ~/.genomac-user in preparation for USER_CONFIGURER to configure its own account
   conditionally_clone_genomac_user_using_HTTPS             # scripts/user_scope/clone_genomac_user_repo.sh
   
   conditionally_create_user_accounts_for_this_Mac          # scripts/spawn/spawn.sh
   conditionally_interactive_create_volumes_for_user_home_directories    # scripts/spawn/spawn-volume-creation.sh
   display_users_to_be_initially_configured                 # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
-
-  # TODO: Report to USER_CONFIGURER the list of user/volume combos that are in need of initial configuration
   
   report_end_phase_standard
 }
