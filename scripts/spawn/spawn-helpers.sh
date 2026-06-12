@@ -119,9 +119,7 @@ function get_array_of_users_to_be_initially_configured() {
 
   # Collect state strings, one for each user awaiting initial configuration
   state_string_prefix="$(construct_system_state_string_for_user_in_need_of_initial_config --prefix-only)"
-  _state_strings_with_prefix \
-    "${state_string_prefix}" \
-    "system"
+  _state_strings_with_prefix "${state_string_prefix}" "system"
   state_strings=("${reply[@]}")
 
   # Construct array of user short-names that are awaiting initial configuration
@@ -136,6 +134,35 @@ function get_array_of_users_to_be_initially_configured() {
 	  user_short_names+=("$short_name")
   done
   reply=("${user_short_names[@]}")
+  
+  report_end_phase_standard
+}
+
+function display_users_to_be_initially_configured() {
+  # Prints list of users still awaiting initial configuration.
+  
+  report_start_phase_standard
+  
+  local number_of_awaiting_users
+  local report_string=""
+  local user_short_name
+
+  local -a user_short_names
+  
+  get_array_of_users_to_be_initially_configured
+  user_short_names=("${reply[@]}")
+
+  number_of_awaiting_users=${#user_short_names[@]}
+
+  if (( ! number_of_awaiting_users )); then
+    report "There are no users awaiting their initial configuration by GenoMac-user."
+  else
+    report_string="📋 The following $number_of_awaiting_users user(s) is/are awaiting their initial configuration by GenoMac-user:${NEWLINE}"
+    for user_short_name in "${user_short_names[@]}"; do
+      report_string+="${user_short_name}${NEWLINE}"
+    done
+    report_highlight "$report_string"
+  fi
   
   report_end_phase_standard
 }
