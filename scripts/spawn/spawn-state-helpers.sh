@@ -3,6 +3,12 @@
 function mark_user_as_created(){
   # Set system-scoped state to mark user as having been created, with supplied volume of
   # user’s home directory.
+  #
+  # NOTE / TODO : Currently (6/11/2026), this state isn’t referenced by either
+  #               GenoMac-system or GenoMac-user.
+  #               If a function *were* going to read this state, a new function
+  #               (construct_state_string_for_user_exists) should be written and
+  #               incorporated.
 
   report_start_phase_standard
   local short_name="$1"
