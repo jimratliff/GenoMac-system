@@ -27,7 +27,7 @@ function subdermis() {
 
   output_hypervisor_welcome_banner "$GENOMAC_SCOPE_SYSTEM"
   keep_sudo_alive
-  # set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
+  set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
 
   # Mark the configuring user as a USER_CONFIGURER
   # Only USER_CONFIGURER runs GenoMac-system, therefore this user is USER_CONFIGURER
