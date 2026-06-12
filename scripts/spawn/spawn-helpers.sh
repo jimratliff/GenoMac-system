@@ -157,7 +157,7 @@ function display_users_to_be_initially_configured() {
   if (( ! number_of_awaiting_users )); then
     report "There are no users awaiting their initial configuration by GenoMac-user."
   else
-    report_string="📋 The following $number_of_awaiting_users user(s) is/are awaiting their initial configuration by GenoMac-user:${NEWLINE}"
+    report_string="📋 The following $number_of_awaiting_users user(s) is/are awaiting their initial configuration by GenoMac-user:"
     for user_short_name in "${user_short_names[@]}"; do
       report_string+="${user_short_name}${NEWLINE}"
     done
