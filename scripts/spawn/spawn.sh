@@ -17,18 +17,13 @@ typeset -gA onepassword_key_from_user_class
 typeset -gA user_attributes_from_user_class
 
 function conditionally_create_user_accounts_for_this_Mac() {
-  # Creates user accounts specified in users_to_create_json JSON object, making use of nonlocal associative
-  # arrays volume_name_from_user_class and onepassword_key_from_user_class, where these specifications are
-  # stored securely in a 1Password vault.
+  # Creates user accounts specified in users_to_create_json JSON object, which is read from 1Password vault,
+  # making use of nonlocal associative arrays volume_name_from_user_class, onepassword_key_from_user_class,
+  # and user_attributes_from_user_class, where these specifications are also stored in a 1Password vault.
   #
   # It’s assumed that this process is being executed by USER_CONFIGURER, which user already exists, as does
   # a "vanilla" account. Thus, the users being created are anticipated to be the third and subsequent
   # users.
-  #
-  # The users to be created are specified in a "users_to_create" JSON object stored in a plain-text item
-  # of a 1Password vault. The script also references two associative arrays (a) volume_name_from_user_class
-  # and (b)onepassword_key_from_user_class stored in a different plain-text item in the same 1Password
-  # vault.
   #
   # If a specified user-to-create has a short name that already has a user account, that user is skipped
   # without error. However, if a specified user-to-create has a novel short name but has a uid that
@@ -38,6 +33,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # - the users_to_create JSON object
   # - the volume_name_from_user_class associative array
   # - the onepassword_key_from_user_class associative array
+  # - the user_attributes_from_user_class associative array
   #
   # This function assumes that:
   # - GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
@@ -97,7 +93,7 @@ function create_user_account(){
   #   referenced by name of item in 1Password vault
   #
   # Relies on associative arrays volume_name_from_user_class, onepassword_key_from_user_class
-  # [[and user_attributes_from_user_class]] being available and populated by caller.
+  # and user_attributes_from_user_class being available and populated by caller.
 
   report_start_phase_standard
   local user_spec_json="$1"
@@ -116,8 +112,8 @@ function create_user_account(){
 
   # Set states for user attributes for this user BEFORE the user is created and BEFORE the
   # check whether this user already exists. This way, this function will update the user’s
-  # attributes every time GenoMac-system’s Hypervisor is run, even after the user has been
-  # created.
+  # attributes every time GenoMac-system’s Hypervisor is run, even if the user has already
+  # been created.
   set_system_states_for_user_attributes "$user_spec_json" # scripts/spawn/spawn-state-helpers.sh
   
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
@@ -188,7 +184,7 @@ function get_user_spawn_config_associative_arrays() {
 }
 
 function get_user_spawn_config_from_1password() {
-  # Get plain-text item $ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG from 1Password vaule
+  # Get plain-text item $ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG from 1Password vault
   # $ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
   #
   # Hint: ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
