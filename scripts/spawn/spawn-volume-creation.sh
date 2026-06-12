@@ -12,11 +12,11 @@ function conditionally_interactive_create_volumes_for_user_home_directories() {
 
   local -a volume_name_op_item_key_pairs_to_create
   
-  collect_volume_name_op_item_key_pairs_for_volumes_pending_certified_creation
+  collect_volume_name_op_item_key_pairs_for_volumes_pending_certified_creation # scripts/spawn/spawn-volume-state-helpers.sh
   volume_name_op_item_key_pairs_to_create=("${reply[@]}")
   
   if (( ! ${#volume_name_op_item_key_pairs_to_create[@]} )); then
-    report "No volumes need to be created."
+    report_highlight "There are no volumes for user home directories that need to be created."
     return 0
   fi
   
@@ -40,7 +40,8 @@ function conditionally_interactive_create_a_volume() {
   local startup_container
   local volume_creation_mode
 
-  if volume_name_is_startup_volume_signifier "$volume_name"; then
+  # volume_name_is_startup_volume_signifier is from: scripts/spawn/spawn-volume-creation-helpers.sh
+  if volume_name_is_startup_volume_signifier "$volume_name"; then 
     # NOTE: This shouldn’t be reached, because the is-necessary state never should have been created for the
     #       the startup volume. (Function conditionally_mark_volume_is_necessary() tests for startup volume.)
     report "The volume name “$volume_name” signifies the startup volume, which necessarily exists.${NEWLINE}Nothing further to record."
@@ -85,7 +86,7 @@ function conditionally_interactive_create_a_volume() {
     
     MARK_VOLUME_COMPLETE)
       # I’ve already created and encrypted this volume. Mark this task as complete.
-      report_action_taken "I am marking volume “$volume_name” as already created."
+      report_action_taken "On your instructions, I’m marking volume “$volume_name” as already created."
       mark_volume_as_created “$volume_name” "$op_item_key"
       ;;
     
