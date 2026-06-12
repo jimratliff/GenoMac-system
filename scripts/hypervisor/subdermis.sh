@@ -31,15 +31,7 @@ function subdermis() {
 
   # Mark the configuring user as a USER_CONFIGURER
   # Only USER_CONFIGURER runs GenoMac-system, therefore this user is USER_CONFIGURER
-  # Use the *user*-state management system to leave a state for this user that will
-  # tell GenoMac-user to configure this user as a USER_CONFIGURER user.
-  #
-  # NOTE: TODO: This doesn’t seem to be used by GenoMac-user
-  # TODO: Consider refactoring in light of the user-attribute helpers.
-  
-  set_genomac_user_state   "$PERM_THIS_USER_IS_A_USER_CONFIGGER"
-
-  mark_current_user_as_user_configger
+  mark_current_user_as_user_configger                      # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
   
   interactive_ensure_terminal_has_fda                      # GenoMac-shared/scripts/helpers-misc.sh
   conditionally_adjust_path_for_homebrew                   # scripts/installations/homebrew/adjust_path_for_homebrew.sh
