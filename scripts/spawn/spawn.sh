@@ -45,7 +45,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   #   - OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     ("authorizing-admin-user-name")
   #   - OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD ("THE_STARTUP_PASSWORD")
   #   - OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        ("specs-of-users-to-create")
-  #   - OP_ITEM_NAME_USER_SPAWN_CONFIG               ("user-spawn-config-json")
+  #   - OP_ITEM_NAME_USER_SPAWN_CONFIG               ("user-spawn-config")
   #   - OP_VAULT_FOR_GENOMAC_USER_CREATION           ("GenoMac-user-creation")
   
   report_start_phase_standard
@@ -188,7 +188,7 @@ function get_user_spawn_config_from_1password() {
   # $OP_VAULT_FOR_GENOMAC_USER_CREATION
   #
   # Hint: OP_VAULT_FOR_GENOMAC_USER_CREATION
-  # Hint: OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config-json"
+  # Hint: OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config"
 
   report_start_phase_standard
   local user_spawn_config_json
