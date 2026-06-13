@@ -6,7 +6,26 @@
 > - [User attributes](https://github.com/jimratliff/GenoMac-shared/blob/main/docs/user_classes_and_attributes.md), GenoMac-shared/docs
 > - [GenoMac-system/scripts/spawn/spawn.sh](https://github.com/jimratliff/GenoMac-system/blob/main/scripts/spawn/spawn.sh)
 
-## Specification of users to be created
+## The users to spawn and their specifics are supplied by items in a 1Password vault
+The code in the public Project GenoMac repositories refer to specifications of users to create, but that code does not include the details, such as user names, the names of volumes on which the users’s home directories reside, and precisely how each user is configured.
+
+Instead, these details are supplied by items in a 1Password vault. The name of this vault is specified by the environment variable `ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION`: "GenoMac-user-creation".
+
+The 1Password items involved in the player-spawing process are shown in the table below:
+| Item name | Environment variable | Item type | Purpose |
+|---|---|---|---|
+| GenoMac-system-specs-of-users-to-create    | ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        | plain-text | Array of user objects |
+| GenoMac-system-user-spawn-config-json      | ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG               | plain-text | 3 associative maps[^ASSOCIATIVE_MAPS] |
+| GenoMac-system-authorizing-admin-user-name | ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     | plain-text | Name of preexisting admin[^PREEXISTING_ADMIN] |
+| THE_STARTUP_PASSWORD                       | ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS] |
+| PERSONAL_PASSWORD                          |                                                       | password   | Points to password for personal-class users |
+| WORK_PASSWORD                              |                                                       | password   | Points to password for work-class users |
+| AUX_PASSWORD                               |                                                       | password   | Points to password for auxiliary-class users |
+
+[^ASSOCIATIVE_MAPS]: (a) `volume_name_from_user_class`, (b) `onepassword_key_from_user_class`, and (c) `user_attributes_from_user_class`.
+[^PREEXISTING_ADMIN]: 
+[^USER_CLASS_PASSWORDS]: These can be freely named, and will be as numerous as are the user classes. These will be values in the `onepassword_key_from_user_class` associative mapping. (To be perfectly clear, 'THE_STARTUP_PASSWORD', etc., are *not* passwords; they are names of the 1Password items that contain those passwords.)
+
 ### `users_to_create`
 Each user to be created is specified by:
 - "short_name"
