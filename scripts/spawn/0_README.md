@@ -4,7 +4,7 @@
 > **Related**
 > - [The volume, user, and password architecture of Project GenoMac](https://github.com/jimratliff/GenoMac-shared/edit/main/docs/volume_user_password_architecture.md), GenoMac-shared/docs
 > - [User attributes](https://github.com/jimratliff/GenoMac-shared/blob/main/docs/user_classes_and_attributes.md), GenoMac-shared/docs
-> [GenoMac-system/scripts/spawn/spawn.sh](https://github.com/jimratliff/GenoMac-system/blob/main/scripts/spawn/spawn.sh)
+> - [GenoMac-system/scripts/spawn/spawn.sh](https://github.com/jimratliff/GenoMac-system/blob/main/scripts/spawn/spawn.sh)
 
 ## Specification of users to be created
 ### `users_to_create`
