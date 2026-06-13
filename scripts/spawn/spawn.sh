@@ -44,7 +44,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES            ("/Users")
   #   - ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     ("GenoMac-system-authorizing-admin-user-name")
   #   - ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD ("THE_STARTUP_PASSWORD")
-  #   - ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        ("GenoMac-system-specs-of-users-to-create")
+  #   - ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        ("specs-of-users-to-create")
   #   - ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG               ("GenoMac-system-user-spawn-config-json")
   #   - ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION           ("GenoMac-user-creation")
   
