@@ -11,7 +11,7 @@ The code in the public Project GenoMac repositories refer to specifications of u
 
 Instead, these details are supplied by items in a 1Password vault. The name of this vault is specified by the environment variable `OP_VAULT_FOR_GENOMAC_USER_CREATION`: "GenoMac-user-creation".
 
-The 1Password items involved in the player-spawing process are shown in the table below:
+The 1Password items involved in the player-spawning process are shown in the table below:
 | Item name | Environment variable | Item type | Purpose |
 |---|---|---|---|
 | specs-of-users-to-create    | OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        | plain-text | Array of user objects |
