@@ -65,8 +65,6 @@ Each user to be created is specified by:
       "uid": 512,
       "user_class": "work",
       "attributes": [
-        "pristine",
-        "configurer",
         "emailer",
         "chessplayer",
         "developer"
@@ -91,13 +89,13 @@ The volume_name is either (a) `::startup_volume::` (which is not a valid volume 
       "superintendent": "::startup_volume::",
       "personal": "some_personal_volume",
       "work": "some_work_volume",
-      "auxiliary": "some_auxiliary_volume"
+      "other_user_class": "some_other_user_class_volume"
     },
     "onepassword_key_from_user_class": {
       "superintendent": "THE_STARTUP_PASSWORD",
       "personal": "PERSONAL_PASSWORD",
       "work": "WORK_PASSWORD",
-      "auxiliary": "AUX_PASSWORD"
+      "other_user_class": "OTHER_USER_CLASS_PASSWORD"
     },
     "user_attributes_from_user_class": {
       "superintendent": [
@@ -113,7 +111,7 @@ The volume_name is either (a) `::startup_volume::` (which is not a valid volume 
         "sync_com",
         "microsoft_word"
       ],
-      "auxiliary": [
+      "other_user_class": [
         "dropbox",
         "sync_com"
       ]
