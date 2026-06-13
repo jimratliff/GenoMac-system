@@ -85,7 +85,7 @@ ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config-json"
 ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="specs-of-users-to-create"
 
 # Name of 1Password plain-text item that stores the short name of the admin user with Secure Token authority
-ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME="GenoMac-system-authorizing-admin-user-name"
+ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME="authorizing-admin-user-name"
 
 # Name of 1Password password item that stores the password of the admin user with Secure Token authority
 ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD="THE_STARTUP_PASSWORD"
