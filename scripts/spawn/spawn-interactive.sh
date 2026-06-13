@@ -51,14 +51,14 @@ function interactive_adduser() {
 
   passphrase_mode="$(get_value_from_numbered_choices \
     "How do you want to supply passwords (for the new user and authorizing admin user)?" \
-    "Use named items in the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” 1Password vault" "1PASSWORD" \
+    "Use named items in the “${OP_VAULT_FOR_GENOMAC_USER_CREATION}” 1Password vault" "1PASSWORD" \
     "Clear text" "CLEAR_TEXT"
     )"
 
   case "$passphrase_mode" in
     "1PASSWORD")
-      adduser_args+=(--op-vault "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION")
-      report "Enter the name of the 1Password ITEMs from the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” 1Password vault for the following passwords:"
+      adduser_args+=(--op-vault "$OP_VAULT_FOR_GENOMAC_USER_CREATION")
+      report "Enter the name of the 1Password ITEMs from the “${OP_VAULT_FOR_GENOMAC_USER_CREATION}” 1Password vault for the following passwords:"
       onepassword_user_password_item_name="$(get_nonblank_answer_to_question "Name of 1Password ITEM for NEW USER")"
       adduser_args+=(--op-item-user-password "$onepassword_user_password_item_name")
       onepassword_admin_password_item_name="$(get_nonblank_answer_to_question "Name of 1Password ITEM for the AUTHORIZING ADMIN USER")"
@@ -207,7 +207,7 @@ function interactive_ensure_encrypted_apfs_volume_exists() {
     get_value_from_numbered_choices \
       "Choose a passphrase mode for supplying the passphrase" \
       "Interactively" "INTERACTIVE" \
-      "From a named item in the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” vault from 1Password" "1PASSWORD"
+      "From a named item in the “${OP_VAULT_FOR_GENOMAC_USER_CREATION}” vault from 1Password" "1PASSWORD"
   )
   
   case "$passphrase_mode" in
@@ -215,8 +215,8 @@ function interactive_ensure_encrypted_apfs_volume_exists() {
       ensure_volume_args+=(--interactive-passphrase)
       ;;
     "1PASSWORD")
-      onepassword_item_name=$(get_confirmed_answer_to_question "Name of 1Password item (in the “${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}” vault)?")
-      ensure_volume_args+=(--op-vault "${ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION}")
+      onepassword_item_name=$(get_confirmed_answer_to_question "Name of 1Password item (in the “${OP_VAULT_FOR_GENOMAC_USER_CREATION}” vault)?")
+      ensure_volume_args+=(--op-vault "${OP_VAULT_FOR_GENOMAC_USER_CREATION}")
       ensure_volume_args+=(--op-item-passphrase "${onepassword_item_name}")
       ;;
     *)
