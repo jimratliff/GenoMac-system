@@ -1,4 +1,4 @@
-# About spawning new users for this Mac
+# Specifying users to spawn
 
 > [!TIP]
 > **Related**
@@ -20,7 +20,7 @@ Each user to be created is specified by:
 - "user-class"
   - a string key, e.g., "superintendent", "personal", "work", "auxiliary"
   - Determines (a) the volume on which the user’s home directory resides and (b) the passphrase that is both (1) the user’s password and (2) the encryption passphrase for the volume.
-  - WIP/TODO: A user class can specify one or more user attributes that will be inherited by default by the users that belong to that user class.
+  - A user class can specify one or more user attributes that will be inherited by default by the users that belong to that user class.
 - "avatar" (optional)
   - The terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to USER_PICTURE_DIRECTORY.[^user_picture_directory]
   - The user picture at that path is referenced at the time the user account is created, at which point the data from the user picture is incorporated into the user’s profile. The user picture does not need to remain accessible at that path after the user account is created.
