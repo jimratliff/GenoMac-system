@@ -14,10 +14,10 @@ Instead, these details are supplied by items in a 1Password vault. The name of t
 The 1Password items involved in the player-spawing process are shown in the table below:
 | Item name | Environment variable | Item type | Purpose |
 |---|---|---|---|
-| specs-of-users-to-create    | ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        | plain-text | Array of user objects |
-| user-spawn-config-json      | ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG               | plain-text | 3 associative maps[^ASSOCIATIVE_MAPS] |
-| authorizing-admin-user-name | ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     | plain-text | Name of preexisting admin[^PREEXISTING_ADMIN] |
-| THE_STARTUP_PASSWORD                       | ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS] |
+| specs-of-users-to-create    | OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        | plain-text | Array of user objects |
+| user-spawn-config-json      | OP_ITEM_NAME_USER_SPAWN_CONFIG               | plain-text | 3 associative maps[^ASSOCIATIVE_MAPS] |
+| authorizing-admin-user-name | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     | plain-text | Name of preexisting admin[^PREEXISTING_ADMIN] |
+| THE_STARTUP_PASSWORD                       | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS] |
 | PERSONAL_PASSWORD                          |                                                       | password   | Points to password for personal-class users |
 | WORK_PASSWORD                              |                                                       | password   | Points to password for work-class users |
 | AUX_PASSWORD                               |                                                       | password   | Points to password for auxiliary-class users |
