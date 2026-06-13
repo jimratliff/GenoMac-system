@@ -79,7 +79,7 @@ STARTUP_VOLUME_SIGNIFIER="::startup_volume::"
 ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION="GenoMac-user-creation"
 
 # Name of 1Password plain-text item that stores the JSON configuration mapping user-class to (a) passwords and (b) volumes
-ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="GenoMac-system-user-spawn-config-json"
+ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config-json"
 
 # Name of 1Password plain-text item that stores the list of users to create (and their specs)
 ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="specs-of-users-to-create"
