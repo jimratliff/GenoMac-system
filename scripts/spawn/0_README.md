@@ -23,7 +23,7 @@ Each user to be created is specified by:
 - "avatar" (optional)
   - The terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to USER_PICTURE_DIRECTORY.[^user_picture_directory]
   - The user picture at that path is referenced at the time the user account is created, at which point the data from the user picture is incorporated into the user’s profile. The user picture does not need to remain accessible at that path after the user account is created.
-- optional additional arbitrary attributes to guide later user provisioning[^arbitrary_attributes_guide_provisioning] These attributes are *in addition* to any user attributes assigned to the user’s user class.
+- optional additional arbitrary attributes to guide later user provisioning.[^arbitrary_attributes_guide_provisioning] These attributes are *in addition* to any user attributes assigned to the user’s user class. See [User classes and attributes](https://github.com/jimratliff/GenoMac-shared/edit/main/docs/user_classes_and_attributes.md).
  
 [^user_picture_directory]: `USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"`, where `GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="${LOCAL_DROPBOX_DIRECTORY}/Preferences_common"`, where `LOCAL_DROPBOX_DIRECTORY="$HOME/Library/CloudStorage/Dropbox"`.
 
