@@ -79,19 +79,19 @@ STARTUP_VOLUME_SIGNIFIER="::startup_volume::"
 ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION="GenoMac-user-creation"
 
 # Name of 1Password plain-text item that stores the JSON configuration mapping user-class to (a) passwords and (b) volumes
-ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config-json"
+OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config-json"
 
 # Name of 1Password plain-text item that stores the list of users to create (and their specs)
-ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="specs-of-users-to-create"
+OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="specs-of-users-to-create"
 
 # Name of 1Password plain-text item that stores the short name of the admin user with Secure Token authority
-ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME="authorizing-admin-user-name"
+OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME="authorizing-admin-user-name"
 
 # Name of 1Password password item that stores the password of the admin user with Secure Token authority
-ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD="THE_STARTUP_PASSWORD"
+OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD="THE_STARTUP_PASSWORD"
 
 # Name of 1Password password item that stores a fake password for testing purposes
-ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD="TEST_PASSWORD"
+OP_ITEM_NAME_FAKE_TEST_PASSWORD="TEST_PASSWORD"
 
 ############### State-management for volume creation
 GMS_STATE_VOLUME_IS_NECESSARY_PREFIX="VOLUME_CREATION_is_necessary"
@@ -117,11 +117,11 @@ export_and_report GMS_STATE_VOLUME_IS_NECESSARY_PREFIX
 export_and_report GMS_USER_SCOPE_SCRIPTS
 export_and_report GMS_USER_SPAWNING_SCRIPTS
 export_and_report GMS_UTILITIES
-export_and_report ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME
-export_and_report ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD
-export_and_report ONEPASSWORD_ITEM_NAME_FAKE_TEST_PASSWORD
-export_and_report ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
-export_and_report ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
+export_and_report OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME
+export_and_report OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD
+export_and_report OP_ITEM_NAME_FAKE_TEST_PASSWORD
+export_and_report OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
+export_and_report OP_ITEM_NAME_USER_SPAWN_CONFIG
 export_and_report ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
 export_and_report STARTUP_VOLUME_SIGNIFIER
 export_and_report USER_PICTURE_DIRECTORY
