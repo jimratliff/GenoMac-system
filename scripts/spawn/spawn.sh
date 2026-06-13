@@ -10,7 +10,7 @@ safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-state-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-state-helpers.sh"
 
-# Global associative arrays to be populated from item ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG
+# Global associative arrays to be populated from item OP_ITEM_NAME_USER_SPAWN_CONFIG
 # of 1Password vault ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
 typeset -gA volume_name_from_user_class
 typeset -gA onepassword_key_from_user_class
@@ -42,10 +42,10 @@ function conditionally_create_user_accounts_for_this_Mac() {
   #     (b) repo-specific environment variables.
   # - The following environment variables have been defined:
   #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES            ("/Users")
-  #   - ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     ("authorizing-admin-user-name")
-  #   - ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD ("THE_STARTUP_PASSWORD")
-  #   - ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        ("specs-of-users-to-create")
-  #   - ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG               ("user-spawn-config-json")
+  #   - OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     ("authorizing-admin-user-name")
+  #   - OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD ("THE_STARTUP_PASSWORD")
+  #   - OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        ("specs-of-users-to-create")
+  #   - OP_ITEM_NAME_USER_SPAWN_CONFIG               ("user-spawn-config-json")
   #   - ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION           ("GenoMac-user-creation")
   
   report_start_phase_standard
@@ -67,8 +67,8 @@ function conditionally_create_user_accounts_for_this_Mac() {
   get_user_spawn_config_associative_arrays
 
   op_vault="$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION"
-  admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
-  onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD")"
+  admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
+  onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD")"
 
   # Get JSON object specifying users to create from plain-text item in 1Password vault
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
@@ -184,17 +184,17 @@ function get_user_spawn_config_associative_arrays() {
 }
 
 function get_user_spawn_config_from_1password() {
-  # Get plain-text item $ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG from 1Password vault
+  # Get plain-text item $OP_ITEM_NAME_USER_SPAWN_CONFIG from 1Password vault
   # $ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
   #
   # Hint: ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
-  # Hint: ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config-json"
+  # Hint: OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config-json"
 
   report_start_phase_standard
   local user_spawn_config_json
 
   if ! user_spawn_config_json="$(
-    read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG"
+    read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_USER_SPAWN_CONFIG"
   )"; then
     report_fail "Failed to read user spawn config from 1Password."
     return 1
@@ -249,7 +249,7 @@ function get_users_to_create_from_1password() {
   local users_to_create_json
 
   if ! users_to_create_json="$(
-    read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
+    read_1password_item_notes_plain "$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
     )"; then
     report_fail "Failed to read users-to-create JSON from 1Password."
     return 1
