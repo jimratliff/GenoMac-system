@@ -76,7 +76,7 @@ STARTUP_VOLUME_SIGNIFIER="::startup_volume::"
 
 ############### 1Password-related
 # Name of 1Password vault that stores items related to user creation
-ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION="GenoMac-user-creation"
+OP_VAULT_FOR_GENOMAC_USER_CREATION="GenoMac-user-creation"
 
 # Name of 1Password plain-text item that stores the JSON configuration mapping user-class to (a) passwords and (b) volumes
 OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config-json"
@@ -122,7 +122,7 @@ export_and_report OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD
 export_and_report OP_ITEM_NAME_FAKE_TEST_PASSWORD
 export_and_report OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE
 export_and_report OP_ITEM_NAME_USER_SPAWN_CONFIG
-export_and_report ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+export_and_report OP_VAULT_FOR_GENOMAC_USER_CREATION
 export_and_report STARTUP_VOLUME_SIGNIFIER
 export_and_report USER_PICTURE_DIRECTORY
 
