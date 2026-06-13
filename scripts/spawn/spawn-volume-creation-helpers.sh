@@ -20,7 +20,7 @@ function create_and_encrypt_volume_on_container() {
     return 0
   fi
   
-  op_vault=$ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION
+  op_vault=$OP_VAULT_FOR_GENOMAC_USER_CREATION
   passphrase="$(read_1password_item_password "$op_vault" "$op_item_key")"
   # Optional volume-level encryption of an APFS volume from inception using the 
   # `diskutil apfs addVolume -passphrase` verb.
