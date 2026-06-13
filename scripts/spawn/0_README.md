@@ -3,7 +3,7 @@
 > [!TIP]
 > **Related**
 > - [The volume, user, and password architecture of Project GenoMac](https://github.com/jimratliff/GenoMac-shared/edit/main/docs/volume_user_password_architecture.md), GenoMac-shared/docs
-> - [User classes and attributes](https://github.com/jimratliff/GenoMac-shared/blob/main/docs/user_classes_and_attributes.md), GenoMac-shared/docs
+> - [User attributes](https://github.com/jimratliff/GenoMac-shared/blob/main/docs/user_classes_and_attributes.md), GenoMac-shared/docs
 
 ## Specification of users to be created
 ### `users_to_create`
