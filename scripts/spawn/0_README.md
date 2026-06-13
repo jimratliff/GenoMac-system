@@ -17,10 +17,10 @@ The 1Password items involved in the player-spawing process are shown in the tabl
 | specs-of-users-to-create    | OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        | plain-text | Array of user objects |
 | user-spawn-config-json      | OP_ITEM_NAME_USER_SPAWN_CONFIG               | plain-text | 3 associative maps[^ASSOCIATIVE_MAPS] |
 | authorizing-admin-user-name | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     | plain-text | Name of preexisting admin[^PREEXISTING_ADMIN] |
-| THE_STARTUP_PASSWORD                       | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS] |
-| PERSONAL_PASSWORD                          |                                                       | password   | Points to password for personal-class users |
-| WORK_PASSWORD                              |                                                       | password   | Points to password for work-class users |
-| AUX_PASSWORD                               |                                                       | password   | Points to password for auxiliary-class users |
+| THE_STARTUP_PASSWORD        | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS] |
+| PERSONAL_PASSWORD           |                                              | password   | Points to password for personal-class users |
+| WORK_PASSWORD               |                                              | password   | Points to password for work-class users |
+| AUX_PASSWORD                |                                              | password   | Points to password for auxiliary-class users |
 
 [^ASSOCIATIVE_MAPS]: (a) `volume_name_from_user_class`, (b) `onepassword_key_from_user_class`, and (c) `user_attributes_from_user_class`.
 [^PREEXISTING_ADMIN]: During the creation of a new user account, an existing admin is required to authorize transferring a Secure Token to the newly created user. The 1Password plain-text item 'authorizing-admin-user-name' contains the short name of such an existing superintendent-class user. That user’s password is necessarily referenced by the 1Password item 'THE_STARTUP_PASSWORD'.
