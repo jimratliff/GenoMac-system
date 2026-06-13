@@ -82,7 +82,7 @@ ONEPASSWORD_VAULT_FOR_GENOMAC_USER_CREATION="GenoMac-user-creation"
 ONEPASSWORD_ITEM_NAME_USER_SPAWN_CONFIG="GenoMac-system-user-spawn-config-json"
 
 # Name of 1Password plain-text item that stores the list of users to create (and their specs)
-ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="GenoMac-system-specs-of-users-to-create"
+ONEPASSWORD_ITEM_NAME_SPECS_OF_USERS_TO_CREATE="specs-of-users-to-create"
 
 # Name of 1Password plain-text item that stores the short name of the admin user with Secure Token authority
 ONEPASSWORD_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME="GenoMac-system-authorizing-admin-user-name"
