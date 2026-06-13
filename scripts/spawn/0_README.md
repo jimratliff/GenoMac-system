@@ -20,7 +20,7 @@ The 1Password items involved in the player-spawning process are shown in the tab
 | THE_STARTUP_PASSWORD        | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS] |
 | PERSONAL_PASSWORD           |                                              | password   | Points to password for personal-class users |
 | WORK_PASSWORD               |                                              | password   | Points to password for work-class users |
-| AUX_PASSWORD                |                                              | password   | Points to password for auxiliary-class users |
+| OTHER_USER_CLASS_PASSWORD   |                                              | password   | Points to password for other-user-class users |
 
 [^ASSOCIATIVE_MAPS]: (a) `volume_name_from_user_class`, (b) `onepassword_key_from_user_class`, and (c) `user_attributes_from_user_class`.
 [^PREEXISTING_ADMIN]: During the creation of a new user account, an existing admin is required to authorize transferring a Secure Token to the newly created user. The 1Password plain-text item 'authorizing-admin-user-name' contains the short name of such an existing superintendent-class user. That user’s password is necessarily referenced by the 1Password item 'THE_STARTUP_PASSWORD'.
@@ -37,7 +37,7 @@ Each user to be created is specified by:
   - (Project GenoMac excludes IDs 501–509 here, even though they are legit user IDs, in order to prevent
     conflicts with any preexisting users.)
 - "user-class"
-  - a string key, e.g., "superintendent", "personal", "work", "auxiliary"
+  - a string key, e.g., "superintendent", "personal", "work", "other-user-class"
   - Determines (a) the volume on which the user’s home directory resides and (b) the passphrase that is both (1) the user’s password and (2) the encryption passphrase for the volume.
   - A user class can specify one or more user attributes that will be inherited by default by the users that belong to that user class.
 - "avatar" (optional)
