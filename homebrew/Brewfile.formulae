@@ -27,6 +27,7 @@ brew "just"                    # Modern alternative to `make` for project-specif
                                  # REQUIRED: Used by:
                                  # - GenoMac-user as a replacement for make
                                  # - Planned: GenoMac-system as a replacement for make
+brew "lc0"                     # Open source neural network based chess engine. See https://lczero.org/
 brew "mas"                     # Mac App Store command-line interface
                                  # REQUIRED: Used by GenoMac (via Homebrew) to install MAS apps
 brew "node"                    # Also known as: node.js, node@24, nodejs, npm
