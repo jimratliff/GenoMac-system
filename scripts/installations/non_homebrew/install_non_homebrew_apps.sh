@@ -26,13 +26,13 @@ function install_non_homebrew_apps() {
   report_start_phase_standard
 
   report_action_taken "Install Alan.app to highlight prominently the active window"
-  install_alan_app
+  install_alan_app               # scripts/installations/non_homebrew/install_alan_app.sh
 
   report_action_taken "Install utiluti utility to set the default app associated with document types, etc."
-  install_utiluti
+  install_utiluti                # scripts/installations/non_homebrew/install_utiluti.sh
 
   report_action_taken "Install default-browser utility to set the default browser"
-  install_default_browser_cli
+  install_default_browser_cli    # scripts/installations/non_homebrew/install_default_browser_cli.sh
 
   # Installing VisualDiffer in this way is DEPRECATED because it’s available from Homebrew
   # report_action_taken "Install VisualDiffer.app to diff two text files"
