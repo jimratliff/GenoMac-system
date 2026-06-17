@@ -29,6 +29,12 @@ function subdermis() {
   keep_sudo_alive
   set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
 
+  # Automatically install Rosetta2. Currently it’s needed by both EagleFiler and HIARCS Chess Explorer Pro.
+  # When Rosetta2 is no longer needed for these apps, you can delete the following two state-assignments, and
+  # then conditionally_install_rosetta will interactively ask the user whether Rosetta2 should be installed.
+  set_genomac_system_state "$PERM_ROSETTA_PREFERENCE_HAS_BEEN_ASCERTAINED"
+  set_genomac_system_state "$PERM_ROSETTA_SHOULD_BE_INSTALLED"
+
   # Mark the configuring user as a USER_CONFIGURER
   # Only USER_CONFIGURER runs GenoMac-system, therefore this user is USER_CONFIGURER
   mark_current_user_as_user_configger                      # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
