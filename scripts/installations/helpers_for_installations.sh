@@ -122,6 +122,23 @@ function install_bundle_from_github_zip() {
   return 0
 }
 
+function is_semantic_version_arg1_greater_than_arg2() {
+  # Returns 0 iff ARG1 > ARG2 according to semantic version ordering. Otherwise returns 1.
+  #
+  # Depends on:
+  #   is_semantic_version_arg1_at_least_arg2
+
+  local arg1="${1:?MISSING arg1}"
+  local arg2="${2:?MISSING arg2}"
+
+  if is_semantic_version_arg1_at_least_arg2 "$arg1" "$arg2" \
+    && ! is_semantic_version_arg1_at_least_arg2 "$arg2" "$arg1"; then
+    return 0
+  fi
+
+  return 1
+}
+
 function is_semantic_version_arg1_at_least_arg2() {
   # is_semantic_version_arg1_at_least_arg2 ARG1 ARG2
   #
@@ -138,8 +155,8 @@ function is_semantic_version_arg1_at_least_arg2() {
   #   is_semantic_version_arg1_at_least_arg2 "1.5" "1.0"  → returns 0 (true)
   #   is_semantic_version_arg1_at_least_arg2 "2.2" "2.2"  → returns 0 (true)
 
-  local arg1="$1"
-  local arg2="$2"
+  local arg1="${1:?MISSING arg1}"
+  local arg2="${2:?MISSING arg2}"
 
   arg1="${arg1#v}"
   arg2="${arg2#v}"
