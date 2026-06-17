@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+# install_app_from_github_zip is DEPRECATED because it’s been subsumed by install_bundle_from_github_zip
+
 function install_app_from_github_zip() {
   # Downloads a macOS .zip from a GitHub repo and installs the contained .app bundle.
   #
