@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+# This is DEPRECATED because it is better to install Witch separately for each user.
+
 function conditionally_install_witch_prefpane() {
   report_start_phase_standard
 
