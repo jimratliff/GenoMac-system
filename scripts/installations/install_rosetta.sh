@@ -36,7 +36,7 @@ function install_rosetta() {
 function interactive_ask_whether_to_install_rosetta() {
   report_start_phase_standard
 
-  report "Rosetta 2 is required for some apps, e.g., Eagle Filer."
+  report "Rosetta 2 is required for some apps, e.g., Eagle Filer and HIARCS Chess Explorer Pro."
   set_system_state_based_on_yes_no \
     "$PERM_ROSETTA_SHOULD_BE_INSTALLED" \
     "Should Rosetta 2 be installed?"
