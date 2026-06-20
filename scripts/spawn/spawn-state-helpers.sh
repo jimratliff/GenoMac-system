@@ -38,7 +38,7 @@ function set_system_states_for_user_attributes(){
   user_class="$(get_user_class_from_user_spec_json "$user_spec_json")"
 
   # Delete all system-scoped attribute states for this user so that they will be assigned on a clean state.
-  user_only_prefix="$(construct_state_string_for_user_and_attribute "$short_name" --user-only )
+  user_only_prefix="$(construct_state_string_for_user_and_attribute "$short_name" --user-only )"
   delete_all_system_states_matching_prefix "$user_only_prefix"
 
   # Listen for existence of any attributes
