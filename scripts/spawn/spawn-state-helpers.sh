@@ -37,20 +37,20 @@ function set_system_states_for_user_attributes_of_user(){
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
   user_class="$(get_user_class_from_user_spec_json "$user_spec_json")"
 
-  # Delete all system-scoped attribute states for this user so that they will be assigned on a clean state.
+  # Delete all system-scoped user-attribute states for this user so that they will be assigned on a clean state.
   user_only_prefix="$(construct_state_string_for_user_and_attribute "$short_name" --user-only )"
   delete_all_system_states_matching_prefix "$user_only_prefix"
 
   # Sets system-scoped states for attributes inherited from the user’s user-class
   while IFS= read -r attribute_name; do
     report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with user-class-derived attribute $attribute_name"
-    set_system_state_for_user_attribute "$short_name" "$attribute_name"
+    set_system_state_for_user_attribute "$short_name" "$attribute_name"       # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
   done < <(attribute_names_from_user_class "$user_class")
 
   # Sets system-scoped states for attributes specific to the user
   while IFS= read -r attribute_name; do
     report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with attribute $attribute_name"
-    set_system_state_for_user_attribute "$short_name" "$attribute_name" # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
+    set_system_state_for_user_attribute "$short_name" "$attribute_name"       # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
   done < <(attribute_names_from_user_spec_json "$user_spec_json")
 
   report_end_phase_standard
