@@ -41,9 +41,6 @@ function set_system_states_for_user_attributes_of_user(){
   user_only_prefix="$(construct_state_string_for_user_and_attribute "$short_name" --user-only )"
   delete_all_system_states_matching_prefix "$user_only_prefix"
 
-  # Listen for existence of any attributes
-  # local is_at_least_one_attribute=false
-
   # Sets system-scoped states for attributes inherited from the user’s user-class
   while IFS= read -r attribute_name; do
     report_adjust_setting "Set system-scoped state $GENOMAC_STATE_USER_ATTRIBUTE_PREFIX for user $short_name with user-class-derived attribute $attribute_name"
