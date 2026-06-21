@@ -21,7 +21,7 @@ function mark_user_as_created(){
   report_end_phase_standard
 }
 
-function set_system_states_for_user_attributes(){
+function set_system_states_for_user_attributes_of_user(){
   # Sets a system-scoped state for each attribute of user:
   # - First, those inherited from the user’s user-class
   # - Second, those user-specific attributes specified in the user’s user_spec_json, which is supplied as $1.
