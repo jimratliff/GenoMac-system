@@ -159,7 +159,7 @@ The Hypervisor is a scripting system that manages the system-scoped configuratio
 
 The Hypervisor is run the first time by:[^homebrew_via_just]
 ```
-cd ~/.genomac-user
+cd ~/.genomac-system
 make run-hypervisor
 ```
 
