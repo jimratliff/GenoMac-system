@@ -16,11 +16,12 @@ function conditionally_mark_this_user_needs_initial_configuration() {
   report_end_phase_standard
 }
 
-function conditionally_instruct_user_configurer_to_configure_itself() {
-  # If USER_CONFIGURER hasn’t yet been configured using GenoMac-user, it must be done now.
+function conditionally_exit_for_user_configurer_to_configure_itself() {
+  # If USER_CONFIGURER hasn’t yet been configured using GenoMac-user, exit to allow USER_CONFIGURER to use
+  # GenoMac-user to do so.
   report_start_phase_standard
 
-  local instruction_message="You must now use GenoMac-user to configure the current user account.${NEWLINE}I’ve opened a document explaining this process."
+  local instruction_message="You must now use GenoMac-user to configure this current user account.${NEWLINE}I’ve opened a document explaining this process."
 
   if ! test_whether_current_user_is_in_need_of_initial_config; then
     report_to_log "USER_CONFIGURER isn’t in need of initial configuration. Moving on…"
