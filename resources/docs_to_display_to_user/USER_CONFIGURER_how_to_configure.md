@@ -29,3 +29,10 @@ Keep rerunning the Hypervisor until you see:
 
 ✅ No GenoMac warnings or failures detected in this run.
 ```
+
+## Return to GenoMac-system and rerun its Hypervisor
+- Return to your earlier terminal window, or open a new one
+- Navigate to the local clone of GenoMac-system:
+  - `cd ~/.genomac-system`
+- Re-run the Hypervisor of GenoMac-system:
+  - `just run-hypervisor`
