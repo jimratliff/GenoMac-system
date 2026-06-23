@@ -64,6 +64,7 @@ function subdermis() {
   # Clone GenoMac-user to ~/.genomac-user in preparation for USER_CONFIGURER to configure its own account
   conditionally_clone_genomac_user_using_HTTPS               # scripts/user_scope/configure_user_configurer_account.sh
 
+  # Exit this shell if USER_CONFIGURER hasn’t already used GenoMac-user to configure this user account
   conditionally_exit_for_user_configurer_to_configure_itself # scripts/user_scope/configure_user_configurer_account.sh
 
   ############### ↓↓↓ SPAWNING NEW USERS ↓↓↓ ###############
