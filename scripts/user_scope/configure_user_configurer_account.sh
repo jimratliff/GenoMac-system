@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 function conditionally_mark_this_user_needs_initial_configuration() {
-  # Marks USER_CONFIGURER as needing initial configuration by GenoMac-user, if this hasn’t already been done.
+  # Marks USER_CONFIGURER as needing initial configuration by GenoMac-user, if this hasn’t already been marked.
   # This is necessary as an explicit step because (a) Hypervisor-System automatically marks as needing initial
   # configuration only new users that Hypervisor-System has created and (b) USER_CONFIGURER is not created by
   # GenoMac-system but rather preexists in order to run Hypervisor-System.
@@ -29,17 +29,15 @@ function conditionally_exit_for_user_configurer_to_configure_itself() {
     return 0
   fi
 
-  print_banner_text "HALT! Leave and come back"
-  
+  print_banner_text "HALT! Switch repos!"
   launch_app_and_prompt_user_to_act \
     --show-doc "${GMS_DOCS_TO_DISPLAY}/USER_CONFIGURER_how_to_configure.md" \
     --no-app \
     "$instruction_message"
-
-  return 0
-  
-  
+  report warning "$instruction_message"
+  report warning "You will now EXIT this shell."
   report_end_phase_standard
+  exit 0
 }
 
 function conditionally_clone_genomac_user_using_HTTPS() {
