@@ -23,6 +23,11 @@ function conditionally_exit_for_user_configurer_to_configure_itself() {
 
   local instruction_message="You must now use GenoMac-user to configure this current user account.${NEWLINE}I’ve opened a document explaining this process."
 
+  if ! test_genomac_system_state "$PERM_USER_CONFIGURER_HAS_BEEN_MARKED_AS_NEEDING_INITIAL_CONFIGURATION"; then
+    report_fail "PROGRAMMER ERROR?: State PERM_USER_CONFIGURER_HAS_BEEN_MARKED_AS_NEEDING_INITIAL_CONFIGURATION not set"
+    return 1
+  fi
+
   if ! test_whether_current_user_is_in_need_of_initial_config; then
     report_to_log "USER_CONFIGURER isn’t in need of initial configuration. Moving on…"
     report_end_phase_standard
