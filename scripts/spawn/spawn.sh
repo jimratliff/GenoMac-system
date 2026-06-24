@@ -10,8 +10,11 @@ safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-state-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-state-helpers.sh"
 
-# Global associative arrays to be populated from item OP_ITEM_NAME_USER_SPAWN_CONFIG
-# of 1Password vault OP_VAULT_FOR_GENOMAC_USER_CREATION
+# Global associative arrays to be populated from GenoMac-spawn/spawn/user-spawn-config.json
+#
+# NOTE: Formerly, this was: “to be populated from item OP_ITEM_NAME_USER_SPAWN_CONFIG of 1Password vault
+# OP_VAULT_FOR_GENOMAC_USER_CREATION”
+
 typeset -gA volume_name_from_user_class
 typeset -gA onepassword_key_from_user_class
 typeset -gA user_attributes_from_user_class
@@ -64,26 +67,30 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # Populate associative arrays (a) volume_name_from_user_class, (b) onepassword_key_from_user_class,
   # and (c) user_attributes_from_user_class by reading from plain-text item of 1Password vault.
   # These arrays are *not* local, because they are referenced by functions called later within this shell
+  
   get_user_spawn_config_associative_arrays
 
+  # Gets credentials for the existing user (admin level, with a Secure Token) required to bestow a
+  # Secure Token upon each new to-be-created user.
   op_vault="$OP_VAULT_FOR_GENOMAC_USER_CREATION"
   admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
   onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD")"
 
   # Get JSON object specifying users to create from plain-text item in 1Password vault
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
+  
   users_to_create_json="$(get_users_to_create_from_1password)"
 
   # Iterate through users_to_create_json, user by user
   keep_sudo_alive
   while IFS= read -r user_spec_json; do
-    create_user_account "$user_spec_json"
+    conditionally_create_user_account "$user_spec_json"
   done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
 
   report_end_phase_standard
 }
 
-function create_user_account(){
+function conditionally_create_user_account(){
   # Creates a single user account, specified by user_spec_json, which is passed as only argument.
   # Sets system-scoped states to record:
   # - that the user has been created
@@ -163,16 +170,20 @@ function create_user_account(){
 
 function get_user_spawn_config_associative_arrays() {
   # Get values for associative arrays (a) volume_name_from_user_class, (b) onepassword_key_from_user_class,
-  # and (c) user_attributes_from_user_class from JSON object in plain-text item of 1Password vault.
+  # and (c) user_attributes_from_user_class from JSON object in GenoMac-private/spawn/user-spawn-config.json
+  #
+  # NOTE: Formerly, this was “from JSON object in plain-text item of 1Password vault.”
 
   report_start_phase_standard
   local user_spawn_config_json
 
-  # Get JSON from 1Password
-  if ! user_spawn_config_json="$(get_user_spawn_config_from_1password)"; then
-    report_fail "Failed to retrieve user spawn config from 1Password."
-    return 1
-  fi
+  # DEPRECATED: 1Password has been replaced with GenoMac-private/spawn/user-spawn-config.json
+  #
+  #   # Get JSON from 1Password
+  #   if ! user_spawn_config_json="$(get_user_spawn_config_from_1password)"; then
+  #     report_fail "Failed to retrieve user spawn config from 1Password."
+  #     return 1
+  #   fi
 
   # Get associative arrays from JSON
   if ! populate_user_spawn_associative_arrays_from_json <<<"$user_spawn_config_json"; then
@@ -183,26 +194,46 @@ function get_user_spawn_config_associative_arrays() {
   report_end_phase_standard
 }
 
-function get_user_spawn_config_from_1password() {
-  # Get plain-text item $OP_ITEM_NAME_USER_SPAWN_CONFIG from 1Password vault
-  # $OP_VAULT_FOR_GENOMAC_USER_CREATION
+function get_user_spawn_config_from_GenoMac-private() {
+  # Get plain-text item $OP_ITEM_NAME_USER_SPAWN_CONFIG from GenoMac-private/spawn/user-spawn-config.json
   #
-  # Hint: OP_VAULT_FOR_GENOMAC_USER_CREATION
-  # Hint: OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config"
+  # Hint: OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT: "GenoMac-user-creation"
+  # Hint: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT: "GitHub_PAT_GenoMac-private_read-only"
 
   report_start_phase_standard
+  local github_pat
   local user_spawn_config_json
 
   if ! user_spawn_config_json="$(
-    read_1password_item_notes_plain "$OP_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_USER_SPAWN_CONFIG"
+    github_pat="$(get_GitHub_PAT_for_GenoMac_private_from_1Password_vault)"
+    user_spawn_config_json="$(read_github_repo_file_raw \
+      --private \
+      --pat "$github_pat" \
+      "$GENOMAC_COMMON_OWNER" \
+      "$GENOMAC_PRIVATE_REPO_NAME" \
+      "$GENOMAC_PRIVATE_SPAWN_COMMIT_ID" \
+      "$GENOMAC_PRIVATE_PATH_TO_USER_SPAWN_CONFIG"
   )"; then
-    report_fail "Failed to read user spawn config from 1Password."
+    report_fail "Failed to read user spawn config from GenoMac-private."
     return 1
   fi
 
   report_end_phase_standard
   print -- "$user_spawn_config_json"
 }
+
+function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
+  # Prints to stdout the GitHub PAT for the GenoMac-private repo, retrieved from 1Password
+  # vault OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT, item name: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT
+  report_start_phase_standard
+  local github_pat
+  github_pat="$(read_1password_item_password "$OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT" "OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT")"
+  print -r -- "$github_pat"
+  report_end_phase_standard
+}
+
+
+
 
 function populate_user_spawn_associative_arrays_from_json() {
   report_start_phase_standard
@@ -260,6 +291,27 @@ function get_users_to_create_from_1password() {
 }
 
 ############### Below this line, the code is DEPRECATED
+
+# function get_user_spawn_config_from_1password() {
+#   # Get plain-text item $OP_ITEM_NAME_USER_SPAWN_CONFIG from 1Password vault
+#   # $OP_VAULT_FOR_GENOMAC_USER_CREATION
+#   #
+#   # Hint: OP_VAULT_FOR_GENOMAC_USER_CREATION
+#   # Hint: OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config"
+# 
+#   report_start_phase_standard
+#   local user_spawn_config_json
+# 
+#   if ! user_spawn_config_json="$(
+#     read_1password_item_notes_plain "$OP_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_USER_SPAWN_CONFIG"
+#   )"; then
+#     report_fail "Failed to read user spawn config from 1Password."
+#     return 1
+#   fi
+# 
+#   report_end_phase_standard
+#   print -- "$user_spawn_config_json"
+# }
 
 #  function create_local_user_account() {
 #    local name="$1"
