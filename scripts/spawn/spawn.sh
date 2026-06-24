@@ -78,7 +78,6 @@ function conditionally_create_user_accounts_for_this_Mac() {
 
   # Get JSON object specifying users to create from plain-text item in 1Password vault
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
-  
   users_to_create_json="$(get_users_to_create_from_1password)"
 
   # Iterate through users_to_create_json, user by user
@@ -191,20 +190,7 @@ function get_user_spawn_config_associative_arrays() {
   report_end_phase_standard
 }
 
-function get_users_to_create_from_1password() {
-  report_start_phase_standard
-  local users_to_create_json
 
-  if ! users_to_create_json="$(
-    read_1password_item_notes_plain "$OP_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
-    )"; then
-    report_fail "Failed to read users-to-create JSON from 1Password."
-    return 1
-  fi
-
-  report_end_phase_standard
-  print -- "$users_to_create_json"
-}
 
 ############### Below this line, the code is DEPRECATED
 
