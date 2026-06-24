@@ -139,9 +139,38 @@ function print_attributes_from_user_spec_json() {
   ' <<<"$user_spec_json"
 }
 
+function get_user_spawn_config_from_GenoMac_private() {
+  # Get plain-text item $OP_ITEM_NAME_USER_SPAWN_CONFIG from GenoMac-private/spawn/user-spawn-config.json
+
+  report_start_phase_standard
+  local github_pat
+  local user_spawn_config_json
+
+  github_pat="$(get_GitHub_PAT_for_GenoMac_private_from_1Password_vault)"
+    
+  if ! user_spawn_config_json="$(
+    read_github_repo_file_raw \
+      --private
+      --pat "$github_pat" \
+      "$GENOMAC_COMMON_OWNER" \
+      "$GENOMAC_PRIVATE_REPO_NAME" \
+      "$GENOMAC_PRIVATE_SPAWN_COMMIT_ID" \
+      "$GENOMAC_PRIVATE_PATH_TO_USER_SPAWN_CONFIG"
+    )"; then
+    report_fail "Failed to read user spawn config from GenoMac-private."
+    return 1
+  fi
+
+  report_end_phase_standard
+  print -r -- "$user_spawn_config_json"
+}
+
 function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
   # Prints to stdout the GitHub PAT for the GenoMac-private repo, retrieved from 1Password:
   # vault OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT, item name: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT
+  #
+  # Hint: OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT: "GenoMac-user-creation"
+  # Hint: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT: "GitHub_PAT_GenoMac-private_read-only"
   
   report_start_phase_standard
   local github_pat
@@ -151,3 +180,26 @@ function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
   print -r -- "$github_pat"
   report_end_phase_standard
 }
+
+############### Below this line, the code is DEPRECATED
+
+# function get_user_spawn_config_from_1password() {
+#   # Get plain-text item $OP_ITEM_NAME_USER_SPAWN_CONFIG from 1Password vault
+#   # $OP_VAULT_FOR_GENOMAC_USER_CREATION
+#   #
+#   # Hint: OP_VAULT_FOR_GENOMAC_USER_CREATION
+#   # Hint: OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config"
+# 
+#   report_start_phase_standard
+#   local user_spawn_config_json
+# 
+#   if ! user_spawn_config_json="$(
+#     read_1password_item_notes_plain "$OP_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_USER_SPAWN_CONFIG"
+#   )"; then
+#     report_fail "Failed to read user spawn config from 1Password."
+#     return 1
+#   fi
+# 
+#   report_end_phase_standard
+#   print -- "$user_spawn_config_json"
+# }
