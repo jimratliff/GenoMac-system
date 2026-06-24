@@ -74,6 +74,11 @@ DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES="/Users"
 # String to signify the current startup volume
 STARTUP_VOLUME_SIGNIFIER="::startup_volume::"
 
+############### Spawning-related from repo GenoMac-private
+GENOMAC_PRIVATE_SPAWN_COMMIT_ID="main"
+GENOMAC_PRIVATE_PATH_TO_USER_SPAWN_CONFIG="spawn/user-spawn-config.json"
+GENOMAC_PRIVATE_PATH_TO_SPECS_OF_USERS_TO_CREATE="spawn/specs-of-users-to-create.json"
+
 ############### 1Password-related
 # Name of 1Password vault that stores items related to user creation
 OP_VAULT_FOR_GENOMAC_USER_CREATION="GenoMac-user-creation"
@@ -89,6 +94,11 @@ OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME="authorizing-admin-user-name"
 
 # Name of 1Password password item that stores the password of the admin user with Secure Token authority
 OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD="THE_STARTUP_PASSWORD"
+
+# Name of 1Password vault that stores the GitHub PAT for GenoMac-private
+OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT="$OP_VAULT_FOR_GENOMAC_USER_CREATION"
+# Name of 1Password password item that stores the GitHub PAT for GenoMac-private
+OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT="GitHub_PAT_GenoMac-private_read-only"
 
 # Name of 1Password password item that stores a fake password for testing purposes
 OP_ITEM_NAME_FAKE_TEST_PASSWORD="TEST_PASSWORD"
