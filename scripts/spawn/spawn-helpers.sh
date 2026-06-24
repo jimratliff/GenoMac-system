@@ -139,6 +139,32 @@ function print_attributes_from_user_spec_json() {
   ' <<<"$user_spec_json"
 }
 
+function get_users_to_create_from_GenoMac_private() {
+  # Get plain-text item $OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE from GenoMac-private/spawn/user-spawn-config.json
+
+  report_start_phase_standard
+  local github_pat
+  local users_to_create_json
+
+  github_pat="$(get_GitHub_PAT_for_GenoMac_private_from_1Password_vault)"
+    
+  if ! users_to_create_json="$(
+    read_github_repo_file_raw \
+      --private
+      --pat "$github_pat" \
+      "$GENOMAC_COMMON_OWNER" \
+      "$GENOMAC_PRIVATE_REPO_NAME" \
+      "$GENOMAC_PRIVATE_SPAWN_COMMIT_ID" \
+      "$GENOMAC_PRIVATE_PATH_TO_SPECS_OF_USERS_TO_CREATE"
+      )"; then
+    report_fail "Failed to read specifications of the users to create from GenoMac-private."
+    return 1
+  fi
+
+  report_end_phase_standard
+  print -r -- "$users_to_create_json"
+}
+
 function get_user_spawn_config_from_GenoMac_private() {
   # Get plain-text item $OP_ITEM_NAME_USER_SPAWN_CONFIG from GenoMac-private/spawn/user-spawn-config.json
 
