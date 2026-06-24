@@ -76,7 +76,7 @@ STARTUP_VOLUME_SIGNIFIER="::startup_volume::"
 
 ############### Spawning-related from repo GenoMac-private
 GENOMAC_PRIVATE_SPAWN_COMMIT_ID="main"
-GENOMAC_PRIVATE_PATH_TO_USER_SPAWN_CONFIG="spawn/user-spawn-config.json"
+GENOMAC_PRIVATE_PATH_OF_USER_SPAWN_CONFIG="spawn/user-spawn-config.json"
 GENOMAC_PRIVATE_PATH_TO_SPECS_OF_USERS_TO_CREATE="spawn/specs-of-users-to-create.json"
 
 ############### 1Password-related
