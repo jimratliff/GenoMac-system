@@ -12,10 +12,9 @@ function warn_if_github_latest_release_differs_from_pinned() {
 
   report_start_phase_standard
 
-  if ! gh_is_authenticated; then
-    report_warning "Skipping check for GitHub latest release tag for ${display_name} because gh isn’t available/authenticated"
-    report_end_phase_standard
-    return 0
+  if ! gh_availability_indicator; then
+    report_fail "Skipping check for GitHub latest release tag for ${display_name} because gh isn’t available/authenticated"
+    return 1
   fi
 
   report_action_taken "Checking GitHub latest release tag for ${display_name}"
