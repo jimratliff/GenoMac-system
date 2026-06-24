@@ -155,7 +155,7 @@ function get_user_spawn_config_from_GenoMac_private() {
       "$GENOMAC_COMMON_OWNER" \
       "$GENOMAC_PRIVATE_REPO_NAME" \
       "$GENOMAC_PRIVATE_SPAWN_COMMIT_ID" \
-      "$GENOMAC_PRIVATE_PATH_TO_USER_SPAWN_CONFIG"
+      "$GENOMAC_PRIVATE_PATH_OF_USER_SPAWN_CONFIG"
     )"; then
     report_fail "Failed to read user spawn config from GenoMac-private."
     return 1
