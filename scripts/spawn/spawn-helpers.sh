@@ -165,6 +165,55 @@ function get_user_spawn_config_from_GenoMac_private() {
   print -r -- "$user_spawn_config_json"
 }
 
+
+
+function populate_user_spawn_associative_arrays_from_json() {
+  # Populates from supplied user_spawn_config_json the three associative arrays:
+  # volume_name_from_user_class, onepassword_key_from_user_class, and
+  # user_attributes_from_user_class.
+  #
+  # Usage:
+  #   populate_user_spawn_associative_arrays_from_json <<<"$user_spawn_config_json"
+  
+  report_start_phase_standard
+
+  local json_input
+  json_input="$(cat)"
+
+  # NOTE: populate_associative_array_from_json_object_of_scalars() and
+  #       populate_associative_array_from_json_object_of_string_arrays()
+  #       are defined in GenoMac-shared/scripts/helpers-json.sh
+
+  if ! populate_associative_array_from_json_object_of_scalars \
+    "$json_input" \
+    '.volume_name_from_user_class' \
+    volume_name_from_user_class
+  then
+    report_fail "Failed to populate volume_name_from_user_class."
+    return 1
+  fi
+
+  if ! populate_associative_array_from_json_object_of_scalars \
+    "$json_input" \
+    '.onepassword_key_from_user_class' \
+    onepassword_key_from_user_class
+  then
+    report_fail "Failed to populate onepassword_key_from_user_class."
+    return 1
+  fi
+
+  if ! populate_associative_array_from_json_object_of_string_arrays \
+    "$json_input" \
+    '.user_attributes_from_user_class' \
+    user_attributes_from_user_class
+  then
+    report_fail "Failed to populate user_attributes_from_user_class."
+    return 1
+  fi
+
+  report_end_phase_standard
+}
+
 function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
   # Prints to stdout the GitHub PAT for the GenoMac-private repo, retrieved from 1Password:
   # vault OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT, item name: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT
