@@ -76,9 +76,9 @@ function conditionally_create_user_accounts_for_this_Mac() {
   admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
   onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD")"
 
-  # Get JSON object specifying users to create from plain-text item in 1Password vault
+  # Get JSON object specifying users to create from GenoMac-private/spawn/specs-of-users-to-create.json
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
-  users_to_create_json="$(get_users_to_create_from_1password)"
+  users_to_create_json="$(get_users_to_create_from_GenoMac_private)"
 
   # Iterate through users_to_create_json, user by user
   keep_sudo_alive
