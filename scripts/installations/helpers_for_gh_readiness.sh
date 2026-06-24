@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+############### DEPRECATION WARNING: These appear not to be used
+
 function gh_is_authenticated() {
   # Returns 0 if gh is authenticated; otherwise, returns 1
   local return_value
