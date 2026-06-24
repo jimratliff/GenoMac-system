@@ -12,10 +12,7 @@ function warn_if_github_latest_release_differs_from_pinned() {
 
   report_start_phase_standard
 
-  if ! gh_availability_indicator; then
-    report_fail "Skipping check for GitHub latest release tag for ${display_name} because gh isn’t available/authenticated"
-    return 1
-  fi
+  abort_if_gh_not_installed_or_not_on_path
 
   report_action_taken "Checking GitHub latest release tag for ${display_name}"
   if latest_tag="$(gh release view --repo "$repo_slug" --json tagName -q .tagName 2>/dev/null)"; then
