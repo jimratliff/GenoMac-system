@@ -169,21 +169,12 @@ function conditionally_create_user_account(){
 }
 
 function get_user_spawn_config_associative_arrays() {
-  # Get values for associative arrays (a) volume_name_from_user_class, (b) onepassword_key_from_user_class,
-  # and (c) user_attributes_from_user_class from JSON object in GenoMac-private/spawn/user-spawn-config.json
-  #
-  # NOTE: Formerly, this was “from JSON object in plain-text item of 1Password vault.”
+  # Get values for associative arrays (a) volume_name_from_user_class,
+  # (b) onepassword_key_from_user_class, and (c) user_attributes_from_user_class from
+  # JSON object in GenoMac-private/spawn/user-spawn-config.json
 
   report_start_phase_standard
   local user_spawn_config_json
-
-  # DEPRECATED: 1Password has been replaced with GenoMac-private/spawn/user-spawn-config.json
-  #
-  #   # Get JSON from 1Password
-  #   if ! user_spawn_config_json="$(get_user_spawn_config_from_1password)"; then
-  #     report_fail "Failed to retrieve user spawn config from 1Password."
-  #     return 1
-  #   fi
 
   # Get JSON from GenoMac-private
   if ! user_spawn_config_json="$(get_user_spawn_config_from_GenoMac_private)"; then
@@ -194,46 +185,6 @@ function get_user_spawn_config_associative_arrays() {
   # Get associative arrays from JSON
   if ! populate_user_spawn_associative_arrays_from_json <<<"$user_spawn_config_json"; then
     report_fail "Failed to populate user spawn associative arrays from JSON."
-    return 1
-  fi
-
-  report_end_phase_standard
-}
-
-function populate_user_spawn_associative_arrays_from_json() {
-  report_start_phase_standard
-
-  local json_input
-  json_input="$(cat)"
-
-  # NOTE: populate_associative_array_from_json_object_of_scalars() and
-  #       populate_associative_array_from_json_object_of_string_arrays()
-  #       are defined in GenoMac-shared/scripts/helpers-json.sh
-
-  if ! populate_associative_array_from_json_object_of_scalars \
-    "$json_input" \
-    '.volume_name_from_user_class' \
-    volume_name_from_user_class
-  then
-    report_fail "Failed to populate volume_name_from_user_class."
-    return 1
-  fi
-
-  if ! populate_associative_array_from_json_object_of_scalars \
-    "$json_input" \
-    '.onepassword_key_from_user_class' \
-    onepassword_key_from_user_class
-  then
-    report_fail "Failed to populate onepassword_key_from_user_class."
-    return 1
-  fi
-
-  if ! populate_associative_array_from_json_object_of_string_arrays \
-    "$json_input" \
-    '.user_attributes_from_user_class' \
-    user_attributes_from_user_class
-  then
-    report_fail "Failed to populate user_attributes_from_user_class."
     return 1
   fi
 
