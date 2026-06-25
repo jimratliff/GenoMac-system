@@ -57,6 +57,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   local op_admin_password_item_name
   local op_vault
   local user_spec_json
+  local users_to_create_json
   
   print_banner_text "BEGIN USER CREATION"
   report_action_taken "Beginning process to create users"
@@ -65,7 +66,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   op signin
 
   # Populate associative arrays (a) volume_name_from_user_class, (b) onepassword_key_from_user_class,
-  # and (c) user_attributes_from_user_class by reading from plain-text item of 1Password vault.
+  # and (c) user_attributes_from_user_class by reading from GeoMac-private/spawn/user-spawn-config.json.
   # These arrays are *not* local, because they are referenced by functions called later by this function.
   get_user_spawn_config_associative_arrays
 
@@ -89,13 +90,18 @@ function conditionally_create_user_accounts_for_this_Mac() {
 }
 
 function conditionally_create_user_account(){
-  # Creates a single user account, specified by user_spec_json, which is passed as only argument.
+  # Conditionally creates a single user account, specified by user_spec_json, which is passed as the first of four arguments.
+  # (The user is created only if there is no user with the short name specified by user_spec_json. A uid collision is a 
+  # fatal error.)
   # Sets system-scoped states to record:
   # - that the user has been created
   # - that the user is in need of initial configuration
   # - each of the attributes of the user
   # - that the volume (if non-startup) needs to be created/encrypted by a particular passphrase
   #   referenced by name of item in 1Password vault
+  #
+  # If the user already exists, the user attributes associated with the user are nevertheless re-read and re-implemented.
+  # This allows the set of user attributes for a user to be updated even after the user is created.
   #
   # Relies on associative arrays volume_name_from_user_class, onepassword_key_from_user_class
   # and user_attributes_from_user_class being available and populated by caller.
@@ -112,7 +118,6 @@ function conditionally_create_user_account(){
   local full_name
   local home_directory
   local op_item_user_password
-  local op_vault
   local parent_of_home_directory
   local short_name
   local uid
@@ -140,9 +145,14 @@ function conditionally_create_user_account(){
     report_fail "Proposed uid $uid for user $short_name already exists as one (or more) different user(s):${NEWLINE}${conflicting_short_names}"
     return 1
   fi
-  
+
   avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")"
-  avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
+  
+  if [[ -n "$avatar" ]]; then
+    avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
+  else
+    avatar_path=""
+  fi
   
   user_class="$(get_user_class_from_user_spec_json "$user_spec_json")"
   op_item_user_password="${onepassword_key_from_user_class[$user_class]}"
