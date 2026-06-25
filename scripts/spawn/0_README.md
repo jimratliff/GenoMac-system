@@ -8,7 +8,7 @@
 
 ## The users to spawn and their specifics are supplied by items in a 1Password vault
 > [!WARNING]
-> The associative maps are no longer provided in a 1Password vault but are, instead, specified in the private repository GenoMac-private.
+> The following section needs to be updated. The associative maps are no longer provided in a 1Password vault but are, instead, specified in the private repository GenoMac-private.
 
 
 The code in the public Project GenoMac repositories refer to specifications of users to create, but that code does not include the details, such as user names, the names of volumes on which the users’s home directories reside, and precisely how each user is configured.
