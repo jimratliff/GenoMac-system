@@ -197,7 +197,8 @@ function populate_user_spawn_associative_arrays_from_json() {
   # user_attributes_from_user_class.
   #
   # NOTES:
-  # - volume_name_from_user_class and onepassword_key_from_user_class are scalar-valued
+  # - volume_name_from_user_class and onepassword_key_from_user_class are JSON
+  #   objects, the propery value of each is a scalar
   # - user_attributes_from_user_class have each value an array of strings
   #
   # Usage:
