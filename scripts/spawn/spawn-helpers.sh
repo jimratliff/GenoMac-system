@@ -242,28 +242,6 @@ function populate_user_spawn_associative_arrays_from_json() {
   report_end_phase_standard
 }
 
-function get_users_to_create_from_GenoMac_private() {
-  report_start_phase_standard
-  local users_to_create_json
-
-  if ! users_to_create_json="$(
-    read_1password_item_notes_plain "$OP_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
-    )"; then
-    report_fail "Failed to read users-to-create JSON from 1Password."
-    return 1
-  fi
-
-  #   if ! users_to_create_json="$(
-  #     read_1password_item_notes_plain "$OP_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
-  #     )"; then
-  #     report_fail "Failed to read users-to-create JSON from 1Password."
-  #     return 1
-  #   fi
-
-  report_end_phase_standard
-  print -- "$users_to_create_json"
-}
-
 function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
   # Prints to stdout the GitHub PAT for the GenoMac-private repo, retrieved from 1Password:
   # vault OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT, item name: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT
