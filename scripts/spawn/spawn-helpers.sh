@@ -52,7 +52,7 @@ function string_of_short_names_with_uid() {
       | awk '{print $1}'
   )}")
 
-  print -- "${(j:, :)short_names}"
+  print -r -- "${(j:, :)short_names}"
 }
 
 function confirm_secure_token_was_enabled_for_user() {
@@ -99,7 +99,7 @@ function parent_of_users_home_directories() {
     path_of_parent_of_home_directories="/Volumes/${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
   fi
   
-  print -- "$path_of_parent_of_home_directories"
+  print -r -- "$path_of_parent_of_home_directories"
 }
 
 function get_short_name_from_user_spec_json() {
@@ -197,7 +197,7 @@ function populate_user_spawn_associative_arrays_from_json() {
   # user_attributes_from_user_class.
   #
   # NOTES:
-  # - spawn/specs-of-users-to-create.json and spawn/specs-of-users-to-create.json are scalar-valued
+  # - volume_name_from_user_class and onepassword_key_from_user_class are scalar-valued
   # - user_attributes_from_user_class have each value an array of strings
   #
   # Usage:
@@ -272,7 +272,7 @@ function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
 #   fi
 # 
 #   report_end_phase_standard
-#   print -- "$users_to_create_json"
+#   print -r -- "$users_to_create_json"
 # }
 
 # function get_user_spawn_config_from_1password() {
@@ -293,5 +293,5 @@ function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
 #   fi
 # 
 #   report_end_phase_standard
-#   print -- "$user_spawn_config_json"
+#   print -r -- "$user_spawn_config_json"
 # }
