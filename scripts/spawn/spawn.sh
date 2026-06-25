@@ -73,7 +73,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # Secure Token upon each new to-be-created user.
   op_vault="$OP_VAULT_FOR_GENOMAC_USER_CREATION"
   admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
-  op_admin_password_item_name="$(read_1password_item_password "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD")"
+  op_admin_password_item_name="$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD"
 
   # Get JSON object specifying users to create from GenoMac-private/spawn/specs-of-users-to-create.json
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
