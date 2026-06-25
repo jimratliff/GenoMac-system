@@ -155,7 +155,7 @@ function get_users_to_create_from_GenoMac_private() {
       "$GENOMAC_COMMON_OWNER" \
       "$GENOMAC_PRIVATE_REPO_NAME" \
       "$GENOMAC_PRIVATE_SPAWN_COMMIT_ID" \
-      "$GENOMAC_PRIVATE_PATH_TO_SPECS_OF_USERS_TO_CREATE"
+      "$GENOMAC_PRIVATE_PATH_OF_SPECS_OF_USERS_TO_CREATE"
       )"; then
     report_fail "Failed to read specifications of the users to create from GenoMac-private."
     return 1
