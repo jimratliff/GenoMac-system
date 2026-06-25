@@ -140,7 +140,7 @@ function print_attributes_from_user_spec_json() {
 }
 
 function get_users_to_create_from_GenoMac_private() {
-  # Get plain-text item $OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE from GenoMac-private/spawn/user-spawn-config.json
+  # Get users_to_create JSON object from GenoMac-private/spawn/specs-of-users-to-create.json
 
   report_start_phase_standard
   local github_pat
@@ -166,7 +166,7 @@ function get_users_to_create_from_GenoMac_private() {
 }
 
 function get_user_spawn_config_from_GenoMac_private() {
-  # Get plain-text item $OP_ITEM_NAME_USER_SPAWN_CONFIG from GenoMac-private/spawn/user-spawn-config.json
+  # Get JSON contents of GenoMac-private/spawn/user-spawn-config.json
 
   report_start_phase_standard
   local github_pat
@@ -195,6 +195,10 @@ function populate_user_spawn_associative_arrays_from_json() {
   # Populates from supplied user_spawn_config_json the three associative arrays:
   # volume_name_from_user_class, onepassword_key_from_user_class, and
   # user_attributes_from_user_class.
+  #
+  # NOTES:
+  # - spawn/specs-of-users-to-create.json and spawn/specs-of-users-to-create.json are scalar-valued
+  # - user_attributes_from_user_class have each value an array of strings
   #
   # Usage:
   #   populate_user_spawn_associative_arrays_from_json <<<"$user_spawn_config_json"
