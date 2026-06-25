@@ -20,9 +20,9 @@ typeset -gA onepassword_key_from_user_class
 typeset -gA user_attributes_from_user_class
 
 function conditionally_create_user_accounts_for_this_Mac() {
-  # Creates user accounts specified in users_to_create_json JSON object, which is read from 1Password vault,
+  # Creates user accounts specified in users_to_create JSON object, which is read from GenoMac-private,
   # making use of nonlocal associative arrays volume_name_from_user_class, onepassword_key_from_user_class,
-  # and user_attributes_from_user_class, where these specifications are also stored in a 1Password vault.
+  # and user_attributes_from_user_class, where these specifications are also read from GenoMac-private.
   #
   # It’s assumed that this process is being executed by USER_CONFIGURER, which user already exists, as does
   # a "vanilla" account. Thus, the users being created are anticipated to be the third and subsequent
@@ -38,23 +38,23 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # - the onepassword_key_from_user_class associative array
   # - the user_attributes_from_user_class associative array
   #
-  # This function assumes that:
+  # This function assumes, among other things, that:
   # - GenoMac-system has been cloned locally to GENOMAC_SYSTEM_LOCAL_DIRECTORY (~/.genomac-system).
   # - scripts/0_initialize_me_first.sh has been sourced
   #   - This sources (a) helpers and cross-repo environment variables from GenoMac-shared and
   #     (b) repo-specific environment variables.
   # - The following environment variables have been defined:
-  #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES            ("/Users")
+  #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES   ("/Users")
   #   - OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     ("authorizing-admin-user-name")
   #   - OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD ("THE_STARTUP_PASSWORD")
-  #   - OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        ("specs-of-users-to-create")
-  #   - OP_ITEM_NAME_USER_SPAWN_CONFIG               ("user-spawn-config")
   #   - OP_VAULT_FOR_GENOMAC_USER_CREATION           ("GenoMac-user-creation")
+  #   - OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT      ("GenoMac-user-creation")
+  #   - OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT      ("GitHub_PAT_GenoMac-private_read-only")
   
   report_start_phase_standard
 
   local admin_user_name
-  local onepassword_admin_password_item_name
+  local op_admin_password_item_name
   local op_vault
   local user_spec_json
   
@@ -66,15 +66,14 @@ function conditionally_create_user_accounts_for_this_Mac() {
 
   # Populate associative arrays (a) volume_name_from_user_class, (b) onepassword_key_from_user_class,
   # and (c) user_attributes_from_user_class by reading from plain-text item of 1Password vault.
-  # These arrays are *not* local, because they are referenced by functions called later within this shell
-  
+  # These arrays are *not* local, because they are referenced by functions called later by this function.
   get_user_spawn_config_associative_arrays
 
   # Gets credentials for the existing user (admin level, with a Secure Token) required to bestow a
   # Secure Token upon each new to-be-created user.
   op_vault="$OP_VAULT_FOR_GENOMAC_USER_CREATION"
   admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
-  onepassword_admin_password_item_name="$(read_1password_item_password "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD")"
+  op_admin_password_item_name="$(read_1password_item_password "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD")"
 
   # Get JSON object specifying users to create from GenoMac-private/spawn/specs-of-users-to-create.json
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
@@ -83,7 +82,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # Iterate through users_to_create_json, user by user
   keep_sudo_alive
   while IFS= read -r user_spec_json; do
-    conditionally_create_user_account "$user_spec_json"
+    conditionally_create_user_account "$user_spec_json" "$op_vault" "$admin_user_name" "$op_admin_password_item_name"
   done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
 
   report_end_phase_standard
@@ -102,7 +101,10 @@ function conditionally_create_user_account(){
   # and user_attributes_from_user_class being available and populated by caller.
 
   report_start_phase_standard
-  local user_spec_json="$1"
+  local user_spec_json="${1:?MISSING user_spec_json}"
+  local op_vault="${2:?MISSING op_vault}"
+  local admin_user_name="${3:?MISSING admin_user_name}"
+  local op_admin_password_item_name="${4:?MISSING op_admin_password_item_name}"
 
   local avatar
   local avatar_path
@@ -110,6 +112,7 @@ function conditionally_create_user_account(){
   local full_name
   local home_directory
   local op_item_user_password
+  local op_vault
   local parent_of_home_directory
   local short_name
   local uid
@@ -124,7 +127,7 @@ function conditionally_create_user_account(){
   
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
   if does_user_name_exist "$short_name"; then
-    report_warning "User ($short_name) already exists; skipping creation of this user."
+    report_warning "User “$short_name” already exists; skipping creation of this user."
     report_end_phase_standard
     return 0
   fi
@@ -145,7 +148,7 @@ function conditionally_create_user_account(){
   op_item_user_password="${onepassword_key_from_user_class[$user_class]}"
 
   volume_name="${volume_name_from_user_class[$user_class]}"
-  parent_of_home_directory="$(parent_of_users_home_directories "$volume_name")"
+  parent_of_home_directory="$(parent_of_users_home_directories "$volume_name")"    # scripts/spawn/spawn-helpers.sh
   home_directory="${parent_of_home_directory}/${short_name}"
   
   sysadminctl_adduser \
@@ -155,14 +158,14 @@ function conditionally_create_user_account(){
     --home                   "$home_directory" \
     --avatar-path            "$avatar_path" \
     --admin-user-name        "$admin_user_name" \
-    --hint                   "$user_class" \
+    --hint                   "User class: $user_class" \
     --op-vault               "$op_vault" \
     --op-item-user-password  "$op_item_user_password" \
-    --op-item-admin-password "$onepassword_admin_password_item_name"
+    --op-item-admin-password "$op_admin_password_item_name"
 
-  mark_user_as_created "$short_name" "$volume_name"       # scripts/spawn/spawn-state-helpers.sh
-  mark_user_as_in_need_of_initial_config "$short_name"    # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
-  conditionally_mark_volume_is_necessary "$volume_name" "$op_item_user_password" # scripts/spawn/spawn-volume-state-helpers.sh
+  mark_user_as_created "$short_name" "$volume_name"                                # scripts/spawn/spawn-state-helpers.sh
+  mark_user_as_in_need_of_initial_config "$short_name"                             # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
+  conditionally_mark_volume_is_necessary "$volume_name" "$op_item_user_password"   # scripts/spawn/spawn-volume-state-helpers.sh
   
   report_end_phase_standard
 }
@@ -176,6 +179,7 @@ function get_user_spawn_config_associative_arrays() {
   local user_spawn_config_json
 
   # Get JSON from GenoMac-private
+  # get_user_spawn_config_from_GenoMac_private is defined in scripts/spawn/spawn-helpers.sh
   if ! user_spawn_config_json="$(get_user_spawn_config_from_GenoMac_private)"; then
     report_fail "Failed to retrieve user spawn config from GenoMac-private."
     return 1
