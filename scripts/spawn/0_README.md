@@ -21,14 +21,14 @@ The 1Password items involved in the player-spawning process are shown in the tab
 | specs-of-users-to-create    | OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        | plain-text | Array of user objects |
 | user-spawn-config      | OP_ITEM_NAME_USER_SPAWN_CONFIG               | plain-text | 3 associative maps[^ASSOCIATIVE_MAPS] |
 | authorizing-admin-user-name | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     | plain-text | Name of preexisting admin[^PREEXISTING_ADMIN] |
-| THE_STARTUP_PASSWORD        | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS] |
+| SUPERINTENDENT_PASSWORD        | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS] |
 | PERSONAL_PASSWORD           |                                              | password   | Points to password for personal-class users |
 | WORK_PASSWORD               |                                              | password   | Points to password for work-class users |
 | OTHER_USER_CLASS_PASSWORD   |                                              | password   | Points to password for other-user-class users |
 
 [^ASSOCIATIVE_MAPS]: (a) `volume_name_from_user_class`, (b) `onepassword_key_from_user_class`, and (c) `user_attributes_from_user_class`.
-[^PREEXISTING_ADMIN]: During the creation of a new user account, an existing admin is required to authorize transferring a Secure Token to the newly created user. The 1Password plain-text item 'authorizing-admin-user-name' contains the short name of such an existing superintendent-class user. That user’s password is necessarily referenced by the 1Password item 'THE_STARTUP_PASSWORD'.
-[^USER_CLASS_PASSWORDS]: These can be freely named, and will be as numerous as are the user classes. These will be values in the `onepassword_key_from_user_class` associative mapping. (To be perfectly clear, 'THE_STARTUP_PASSWORD', etc., are *not* passwords; they are names of the 1Password items that contain those passwords.)
+[^PREEXISTING_ADMIN]: During the creation of a new user account, an existing admin is required to authorize transferring a Secure Token to the newly created user. The 1Password plain-text item 'authorizing-admin-user-name' contains the short name of such an existing superintendent-class user. That user’s password is necessarily referenced by the 1Password item 'SUPERINTENDENT_PASSWORD'.
+[^USER_CLASS_PASSWORDS]: These can be freely named, and will be as numerous as are the user classes. These will be values in the `onepassword_key_from_user_class` associative mapping. (To be perfectly clear, 'SUPERINTENDENT_PASSWORD', etc., are *not* passwords; they are names of the 1Password items that contain those passwords.)
 
 ### `users_to_create`
 Each user to be created is specified by:
@@ -96,7 +96,7 @@ The volume_name is either (a) `::startup_volume::` (which is not a valid volume 
       "other_user_class": "some_other_user_class_volume"
     },
     "onepassword_key_from_user_class": {
-      "superintendent": "THE_STARTUP_PASSWORD",
+      "superintendent": "SUPERINTENDENT_PASSWORD",
       "personal": "PERSONAL_PASSWORD",
       "work": "WORK_PASSWORD",
       "other_user_class": "OTHER_USER_CLASS_PASSWORD"
