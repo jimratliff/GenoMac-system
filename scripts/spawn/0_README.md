@@ -18,12 +18,12 @@ Instead, these details are supplied by items in a 1Password vault. The name of t
 The 1Password items involved in the player-spawning process are shown in the table below:
 | 1Password item name | Environment variable | Item type | Purpose |
 |---|---|---|---|
-| specs-of-users-to-create    | OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        | plain-text | Array of user objects |
-| user-spawn-config      | OP_ITEM_NAME_USER_SPAWN_CONFIG               | plain-text | 3 associative maps[^ASSOCIATIVE_MAPS] |
+| specs-of-users-to-create    | OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE        | plain-text | Array of user objects                         |
+| user-spawn-config           | OP_ITEM_NAME_USER_SPAWN_CONFIG               | plain-text | 3 associative maps[^ASSOCIATIVE_MAPS]         |
 | authorizing-admin-user-name | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     | plain-text | Name of preexisting admin[^PREEXISTING_ADMIN] |
-| SUPERINTENDENT_PASSWORD        | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS] |
-| PERSONAL_PASSWORD           |                                              | password   | Points to password for personal-class users |
-| WORK_PASSWORD               |                                              | password   | Points to password for work-class users |
+| SUPERINTENDENT_PASSWORD     | OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD | password   | Points to password for superintendent-class users[^USER_CLASS_PASSWORDS]  |
+| PERSONAL_PASSWORD           |                                              | password   | Points to password for personal-class users   |
+| EMPLOYMENT_PASSWORD         |                                              | password   | Points to password for work-class users       |
 | OTHER_USER_CLASS_PASSWORD   |                                              | password   | Points to password for other-user-class users |
 
 [^ASSOCIATIVE_MAPS]: (a) `volume_name_from_user_class`, (b) `onepassword_key_from_user_class`, and (c) `user_attributes_from_user_class`.
@@ -98,7 +98,7 @@ The volume_name is either (a) `::startup_volume::` (which is not a valid volume 
     "onepassword_key_from_user_class": {
       "superintendent": "SUPERINTENDENT_PASSWORD",
       "personal": "PERSONAL_PASSWORD",
-      "work": "WORK_PASSWORD",
+      "work": "EMPLOYMENT_PASSWORD",
       "other_user_class": "OTHER_USER_CLASS_PASSWORD"
     },
     "user_attributes_from_user_class": {
