@@ -46,7 +46,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # - The following environment variables have been defined:
   #   - DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES   ("/Users")
   #   - OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME     ("authorizing-admin-user-name")
-  #   - OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD ("THE_STARTUP_PASSWORD")
+  #   - OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD ("SUPERINTENDENT_PASSWORD")
   #   - OP_VAULT_FOR_GENOMAC_USER_CREATION           ("GenoMac-user-creation")
   #   - OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT      ("GenoMac-user-creation")
   #   - OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT      ("GitHub_PAT_GenoMac-private_read-only")
