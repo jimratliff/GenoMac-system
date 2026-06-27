@@ -33,10 +33,7 @@ brew "mas"                     # Mac App Store command-line interface
                                  # REQUIRED: Used by GenoMac (via Homebrew) to install MAS apps
 brew "node"                    # Also known as: node.js, node@24, nodejs, npm
                                  # Required for Alfred’s “Proper Title Case” workflow.
-
-# Opencode appears to be causing trouble
-# brew "opencode"                # AI coding agent, built for the terminal
-
+brew "opencode"                # AI coding agent, built for the terminal
 brew "php"                     # General-purpose scripting language
                                  # Required for Alfred’s “Text Actions” workflow.
 brew "python"                  # Python 3. See https://docs.brew.sh/Homebrew-and-Python
