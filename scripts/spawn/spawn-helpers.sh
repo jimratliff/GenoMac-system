@@ -244,18 +244,31 @@ function populate_user_spawn_associative_arrays_from_json() {
 }
 
 function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
-  # Prints to stdout the GitHub PAT for the GenoMac-private repo, retrieved from 1Password:
-  # vault OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT, item name: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT
-  # expected field name: 'token'
+  # Prints to stdout the GitHub PAT for the GenoMac-private repo, retrieved from 1Password.
   #
-  # Hint: OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT: "GenoMac-user-creation"
-  # Hint: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT: "GitHub_PAT_GenoMac-private_read-only"
-  
+  # vault: OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT
+  # item:  OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT
+  # field: token
+
   report_start_phase_standard
+
   local github_pat
-  
-  github_pat="$(read_1password_item_token "$OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT" "$OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT")"
-  
+
+  if ! whence -w read_1password_item_token >/dev/null 2>&1; then
+    report_fail "PROGRAMMER_ERROR: Missing required function or command: read_1password_item_token"
+    return 1
+  fi
+
+  if ! github_pat="$(read_1password_item_token "$OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT" "$OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT")"; then
+    report_fail "Failed to retrieve GitHub PAT for GenoMac-private from 1Password."
+    return 1
+  fi
+
+  if [[ -z "$github_pat" ]]; then
+    report_fail "Retrieved empty GitHub PAT for GenoMac-private from 1Password."
+    return 1
+  fi
+
   print -r -- "$github_pat"
   report_end_phase_standard
 }
