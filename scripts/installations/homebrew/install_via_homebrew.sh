@@ -32,10 +32,13 @@ function install_via_homebrew() {
   brew update ; success_or_not
 
   # Installs packages, etc. from Brewfile
+  # --cleanup is DEPRECATED with no replacement (at least as of 6/26/2026)
   # --cleanup removes installed packages no longer called for by the Brewfile
-  report_action_taken "Install new packages and remove no-longer-desired ones"
+  # report_action_taken "Install new packages and remove no-longer-desired ones"
+  report_action_taken "Install new packages"
   report_warning "Don’t walk away! You’ll be required to enter your administrator password for some apps."
-  brew bundle install --cleanup --file="${brewfile_path}" ; success_or_not
+  # brew bundle install --cleanup --file="${brewfile_path}" ; success_or_not
+  brew bundle install --file="${brewfile_path}" ; success_or_not
 
   # Sets state to indicate that Homebrew has been used at least once to install apps
   # This assumes basic existence of non-builtin apps on which other parts of GenoMac-system relies
