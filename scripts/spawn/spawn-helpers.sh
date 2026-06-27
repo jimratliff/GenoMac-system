@@ -176,7 +176,7 @@ function get_user_spawn_config_from_GenoMac_private() {
     
   if ! user_spawn_config_json="$(
     read_github_repo_file_raw \
-      --private
+      --private \
       --pat "$github_pat" \
       "$GENOMAC_COMMON_OWNER" \
       "$GENOMAC_PRIVATE_REPO_NAME" \
