@@ -51,11 +51,8 @@ cask "microsoft-teams"          # Microsoft version of Zoom
 cask "msgfiler"                 # Keyboard-based email filing application for Apple Mail
 cask "notion"                   # Knowledge base using proprietary files
 cask "obsidian"                 # Knowledge base using local folder of Markdown files
-
 cask "opencode-desktop"         # AI coding agent desktop client
-                                # See also `brew "anomalyco/tap/opencode"`
-
-cask "orion"                    # WebKit-based web browser
+# cask "orion"                    # WebKit-based web browser
 cask "raindropio"               # Bookmarking manager
 # cask "textexpander"             # Insert pre-made snippets of text anywhere
 cask "tower"                    # Git client GUI
