@@ -13,6 +13,9 @@
 # Defined in GenoMac-shared/scripts/assign_common_environment_variables.sh
 # GENOMAC_SYSTEM_LOCAL_DIRECTORY="$HOME/.genomac-system"
 
+############### Set verbosity of reporting
+GENOMAC_VERBOSE="true"
+
 #############################################
 #                  Aliases to intra-repository hierarchical structures
 #
