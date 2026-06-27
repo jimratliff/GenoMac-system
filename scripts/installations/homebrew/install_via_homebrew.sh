@@ -40,7 +40,8 @@ function install_via_homebrew() {
   # Installs packages, etc. from Brewfile
   report_action_taken "Install and upgrading Homebrew items declared in Brewfile (and its children)"
   report_warning "Don’t walk away! You’ll be required to enter your administrator password for some apps."
-  brew bundle install --file="${brewfile_path}" ; success_or_not
+  # brew bundle install --file="${brewfile_path}" ; success_or_not
+  brew bundle install --file="${brewfile_path}" --verbose ; success_or_not
 
   # Reconcile again after install. This catches anything made removable by dependency changes.
   report_action_taken "Removing Homebrew items not declared in Brewfile after install"
