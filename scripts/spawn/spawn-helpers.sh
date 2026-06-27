@@ -246,6 +246,7 @@ function populate_user_spawn_associative_arrays_from_json() {
 function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
   # Prints to stdout the GitHub PAT for the GenoMac-private repo, retrieved from 1Password:
   # vault OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT, item name: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT
+  # expected field name: 'token'
   #
   # Hint: OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT: "GenoMac-user-creation"
   # Hint: OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT: "GitHub_PAT_GenoMac-private_read-only"
@@ -253,7 +254,7 @@ function get_GitHub_PAT_for_GenoMac_private_from_1Password_vault() {
   report_start_phase_standard
   local github_pat
   
-  github_pat="$(read_1password_item_password "$OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT" "$OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT")"
+  github_pat="$(read_1password_item_token "$OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT" "$OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT")"
   
   print -r -- "$github_pat"
   report_end_phase_standard
