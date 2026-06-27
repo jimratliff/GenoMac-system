@@ -24,6 +24,8 @@ function subdermis() {
   #   state rather than immediately triggering a logout.
   #   Requires new function `hypervisor_forced_logout_if_dirty`
 
+  # TODO: Ask user whether VERBOSE output is wanted
+
   output_hypervisor_welcome_banner "$GENOMAC_SCOPE_SYSTEM"
   keep_sudo_alive
   set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
