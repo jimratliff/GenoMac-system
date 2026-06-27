@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Source the function file(s)
-source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/helpers_for_non_homebrew_installations.sh"
+# source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/helpers_for_non_homebrew_installations.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_alan_app.sh"
 # source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_app_from_github_zip.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_hiarcs_chess_explorer_pro.sh"
