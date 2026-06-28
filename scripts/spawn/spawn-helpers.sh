@@ -150,7 +150,7 @@ function get_users_to_create_from_GenoMac_private() {
     
   if ! users_to_create_json="$(
     read_github_repo_file_raw \
-      --private
+      --private \
       --pat "$github_pat" \
       "$GENOMAC_COMMON_OWNER" \
       "$GENOMAC_PRIVATE_REPO_NAME" \
