@@ -33,7 +33,7 @@ function conditionally_interactive_create_a_volume() {
   # Create specified volume, encrypted by passphrase referenced by 1Password item.
   
   report_start_phase_standard
-  local volume_name="${1;?missing volume_name}"
+  local volume_name="${1:?missing volume_name}"
   local op_item_key="${2:?missing op_item_key}"
   
   local container_name
