@@ -160,6 +160,43 @@ function conditionally_create_user_account(){
   volume_name="${volume_name_from_user_class[$user_class]}"
   parent_of_home_directory="$(parent_of_users_home_directories "$volume_name")"    # scripts/spawn/spawn-helpers.sh
   home_directory="${parent_of_home_directory}/${short_name}"
+
+  ############### BEGIN: Interactively confirm that this user should be created at this time
+
+  local user_creation_mode
+  report "I’m on the verge of creating user “${short_name}” on ${home_directory}"
+  user_creation_mode="$(get_value_from_numbered_choices \
+    "How do you want to deal with the pending-to-create user “$short_name”?" \
+    "Create this user now" "CREATE_NOW" \
+    "PUNT. Leave it pending for now, move on, and I’ll deal with it later" "PUNT"
+    "ABORT. Abort now; don’t show me any other pending users to create at this time." "ABORT"
+    )"
+
+  case "$user_creation_mode" in
+    CREATE_NOW)
+      # Create this user now
+      # Fall through the case switch
+      ;;
+    
+    PUNT)
+      #  Leave it pending for now, move on, and I’ll deal with it later
+      report_warning "You have deferred the creation of user “$short_name”."
+      report_end_phase_standard
+      return 0
+      ;;
+    
+    ABORT)
+      # Abort now; don’t show me any other pending users to create at this time
+      leave_genomac_hypervisor "At your direction, I am aborting."
+      ;;
+    
+    *)
+      report_fail "Unrecognized user-creation choice: “${user_creation_mode}”"
+      return 1
+      ;;
+  esac
+
+  ############### END: Interactively confirm that this user should be created at this time
   
   sysadminctl_adduser \
     --short-name             "$short_name" \
