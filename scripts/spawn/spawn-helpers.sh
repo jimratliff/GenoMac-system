@@ -173,7 +173,8 @@ function get_user_spawn_config_from_GenoMac_private() {
   local user_spawn_config_json
 
   github_pat="$(get_GitHub_PAT_for_GenoMac_private_from_1Password_vault)"
-    
+
+  # read_github_repo_file_raw is defined in GitHub-shared/scripts/helpers-git.sh
   if ! user_spawn_config_json="$(
     read_github_repo_file_raw \
       --private \
