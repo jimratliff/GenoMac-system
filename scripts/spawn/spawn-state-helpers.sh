@@ -15,7 +15,7 @@ function mark_user_as_created(){
   local volume_name="$2"
   local state_string
 
-  state_string="${GENOMAC_STATE_USER_EXISTS_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${user_name}${GENOMAC_STATE_STRING_DELIMITER_B}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_C}"
+  state_string="${GENOMAC_STATE_USER_EXISTS_PREFIX}${GENOMAC_STATE_STRING_DELIMITER_A}${short_name}${GENOMAC_STATE_STRING_DELIMITER_B}${volume_name}${GENOMAC_STATE_STRING_DELIMITER_C}"
   set_genomac_system_state "$state_string"
   
   report_end_phase_standard
