@@ -7,6 +7,7 @@ safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-default_attributes_for_user_conf
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-interactive.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-state-helpers.sh"
+safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-state-helpers.sh"
 
