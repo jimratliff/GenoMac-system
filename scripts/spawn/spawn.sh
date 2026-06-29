@@ -168,7 +168,7 @@ function conditionally_create_user_account(){
   user_creation_mode="$(get_value_from_numbered_choices \
     "How do you want to deal with the pending-to-create user “$short_name”?" \
     "Create this user now" "CREATE_NOW" \
-    "PUNT. Leave it pending for now, move on, and I’ll deal with it later" "PUNT"
+    "PUNT. Leave it pending for now, move on, and I’ll deal with it later" "PUNT" \
     "ABORT. Abort now; don’t show me any other pending users to create at this time." "ABORT"
     )"
 
