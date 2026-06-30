@@ -37,9 +37,11 @@ function volume_exists_on_container() {
   local container_name="${2? missing container name}"
 
   if diskutil apfs list "$container_name" | grep -Fq "Name: ${volume_name} "; then
+    report_to_log "Volume “${volume_name}” already exist on container “${container_name}”
     report_end_phase_standard
     return 0
   fi
+  report_to_log "Volume “${volume_name}” does not already exist on container “${container_name}”
   report_end_phase_standard
   return 1
 }
