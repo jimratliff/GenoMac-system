@@ -13,7 +13,7 @@ function create_and_encrypt_volume_on_container() {
   local op_vault
 
   # If volume already exists on container, do nothing
-  if $volume_exists_on_container "$volume_name" "$container_name"; then
+  if $(volume_exists_on_container "$volume_name" "$container_name"); then
     report "Volume “$volume_name” already exists in container “$container_name”; Moving on…"
     report_warning "I can’t guarantee that volume “$volume_name” is encrypted by the desired passphrase."
     report_end_phase_standard
