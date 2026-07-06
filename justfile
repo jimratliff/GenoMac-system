@@ -24,9 +24,12 @@ genomac_push_url := 'git@github.com:' + genomac_github_owner + '/' + genomac_rem
 
 ############### Repo management
 
-# Pull latest changes from origin/main, including any submodule updates. Does not require authenticating with GitHub
+# Refresh local checkout from origin/main, including submodules. Does not require GitHub authentication.
+# WARNING: discards local changes in this managed checkout.
 refresh-repo-and-module:
-    git -C "{{genomac_local_dir}}" pull --recurse-submodules origin main
+    git -C "{{genomac_local_dir}}" fetch origin main
+    git -C "{{genomac_local_dir}}" reset --hard origin/main
+    git -C "{{genomac_local_dir}}" submodule update --init --recursive
 
 # Destructively make the local clone match origin/main.
 # This discards local commits and tracked-file changes.
