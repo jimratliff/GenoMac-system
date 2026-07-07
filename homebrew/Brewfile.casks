@@ -53,6 +53,7 @@ cask "notion"                   # Knowledge base using proprietary files
 cask "obsidian"                 # Knowledge base using local folder of Markdown files
 cask "opencode-desktop"         # AI coding agent desktop client
 # cask "orion"                    # WebKit-based web browser
+cask "proton-drive"             # Client for Proton Drive
 cask "raindropio"               # Bookmarking manager
 # cask "textexpander"             # Insert pre-made snippets of text anywhere
 cask "tower"                    # Git client GUI
