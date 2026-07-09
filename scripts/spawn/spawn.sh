@@ -91,9 +91,17 @@ function conditionally_create_user_accounts_for_this_Mac() {
 }
 
 function conditionally_create_user_account(){
-  # Conditionally creates a single user account, specified by user_spec_json, which is passed as the first of four arguments.
-  # (The user is created only if there is no user with the short name specified by user_spec_json. A uid collision is a 
-  # fatal error.)
+  # Conditionally creates a single user account, specified by user_spec_json, which is passed
+  # as the first of four arguments.
+  # 
+  # If the user’s short name already exists, creation is skipped and returns normally. Thus,
+  # conditionally_create_user_account can be run idempotently in the sense that only newly
+  # added users will be created. (This isn’t purely declarative: A user removed from the
+  # specification will *not* be *uncreated*.)
+  #
+  # If the new user’s uid collides with an existing uid, creation is skipped and a warning is
+  # issued that the uid must be changed and “resubmitted” (i.e., rerun Hypervisor-system).
+  # 
   # Sets system-scoped states to record:
   # - that the user has been created
   # - that the user is in need of initial configuration
@@ -124,6 +132,7 @@ function conditionally_create_user_account(){
   local uid
   local user_class
   local volume_name
+  local warning_message
 
   # Set states for user attributes for this user BEFORE the user is created and BEFORE the
   # check whether this user already exists. This way, this function will update the user’s
@@ -143,8 +152,12 @@ function conditionally_create_user_account(){
   uid="$(get_uid_from_user_spec_json "$user_spec_json")"
   if does_user_uid_exist $uid; then
     conflicting_short_names="$(string_of_short_names_with_uid $uid)"
-    report_fail "Proposed uid $uid for user $short_name already exists as one (or more) different user(s):${NEWLINE}${conflicting_short_names}"
-    return 1
+    warning_message="Proposed uid $uid for user $short_name already exists as one (or more) different user(s):"
+    warning_message+="${NEWLINE}${conflicting_short_names}"
+    warning_message+="${NEWLINE}Please provide a unique uid for user $short_name and rerun Hypervisor-system."
+    warning_message+="${NEWLINE}Skipping creation of user ${short_name}."
+    report_warning "$warning_message"
+    return 0
   fi
 
   avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")"
@@ -162,6 +175,14 @@ function conditionally_create_user_account(){
   parent_of_home_directory="$(parent_of_users_home_directories "$volume_name")"    # scripts/spawn/spawn-helpers.sh
   home_directory="${parent_of_home_directory}/${short_name}"
 
+  if is_supplied_HOME_too_long_for_1P_SSH_Agent_socket "$home_directory"; then
+    warning_message="Home directory path is too long for 1Password SSH Agent configuration."
+    warning_message+="${NEWLINE}Skipping creation of user ${short_name}."
+    warning_message+="${NEWLINE}Denying creation in this circumstance is current policy."
+    report_warning "$warning_message"
+    return 0
+  fi
+  
   ############### BEGIN: Interactively confirm that this user should be created at this time
 
   local user_creation_mode
