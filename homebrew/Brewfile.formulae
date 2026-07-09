@@ -31,6 +31,8 @@ brew "just"                    # Modern alternative to `make` for project-specif
 brew "lc0"                     # Open source neural network based chess engine. See https://lczero.org/
 brew "mas"                     # Mac App Store command-line interface
                                  # REQUIRED: Used by GenoMac (via Homebrew) to install MAS apps
+brew "m-cli"                   # CLI tool for macOS that enables you to control system functions, manage utilities, and tweak preferences
+                                 # https://github.com/rgcr/m-cli
 brew "node"                    # Also known as: node.js, node@24, nodejs, npm
                                  # Required for Alfred’s “Proper Title Case” workflow.
 brew "opencode"                # AI coding agent, built for the terminal
