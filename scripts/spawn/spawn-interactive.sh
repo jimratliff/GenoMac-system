@@ -1,5 +1,12 @@
 #!/usr/bin/env zsh
 
+############### DEPRECATION WARNING ###############
+This interactive code was written for testing/proof-of-concept purposes. It is no longer
+guaranteed to conform to the main spawing code it calls.
+
+report_warning "This interactive spawn code is DEPRECATED."
+exit 1
+
 function interactive_adduser() {
   # Interactive front end for sysadminctl_adduser().
   #
