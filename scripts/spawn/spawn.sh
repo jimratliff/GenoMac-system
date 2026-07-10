@@ -233,8 +233,8 @@ function conditionally_create_user_account(){
 
   ############### END: Interactively confirm that this user should be created at this time
 
-  ############### REFACTORING IN PROGRESS: Specify whether Secure Token should be awarded ###############
-
+  # Prepare arguments for, and then execute, sysadminctl_adduser
+  
   local -a sysadminctl_adduser_args
   
   sysadminctl_adduser_args=(
@@ -258,6 +258,8 @@ function conditionally_create_user_account(){
   fi
   
   sysadminctl_adduser "${sysadminctl_adduser_args[@]}"
+
+  # Post–user-creation bookkeeping
 
   mark_user_as_created "$short_name" "$volume_name"                                # scripts/spawn/spawn-state-helpers.sh
   mark_user_as_in_need_of_initial_config "$short_name"                             # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
