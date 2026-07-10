@@ -250,11 +250,14 @@ function conditionally_create_user_account(){
   
   # Give a Secure Token only when user’s home directory resides on startup volume
   if volume_name_is_startup_volume_signifier "$volume_name"; then
+    report_to_log "Adding Secure Token for this user (“${short_name}”) residing on startup volume."
     sysadminctl_adduser_args+=(
       --give-secure-token
       --admin-user-name        "$admin_user_name"
       --op-item-admin-password "$op_admin_password_item_name"
     )
+  else
+    report_to_log "No Secure Token for this user (“${short_name}”) residing on non-startup volume."
   fi
   
   sysadminctl_adduser "${sysadminctl_adduser_args[@]}"
