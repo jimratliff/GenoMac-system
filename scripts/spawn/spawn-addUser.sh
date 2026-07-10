@@ -3,8 +3,7 @@
 function sysadminctl_adduser() {
   # An interface to the addUser subcommand of sysadminctl.
   #
-  # Creates a new user via sysadminctl -addUser, conditionally enabling Secure Token if
-  # --give-secure-token.
+  # Creates a new user via sysadminctl -addUser, conditionally enabling Secure Token.
   #
   # sysadminctl is called with sudo. (The --admin-user-name is for an admin user with a
   # Secure Token. It doesn’t provide authority to create a user without sudo.)
@@ -40,7 +39,7 @@ function sysadminctl_adduser() {
   #   --hint                      optional   <string> password hint
   #   --not-an-admin              optional   If supplied, new user will NOT be an admin.
   #                                          Default: new user WILL be an admin.
-  #   --give-secure-token         optional   If supplied, new user will be give Secure Token.
+  #   --give-secure-token         optional   If supplied, new user will be given Secure Token.
   #
   #   The following are mandatory only if --give-secure-token is provided:
   #   --admin-user-name                      <string> short name of existing admin user
@@ -57,9 +56,9 @@ function sysadminctl_adduser() {
   local op_item_user_password=""
   local avatar_path=""
   local hint=""
-  local new_user_is_admin=true
+  local new_user_is_admin="true"
 
-  local do_give_secure_token=false
+  local do_give_secure_token="false"
   local admin_user_name=""
   local op_item_admin_password=""
 
@@ -130,9 +129,16 @@ function sysadminctl_adduser() {
     uid                   --uid \
     home                  --home \
     op_vault              --op-vault \
-    op_item_user_password --op-item-user-password
+    op_item_user_password --op-item-user-password \
+    || return 1
 
-  if [[ "$do_give_secure_token" == true ]]; then
+  if [[ "$uid" != <-> ]]; then
+    # In Zsh, <-> matches one or more decimal digits
+    report_fail "--uid must be a nonnegative integer; received: ${uid}"
+    return 1
+  fi
+
+  if [[ "$do_give_secure_token" == "true" ]]; then
     if [[ -z "$admin_user_name" || -z "$op_item_admin_password" ]]; then
       report_fail "--give-secure-token requires both --admin-user-name and --op-item-admin-password."
       return 1
@@ -176,7 +182,7 @@ function sysadminctl_adduser() {
     cmd+=(-admin)
   fi
 
-  if [[ "$do_give_secure_token" == true ]]; then
+  if [[ "$do_give_secure_token" == "true" ]]; then
     # Use supplied 1Password key name for Secure Token–holding admin password to retrieve the actual password
     if ! admin_password="$(read_1password_item_password "$op_vault" "$op_item_admin_password")"; then
       report_fail "Failed to retrieve the admin user's password from 1Password."
@@ -184,13 +190,15 @@ function sysadminctl_adduser() {
     fi
 
     # Add arguments to achieve Secure Token
-    cmd+=(-adminUser "$admin_user_name")
-    cmd+=(-adminPassword "$admin_password")
+    cmd+=(
+      -adminUser "$admin_user_name"
+      -adminPassword "$admin_password"
+    )
   fi
 
   report "About to create user ${short_name} with home directory ${home}."
 
-  if [[ "$new_user_is_admin" == true ]]; then
+  if [[ "$new_user_is_admin" == "true" ]]; then
     report "New user will be created as an admin user."
   else
     report "New user will be created as a standard user."
@@ -203,7 +211,7 @@ function sysadminctl_adduser() {
     return 1
   fi
 
-  if [[ "$do_give_secure_token" == true ]]; then
+  if [[ "$do_give_secure_token" == "true" ]]; then
     if confirm_secure_token_was_enabled_for_user "$short_name"; then
       report_success "User ${short_name} was created and Secure Token was enabled."
     else
@@ -212,10 +220,9 @@ function sysadminctl_adduser() {
     fi
   else
     if confirm_secure_token_was_enabled_for_user "$short_name"; then
-      report_warning "A Secure Token was enabled for User ${short_name} even though that was not desired."
+      report_warning "A Secure Token was enabled for user ${short_name} even though that was not desired."
     else
       report_success "User ${short_name} was created and, as desired, Secure Token wasn’t enabled."
-      return 0
     fi
   fi
 
