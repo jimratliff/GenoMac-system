@@ -16,6 +16,7 @@ function subdermis() {
   safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
   safe_source "${GMS_USER_SCOPE_SCRIPTS}/configure_user_configurer_account.sh"
+  safe_source "${GMS_USER_SCOPE_SCRIPTS}/helpers.sh"
   safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn.sh"
 
   # TODO:
@@ -69,9 +70,10 @@ function subdermis() {
   conditionally_exit_for_user_configurer_to_configure_itself # scripts/user_scope/configure_user_configurer_account.sh
 
   ############### ↓↓↓ SPAWNING NEW USERS ↓↓↓ ###############
-  conditionally_create_user_accounts_for_this_Mac            # scripts/spawn/spawn.sh
+  conditionally_create_user_accounts_for_this_Mac                       # scripts/spawn/spawn.sh
   conditionally_interactive_create_volumes_for_user_home_directories    # scripts/spawn/spawn-volume-creation.sh
-  display_users_to_be_initially_configured                   # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
+  display_users_to_be_initially_configured                              # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
+  list_File_Vault_enabled_users                                         # scripts/user_scope/helpers.sh
   
   report_end_phase_standard
 }
