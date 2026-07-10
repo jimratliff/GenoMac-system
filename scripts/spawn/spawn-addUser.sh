@@ -52,8 +52,8 @@ function sysadminctl_adduser() {
   #   --give-secure-token         optional   If supplied, new user will be give Secure Token.
   #
   #   The following are mandatory only if --give-secure-token is provided:
-  #   --op-item-admin-password               <string> item name containing password for --admin-user-name
   #   --admin-user-name                      <string> short name of existing admin user
+  #   --op-item-admin-password               <string> item name containing password for --admin-user-name
 
   report_start_phase_standard
   report_argument_vector "$@"
@@ -62,17 +62,15 @@ function sysadminctl_adduser() {
   local full_name=""
   local uid=""
   local home=""
-  local avatar_path=""
-  local admin_user_name=""
-
   local op_vault=""
   local op_item_user_password=""
-  local op_item_admin_password=""
-
-  local do_give_secure_token=true
-
+  local avatar_path=""
   local hint=""
   local new_user_is_admin=true
+
+  local do_give_secure_token=false
+  local admin_user_name=""
+  local op_item_admin_password=""
 
   local user_password=""
   local admin_password=""
@@ -118,7 +116,7 @@ function sysadminctl_adduser() {
         shift
         ;;
       --give-secure-token)
-        do_give_secure_token=false
+        do_give_secure_token=true
         shift
         ;;
       --admin-user-name)
@@ -143,24 +141,24 @@ function sysadminctl_adduser() {
     op_vault              --op-vault \
     op_item_user_password --op-item-user-password
 
+  # Add tests that, if do_give_secure_token=true, then both (a) admin_user_name and
+  # (b) op_item_admin_password must have been specified
 
-  if [[ "$using_1password" == true ]]; then
-    if ! user_password="$(
-      read_1password_item_password "$op_vault" "$op_item_user_password"
-    )"; then
-      report_fail "Failed to retrieve the new user's password from 1Password."
-      return 1
-    fi
+  if ! user_password="$(
+    read_1password_item_password "$op_vault" "$op_item_user_password"
+  )"; then
+    report_fail "Failed to retrieve the new user's password from 1Password."
+    return 1
+  fi
 
+
+  if [[ "$do_give_secure_token" == true ]]; then
     if ! admin_password="$(
       read_1password_item_password "$op_vault" "$op_item_admin_password"
     )"; then
       report_fail "Failed to retrieve the admin user's password from 1Password."
       return 1
     fi
-  else
-    user_password="$cleartext_password_user"
-    admin_password="$cleartext_password_admin"
   fi
 
   # Build the sysadminctl command as an array
