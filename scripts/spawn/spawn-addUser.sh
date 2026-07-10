@@ -1,28 +1,37 @@
 #!/usr/bin/env zsh
 
+############### REFACTORING IN PROGRESS (7/10/2026) WARNING ###############
+# Previously (as memorialized in the secure-token-for-all branch), all new users were given
+# a Secure Token, enabling them to unlock the FileVault-protected startup volume.
+# However, this power is useless for users whose home directory resides on a different and
+# encrypted volume. This refactoring changes the policy such that only users who reside
+# on the startup volume receive a Secure Token.
+#
+# Also previously, allowed a cleartext alternative to 1Password. That is being removed.
+
 function sysadminctl_adduser() {
   # An interface to the addUser subcommand of sysadminctl.
   #
-  # Creates a new user via sysadminctl -addUser, including enabling Secure Token.
+  # Creates a new user via sysadminctl -addUser, conditionally enabling Secure Token if
+  # --give-secure-token.
   #
-  # Must be run with sudo. (The --admin-user-name is for an admin user with a Secure
-  # Token. It doesn’t provide authority to create a user without sudo.)
+  # sysadminctl is called with sudo. (The --admin-user-name is for an admin user with a
+  # Secure Token. It doesn’t provide authority to create a user without sudo.)
   # 
-  # Intended usage: Provide the password for (each of (a) the new user and (b) an
-  # existing admin user with a Secure Token) by providing the name of a 1Password vault
-  # and the name of the password items in that vault that contain those two passwords.
-  # (This reduces the security exposure relative to passing cleartext passwords between
-  # functions.) (Alternatively, but insecurely, cleartext passwords can be supplied,
-  # primarily for testing purposes.)
+  # Intended usage: Provide the password for (a) the new user and (b) if --give-secure-token,
+  # an existing admin user with a Secure Token, by providing the name of a
+  # 1Password vault and the name of the password items in that vault that contain those two
+  # passwords. (This reduces the security exposure relative to passing cleartext passwords
+  # between functions.)
   #
-  # This function requires credentials for an existing admin user with a Secure Token,
-  # referred to as the “authorizing admin.”
+  # If --give-secure-token, this function requires credentials for an existing admin user
+  # with a Secure Token, referred to as the “authorizing admin.”
   #
   # The new user is referred to as “user,” even though that user is also by default an 
   # admin-level user.
   #
-  # After creation, this function confirms that Secure Token is enabled for the new user.
-  # If Secure Token is not confirmed to be enabled, the function fails.
+  # If --give-secure-token, after creation, this function confirms that Secure Token is
+  # enabled for the new user. If Secure Token is not confirmed to be enabled, the function fails.
   #
   # NOTE: The --home path does *not* need to exist in order for the user to be created.
   #       The *volume* will need to exist and be mounted when this user first logs into the account.
@@ -34,26 +43,17 @@ function sysadminctl_adduser() {
   #   --full-name                 optional   <string> full user name for new user
   #   --uid                       mandatory  <integer> UID for new user
   #   --home                      mandatory  <string> full path to home directory
+  #   --op-vault                  mandatory  <string> 1Password vault name
+  #   --op-item-user-password     mandatory  <string> item name containing password for --short-name
   #   --avatar-path               optional   <string> full path to avatar file
-  #   --admin-user-name           mandatory  <string> short name of existing admin user
   #   --hint                      optional   <string> password hint
   #   --not-an-admin              optional   If supplied, new user will NOT be an admin.
   #                                          Default: new user WILL be an admin.
+  #   --give-secure-token         optional   If supplied, new user will be give Secure Token.
   #
-  #   PASSWORD SPECIFICATIONS:    mandatory
-  #   Specify either:
-  #     (a) 1Password vault + password-type item names for both new-user and admin-user passwords
-  #   or
-  #     (b) cleartext passwords for both (testing only)
-  #
-  #   1PASSWORD:
-  #   --op-vault                             <string> 1Password vault name
-  #   --op-item-user-password                <string> item name containing password for --short-name
+  #   The following are mandatory only if --give-secure-token is provided:
   #   --op-item-admin-password               <string> item name containing password for --admin-user-name
-  #
-  #   CLEARTEXT (insecure; testing only):
-  #   --cleartext-password-user              <string> password for --short-name
-  #   --cleartext-password-admin             <string> password for --admin-user-name
+  #   --admin-user-name                      <string> short name of existing admin user
 
   report_start_phase_standard
   report_argument_vector "$@"
@@ -68,8 +68,8 @@ function sysadminctl_adduser() {
   local op_vault=""
   local op_item_user_password=""
   local op_item_admin_password=""
-  local cleartext_password_user=""
-  local cleartext_password_admin=""
+
+  local do_give_secure_token=true
 
   local hint=""
   local new_user_is_admin=true
@@ -77,8 +77,6 @@ function sysadminctl_adduser() {
   local user_password=""
   local admin_password=""
 
-  local using_1password=false
-  local using_cleartext=false
   local -a cmd
 
   while (( $# > 0 )); do
@@ -99,14 +97,6 @@ function sysadminctl_adduser() {
         home=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
         ;;
-      --avatar-path)
-        avatar_path=$(required_value_for_option "$1" "${2-}") || return 1
-        shift 2
-        ;;
-      --admin-user-name)
-        admin_user_name=$(required_value_for_option "$1" "${2-}") || return 1
-        shift 2
-        ;;
       --op-vault)
         op_vault=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
@@ -115,16 +105,8 @@ function sysadminctl_adduser() {
         op_item_user_password=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
         ;;
-      --op-item-admin-password)
-        op_item_admin_password=$(required_value_for_option "$1" "${2-}") || return 1
-        shift 2
-        ;;
-      --cleartext-password-user)
-        cleartext_password_user=$(required_value_for_option "$1" "${2-}") || return 1
-        shift 2
-        ;;
-      --cleartext-password-admin)
-        cleartext_password_admin=$(required_value_for_option "$1" "${2-}") || return 1
+      --avatar-path)
+        avatar_path=$(required_value_for_option "$1" "${2-}") || return 1
         shift 2
         ;;
       --hint)
@@ -135,6 +117,18 @@ function sysadminctl_adduser() {
         new_user_is_admin=false
         shift
         ;;
+      --give-secure-token)
+        do_give_secure_token=false
+        shift
+        ;;
+      --admin-user-name)
+        admin_user_name=$(required_value_for_option "$1" "${2-}") || return 1
+        shift 2
+        ;;
+      --op-item-admin-password)
+        op_item_admin_password=$(required_value_for_option "$1" "${2-}") || return 1
+        shift 2
+        ;;
       *)
         report_fail "Unknown parameter: $1"
         return 1
@@ -143,42 +137,12 @@ function sysadminctl_adduser() {
   done
 
   require_mandatory_parameters \
-    short_name       --short-name \
-    uid              --uid \
-    home             --home \
-    admin_user_name  --admin-user-name
+    short_name            --short-name \
+    uid                   --uid \
+    home                  --home \
+    op_vault              --op-vault \
+    op_item_user_password --op-item-user-password
 
-  if [[ -n "$op_vault" || -n "$op_item_user_password" || -n "$op_item_admin_password" ]]; then
-    using_1password=true
-  fi
-
-  if [[ -n "$cleartext_password_user" || -n "$cleartext_password_admin" ]]; then
-    using_cleartext=true
-  fi
-
-  if [[ "$using_1password" == true && "$using_cleartext" == true ]]; then
-    report_fail "Specify passwords *either* via 1Password parameters *or* via cleartext parameters, *not* both."
-    return 1
-  fi
-
-  if [[ "$using_1password" == false && "$using_cleartext" == false ]]; then
-    report_fail "You must specify passwords either via 1Password parameters or via cleartext parameters."
-    return 1
-  fi
-
-  if [[ "$using_1password" == true ]]; then
-    if [[ -z "$op_vault" || -z "$op_item_user_password" || -z "$op_item_admin_password" ]]; then
-      report_fail "When using 1Password, you must supply --op-vault, --op-item-user-password, and --op-item-admin-password."
-      return 1
-    fi
-  fi
-
-  if [[ "$using_cleartext" == true ]]; then
-    if [[ -z "$cleartext_password_user" || -z "$cleartext_password_admin" ]]; then
-      report_fail "When using cleartext passwords, you must supply both --cleartext-password-user and --cleartext-password-admin."
-      return 1
-    fi
-  fi
 
   if [[ "$using_1password" == true ]]; then
     if ! user_password="$(
