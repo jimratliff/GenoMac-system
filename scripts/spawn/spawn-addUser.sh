@@ -1,14 +1,5 @@
 #!/usr/bin/env zsh
 
-############### REFACTORING IN PROGRESS (7/10/2026) WARNING ###############
-# Previously (as memorialized in the secure-token-for-all branch), all new users were given
-# a Secure Token, enabling them to unlock the FileVault-protected startup volume.
-# However, this power is useless for users whose home directory resides on a different and
-# encrypted volume. This refactoring changes the policy such that only users who reside
-# on the startup volume receive a Secure Token.
-#
-# Also previously, allowed a cleartext alternative to 1Password. That is being removed.
-
 function sysadminctl_adduser() {
   # An interface to the addUser subcommand of sysadminctl.
   #
@@ -141,12 +132,17 @@ function sysadminctl_adduser() {
     op_vault              --op-vault \
     op_item_user_password --op-item-user-password
 
-  ############### TODO
-  # Add tests that:
-  # - if "$do_give_secure_token" == true, then both (a) admin_user_name and
-  #   (b) op_item_admin_password must have been specified
-  # - if NOT do_give_secure_token=true, then NEITHER (a) admin_user_name and
-  #   nor (b) op_item_admin_password have been specified
+  if [[ "$do_give_secure_token" == true ]]; then
+    if [[ -z "$admin_user_name" || -z "$op_item_admin_password" ]]; then
+      report_fail "--give-secure-token requires both --admin-user-name and --op-item-admin-password."
+      return 1
+    fi
+  else
+    if [[ -n "$admin_user_name" || -n "$op_item_admin_password" ]]; then
+      report_fail "--admin-user-name and --op-item-admin-password may be supplied only with --give-secure-token."
+      return 1
+    fi
+  fi
 
   # Use supplied 1Password key name for user password to retrieve the actual password
   if ! user_password="$(read_1password_item_password "$op_vault" "$op_item_user_password")"; then
