@@ -28,7 +28,7 @@ The 1Password items involved in the player-spawning process are shown in the tab
 | OTHER_USER_CLASS_PASSWORD   |                                              | password   | Points to password for other-user-class users |
 
 [^ASSOCIATIVE_MAPS]: (a) `volume_name_from_user_class`, (b) `onepassword_key_from_user_class`, and (c) `user_attributes_from_user_class`.
-[^PREEXISTING_ADMIN]: During the creation of a new user account, an existing admin is required to authorize transferring a Secure Token to the newly created user. The 1Password plain-text item 'authorizing-admin-user-name' contains the short name of such an existing superintendent-class user. That user’s password is necessarily referenced by the 1Password item 'SUPERINTENDENT_PASSWORD'.
+[^PREEXISTING_ADMIN]: During the creation of a new user account that should receive a Secure Token (in order to unlock the FileVault-protected startup volume), an existing admin is required to authorize transferring a Secure Token to the newly created user. The 1Password plain-text item 'authorizing-admin-user-name' contains the short name of such an existing superintendent-class user. That user’s password is necessarily referenced by the 1Password item 'SUPERINTENDENT_PASSWORD'.
 [^USER_CLASS_PASSWORDS]: These can be freely named, and will be as numerous as are the user classes. These will be values in the `onepassword_key_from_user_class` associative mapping. (To be perfectly clear, 'SUPERINTENDENT_PASSWORD', etc., are *not* passwords; they are names of the 1Password items that contain those passwords.)
 
 ### `users_to_create`
