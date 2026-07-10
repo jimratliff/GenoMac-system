@@ -5,7 +5,9 @@ Project GenoMac automates setup and maintenance of multiple Macs, each with mult
 
 [^genomac_shared_purpose]: GenoMac-shared is an externally defined set of common code that specifies some environment variables and defines some helper functions. This common code is incorporated into each of GenoMac-system and GenoMac-user as a submodule located at `external/genomac-shared` of each of the two container repositories. See GenoMac-shared’s [README](https://github.com/jimratliff/GenoMac-shared/blob/main/README.md) for information on how that affects/complicates work flows, particularly when there is a change to GenoMac-shared’s code.
 
-Find the installer for the version of macOS you want to install: Mr. Macintosh’s [macOS Tahoe Full Installer Database](https://mrmacintosh.com/macos-tahoe-full-installer-database-download-directly-from-apple/) has links to the same full installers you’d download directly from the App Store.
+Find the installer for the version of macOS you want to install: Mr. Macintosh’s [macOS Tahoe Full Installer Database](https://mrmacintosh.com/macos-tahoe-full-installer-database-download-directly-from-apple/) has links to the same full installers you’d download directly from the App Store.[^HOW_TO_INSTALL]
+
+[^HOW_TO_INSTALL]: Download the installer and run it. Choose the desired (new) volume as the target. This creates an `Applications` and a `Library` folder on that volume. Launch `Applications/Install macOS Tahoe`.
 
 Both the GenoMac-system and GenoMac-user repositories are intended to be cloned locally, in order to provide access to the necessary scripts and other resources:
 - GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac.
