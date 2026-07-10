@@ -152,15 +152,6 @@ function sysadminctl_adduser() {
   fi
 
 
-  if [[ "$do_give_secure_token" == true ]]; then
-    if ! admin_password="$(
-      read_1password_item_password "$op_vault" "$op_item_admin_password"
-    )"; then
-      report_fail "Failed to retrieve the admin user's password from 1Password."
-      return 1
-    fi
-  fi
-
   # Build the sysadminctl command as an array
 
   cmd=(
@@ -169,8 +160,6 @@ function sysadminctl_adduser() {
     -UID "$uid"
     -password "$user_password"
     -home "$home"
-    -adminUser "$admin_user_name"
-    -adminPassword "$admin_password"
   )
 
   if [[ -n "$full_name" ]]; then
@@ -189,6 +178,19 @@ function sysadminctl_adduser() {
     cmd+=(-admin)
   fi
 
+  if [[ "$do_give_secure_token" == true ]]; then
+    if ! admin_password="$(
+      read_1password_item_password "$op_vault" "$op_item_admin_password"
+    )"; then
+      report_fail "Failed to retrieve the admin user's password from 1Password."
+      return 1
+    fi
+
+    ############### TODO: Add arguments to achieved Secure Token
+    cmd+=(-adminUser "$admin_user_name")
+    cmd+=(-adminPassword "$admin_password")
+  fi
+
   report "About to create user ${short_name} with home directory ${home}."
 
   if [[ "$new_user_is_admin" == true ]]; then
@@ -204,6 +206,7 @@ function sysadminctl_adduser() {
     return 1
   fi
 
+  ############### TODO: Make this conditional on "$do_give_secure_token" == true
   if confirm_secure_token_was_enabled_for_user "$short_name"; then
     report_success "User ${short_name} was created and Secure Token was enabled."
   else
