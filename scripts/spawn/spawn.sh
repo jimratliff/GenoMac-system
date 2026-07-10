@@ -11,6 +11,13 @@ safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-state-helpers.sh"
 
+############### REFACTORING IN PROGRESS (7/10/2026) WARNING ###############
+# Previously (as memorialized in the secure-token-for-all branch), all new users were given
+# a Secure Token, enabling them to unlock the FileVault-protected startup volume.
+# However, this power is useless for users whose home directory resides on a different and
+# encrypted volume. This refactoring changes the policy such that only users who reside
+# on the startup volume receive a Secure Token.
+
 # Global associative arrays to be populated from GenoMac-spawn/spawn/user-spawn-config.json
 #
 # NOTE: Formerly, this was: “to be populated from item OP_ITEM_NAME_USER_SPAWN_CONFIG of 1Password vault
@@ -30,8 +37,13 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # users.
   #
   # If a specified user-to-create has a short name that already has a user account, that user is skipped
-  # without error. However, if a specified user-to-create has a novel short name but has a uid that
-  # corresponds to an existing user, a fatal error is raised.
+  # without error. If a specified user-to-create has a novel short name but has a uid that
+  # corresponds to an existing user, creation of this user is skipped and a warning message is issued.
+  #
+  # If a specified user-to-create resides on the startup volume, that user will be given a Secure Token
+  # to allow it to unlock the FileVault-protected startup volume. If a specified user-to-create resides
+  # on a different volume, that user will not be given a Secure Token (in hopes that that user’s avatar
+  # will not show up on the login screen when the Mac first boots up).
   #
   # See scripts/spawn/0_README.md for a description of:
   # - the users_to_create JSON object
@@ -109,8 +121,9 @@ function conditionally_create_user_account(){
   # - that the volume (if non-startup) needs to be created/encrypted by a particular passphrase
   #   referenced by name of item in 1Password vault
   #
-  # If the user already exists, the user attributes associated with the user are nevertheless re-read and re-implemented.
-  # This allows the set of user attributes for a user to be updated even after the user is created.
+  # If the user already exists, the user attributes associated with the user are nevertheless
+  # re-read and re-implemented. This allows the set of user attributes for a user to be updated
+  # even after the user is created.
   #
   # Relies on associative arrays volume_name_from_user_class, onepassword_key_from_user_class
   # and user_attributes_from_user_class being available and populated by caller.
@@ -219,18 +232,32 @@ function conditionally_create_user_account(){
   esac
 
   ############### END: Interactively confirm that this user should be created at this time
+
+  ############### REFACTORING IN PROGRESS: Specify whether Secure Token should be awarded ###############
+
+  local -a sysadminctl_adduser_args
   
-  sysadminctl_adduser \
-    --short-name             "$short_name" \
-    --full-name              "$full_name" \
-    --uid                    "$uid" \
-    --home                   "$home_directory" \
-    --avatar-path            "$avatar_path" \
-    --admin-user-name        "$admin_user_name" \
-    --hint                   "User class: $user_class" \
-    --op-vault               "$op_vault" \
-    --op-item-user-password  "$op_item_user_password" \
-    --op-item-admin-password "$op_admin_password_item_name"
+  sysadminctl_adduser_args=(
+    --short-name             "$short_name"
+    --full-name              "$full_name"
+    --uid                    "$uid"
+    --home                   "$home_directory"
+    --avatar-path            "$avatar_path"
+    --hint                   "User class: $user_class"
+    --op-vault               "$op_vault"
+    --op-item-user-password  "$op_item_user_password"
+  )
+  
+  # Give a Secure Token only when user’s home directory resides on startup volume
+  if volume_name_is_startup_volume_signifier "$volume_name"; then
+    sysadminctl_adduser_args+=(
+      --give-secure-token
+      --admin-user-name        "$admin_user_name"
+      --op-item-admin-password "$op_admin_password_item_name"
+    )
+  fi
+  
+  sysadminctl_adduser "${sysadminctl_adduser_args[@]}"
 
   mark_user_as_created "$short_name" "$volume_name"                                # scripts/spawn/spawn-state-helpers.sh
   mark_user_as_in_need_of_initial_config "$short_name"                             # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
