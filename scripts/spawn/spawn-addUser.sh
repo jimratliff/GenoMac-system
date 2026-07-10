@@ -141,16 +141,18 @@ function sysadminctl_adduser() {
     op_vault              --op-vault \
     op_item_user_password --op-item-user-password
 
-  # Add tests that, if do_give_secure_token=true, then both (a) admin_user_name and
-  # (b) op_item_admin_password must have been specified
+  ############### TODO
+  # Add tests that:
+  # - if "$do_give_secure_token" == true, then both (a) admin_user_name and
+  #   (b) op_item_admin_password must have been specified
+  # - if NOT do_give_secure_token=true, then NEITHER (a) admin_user_name and
+  #   nor (b) op_item_admin_password have been specified
 
-  if ! user_password="$(
-    read_1password_item_password "$op_vault" "$op_item_user_password"
-  )"; then
+  # Use supplied 1Password key name for user password to retrieve the actual password
+  if ! user_password="$(read_1password_item_password "$op_vault" "$op_item_user_password")"; then
     report_fail "Failed to retrieve the new user's password from 1Password."
     return 1
   fi
-
 
   # Build the sysadminctl command as an array
 
@@ -179,14 +181,13 @@ function sysadminctl_adduser() {
   fi
 
   if [[ "$do_give_secure_token" == true ]]; then
-    if ! admin_password="$(
-      read_1password_item_password "$op_vault" "$op_item_admin_password"
-    )"; then
+    # Use supplied 1Password key name for Secure Token–holding admin password to retrieve the actual password
+    if ! admin_password="$(read_1password_item_password "$op_vault" "$op_item_admin_password")"; then
       report_fail "Failed to retrieve the admin user's password from 1Password."
       return 1
     fi
 
-    ############### TODO: Add arguments to achieved Secure Token
+    # Add arguments to achieve Secure Token
     cmd+=(-adminUser "$admin_user_name")
     cmd+=(-adminPassword "$admin_password")
   fi
@@ -206,12 +207,20 @@ function sysadminctl_adduser() {
     return 1
   fi
 
-  ############### TODO: Make this conditional on "$do_give_secure_token" == true
-  if confirm_secure_token_was_enabled_for_user "$short_name"; then
-    report_success "User ${short_name} was created and Secure Token was enabled."
+  if [[ "$do_give_secure_token" == true ]]; then
+    if confirm_secure_token_was_enabled_for_user "$short_name"; then
+      report_success "User ${short_name} was created and Secure Token was enabled."
+    else
+      report_fail "User ${short_name} was created, but Secure Token was not confirmed enabled."
+      return 1
+    fi
   else
-    report_fail "User ${short_name} was created, but Secure Token was not confirmed enabled."
-    return 1
+    if confirm_secure_token_was_enabled_for_user "$short_name"; then
+      report_warning "A Secure Token was enabled for User ${short_name} even though that was not desired."
+    else
+      report_success "User ${short_name} was created and, as desired, Secure Token wasn’t enabled."
+      return 0
+    fi
   fi
 
   report_end_phase_standard
