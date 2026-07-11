@@ -5,18 +5,11 @@ set -euo pipefail
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-addUser.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-default_attributes_for_user_configurer.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-helpers.sh"
-safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-interactive.sh"
+# safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-interactive.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-state-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-creation-helpers.sh"
 safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn-volume-state-helpers.sh"
-
-############### REFACTORING IN PROGRESS (7/10/2026) WARNING ###############
-# Previously (as memorialized in the secure-token-for-all branch), all new users were given
-# a Secure Token, enabling them to unlock the FileVault-protected startup volume.
-# However, this power is useless for users whose home directory resides on a different and
-# encrypted volume. This refactoring changes the policy such that only users who reside
-# on the startup volume receive a Secure Token.
 
 # Global associative arrays to be populated from GenoMac-spawn/spawn/user-spawn-config.json
 #
