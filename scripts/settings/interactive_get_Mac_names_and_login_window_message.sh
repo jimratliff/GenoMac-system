@@ -12,7 +12,7 @@ function conditionally_interactive_get_Mac_names_and_login_window_message() {
     "Skipping asking for computer names and login-window text, because these were obtained in the past."
 
   fix_mangled_computername_if_necessary
-  hypervisor_force_logout
+  hypervisor_system_force_logout_if_dirty
   report_end_phase_standard
 }
 
@@ -70,6 +70,7 @@ function interactive_get_Mac_names() {
   if [[ "$final_name_is_dirty" == true ]]; then
     report_action_taken "Assigning ComputerName to $final_name"
     sudo systemsetup -setcomputername "$final_name" 2> >(grep -v '### Error:-99' >&2); success_or_not
+    mark_system_session_dirty
   fi
 
   # Unconditionally sets localhostname to ensure localhostname is set even if computername 
@@ -174,6 +175,7 @@ function interactive_get_loginwindow_message() {
     *)
       report_action_taken "New login-window message: ${user_input}"
       sudo defaults write "${domain}" "${key}" -string "$user_input"; success_or_not
+      mark_system_session_dirty
       ;;
   esac
   
