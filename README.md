@@ -113,7 +113,7 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
 [^my_google_doc]: Of course, this document is specific to, and accessible by, only me. Make your own!
 
 #### Grant Terminal full-disk access and then launch it
-Because the Mac is pristine when beginning this GenoMac-system bootstrapping process the first time, the macOS-supplied Terminal is the only terminal-emulator application available. We’ll use it until the Hypervisor has installed third-party apps, at which point I switch iTerm.
+Because the Mac is pristine when beginning this GenoMac-system bootstrapping process the first time, the macOS-supplied Terminal is the only terminal-emulator application available. We’ll use it until the Hypervisor has installed third-party apps, at which point I switch to iTerm.
 
 Terminal will need full-disk access:
 - System Settings
