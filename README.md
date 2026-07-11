@@ -7,7 +7,7 @@ Project GenoMac automates setup and maintenance of multiple Macs, each with mult
 
 Find the installer for the version of macOS you want to install: Mr. Macintosh’s [macOS Tahoe Full Installer Database](https://mrmacintosh.com/macos-tahoe-full-installer-database-download-directly-from-apple/) has links to the same full installers you’d download directly from the App Store.[^HOW_TO_INSTALL]
 
-[^HOW_TO_INSTALL]: Download the installer and run it. Choose the desired (new) volume as the target. This creates an `Applications` and a `Library` folder on that volume. Launch `Applications/Install macOS Tahoe`. Once again, choose the new volume as the target.Select VANILLA_USER as the owner of the new volume, and ✅ “Copy account settings from «username».” Set up as new. Create a local administrator account for «username». Skip Apple Account signin. Skip Apple Intelligence. Enable File Vault. Now create USER_CONFIGURER.
+[^HOW_TO_INSTALL]: Download the installer and run it. Choose the desired (new) volume as the target. This creates an `Applications` and a `Library` folder on that volume. Launch `Applications/Install macOS Tahoe`. Once again, choose the new volume as the target.Select VANILLA_USER as the owner of the new volume, and ✅ “Copy account settings from «username».” Set up as new. Create a local administrator account for «username». Skip Apple Account signin. Skip Apple Intelligence. Enable FileVault. Now create USER_CONFIGURER.
 
 Both the GenoMac-system and GenoMac-user repositories are intended to be cloned locally, in order to provide access to the necessary scripts and other resources:
 - GenoMac-system is cloned only by the designated configuring user, USER_CONFIGURER, for that Mac.
