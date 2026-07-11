@@ -12,13 +12,15 @@ function conditionally_interactive_get_Mac_names_and_login_window_message() {
     "Skipping asking for computer names and login-window text, because these were obtained in the past."
 
   fix_mangled_computername_if_necessary
+  hypervisor_force_logout
   report_end_phase_standard
 }
 
 function interactive_get_Mac_names_and_login_window_message() {
+  report_start_phase_standard
   interactive_get_Mac_names
   interactive_get_loginwindow_message
-  hypervisor_force_logout
+  report_end_phase_standard
 }
 
 function interactive_get_Mac_names() {
