@@ -33,10 +33,13 @@ cask "ghostty"                  # Terminal emulator that uses platform-native UI
 
 cask "gitbutler"                # Git client for simultaneous branches on top of existing workflow
 
-cask "glance-chamburr"          # All-in-one Quick Look previews.
+# cask "glance-chamburr"          # All-in-one Quick Look previews.
                                 # Modern fork of glance that works post-Catalina’s deprecation of legacy
                                 # framework.
                                 # You must start $APPDIR/Glance.app once manually to setup the Quick Look plugin.
+
+cask "chamburr/tap/glance"      # Developer’s advice: "If you previously installed Glance from the official tap,
+                                # uninstall it first with brew uninstall --cask glance-chamburr."
 
 cask "google-chrome"            # Web browser
 cask "google-drive"             # Desktop client for Google Drive storage service
