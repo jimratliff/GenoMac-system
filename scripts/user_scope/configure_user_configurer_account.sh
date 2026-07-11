@@ -28,7 +28,7 @@ function conditionally_exit_for_user_configurer_to_configure_itself() {
     return 1
   fi
 
-  if ! test_whether_current_user_is_in_need_of_initial_config; then
+  if ! test_whether_current_user_is_in_need_of_initial_config; then    # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
     report_to_log "USER_CONFIGURER isn’t in need of initial configuration. Moving on…"
     report_end_phase_standard
     return 0
@@ -39,8 +39,7 @@ function conditionally_exit_for_user_configurer_to_configure_itself() {
     --show-doc "${GMS_DOCS_TO_DISPLAY}/USER_CONFIGURER_how_to_configure.md" \
     --no-app \
     "$instruction_message"
-  report warning "$instruction_message"
-  report warning "You will now EXIT this shell."
+  report warning "$instruction_message${NEWLINE}You will now EXIT this shell."
   report_end_phase_standard
   exit 0
 }
@@ -64,7 +63,10 @@ function clone_genomac_user_repo_using_HTTPS() {
 
   report_start_phase_standard
 
-  clone_public_genomac_repo_using_HTTPS "$GENOMAC_USER_REPO_NAME" "$GENOMAC_USER_LOCAL_DIRECTORY"
+  clone_genomac_repo \
+    --public \
+    "$GENOMAC_USER_REPO_NAME" \
+    "$GENOMAC_USER_LOCAL_DIRECTORY"
 
   local status=$?
 
