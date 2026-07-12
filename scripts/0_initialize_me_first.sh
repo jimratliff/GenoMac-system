@@ -79,6 +79,6 @@ echo "Source ${repo_specific_environment_variables}"
 source "${repo_specific_environment_variables}"
 
 # Source environment variables corresponding to enums for states
-safe_source "${GMS_HYPERVISOR_SCRIPTS}/assign_enum_env_vars_for_states.sh"
+safe_source "${GENOMAC_SYSTEM_SCRIPTS}/assign_enum_env_vars_for_states.sh"
 
 echo "Leaving /scripts/0_initialize_me_first.sh"
