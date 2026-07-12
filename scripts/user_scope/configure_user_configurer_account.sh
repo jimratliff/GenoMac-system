@@ -68,12 +68,12 @@ function clone_genomac_user_repo_using_HTTPS() {
     "$GENOMAC_USER_REPO_NAME" \
     "$GENOMAC_USER_LOCAL_DIRECTORY"
 
-  local status=$?
+  local return_value=$?
 
-  if (( status == 0 )); then
+  if (( return_value == 0 )); then
     set_genomac_system_state "$PERM_GENOMAC_USER_HAS_BEEN_CLONED"
   fi
 
   report_end_phase_standard
-  return "$status"
+  return "$return_value"
 }
