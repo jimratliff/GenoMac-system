@@ -215,7 +215,10 @@ function sysadminctl_adduser() {
     if confirm_secure_token_was_enabled_for_user "$short_name"; then
       report_success "User ${short_name} was created and Secure Token was enabled."
     else
-      report_fail "User ${short_name} was created, but Secure Token was not confirmed enabled."
+      local err_message
+      err_message="User ${short_name} was created, but Secure Token was (a) desired but (b) not confirmed enabled."
+      err_message+="${NEWLINE}Ensure user specified in 1Password item referenced by OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME actually exists."
+      report_fail "$err_message"
       return 1
     fi
   else
