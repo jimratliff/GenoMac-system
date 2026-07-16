@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# This script file is for code that (a) is related to GenoMac-system’s user spawning but is also referenced by
+# GenoMac-user.
+
 function conditionally_mark_this_user_needs_initial_configuration() {
   # Marks USER_CONFIGURER as needing initial configuration by GenoMac-user, if this hasn’t already been marked.
   # This is necessary as an explicit step because (a) Hypervisor-System automatically marks as needing initial
