@@ -82,6 +82,12 @@ function conditionally_create_user_accounts_for_this_Mac() {
   admin_user_name="$(read_1password_item_notes_plain "$op_vault" "$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME")"
   op_admin_password_item_name="$OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD"
 
+  # Ensure the designated authorizing admin user actually exists as a user
+  if ! does_user_name_exist "$admin_user_name"; then
+    report_fail "Designated authorizing admin user “$admin_user_name” doesn’t exist as a user."
+    return 1
+  fi
+  
   # Get JSON object specifying users to create from GenoMac-private/spawn/specs-of-users-to-create.json
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
   users_to_create_json="$(get_users_to_create_from_GenoMac_private)"
