@@ -46,11 +46,11 @@ Each user to be created is specified by:
   - Determines (a) the volume on which the user’s home directory resides and (b) the passphrase that is both (1) the user’s password and (2) the encryption passphrase for the volume.
   - A user class can specify one or more user attributes that will be inherited by default by the users that belong to that user class.
 - "avatar" (optional)
-  - The terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to USER_PICTURE_DIRECTORY.[^user_picture_directory]
+  - The terminal subpath to image file for the user’s avatar, e.g., "Betty.png", expressed relative to CUSTOM_USER_PICTURE_DIRECTORY.[^user_picture_directory]
   - The user picture at that path is referenced at the time the user account is created, at which point the data from the user picture is incorporated into the user’s profile. The user picture does not need to remain accessible at that path after the user account is created.
 - optional additional arbitrary attributes to guide later user provisioning.[^arbitrary_attributes_guide_provisioning] These attributes are *in addition* to any user attributes assigned to the user’s user class. See [User classes and attributes](https://github.com/jimratliff/GenoMac-shared/edit/main/docs/user_classes_and_attributes.md).
  
-[^user_picture_directory]: `USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"`, where `GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="${LOCAL_DROPBOX_DIRECTORY}/Preferences_common"`, where `LOCAL_DROPBOX_DIRECTORY="$HOME/Library/CloudStorage/Dropbox"`.
+[^user_picture_directory]: `CUSTOM_USER_PICTURE_DIRECTORY="$GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY/Resources/User_pictures"`, where `GENOMAC_USER_SHARED_PREFERENCES_DIRECTORY="${LOCAL_DROPBOX_DIRECTORY}/Preferences_common"`, where `LOCAL_DROPBOX_DIRECTORY="$HOME/Library/CloudStorage/Dropbox"`.
 
 [^arbitrary_attributes_guide_provisioning]: Note that, at the time of user creation, any additional attributes (which by definition aren’t required for creating the user) can’t be stored/recorded in that user’s home directory because that home directory will not exist until it is created at the later time when the user first logs in. Instead, the attribute is recorded as a system-level state file. E.g., a system-level state file "USER_ATTRIBUTE∞§¶wilma¶§∞dropbox§∞¶" would indicate that user "wilma" has the attribute "dropbox". GenoMac-user transfers these system-scoped state files to become user-scoped state files using the function `transfer_system_scoped_user_attribute_states_to_user_scoped`. (Note: `GENOMAC_STATE_USER_ATTRIBUTE_PREFIX="USER_ATTRIBUTE"`.)
 
