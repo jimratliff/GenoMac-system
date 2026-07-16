@@ -1,17 +1,32 @@
 #!/usr/bin/env zsh
 
 function set_user_picture() {
-  ############### WIP
   # Sets the account picture for an existing local user.
   #
+  # Imports the JPEG data into the user's JPEGPhoto Directory Services
+  # attribute. After a successful import, the original image file is no
+  # longer needed by the user record.
+  #
   # Usage:
-  #   set_user_picture short_name /absolute/path/to/image
+  #   set_user_picture short_name /absolute/path/to/image.jpg
+  #
+  # Sources:
+  # - Armin Briegel, “Changing a User’s Login Picture,” Scripting OS X, updated 9/20/2019.
+  #   - https://scriptingosx.com/2018/10/changing-a-users-login-picture/
+  # - Alan Siu, “Scripting changing the user picture in macOS,” Alan Siu’s Blog, 9/20/2019.
+  #   - https://www.alansiu.net/2019/09/20/scripting-changing-the-user-picture-in-macos/
+  # - Cameron Lowell Palmer’s answer, 8/27/2019, to “Setting Account Picture/JPEGPhoto with
+  #   dscl in terminal,” Ask Different, https://apple.stackexchange.com/a/367667/249826
+  # - starfry’s answer, 12/14/2021, to the same question,
+  #   https://apple.stackexchange.com/a/432510/249826
 
   report_start_phase_standard
 
   local short_name="${1:?MISSING short_name}"
   local picture_path="${2:?MISSING picture_path}"
-  local user_record="/Users/${short_name}"
+
+  local ds_user_record_path="/Users/${short_name}"
+  local ds_import_file
 
   if [[ "${picture_path}" != /* ]]; then
     report_fail "ERROR: User-picture path must be absolute: ${picture_path}"
@@ -23,17 +38,100 @@ function set_user_picture() {
     return 1
   fi
 
-  if ! dscl . -read "${user_record}" RecordName &>/dev/null; then
-    report_fail "ERROR: No local user exists with short name: ${short_name}"
+  # JPEGPhoto must contain JPEG data, regardless of the filename extension.
+  if ! /usr/bin/sips -g format "${picture_path}" 2>/dev/null |
+      /usr/bin/grep -q 'format: jpeg'
+  then
+    report_fail "ERROR: User-picture file is not a JPEG image: ${picture_path}"
     return 1
   fi
 
-  # An embedded JPEGPhoto ordinarily overrides the path stored in Picture.
-  if sudo dscl . -read "${user_record}" JPEGPhoto &>/dev/null; then
-    sudo dscl . -delete "${user_record}" JPEGPhoto
+  # Confirm that this is an existing user in the local Directory Services node.
+  if ! /usr/bin/dscl . -read \
+      "${ds_user_record_path}" \
+      RecordName \
+      &>/dev/null
+  then
+    report_fail "ERROR: Local user does not exist: ${short_name}"
+    return 1
   fi
 
-  sudo dscl . -create "${user_record}" Picture "${picture_path}"
+  ds_import_file="$(
+    /usr/bin/mktemp \
+      "${TMPDIR:-/tmp}/${short_name}_user_picture_dsimport.XXXXXXXX"
+  )" || {
+    report_fail "ERROR: Could not create temporary dsimport file."
+    return 1
+  }
+
+  # The `always` block removes the temporary file even if a command returns
+  # early from the preceding block.
+  {
+    if ! /usr/bin/printf \
+        '%s %s\n%s:%s\n' \
+        '0x0A 0x5C 0x3A 0x2C' \
+        'dsRecTypeStandard:Users 2 dsAttrTypeStandard:RecordName externalbinary:dsAttrTypeStandard:JPEGPhoto' \
+        "${short_name}" \
+        "${picture_path}" \
+        > "${ds_import_file}"
+    then
+      report_fail "ERROR: Could not construct dsimport data for user: ${short_name}"
+      return 1
+    fi
+
+    # Remove existing values before importing the replacement. An absent
+    # attribute is normal and must not be treated as an error.
+    if sudo /usr/bin/dscl . -read \
+        "${ds_user_record_path}" \
+        JPEGPhoto \
+        &>/dev/null
+    then
+      if ! sudo /usr/bin/dscl . -delete \
+          "${ds_user_record_path}" \
+          JPEGPhoto
+      then
+        report_fail \
+          "ERROR: Could not delete the existing JPEGPhoto attribute for user: ${short_name}"
+        return 1
+      fi
+    fi
+
+    if sudo /usr/bin/dscl . -read \
+        "${ds_user_record_path}" \
+        Picture \
+        &>/dev/null
+    then
+      if ! sudo /usr/bin/dscl . -delete \
+          "${ds_user_record_path}" \
+          Picture
+      then
+        report_fail \
+          "ERROR: Could not delete the existing Picture attribute for user: ${short_name}"
+        return 1
+      fi
+    fi
+
+    if ! sudo /usr/bin/dsimport \
+        "${ds_import_file}" \
+        /Local/Default \
+        M
+    then
+      report_fail "ERROR: Could not import the user picture for user: ${short_name}"
+      return 1
+    fi
+
+    if ! /usr/bin/dscl . -read \
+        "${ds_user_record_path}" \
+        JPEGPhoto \
+        &>/dev/null
+    then
+      report_fail \
+        "ERROR: dsimport completed, but JPEGPhoto was not found for user: ${short_name}"
+      return 1
+    fi
+  } always {
+    /bin/rm -f -- "${ds_import_file}"
+  }
 
   report_end_phase_standard
 }
