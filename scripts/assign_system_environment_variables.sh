@@ -32,6 +32,17 @@ GMS_RESOURCES="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/resources"
 # ~/.genomac-system/resources/docs_to_display_to_user
 GMS_DOCS_TO_DISPLAY="${GMS_RESOURCES}/docs_to_display_to_user"
 
+# Specify the local directory that holds image-file resources
+# ~/.genomac-system/resources/images
+GMS_IMAGES_RESOURCES="${GMS_RESOURCES}/images"
+
+# Specify the local directory that holds user-picture resources
+# ~/.genomac-system/resources/images/user_pictures
+GMS_USER_PICTURE_RESOURCES="${GMS_IMAGES_RESOURCES}/user_pictures"
+
+GMS_DEFAULT_USER_PICTURE_FOR_USER_CONFIGURER="${GMS_USER_PICTURE_RESOURCES}/propeller_beanie_avatar.heic"
+GMS_DEFAULT_USER_PICTURE_FOR_USER_VANILLA="${GMS_USER_PICTURE_RESOURCES}/vanilla_user_picture.heic"
+
 ############### ~/.genomac-system/scripts
 # - Local directory that holds scripts: ~/.genomac-system/scripts
 GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
