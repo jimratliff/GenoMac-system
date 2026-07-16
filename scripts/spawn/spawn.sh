@@ -175,7 +175,7 @@ function conditionally_create_user_account(){
   avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")"
   
   if [[ -n "$avatar" ]]; then
-    avatar_path="${USER_PICTURE_DIRECTORY}/${avatar}"
+    avatar_path="${CUSTOM_USER_PICTURE_DIRECTORY}/${avatar}"
   else
     avatar_path=""
   fi
