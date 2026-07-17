@@ -15,6 +15,7 @@ function subdermis() {
   safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/set_user_pictures_for_vanilla_configurer.sh.sh"
   safe_source "${GMS_USER_SCOPE_SCRIPTS}/configure_user_configurer_account.sh"
   # safe_source "${GMS_USER_SCOPE_SCRIPTS}/helpers.sh"
   safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn.sh"
@@ -30,6 +31,8 @@ function subdermis() {
   output_hypervisor_welcome_banner "$GENOMAC_SCOPE_SYSTEM"
   keep_sudo_alive
   set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
+  
+  interactive_ensure_terminal_has_fda                        # GenoMac-shared/scripts/helpers-misc.sh
 
   # Automatically install Rosetta2. Currently it’s needed by both EagleFiler and HIARCS Chess Explorer Pro.
   # When Rosetta2 is no longer needed for these apps, you can delete the following two state-assignments, and
@@ -40,8 +43,8 @@ function subdermis() {
   # Mark the configuring user as a USER_CONFIGURER
   # Only USER_CONFIGURER runs GenoMac-system, therefore this user is USER_CONFIGURER
   mark_current_user_as_user_configger                        # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
-  
-  interactive_ensure_terminal_has_fda                        # GenoMac-shared/scripts/helpers-misc.sh
+
+  conditionally_set_user_pictures_for_vanilla_and_configurer # 
   
   conditionally_adjust_path_for_homebrew                     # scripts/installations/homebrew/adjust_path_for_homebrew.sh
   
