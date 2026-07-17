@@ -44,7 +44,7 @@ function subdermis() {
   # Only USER_CONFIGURER runs GenoMac-system, therefore this user is USER_CONFIGURER
   mark_current_user_as_user_configger                        # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
 
-  conditionally_set_user_pictures_for_vanilla_and_configurer # 
+  conditionally_set_user_pictures_for_vanilla_and_configurer # scripts/settings/set_user_pictures_for_vanilla_configurer.sh
   
   conditionally_adjust_path_for_homebrew                     # scripts/installations/homebrew/adjust_path_for_homebrew.sh
   
