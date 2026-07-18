@@ -38,14 +38,6 @@ function set_user_picture() {
     return 1
   fi
 
-#   # JPEGPhoto must contain JPEG data, regardless of the filename extension.
-#   if ! /usr/bin/sips -g format "${picture_path}" 2>/dev/null |
-#       /usr/bin/grep -q 'format: jpeg'
-#   then
-#     report_fail "ERROR: User-picture file is not a JPEG image: ${picture_path}"
-#     return 1
-#   fi
-
   # Confirm that this is an existing user in the local Directory Services node.
   if ! /usr/bin/dscl . -read \
       "${ds_user_record_path}" \
