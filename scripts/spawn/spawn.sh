@@ -69,7 +69,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   report_action_taken "Beginning process to create users"
 
   report "Sign into 1Password (if necessary)"
-  op signin
+  sign_into_1password
 
   # Populate associative arrays (a) volume_name_from_user_class, (b) onepassword_key_from_user_class,
   # and (c) user_attributes_from_user_class by reading from GeoMac-private/spawn/user-spawn-config.json.
