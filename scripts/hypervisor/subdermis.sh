@@ -15,7 +15,7 @@ function subdermis() {
   safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
-  safe_source "${GMS_SETTINGS_SCRIPTS}/set_user_pictures_for_vanilla_configurer.sh.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/set_user_pictures_for_vanilla_configurer.sh"
   safe_source "${GMS_USER_SCOPE_SCRIPTS}/configure_user_configurer_account.sh"
   # safe_source "${GMS_USER_SCOPE_SCRIPTS}/helpers.sh"
   safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn.sh"
