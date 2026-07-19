@@ -28,6 +28,7 @@ cask "docker-desktop"           # App to build and share containerized applicati
 cask "downie"                   # Downloader of videos from various web sites
 cask "dropbox"                  # Cloud storage service. (Kernel extension?)
 cask "firefox"                  # Web browser
+cask "xykong/tap/flux-markdown", trusted: true   # QuickLook extension for Markdown, Mermaid, KaTeX, etc.
 
 cask "ghostty"                  # Terminal emulator that uses platform-native UI and GPU acceleration
                                 # Now with native scollbars, as of 1.3.0 March 2026
