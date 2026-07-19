@@ -19,7 +19,8 @@ cask "chatgpt"                  # Official OpenAI ChatGPT client desktop app
 cask "claude"                   # Official Anthropic Claude AI desktop app
 cask "claude-code"              # Terminal-based AI coding assistant
 cask "cmux"                     # Ghostty-based terminal with vertical tabs and notifications for AI coding agents
-cask "codex"                    # OpenAI’s coding agent that runs in your terminal
+# cask "codex"                    # OpenAI’s coding agent that runs in your terminal
+                                  # Deprecated in favor of new combo ChatGPT app
 cask "codex-app"                # OpenAI’s Codex desktop app for managing coding agents
 cask "daisydisk"                # Disk-space visualizer
 cask "discord"                  # Voice and text chat software
@@ -33,11 +34,12 @@ cask "ghostty"                  # Terminal emulator that uses platform-native UI
 
 cask "gitbutler"                # Git client for simultaneous branches on top of existing workflow
 
-cask "glance-chamburr"          # All-in-one Quick Look previews.
+# cask "glance-chamburr"          # All-in-one Quick Look previews.
                                 # Modern fork of glance that works post-Catalina’s deprecation of legacy
                                 # framework.
                                 # You must start $APPDIR/Glance.app once manually to setup the Quick Look plugin.
                                 # WARNING: This is deprecated and will disappear August 2026.
+                                # macOS won’t launch this app
 
 # cask "chamburr/tap/glance"      # Developer’s advice: "If you previously installed Glance from the official tap,
                                   # uninstall it first with brew uninstall --cask glance-chamburr."
