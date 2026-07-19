@@ -70,7 +70,7 @@ function interactive_get_Mac_names() {
   if [[ "$final_name_is_dirty" == true ]]; then
     report_action_taken "Assigning ComputerName to $final_name"
     sudo systemsetup -setcomputername "$final_name" 2> >(grep -v '### Error:-99' >&2); success_or_not
-    mark_system_session_dirty
+    mark_system_session_dirty      # GenoMac-shared/scripts/helpers-hypervisor.sh
   fi
 
   # Unconditionally sets localhostname to ensure localhostname is set even if computername 
