@@ -24,6 +24,7 @@ genomac_push_url := 'git@github.com:' + genomac_github_owner + '/' + genomac_rem
 
 ############### Repo management
 
+[group('Repo management WITHOUT GitHub authentication')]
 # Refresh local checkout from origin/main, including submodules. Does not require GitHub authentication.
 # WARNING: discards local changes in this managed checkout.
 refresh-repo-and-module:
@@ -42,6 +43,7 @@ conform-local-to-remote:
 
 # Below this point, the ability to authenticate with GitHub is required
 
+[group('Repo management WITH GitHub authentication')]
 # Updates this repo, including genomac-shared submodule, and pushes it back to GitHub
 # The git diff check detects whether there are staged changes to the submodule and, if so, commits them.
 # Requires authenticating with GitHub (hence the 'dev-' prefix to distinguish from refresh-repo-and-module recipe).
@@ -62,6 +64,7 @@ dev-configure-remote-for-https-fetch-and-ssh-push:
 
 ############### System state utilities
 
+[group('State utilities')]
 system-states command:
     zsh scripts/utilities/system_state_utilities.sh '{{command}}'
 
@@ -76,6 +79,7 @@ system-states-clear-all-states:
 
 ############### Logging utilities
 
+[group('Log file utilities')]
 logging command:
     zsh scripts/utilities/logging_utilities.sh '{{command}}'
 
@@ -87,6 +91,7 @@ logging-show-directory:
 
 ############### Spawn-related commands
 
+[group('User-spawning utilities')]
 spawn-related command:
     zsh scripts/spawn/spawn-related-commands.sh '{{command}}'
 
