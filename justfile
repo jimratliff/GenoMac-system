@@ -37,6 +37,7 @@ refresh-repo-and-module:
 # Destructively make the local clone match origin/main.
 # This discards local commits and tracked-file changes.
 # It does not remove untracked files.
+[group('Repo management WITHOUT GitHub authentication')]
 conform-local-to-remote:
     git -C "{{genomac_local_dir}}" fetch origin main
     git -C "{{genomac_local_dir}}" reset --hard origin/main
@@ -60,6 +61,7 @@ dev-update-repo-and-submodule:
 # Configure remote for HTTPS fetch and SSH push
 # Sets the fetch URL to HTTPS
 # Sets the push URL to SSH, using the 1Password SSH agent
+[group('Repo management WITH GitHub authentication')]
 dev-configure-remote-for-https-fetch-and-ssh-push:
     git -C "{{genomac_local_dir}}" remote set-url origin "{{genomac_fetch_url}}"
     git -C "{{genomac_local_dir}}" remote set-url --push origin "{{genomac_push_url}}"
@@ -71,12 +73,15 @@ dev-configure-remote-for-https-fetch-and-ssh-push:
 system-states command:
     zsh scripts/utilities/system_state_utilities.sh '{{command}}'
 
+[group('State utilities')]
 system-states-show:
     just system-states show
 
+[group('State utilities')]
 system-states-clear-session-states:
     just system-states clear-session
 
+[group('State utilities')]
 system-states-clear-all-states:
     just system-states clear-all
 
@@ -86,9 +91,11 @@ system-states-clear-all-states:
 logging command:
     zsh scripts/utilities/logging_utilities.sh '{{command}}'
 
+[group('Log file utilities')]
 logging-show-latest:
     just logging show-latest
 
+[group('Log file utilities')]
 logging-show-directory:
     just logging show-directory
 
@@ -98,17 +105,22 @@ logging-show-directory:
 spawn-related command:
     zsh scripts/spawn/spawn-related-commands.sh '{{command}}'
 
+[group('User-spawning utilities')]
 spawn-related-test-parent-of-home-directories-from-volume:
 	just spawn-related test-home-directories-parent
 
+[group('User-spawning utilities')]
 spawn-related-does-user-exist:
 	just spawn-related test-user-exists
 
+[group('User-spawning utilities')]
 spawn-related-what-is-startup-container:
 	just spawn-related what-is-startup-container
 
+[group('User-spawning utilities')]
 spawn-related-ensure-volume-exists:
 	just spawn-related ensure-volume-exists
 
+[group('User-spawning utilities')]
 spawn-related-create-user:
 	just spawn-related add-user
