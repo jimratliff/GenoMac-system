@@ -24,9 +24,11 @@ genomac_push_url := 'git@github.com:' + genomac_github_owner + '/' + genomac_rem
 
 ############### Repo management
 
-[group('Repo management WITHOUT GitHub authentication')]
+# refresh-repo-and-module
 # Refresh local checkout from origin/main, including submodules. Does not require GitHub authentication.
 # WARNING: discards local changes in this managed checkout.
+
+[group('Repo management WITHOUT GitHub authentication')]
 refresh-repo-and-module:
     git -C "{{genomac_local_dir}}" fetch origin main
     git -C "{{genomac_local_dir}}" reset --hard origin/main
@@ -43,10 +45,11 @@ conform-local-to-remote:
 
 # Below this point, the ability to authenticate with GitHub is required
 
-[group('Repo management WITH GitHub authentication')]
+# dev-update-repo-and-submodule
 # Updates this repo, including genomac-shared submodule, and pushes it back to GitHub
 # The git diff check detects whether there are staged changes to the submodule and, if so, commits them.
 # Requires authenticating with GitHub (hence the 'dev-' prefix to distinguish from refresh-repo-and-module recipe).
+[group('Repo management WITH GitHub authentication')]
 dev-update-repo-and-submodule:
     git -C "{{genomac_local_dir}}" pull --recurse-submodules origin main
     git -C "{{genomac_local_dir}}" submodule update --remote
