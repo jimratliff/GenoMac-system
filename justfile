@@ -1,20 +1,23 @@
 # For syntax/behavior of just, see https://github.com/casey/just
+#
+# Use A0-, A1-, … prefixes for recipe names to prioritize their display in the fzf-TUI display.
+#
+# Use `just --list` to see list of recipes by group.
+#
+# use `just --choose` to be presented with an interactive chooser to select the particular recipe
 
 # Set default shell for just to Zsh
 set shell := ["zsh", "-c"]
-
-# use `just --choose` to be presented with an interactive chooser to select the particular recipe
 
 # Typing only 'just' will run this default recipe, displaying interactive chooser.
 default:
 	@just --choose
 
-
 # Prevent intra-recipe comments from being echoed to the terminal
 set ignore-comments
 
 ############### Repo-specific configuration
-# These exist to enable closer replication of justfile code between GenoMac-system and GenoMac-user
+# This section exists to enable closer reuse of justfile code between GenoMac-system and GenoMac-user.
 
 genomac_local_dir := env_var('HOME') / '.genomac-system'
 genomac_remote_repo := 'GenoMac-system'
@@ -27,14 +30,14 @@ genomac_push_url := 'git@github.com:' + genomac_github_owner + '/' + genomac_rem
 
 # Run the Hypervisor
 [group('Hypervisor')]
-p1-hypervisor-run:
+A1-hypervisor-run:
     zsh scripts/run_hypervisor.sh
 
 ############### Repo management WITHOUT GitHub authentication
 
 # Refresh local checkout from origin/main, including submodules
 [group('Repo management WITHOUT GitHub authentication')]
-p0-repo-refresh-repo-and-module:
+A0-repo-refresh-repo-and-module:
     # Refresh local checkout from origin/main, including submodules.
     # Does not require GitHub authentication.
     # WARNING: discards local changes in this managed checkout.
@@ -57,7 +60,7 @@ repo-conform-local-to-remote:
 
 # Update repo/submodule, push → GitHub
 [group('Repo management WITH GitHub authentication')]
-p2-dev-update-repo-and-submodule:
+A2-dev-update-repo-and-submodule:
     # The git diff check detects whether there are staged changes to the
     # submodule and, if so, commits them.
     git -C "{{genomac_local_dir}}" pull --recurse-submodules origin main
