@@ -35,8 +35,8 @@ hypervisor-run:
 # Refresh local checkout from origin/main, including submodules. Does not require GitHub authentication.
 [group('Repo management WITHOUT GitHub authentication')]
 repo-refresh-repo-and-module:
-	# Refresh local checkout from origin/main, including submodules. Does not require GitHub authentication.
-	# WARNING: discards local changes in this managed checkout.
+    # Refresh local checkout from origin/main, including submodules. Does not require GitHub authentication.
+    # WARNING: discards local changes in this managed checkout.
     git -C "{{genomac_local_dir}}" fetch origin main
     git -C "{{genomac_local_dir}}" reset --hard origin/main
     git -C "{{genomac_local_dir}}" submodule update --init --recursive
@@ -44,8 +44,8 @@ repo-refresh-repo-and-module:
 # Destructively make the local clone match origin/main.
 [group('Repo management WITHOUT GitHub authentication')]
 repo-conform-local-to-remote:
-	# Discards local commits and tracked-file changes.
-	# Does not remove untracked files.
+    # Discards local commits and tracked-file changes.
+    # Does not remove untracked files.
     git -C "{{genomac_local_dir}}" fetch origin main
     git -C "{{genomac_local_dir}}" reset --hard origin/main
     git -C "{{genomac_local_dir}}" submodule sync --recursive
@@ -57,7 +57,7 @@ repo-conform-local-to-remote:
 # Updates this repo, including genomac-shared submodule, and pushes it back to GitHub. Requires authenticating with GitHub.
 [group('Repo management WITH GitHub authentication')]
 dev-update-repo-and-submodule:
-	# The git diff check detects whether there are staged changes to the submodule and, if so, commits them.
+    # The git diff check detects whether there are staged changes to the submodule and, if so, commits them.
     git -C "{{genomac_local_dir}}" pull --recurse-submodules origin main
     git -C "{{genomac_local_dir}}" submodule update --remote
     git -C "{{genomac_local_dir}}" add external/genomac-shared
@@ -67,8 +67,8 @@ dev-update-repo-and-submodule:
 # Configure remote for HTTPS fetch and SSH push 
 [group('Repo management WITH GitHub authentication')]
 dev-configure-remote-for-https-fetch-and-ssh-push:
-	# Sets the fetch URL to HTTPS
-	# Sets the push URL to SSH, using the 1Password SSH agent
+    # Sets the fetch URL to HTTPS
+    # Sets the push URL to SSH, using the 1Password SSH agent
     git -C "{{genomac_local_dir}}" remote set-url origin "{{genomac_fetch_url}}"
     git -C "{{genomac_local_dir}}" remote set-url --push origin "{{genomac_push_url}}"
     git -C "{{genomac_local_dir}}" config pull.rebase false
