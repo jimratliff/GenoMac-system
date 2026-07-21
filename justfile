@@ -27,14 +27,14 @@ genomac_push_url := 'git@github.com:' + genomac_github_owner + '/' + genomac_rem
 
 # Run the Hypervisor
 [group('Hypervisor')]
-hypervisor-run:
+p1-hypervisor-run:
     zsh scripts/run_hypervisor.sh
 
 ############### Repo management WITHOUT GitHub authentication
 
 # Refresh local checkout from origin/main, including submodules
 [group('Repo management WITHOUT GitHub authentication')]
-repo-refresh-repo-and-module:
+p0-repo-refresh-repo-and-module:
     # Refresh local checkout from origin/main, including submodules.
     # Does not require GitHub authentication.
     # WARNING: discards local changes in this managed checkout.
@@ -57,7 +57,7 @@ repo-conform-local-to-remote:
 
 # Update repo/submodule, push → GitHub
 [group('Repo management WITH GitHub authentication')]
-dev-update-repo-and-submodule:
+p2-dev-update-repo-and-submodule:
     # The git diff check detects whether there are staged changes to the
     # submodule and, if so, commits them.
     git -C "{{genomac_local_dir}}" pull --recurse-submodules origin main
