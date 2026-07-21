@@ -4,7 +4,7 @@
 #
 # Use `just --list` to see list of recipes by group.
 #
-# use `just --choose` to be presented with an interactive chooser to select the particular recipe
+# Use `just --choose` to be presented with an interactive chooser to select the particular recipe
 
 # Set default shell for just to Zsh
 set shell := ["zsh", "-c"]
