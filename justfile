@@ -87,13 +87,13 @@ dev-configure-remote-for-https-fetch-and-ssh-push:
 system-states command:
     zsh scripts/utilities/system_state_utilities.sh '{{command}}'
 
-[group('State utilities')]
 # Show directory containing state files
+[group('State utilities')]
 system-states-show:
     just system-states show
 
-[group('State utilities')]
 # Clear SESH state files
+[group('State utilities')]
 system-states-clear-session-states:
     just system-states clear-session
 
