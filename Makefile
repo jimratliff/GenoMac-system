@@ -1,38 +1,39 @@
-# Makefile for GenoMac project
+# Makefile for the GenoMac project
+#
+# This Makefile exists only for a limited bootstrap purpose. The first
+# time GenoMac-system is used on a Mac, `just` is not yet available.
+# Until the bootstrap process installs `just`, these operations can be
+# run with `make`.
 
-GENOMAC_SYSTEM_DIR := $(HOME)/.genomac-system
+.DEFAULT_GOAL := help
+
+# Directory containing this Makefile, including its trailing slash.
+makefile_dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 # --------------------------------------------------------------------
 # Phony targets (not real files)
 # --------------------------------------------------------------------
 .PHONY: \
-	run-hypervisor \
-	refresh-repo \
-	dev-update-repo-and-submodule \
-	dev-configure-remote-for-https-fetch-and-ssh-push
+	help \
+	A0-repo-refresh-repo-and-submodule \
+	A1-hypervisor-run
 
-# --------------------------------------------------------------------
-# Targets
-# --------------------------------------------------------------------
+help:
+	@printf '%s\n' \
+		'Available targets:' \
+		'  A0-repo-refresh-repo-and-submodule' \
+		'  A1-hypervisor-run'
 
-run-hypervisor:
-	zsh scripts/run_hypervisor.sh
+# Refresh local checkout from origin/main, including submodules.
+# Does not require GitHub authentication.
+# WARNING: discards local commits and tracked-file changes in this
+# managed checkout. It does not remove untracked files.
+A0-repo-refresh-repo-and-submodule:
+	git -C "$(HOME)/.genomac-system" fetch origin main
+	git -C "$(HOME)/.genomac-system" reset --hard origin/main
+	git -C "$(HOME)/.genomac-system" submodule update --init --recursive
 
-refresh-repo:
-	git -C "$(GENOMAC_SYSTEM_DIR)" pull --recurse-submodules origin main
-
-## Updates genomac-system repo, including genomac-shared submodule, and pushes it back to GitHub
-## git diff… checks whether there are staged changes to the submodule and, if so, commits them
-dev-update-repo-and-submodule:
-	git -C "$(GENOMAC_SYSTEM_DIR)" pull --recurse-submodules origin main
-	git -C "$(GENOMAC_SYSTEM_DIR)" submodule update --remote
-	git -C "$(GENOMAC_SYSTEM_DIR)" add external/genomac-shared
-	git -C "$(GENOMAC_SYSTEM_DIR)" diff --cached --quiet external/genomac-shared || git -C "$(GENOMAC_SYSTEM_DIR)" commit -m "Update genomac-shared submodule"
-	git -C "$(GENOMAC_SYSTEM_DIR)" push origin main
-
-# Configure remote for HTTPS fetch and SSH push
-# Sets the fetch URL to HTTPS (no auth needed for public repo)
-# Sets the push URL to SSH (uses 1Password SSH agent)
-dev-configure-remote-for-https-fetch-and-ssh-push:
-	git -C "$(GENOMAC_SYSTEM_DIR)" remote set-url origin https://github.com/jimratliff/GenoMac-system.git
-	git -C "$(GENOMAC_SYSTEM_DIR)" remote set-url --push origin git@github.com:jimratliff/GenoMac-system.git
+# Run from the project directory so the script's relative paths behave
+# consistently even if Make was invoked from elsewhere.
+A1-hypervisor-run:
+	cd "$(makefile_dir)" && zsh scripts/run_hypervisor.sh
