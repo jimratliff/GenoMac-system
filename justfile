@@ -40,7 +40,7 @@ A1-hypervisor-run:
 
 # Refresh local checkout from origin/main, including submodules
 [group('Repo management WITHOUT GitHub authentication')]
-A0-repo-refresh-repo-and-module:
+A0-repo-refresh-repo-and-submodule:
     # Refresh local checkout from origin/main, including submodules.
     # Does not require GitHub authentication.
     # WARNING: discards local changes in this managed checkout.
