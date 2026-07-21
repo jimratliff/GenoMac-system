@@ -32,10 +32,11 @@ hypervisor-run:
 
 ############### Repo management WITHOUT GitHub authentication
 
-# Refresh local checkout from origin/main, including submodules. Does not require GitHub authentication.
+# Refresh local checkout from origin/main, including submodules
 [group('Repo management WITHOUT GitHub authentication')]
 repo-refresh-repo-and-module:
-    # Refresh local checkout from origin/main, including submodules. Does not require GitHub authentication.
+    # Refresh local checkout from origin/main, including submodules.
+    # Does not require GitHub authentication.
     # WARNING: discards local changes in this managed checkout.
     git -C "{{genomac_local_dir}}" fetch origin main
     git -C "{{genomac_local_dir}}" reset --hard origin/main
@@ -54,10 +55,11 @@ repo-conform-local-to-remote:
 ############### Repo management WITH GitHub authentication
 # Below this point, the ability to authenticate with GitHub is required
 
-# Updates this repo, including genomac-shared submodule, and pushes it back to GitHub. Requires authenticating with GitHub.
+# Update repo/submodule, push → GitHub
 [group('Repo management WITH GitHub authentication')]
 dev-update-repo-and-submodule:
-    # The git diff check detects whether there are staged changes to the submodule and, if so, commits them.
+    # The git diff check detects whether there are staged changes to the
+    # submodule and, if so, commits them.
     git -C "{{genomac_local_dir}}" pull --recurse-submodules origin main
     git -C "{{genomac_local_dir}}" submodule update --remote
     git -C "{{genomac_local_dir}}" add external/genomac-shared
@@ -87,9 +89,11 @@ system-states-show:
 system-states-clear-session-states:
     just system-states clear-session
 
-[group('State utilities')]
-system-states-clear-all-states:
-    just system-states clear-all
+# DEPRECATED BELOW COMMAND because too easy/dangerous to trigger accidentally
+# given there’s no real use case for it.
+# [group('State utilities')]
+# system-states-clear-all-states:
+#    just system-states clear-all
 
 ############### Logging utilities
 
@@ -97,10 +101,12 @@ system-states-clear-all-states:
 logging command:
     zsh scripts/utilities/logging_utilities.sh '{{command}}'
 
+# Show latest GenoMac-system log file
 [group('Log file utilities')]
 logging-show-latest:
     just logging show-latest
 
+# Show directory holding GenoMac-system log files
 [group('Log file utilities')]
 logging-show-directory:
     just logging show-directory
