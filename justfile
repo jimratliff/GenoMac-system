@@ -18,6 +18,9 @@ set ignore-comments
 
 ############### Repo-specific configuration
 # This section exists to enable closer reuse of justfile code between GenoMac-system and GenoMac-user.
+# The recipes below this section refer to the variables defined immediately below. The definition
+# of these variables are repo-specific.
+# This allows the repo-specificity to be largely restricted to this section of variable definitions.
 
 genomac_local_dir := env_var('HOME') / '.genomac-system'
 genomac_remote_repo := 'GenoMac-system'
@@ -28,7 +31,7 @@ genomac_push_url := 'git@github.com:' + genomac_github_owner + '/' + genomac_rem
 
 ############### Run the Hypervisor
 
-# Run the Hypervisor
+# Run the Hypervisor-System
 [group('Hypervisor')]
 A1-hypervisor-run:
     zsh scripts/run_hypervisor.sh
@@ -85,10 +88,12 @@ system-states command:
     zsh scripts/utilities/system_state_utilities.sh '{{command}}'
 
 [group('State utilities')]
+# Show directory containing state files
 system-states-show:
     just system-states show
 
 [group('State utilities')]
+# Clear SESH state files
 system-states-clear-session-states:
     just system-states clear-session
 
