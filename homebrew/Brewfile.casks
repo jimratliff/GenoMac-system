@@ -63,6 +63,7 @@ cask "opencode-desktop"         # AI coding agent desktop client
 # cask "orion"                    # WebKit-based web browser
 cask "proton-drive"             # Client for Proton Drive
 cask "raindropio"               # Bookmarking manager
+cask "sync"                     # Canadian zero-knowledge cloud-syncing service
 # cask "textexpander"             # Insert pre-made snippets of text anywhere
 cask "tower"                    # Git client GUI
 cask "visual-studio-code"       # Microsoft open-source code editor
