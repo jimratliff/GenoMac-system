@@ -1,20 +1,21 @@
 # For syntax/behavior of just, see https://github.com/casey/just
 #
-# Use A0-, A1-, … prefixes for recipe names to prioritize their display in the fzf-TUI display.
-#
 # Use `just --list` to see list of recipes by group.
 #
-# Use `just --choose` to be presented with an interactive chooser to select the particular recipe
+# Run bare `just` to open the interactive chooser to select the particular recipe.
+# Recipes initially appear in justfile order, with the first public argument-free
+# recipe at the bottom of the chooser.
 
 # Set default shell for just to Zsh
 set shell := ["zsh", "-c"]
 
-# Typing only 'just' will run this default recipe, displaying interactive chooser.
-default:
-	@just --choose
-
 # Prevent intra-recipe comments from being echoed to the terminal
 set ignore-comments
+
+# Typing only `just` displays the interactive chooser.
+[default, private]
+choose:
+    @FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-} --no-sort" just --unsorted --choose
 
 ############### Repo-specific configuration
 # This section exists to enable closer reuse of justfile code between GenoMac-system and GenoMac-user.
@@ -29,48 +30,59 @@ genomac_github_owner := 'jimratliff'
 genomac_fetch_url := 'https://github.com/' + genomac_github_owner + '/' + genomac_remote_repo + '.git'
 genomac_push_url := 'git@github.com:' + genomac_github_owner + '/' + genomac_remote_repo + '.git'
 
-############### Run the Hypervisor
-
-# Run the Hypervisor-System
-[group('Hypervisor')]
-A1-hypervisor-run:
-    zsh scripts/run_hypervisor.sh
-
-############### Repo management WITHOUT GitHub authentication
+############### HIGH-PRIORITY RECIPES ###############
+# The following will be listed in order (upward from the bottom in the fzf TUI’s left column)
 
 # Refresh local checkout from origin/main, including submodules
 [group('Repo management WITHOUT GitHub authentication')]
-A0-repo-refresh-repo-and-submodule:
-    # Refresh local checkout from origin/main, including submodules.
+repo-refresh-repo-and-submodule:
+    # Makes the superproject and all submodules match origin/main.
     # Does not require GitHub authentication.
-    # WARNING: discards local changes in this managed checkout.
-    git -C "{{genomac_local_dir}}" fetch origin main
-    git -C "{{genomac_local_dir}}" reset --hard origin/main
-    git -C "{{genomac_local_dir}}" submodule update --init --recursive
-
-# Destructively make the local clone match origin/main.
-[group('Repo management WITHOUT GitHub authentication')]
-repo-conform-local-to-remote:
-    # Discards local commits and tracked-file changes.
-    # Does not remove untracked files.
+    # Local modifications and extraneous files are intentionally discarded.
     git -C "{{genomac_local_dir}}" fetch origin main
     git -C "{{genomac_local_dir}}" reset --hard origin/main
     git -C "{{genomac_local_dir}}" submodule sync --recursive
-    git -C "{{genomac_local_dir}}" submodule update --init --recursive
+    git -C "{{genomac_local_dir}}" submodule update --init --recursive --checkout --force
+    git -C "{{genomac_local_dir}}" submodule foreach --recursive 'git reset --hard && git clean -ffdx'
+    git -C "{{genomac_local_dir}}" clean -ffdx
 
-############### Repo management WITH GitHub authentication
-# Below this point, the ability to authenticate with GitHub is required
+# Run the Hypervisor-System
+[group('Hypervisor')]
+hypervisor-run:
+    zsh scripts/run_hypervisor.sh
 
 # Update repo/submodule, push → GitHub
 [group('Repo management WITH GitHub authentication')]
-A2-dev-update-repo-and-submodule:
-    # The git diff check detects whether there are staged changes to the
-    # submodule and, if so, commits them.
+dev-update-repo-main-branch-and-submodule:
+    @branch="$(git -C {{quote(genomac_local_dir)}} branch --show-current)"; \
+        if [[ "$branch" != main ]]; then \
+            [[ -n "$branch" ]] || branch="detached HEAD"; \
+            print -u2 -- "error: this recipe requires the main branch; current state: $branch"; \
+            exit 1; \
+        fi
     git -C "{{genomac_local_dir}}" pull --recurse-submodules origin main
     git -C "{{genomac_local_dir}}" submodule update --remote
     git -C "{{genomac_local_dir}}" add external/genomac-shared
     git -C "{{genomac_local_dir}}" diff --cached --quiet external/genomac-shared || git -C "{{genomac_local_dir}}" commit -m "Update genomac-shared submodule"
     git -C "{{genomac_local_dir}}" push origin main
+
+############### Logging utilities
+
+[group('Log file utilities')]
+logging command:
+    zsh scripts/utilities/logging_utilities.sh {{quote(command)}}
+
+# Show latest GenoMac-system log file
+[group('Log file utilities')]
+logging-show-latest:
+    just logging show-latest
+
+# Show directory holding GenoMac-system log files
+[group('Log file utilities')]
+logging-show-directory:
+    just logging show-directory
+
+############### Remaining repository-management utility
 
 # Configure remote for HTTPS fetch and SSH push 
 [group('Repo management WITH GitHub authentication')]
@@ -85,7 +97,7 @@ dev-configure-remote-for-https-fetch-and-ssh-push:
 
 [group('State utilities')]
 system-states command:
-    zsh scripts/utilities/system_state_utilities.sh '{{command}}'
+    zsh scripts/utilities/system_state_utilities.sh {{quote(command)}}
 
 # Show directory containing state files
 [group('State utilities')]
@@ -103,27 +115,11 @@ system-states-clear-session-states:
 # system-states-clear-all-states:
 #    just system-states clear-all
 
-############### Logging utilities
-
-[group('Log file utilities')]
-logging command:
-    zsh scripts/utilities/logging_utilities.sh '{{command}}'
-
-# Show latest GenoMac-system log file
-[group('Log file utilities')]
-logging-show-latest:
-    just logging show-latest
-
-# Show directory holding GenoMac-system log files
-[group('Log file utilities')]
-logging-show-directory:
-    just logging show-directory
-
 ############### Spawn-related commands
 
 [group('User-spawning utilities')]
 spawn-related command:
-    zsh scripts/spawn/spawn-related-commands.sh '{{command}}'
+    zsh scripts/spawn/spawn-related-commands.sh {{quote(command)}}
 
 [group('User-spawning utilities')]
 spawn-related-test-parent-of-home-directories-from-volume:
