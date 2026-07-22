@@ -35,7 +35,7 @@ genomac_push_url := 'git@github.com:' + genomac_github_owner + '/' + genomac_rem
 
 # Refresh local checkout from origin/main, including submodules
 [group('Repo management WITHOUT GitHub authentication')]
-repo-refresh-repo-and-submodule:
+refresh-repo-and-submodule:
     # Makes the superproject and all submodules match origin/main.
     # Does not require GitHub authentication.
     # Local modifications and extraneous files are intentionally discarded.
@@ -48,7 +48,7 @@ repo-refresh-repo-and-submodule:
 
 # Run the Hypervisor-System
 [group('Hypervisor')]
-hypervisor-run:
+run-hypervisor:
     zsh scripts/run_hypervisor.sh
 
 # Update repo/submodule, push → GitHub
