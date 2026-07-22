@@ -70,7 +70,7 @@ dev-update-repo-main-branch-and-submodule:
 
 [group('Log file utilities')]
 logging command:
-    zsh scripts/utilities/logging_utilities.sh {{quote(command)}}
+    zsh external/genomac-shared/scripts/logging_utilities.sh {{quote(command)}}
 
 # Show latest GenoMac-system log file
 [group('Log file utilities')]
