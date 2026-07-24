@@ -14,22 +14,16 @@ function subdermis() {
   safe_source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_non_homebrew_apps.sh"
   safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_ask_initial_questions.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/set_user_pictures_for_vanilla_configurer.sh"
   safe_source "${GMS_USER_SCOPE_SCRIPTS}/configure_user_configurer_account.sh"
   # safe_source "${GMS_USER_SCOPE_SCRIPTS}/helpers.sh"
   safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn.sh"
 
-  # TODO:
-  # - Consider adding environment variable SESH_FORCED_LOGOUT_DIRTY to avoid
-  #   gratuitous logouts. An action requiring --forced-logout would (a) set this
-  #   state rather than immediately triggering a logout.
-  #   Requires new function `hypervisor_forced_logout_if_dirty`
-
-  # TODO: Ask user whether VERBOSE output is wanted
-
   output_hypervisor_welcome_banner "$GENOMAC_SCOPE_SYSTEM"
   keep_sudo_alive
+  conditionally_ask_and_set_verbosity_preference
   set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
   
   interactive_ensure_terminal_has_fda                        # GenoMac-shared/scripts/helpers-misc.sh
