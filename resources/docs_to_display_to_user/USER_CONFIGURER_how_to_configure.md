@@ -36,3 +36,6 @@ Keep rerunning the Hypervisor until you see:
   - `cd ~/.genomac-system`
 - Re-run the Hypervisor of GenoMac-system:
   - `just run-hypervisor`
+ 
+## Be tidy: Close this document
+- ❑ Close this document
