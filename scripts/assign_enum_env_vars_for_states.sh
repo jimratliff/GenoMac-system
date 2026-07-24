@@ -85,7 +85,6 @@ SESH_NON_HOMEBREW_APPS_HAVE_BEEN_INSTALLED="SESH_non_homebrew_apps_have_been_ins
 SESH_REPO_HAS_BEEN_TESTED_FOR_CHANGES="SESH_repo_has_been_tested_for_changes"
 SESH_RESOURCES_HAVE_BEEN_INSTALLED="SESH_resources_have_been_installed"
 SESH_SYSTEMWIDE_SETTINGS_HAVE_BEEN_IMPLEMENTED="SESH_systemwide_settings_have_been_implemented"
-SESH_TERMINAL_FULL_DISK_ACCESS_HAS_BEEN_ASSURED="SESH_terminal_full_disk_access_has_been_assured"
 
 # Export environment variables to be available in all subsequent shells
 # report_action_taken "Exporting environment variables corresponding to states."
