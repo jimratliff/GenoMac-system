@@ -16,6 +16,7 @@ function subdermis() {
   safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_ask_initial_questions.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_set_permissions.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/set_user_pictures_for_vanilla_configurer.sh"
   safe_source "${GMS_USER_SCOPE_SCRIPTS}/configure_user_configurer_account.sh"
   # safe_source "${GMS_USER_SCOPE_SCRIPTS}/helpers.sh"
@@ -25,8 +26,7 @@ function subdermis() {
   keep_sudo_alive
   conditionally_ask_and_set_verbosity_preference
   set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
-  
-  interactive_ensure_terminal_has_fda                        # GenoMac-shared/scripts/helpers-misc.sh
+  conditional_interactive_ensure_terminal_has_fda             # GenoMac-shared/scripts/helpers-misc.sh
 
   # Automatically install Rosetta2. Currently it’s needed by both EagleFiler and HIARCS Chess Explorer Pro.
   # When Rosetta2 is no longer needed for these apps, you can delete the following two state-assignments, and
