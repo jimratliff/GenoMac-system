@@ -18,3 +18,6 @@ refined to use the time it last asked for USER_CONFIGURER to sign into the Mac A
 
 ## Return to the terminal
 Now return to the terminal and acknowledge you have completed signing in to the Mac App Store.
+
+## Be tidy: Close this document
+- ❑ Close this document
