@@ -26,7 +26,7 @@ function subdermis() {
   keep_sudo_alive
   conditionally_ask_and_set_verbosity_preference
   set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
-  conditional_interactive_ensure_terminal_has_fda             # GenoMac-shared/scripts/helpers-misc.sh
+  interactive_ensure_terminal_has_fda                        # GenoMac-shared/scripts/helpers-misc.sh
 
   # Automatically install Rosetta2. Currently it’s needed by both EagleFiler and HIARCS Chess Explorer Pro.
   # When Rosetta2 is no longer needed for these apps, you can delete the following two state-assignments, and
