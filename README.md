@@ -123,14 +123,14 @@ installation of which will install, among other things, a version of Git, which 
 > [!NOTE]
 > Beginning with macOS Tahoe 26, pasting into the Terminal can result in a scary warning: “Possible Malware, Paste Blocked” (followed by “Your Mac has not been harmed. Scammers often encourage pasting text into Terminal to try and harm your Mac or compromise your privacy. These instructions are commonly offered via websites, chat agents, apps, files, or a phone call.”). Choose “Paste Anyway.”
 
+> [!WARNING]
+> Near the end of the following installation process, **do *not* follow Homebrew’s instructions to modify the PATH. This will be dealt with systemwide later.**
+
 To install Homebrew, launch Terminal and paste in the following code snippet:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 (This is the same command as you would get by going to [brew.sh](https://brew.sh/) and copying the command from near the top of the page under “Install Homebrew.”)
-
-> [!WARNING]
-> **Do *not* follow Homebrew’s instructions to modify the PATH. This will be dealt with systemwide later.**
 
 #### Clone this repo to `~/.genomac-system`
 This public GenoMac-user repo is meant to be cloned locally (using https) to USER_CONFIGURER’s home directory.[^https] 
