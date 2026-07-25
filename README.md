@@ -120,7 +120,7 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
 We can’t even clone this repository at this point, because Git doesn’t come out-of-the-box on macOS. We’ll need Homebrew eventually to perform app installations. We install Homebrew now, because doing so has the side benefit that installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
 installation of which will install, among other things, a version of Git, which will permit cloning this repo.
 
-> [NOTE!]
+> [!NOTE]
 > Beginning with macOS Tahoe 26, pasting into the Terminal can result in a scary warning: “Possible Malware, Paste Blocked” (followed by “Your Mac has not been harmed. Scammers often encourage pasting text into Terminal to try and harm your Mac or compromise your privacy. These instructions are commonly offered via websites, chat agents, apps, files, or a phone call.”). Choose “Paste Anyway.”
 
 To install Homebrew, launch Terminal and paste in the following code snippet:
