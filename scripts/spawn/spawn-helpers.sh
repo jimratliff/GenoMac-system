@@ -190,8 +190,10 @@ function confirm_secure_token_was_enabled_for_user() {
   # expected when Secure Token is enabled.
   
   report_start_phase_standard
-  local short_name="$1"
+  local short_name="${1:?MISSING short_name}"
+  
   local output
+  local return_value
 
   if ! output="$(sysadminctl -secureTokenStatus "$short_name" 2>&1)"; then
     report_fail "Failed to determine Secure Token status for user ${short_name}."
@@ -199,13 +201,16 @@ function confirm_secure_token_was_enabled_for_user() {
   fi
 
   if [[ "$output" == *"Secure token is ENABLED for user"* ]]; then
-    report_success "Secure Token is enabled for user ${short_name}."
-    report_end_phase_standard
-    return 0
+    report_to_log "Secure Token is enabled for user ${short_name}."
+    return_value=0
+  else
+    report_to_log "Secure Token does not appear to be enabled for user ${short_name}. Output was: ${output}"
+    return_value=1
   fi
-
-  report_fail "Secure Token does not appear to be enabled for user ${short_name}. Output was: ${output}"
-  return 1
+  
+  report_end_phase_standard
+  return "$return_value"
+  
 }
 
 function parent_of_users_home_directories() {
