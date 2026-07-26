@@ -1,7 +1,7 @@
 # GenoMac-system
 
 > [!NOTE]
-> You can skip directly to [Step-by-step: Set up a new Mac](https://github.com/jimratliff/GenoMac-system/blob/main/README.md#step-by-step-set-up-a-new-mac)
+> You can skip directly to [Step-by-step: Set up a new Mac](#step-by-step-set-up-a-new-mac)
 
 Project GenoMac automates setup and maintenance of multiple Macs, each with multiple users.[^multiple_users] The current repository (GenoMac-system) is one of three repositories in Project GenoMac. It addresses system-level configuration of each Mac. The other two repositories are: (a) [GenoMac-user](https://github.com/jimratliff/GenoMac-user), which addresses user-level configuration of each user, and (b) [GenoMac-shared](https://github.com/jimratliff/GenoMac-shared), which provides shared code used by both GenoMac-system and GenoMac-user.[^genomac_shared_purpose] (There is an additional, private repo, too: [GenoMac-private](https://github.com/jimratliff/GenoMac-private). Its purpose is TBD.)
 
