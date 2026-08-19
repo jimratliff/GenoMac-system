@@ -18,13 +18,6 @@ function install_via_homebrew() {
   # Preemptively calling `keep_sudo_alive` doesn’t prevent this
   report_start_phase_standard
 
-  # Says: don’t quarantine installed apps
-  # This duplicates the effect of `HOMEBREW_CASK_OPTS=--no-quarantine` in `.config/homebrew/brew.env`
-  # but this dotfile hasn’t been established by the time this script runs the first time when 
-  # bootstrapping a Mac.
-  report_action_taken "Suppressing quarantine flag on to-be-installed apps"
-  export HOMEBREW_CASK_OPTS=--no-quarantine
-
   local brewfile_path
   brewfile_path="${GMS_HOMEBREW}/Brewfile"
 
@@ -58,3 +51,4 @@ function install_via_homebrew() {
   report_end_phase_standard
 
 }
+
