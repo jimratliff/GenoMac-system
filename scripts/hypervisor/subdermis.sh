@@ -13,6 +13,7 @@ function subdermis() {
   safe_source "${GMS_INSTALL_SCRIPTS}/install_rosetta.sh"
   safe_source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_non_homebrew_apps.sh"
   safe_source "${GMS_RESOURCE_INSTALL_SCRIPTS}/install_resources.sh"
+  safe_source "${GMS_SETTINGS_SCRIPTS}/enable_Touch_ID_authentication_for_sudo.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/implement_systemwide_settings.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_ask_initial_questions.sh"
   safe_source "${GMS_SETTINGS_SCRIPTS}/interactive_get_Mac_names_and_login_window_message.sh"
@@ -23,6 +24,7 @@ function subdermis() {
   safe_source "${GMS_USER_SPAWNING_SCRIPTS}/spawn.sh"
 
   output_hypervisor_welcome_banner "$GENOMAC_SCOPE_SYSTEM"
+  enable_Touch_ID_authentication_for_sudo
   keep_sudo_alive
   conditionally_ask_and_set_verbosity_preference
   set_genomac_system_state "$SESH_SESSION_HAS_STARTED"
