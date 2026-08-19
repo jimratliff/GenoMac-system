@@ -55,7 +55,8 @@ function implement_systemwide_settings() {
   sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName ; success_or_not
 
   # Enable Touch ID authentication for sudo
-  enable_Touch_ID_authentication_for_sudo
+  # This has been relocated to the beginning of subdermis.sh
+  # enable_Touch_ID_authentication_for_sudo
   
   report_end_phase_standard
 
