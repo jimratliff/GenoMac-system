@@ -12,7 +12,7 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-echo "Inside /scripts/0_initialize_me_first.sh"
+echo "Inside /scripts/0_initialize_me_first.sh" >> "$GM_LOG_FILE"
 
 # NOTE: REPO_SHORT_NAME is defined here only to be used in the following
 #       “Logging output to GM_LOG_FILE” code, in order that that code block can be
@@ -59,17 +59,17 @@ GENOMAC_SYSTEM_ROOT="${GENOMAC_SYSTEM_SCRIPTS:h}"   # ~/.genomac-system
 GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM="${GENOMAC_SYSTEM_ROOT}/external/genomac-shared" # ~/.genomac-system/external/genomac-shared
 HELPERS_FROM_GENOMAC_SHARED="${GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM}/scripts"  # external/genomac-shared/scripts
 
-echo "Paths determined in 0_initialize_me_first.sh:"
+echo "Paths determined in 0_initialize_me_first.sh:"       >> "$GM_LOG_FILE"
 echo "• this_script_path: ${this_script_path}"
-echo "• GENOMAC_SYSTEM_SCRIPTS: ${GENOMAC_SYSTEM_SCRIPTS}"
-echo "• GENOMAC_SYSTEM_ROOT: ${GENOMAC_SYSTEM_ROOT}"
-echo "• GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM: ${GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM}"
+echo "• GENOMAC_SYSTEM_SCRIPTS: ${GENOMAC_SYSTEM_SCRIPTS}" >> "$GM_LOG_FILE"
+echo "• GENOMAC_SYSTEM_ROOT: ${GENOMAC_SYSTEM_ROOT}"       >> "$GM_LOG_FILE"
+echo "• GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM: ${GENOMAC_SHARED_ROOT_RELATIVE_TO_GENOMAC_SYSTEM}"  >> "$GM_LOG_FILE"
 
 # Source the master-helper script from GenoMac-shared submodule, which sources helpers
 # and environment variables from GenoMac-shared
 master_helper_script="${HELPERS_FROM_GENOMAC_SHARED}/helpers.sh"
 
-echo "Source ${master_helper_script}"
+echo "Source ${master_helper_script}"  >> "$GM_LOG_FILE"
 source "${master_helper_script}"
 
 turn_off_verbose_genomac_output
@@ -77,10 +77,10 @@ turn_off_verbose_genomac_output
 # Source repo-specific environment-variables script
 repo_specific_environment_variables="${GENOMAC_SYSTEM_SCRIPTS}/assign_system_environment_variables.sh"
 
-echo "Source ${repo_specific_environment_variables}"
+echo "Source ${repo_specific_environment_variables}"  >> "$GM_LOG_FILE"
 source "${repo_specific_environment_variables}"
 
 # Source environment variables corresponding to enums for states
 safe_source "${GENOMAC_SYSTEM_SCRIPTS}/assign_enum_env_vars_for_states.sh"
 
-echo "Leaving /scripts/0_initialize_me_first.sh"
+echo "Leaving /scripts/0_initialize_me_first.sh"  >> "$GM_LOG_FILE"
