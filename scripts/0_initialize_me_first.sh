@@ -12,8 +12,6 @@
 # Fail early on unset variables or command failure
 set -euo pipefail
 
-echo "Inside /scripts/0_initialize_me_first.sh" >> "$GM_LOG_FILE"
-
 # NOTE: REPO_SHORT_NAME is defined here only to be used in the following
 #       “Logging output to GM_LOG_FILE” code, in order that that code block can be
 #       identical (for copy/paste) across both GenoMac-system and GenoMac-user
@@ -43,6 +41,8 @@ if [[ "${GM_STDOUT_STDERR_NOW_BEING_SENT_TO_GM_LOG_FILE:-false}" != true ]]; the
 fi
 
 ###
+
+echo "Inside /scripts/0_initialize_me_first.sh" >> "$GM_LOG_FILE"
 
 # Get path of THIS script, even when sourced
 # Explanation:
