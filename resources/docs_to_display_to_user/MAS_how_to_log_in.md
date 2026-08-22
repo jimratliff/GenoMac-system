@@ -1,5 +1,10 @@
 # How to log into the Mac App Store
 Source: “[Sign in to your Apple Account in the App Store on Mac](https://support.apple.com/en-kg/guide/app-store/fir6253293d/mac),” Apple Store User Guide.
+
+> [!NOTE]
+> Don’t want to deal with this right this sec? Return to the terminal and enter 'punt'.
+> This task will be re-presented to you next time you run the Hypervisor.
+
 ## Procedure
 - Go to the App Store app on your Mac
   - The Hypervisor should have launched the App Store for you. Just find it.
