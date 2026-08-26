@@ -35,6 +35,9 @@ function install_non_homebrew_apps() {
   report_action_taken "Install default-browser utility to set the default browser"
   install_default_browser_cli    # scripts/installations/non_homebrew/install_default_browser_cli.sh
 
+  report_action_taken "Conditionally install HIARCS Chess Explorer Pro"
+  conditionally_install_hiarcs_chess_explorer_pro  # scripts/installations/non_homebrew/install_hiarcs_chess_explorer_pro.sh
+
   # Installing VisualDiffer in this way is DEPRECATED because it’s available from Homebrew
   # report_action_taken "Install VisualDiffer.app to diff two text files"
   # install_visualdiffer
