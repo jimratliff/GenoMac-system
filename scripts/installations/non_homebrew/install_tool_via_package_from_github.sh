@@ -1,9 +1,17 @@
 #!/bin/zsh
 
 function install_tool_via_package_from_github() {
-  # Download and install a GitHub-hosted macOS installer package (.pkg) whose
-  # payload is a *command-line tool or utility*, not an .app bundle, and manage
-  # versioning via pkgutil when possible.
+  # Ensure a command-line tool distributed as a macOS installer package on GitHub
+  # is installed at the pinned version or newer.
+  # - When possible, inspect the installed package receipt, if any, and skip,
+  #   upgrade, or reinstall based on its version and the expected binary's
+  #   presence.
+  # - If installation is needed, download the pinned release asset and install it
+  #   with `sudo installer`.
+  # - Issues warning if the latest release available on GitHub is different than the
+  #   “pinned version” supplied as an argument.
+  # - With -f, bypass installed-version and binary-presence checks and reinstall
+  #   the pinned package, potentially downgrading a newer version.
   #
   # Usage:
   #   install_tool_via_package_from_github [-f] tool_name repo_slug pinned_version pkg_filename [pkg_id] [binary_path]
