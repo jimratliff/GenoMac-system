@@ -23,6 +23,8 @@ GENOMAC_VERBOSE="true"
 # Local directory that holds declarative Homebrew files
 GMS_HOMEBREW="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/homebrew"
 
+HOMEBREW_TRUST_FILE="${GMS_HOMEBREW}/Homebrew.trust"
+
 ############### ~/.genomac-system/resources
 # Local directory that holds resources (files or folders) needed for particular
 # operations by GenoMac-system, typically resources to be installed at the system level
