@@ -58,6 +58,11 @@ function install_via_homebrew() {
 function apply_homebrew_trust() {
   # Applies `brew trust` to each entry in the supplied trust file.
   # Allows for blank lines and # comments
+  #
+  # Examples:
+  #   cask xykong/tap/flux-markdown
+  #   formula jeremy4971/mysides-swift/mysides-swift
+  #
   report_start_phase_standard
   
   local trust_file="${1:?missing trust file}"
