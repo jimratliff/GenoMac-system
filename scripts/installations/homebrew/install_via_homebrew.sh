@@ -52,3 +52,51 @@ function install_via_homebrew() {
 
 }
 
+function apply_homebrew_trust() {
+  # Applies `brew trust` to each entry in the supplied trust file.
+  # Allows for blank lines and # comments
+  report_start_phase_standard
+  
+  local trust_file="${1:?missing trust file}"
+  local extra
+  local kind
+  local name
+  
+  local -i line_number=0
+
+  if [[ ! -r "$trust_file" ]]; then
+    report_fail "Cannot read Homebrew trust file: “${trust_file}”"
+    return 1
+  fi
+
+  while IFS=$' \t' read -r kind name extra ||
+        [[ -n "$kind$name$extra" ]]; do
+    line_number=$((line_number + 1))
+
+    # Skip blank lines and full-line comments.
+    case "$kind" in
+      ''|\#*) continue ;;
+    esac
+
+    # Require a name; allow only a comment after it.
+    if [[ -z "$name" || "$name" == -* || ( -n "$extra" && "$extra" != \#* ) ]]; then
+      report_fail "Expected type and name, optionally followed by # comment${NEWLINE}${trust_file} at line: ${line_number}."
+      return 1
+    fi
+
+    case "$kind" in
+      formula|cask|tap) ;;
+      *)
+        report_fail "Unknown trust type${NEWLINE}${trust_file} at line: ${line_number} kind: ${kind}."
+        return 1
+        ;;
+    esac
+
+    report_adjust_setting "Trusting Homebrew ${kind}: ${name}"
+    brew trust "--${kind}" "$name" || return 1
+  done < "$trust_file"
+
+  report_end_phase_standard
+  return 0
+}
+
