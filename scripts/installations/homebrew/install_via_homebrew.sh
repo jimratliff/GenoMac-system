@@ -101,7 +101,7 @@ function apply_homebrew_trust() {
     esac
 
     report_adjust_setting "Trusting Homebrew ${kind}: ${name}"
-    brew trust "--${kind}" "$name"
+    brew trust "--${kind}" "$name" ; success_or_not
   done < "$trust_file"
 
   report_end_phase_standard
