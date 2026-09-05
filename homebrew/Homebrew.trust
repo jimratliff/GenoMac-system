@@ -1,0 +1,5 @@
+# Homebrew trust declarations.
+# Format: type name
+# Supported types: formula, cask, tap
+
+formula jeremy4971/mysides-swift/mysides-swift
