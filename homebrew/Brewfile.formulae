@@ -35,6 +35,7 @@ brew "m-cli"                   # CLI tool for macOS that enables you to control 
                                  # https://github.com/rgcr/m-cli
 
 # mysides, by jeremy4971
+tap "jeremy4971/mysides-swift"
 brew "jeremy4971/mysides-swift/mysides-swift" # CLI for managing Finder sidebar favorites on macOS
                                  # built in Swift on top of the deprecated but still functional LSSharedFileList API.
 
