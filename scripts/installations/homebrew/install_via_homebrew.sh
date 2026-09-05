@@ -25,6 +25,9 @@ function install_via_homebrew() {
   report_action_taken "Updating Homebrew itself and package definitions"
   brew update ; success_or_not
 
+  report_action_taken "Trusts any necessary formulae, casks, taps"
+  apply_homebrew_trust "$HOMEBREW_TRUST_FILE" ; success_or_not
+
   # Remove installed Homebrew items that are not declared in the aggregate Brewfile.
   # This is the replacement for the old `brew bundle install --cleanup`.
   report_action_taken "Removing Homebrew items not declared in Brewfile"
@@ -64,8 +67,8 @@ function apply_homebrew_trust() {
   
   local -i line_number=0
 
-  if [[ ! -r "$trust_file" ]]; then
-    report_fail "Cannot read Homebrew trust file: “${trust_file}”"
+  if [[ ! -f "$trust_file" || ! -r "$trust_file" ]]; then
+    report_fail "Cannot find or read Homebrew trust file: “${trust_file}”"
     return 1
   fi
 
@@ -93,7 +96,7 @@ function apply_homebrew_trust() {
     esac
 
     report_adjust_setting "Trusting Homebrew ${kind}: ${name}"
-    brew trust "--${kind}" "$name" || return 1
+    brew trust "--${kind}" "$name"
   done < "$trust_file"
 
   report_end_phase_standard
