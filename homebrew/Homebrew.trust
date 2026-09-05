@@ -1,5 +1,12 @@
 # Homebrew trust declarations.
 # Format: type name
 # Supported types: formula, cask, tap
+#
+# Examples:
+#   cask xykong/tap/flux-markdown
+#   formula jeremy4971/mysides-swift/mysides-swift
+#
+# Do NOT wrap strings in quotes! They would confuse the text parser.
 
+cask xykong/tap/flux-markdown
 formula jeremy4971/mysides-swift/mysides-swift
