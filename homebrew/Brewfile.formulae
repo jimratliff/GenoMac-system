@@ -34,7 +34,10 @@ brew "mas"                     # Mac App Store command-line interface
 brew "m-cli"                   # CLI tool for macOS that enables you to control system functions, manage utilities, and tweak preferences
                                  # https://github.com/rgcr/m-cli
 
-# mysides, by jeremy4971
+# mysides command, from mysides-swift, by jeremy4971
+                                 # REQUIRED: Used by GenoMac-user to set Finder sidebar Favorites.
+                                 #           See GenoMac-user/scripts/settings/set_finder_sidebar_favorites.sh
+                                 #               » finder_sidebar_favorites_add_name_and_file_url
 tap "jeremy4971/mysides-swift"
 brew "jeremy4971/mysides-swift/mysides-swift", trusted: true # CLI for managing Finder sidebar favorites on macOS
                                  # built in Swift on top of the deprecated but still functional LSSharedFileList API.
