@@ -117,8 +117,7 @@ Open a Google Docs document to be used as/if needed for real-time exchange of te
 [^my_google_doc]: Of course, this document is specific to, and accessible by, only me. Make your own!
 
 #### Manually install Homebrew
-We can’t even clone this repository at this point, because Git doesn’t come out-of-the-box on macOS. We’ll need Homebrew eventually to perform app installations. We install Homebrew now, because doing so has the side benefit that installing Homebrew will automatically install Xcode Command Line Tools (CLT), the 
-installation of which will install, among other things, a version of Git, which will permit cloning this repo.
+We can’t even clone this repository at this point, because Git isn’t available on out-of-the-box macOS. We’ll need Homebrew eventually to perform app installations. We install Homebrew now, because doing so has the side benefit that installing Homebrew will automatically install Xcode Command Line Tools (CLT), the installation of which will install, among other things, a version of Git, which will permit cloning this repo.
 
 > [!NOTE]
 > Beginning with macOS Tahoe 26, pasting into the Terminal can result in a scary warning: “Possible Malware, Paste Blocked” (followed by “Your Mac has not been harmed. Scammers often encourage pasting text into Terminal to try and harm your Mac or compromise your privacy. These instructions are commonly offered via websites, chat agents, apps, files, or a phone call.”). Choose “Paste Anyway.”
@@ -228,13 +227,22 @@ just run-hypervisor
 
 
 ### A note on the declarativeness, or lack thereof, of non-Homebrew installations by Hypervisor
-Unlike Homebrew installations, upgrading to new versions is not automatic. Instead, some non-Homebrew apps are “pinned” to a particular version (viz., Alan.app, default-browser, .and utiluti). Hypervisor will detect, and report, when the GitHub repo has a newer version available (relative to the pinned version), but it requires a manual change in the corresponding script to update the pinned version. In this sense, this script is intended to be run only (a) on a new system or (b) after one or more the apps/tools has been updated.
+Unlike Homebrew installations, upgrading to new versions is not automatic. Instead, some non-Homebrew apps are “pinned” to a particular version (viz., Alan.app, default-browser, .and utiluti). Hypervisor will detect, and report, when the GitHub repo has a newer version available (relative to the pinned version), but it requires a manual change in the corresponding script to update the pinned version. In this sense, this script is intended to be run only (a) on a new system or (b) after one or more the apps/tools has been updated. (TODO / NOTE: This sentence \[“this script is intended to be run only (a) on a new system or (b) after one or more the apps/tools has been updated”\] is suspect: In fact, for at least many, if not all, of these non-Homebrew installations, the pinned version is reinstalled *every time the Hypervisor is run*, perhaps on the belief that these installations are cheap (e.g., don’t take long and, importantly, don’t require any time-consuming interaction with the user).
 
 If existing resources are marked for deletion, this would require an appropriate `sudo rm -rf path/to/some_resource` to be deployed and executed on each Mac.
 
+(See also [The scope of declarativeness in Project GenoMac](https://github.com/jimratliff/GenoMac-shared/blob/main/docs/declaritiveness.md).)
 
+### The Makefile or `justfile` is the user’s interface with the functionality of this repo
 
-### `make` vs. `just`
+The `Makefile` or `justfile` provides the interface for the user to effect the functionalities of this repo, such as commanding the execution of (a) installing apps via Homebrew and (b) changing certain systemwide macOS settings using `defaults write` commands.
+
+TODO: Include the following points when this section is fleshed out:
+- `make` is available out of the box with macOS, thus it is used before Homebrew is first used to install programs.
+- `just` is superior to `make`
+- `just` is installed by Homebrew the first time Homebrew installs programs
+- `just` is preferred to `make` after the first time Homebrew installs programs
+- Genomac-system’s `makefile` is only a subset of the recipes in GenoMac-system’s `justfile`, specifically those recipes that you might want to use in the time prior to the first time Homebrew installs programs.
 
 ### Refresh local clone
 
@@ -246,34 +254,6 @@ cd ~/.genomac-system
 git pull --recurse-submodules origin main
 ```
 (The `--recurse-submodules` ensures that the local version of submodule GenoMac-shared is updated to the commit specified by the GenoMac-user origin repository.)
-
-
-
-
-
-
-
-
-### The Makefile is the user’s interface with the functionality of this repo
-
-The `Makefile` provides the interface for the user to effect the functionalities of this repo, such as commanding the execution of (a) installing apps via Homebrew and (b) changing certain systemwide macOS settings using `defaults write` commands.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
 
 
 
@@ -358,3 +338,8 @@ git diff --cached --quiet external/genomac-shared || git commit -m "Update genom
 git push origin main
 ```
 which can also be performed by `make dev-update-repo-and-submodule`.
+
+### Specifying/changing Homebrew installations
+TODO
+- Describe user of Brewfile structure, and what goes where
+- Explain that `taps` (or other Homebrew entities) that require explicit trust (because they’re not implicitly trusted by Homebrew) can be specified to receive that explicit trust in the file `homebrew/Homebrew.trust`.
