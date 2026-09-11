@@ -1,0 +1,35 @@
+  {
+    "volume_name_from_user_class": {
+      "superintendent": "::startup_volume::",
+      "personal": "personal_volume",
+      "employment": "work_volume",
+      "auxiliary": "auxiliary_volume"
+    },
+    "onepassword_key_from_user_class": {
+      "superintendent": "SUPERINTENDENT_PASSWORD",
+      "personal": "PERSONAL_PASSWORD",
+      "employment": "EMPLOYMENT_PASSWORD",
+      "auxiliary": "AUX_PASSWORD"
+    },
+    "user_attributes_from_user_class": {
+      "superintendent": [
+        "mac-admin"
+      ],
+      "personal": [
+        "all-mission-control-spaces",
+        "dropbox",
+        "wallpapers"
+      ],
+      "employment": [
+        "all-mission-control-spaces",
+        "dropbox",
+        "emailer",
+        "microsoft-word",
+        "wallpapers"
+      ],
+      "auxiliary": [
+        "all-mission-control-spaces",
+        "dropbox"
+      ]
+    }
+  }
