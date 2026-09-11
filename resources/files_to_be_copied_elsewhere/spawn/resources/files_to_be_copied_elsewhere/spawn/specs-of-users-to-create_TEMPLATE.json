@@ -1,0 +1,48 @@
+{
+  "users_to_create": [
+    {
+      "short_name": "SHORT_NAME",
+      "full_name": "FULL_NAME",
+      "uid": 5xx,
+      "user_class": "USER_CLASS",
+      "avatar": "AVATAR_PATH",
+      "attributes": [
+        "touchid¶∞§Rx",
+        "barebones",
+        "chessplayer",
+        "developer",
+        "dropbox",
+        "emailer",
+        "genomac-developer",
+        "mac-admin",
+        "microsoft-word",
+        "obsidian",
+        "raindrop-io",
+        "sync-com",
+        "youtube-watcher"
+      ]
+    },
+    {
+      "short_name": "SHORT_NAME",
+      "full_name": "FULL_NAME",
+      "uid": 5xx,
+      "user_class": "USER_CLASS",
+      "avatar": "AVATAR_PATH",
+      "attributes": [
+        "touchid¶∞§Rx",
+        "barebones",
+        "chessplayer",
+        "developer",
+        "dropbox",
+        "emailer",
+        "genomac-developer",
+        "mac-admin",
+        "microsoft-word",
+        "obsidian",
+        "raindrop-io",
+        "sync-com"
+        "youtube-watcher"
+      ]
+    },
+  ]
+}
