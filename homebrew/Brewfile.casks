@@ -21,7 +21,7 @@ cask "claude-code"              # Terminal-based AI coding assistant
 cask "cmux"                     # Ghostty-based terminal with vertical tabs and notifications for AI coding agents
 # cask "codex"                    # OpenAI’s coding agent that runs in your terminal
                                   # Deprecated in favor of new combo ChatGPT app
-cask "codex-app"                # OpenAI’s Codex desktop app for managing coding agents
+# cask "codex-app"                # OpenAI’s Codex desktop app for managing coding agents
 cask "daisydisk"                # Disk-space visualizer
 cask "discord"                  # Voice and text chat software
 cask "docker-desktop"           # App to build and share containerized applications and services
