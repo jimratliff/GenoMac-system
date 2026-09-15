@@ -6,6 +6,14 @@ function enable_Touch_ID_authentication_for_sudo() {
   # As of macOS Sonoma, the settings can be added to a separate file /etc/pam.d/sudo_local, which isn’t
   # overwritten during updates, allowing Touch ID to remain enabled for sudo commands consistently.
   report_start_phase_standard
+
+  if grep -Eq '^[[:space:]]*auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so([[:space:]]|$)' \
+      /etc/pam.d/sudo_local 2>/dev/null; then
+    report_to_log "Touch ID authentication for sudo is already enabled; nothing more to do…"
+    report_end_phase_standard
+    return 0
+  fi
+
   report_action_taken "Enable Touch ID authentication for sudo"
   sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local ; success_or_not
   report_end_phase_standard
