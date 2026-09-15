@@ -16,5 +16,6 @@ function enable_Touch_ID_authentication_for_sudo() {
 
   report_action_taken "Enable Touch ID authentication for sudo"
   sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local ; success_or_not
+  
   report_end_phase_standard
 }
