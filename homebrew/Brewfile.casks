@@ -48,7 +48,11 @@ cask "gitbutler"                # Git client for simultaneous branches on top of
 
 cask "google-chrome"            # Web browser
 cask "google-drive"             # Desktop client for Google Drive storage service
-cask "graphicconverter"         # Graphic Converter image viewer, editor, and slideshow presenter
+
+# cask "graphicconverter"         # Graphic Converter image viewer, editor, and slideshow presenter
+                                  # Installing GraphicConverter 12 from the Mac App Store instead.
+
+
 cask "helium-browser"           # Chromium-based web browser
 cask "insta360-link-controller" # Controller for Insta360 webcams
 cask "iterm2"                   # Terminal emulator; alternative to Apple’s Terminal
