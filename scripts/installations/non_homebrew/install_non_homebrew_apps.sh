@@ -5,6 +5,7 @@
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_alan_app.sh"
 # source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_app_from_github_zip.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_hiarcs_chess_explorer_pro.sh"
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_officetime.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_tool_via_package_from_github.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_default_browser_cli.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_utiluti.sh"
@@ -27,16 +28,19 @@ function install_non_homebrew_apps() {
   report_start_phase_standard
 
   report_action_taken "Install Alan.app to highlight prominently the active window"
-  install_alan_app               # scripts/installations/non_homebrew/install_alan_app.sh
+  install_alan_app                                 # scripts/installations/non_homebrew/install_alan_app.sh
 
   report_action_taken "Install utiluti utility to set the default app associated with document types, etc."
-  install_utiluti                # scripts/installations/non_homebrew/install_utiluti.sh
+  install_utiluti                                  # scripts/installations/non_homebrew/install_utiluti.sh
 
   report_action_taken "Install default-browser utility to set the default browser"
-  install_default_browser_cli    # scripts/installations/non_homebrew/install_default_browser_cli.sh
+  install_default_browser_cli                      # scripts/installations/non_homebrew/install_default_browser_cli.sh
 
   report_action_taken "Conditionally install HIARCS Chess Explorer Pro"
   conditionally_install_hiarcs_chess_explorer_pro  # scripts/installations/non_homebrew/install_hiarcs_chess_explorer_pro.sh
+
+  report_action_taken "Conditionally install OfficeTime"
+  conditionally_install_officetime                 # scripts/installations/non_homebrew/install_officetime.sh
 
   # Installing VisualDiffer in this way is DEPRECATED because it’s available from Homebrew
   # report_action_taken "Install VisualDiffer.app to diff two text files"
