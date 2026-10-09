@@ -11,7 +11,7 @@ function install_alan_app() {
   local pinned_tag="v1.0.1"
   local zip_filename="Alan.zip"
   local applications_dir="/Applications"
-  local bundle_id="BUNDLE_ID_ALAN_APP"     # studio.retina.Alan
+  local bundle_id="$BUNDLE_ID_ALAN_APP"     # studio.retina.Alan
 
   # Memorialize whether Alan was already running
   local alan_was_running=false
