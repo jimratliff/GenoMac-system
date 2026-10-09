@@ -15,7 +15,7 @@ function install_alan_app() {
 
   # Memorialize whether Alan was already running
   local alan_was_running=false
-  if osascript -e "application id \"$bundle_id\" is running" 2>/dev/null | grep -qi true; then
+  if app_is_running "$bundle_id"; then
     alan_was_running=true
   fi
 
