@@ -74,6 +74,8 @@ source "${master_helper_script}"
 
 turn_off_verbose_genomac_output
 
+export HOMEBREW_PREFIX="$(get_homebrew_prefix)"    # GenoMac-shared/scripts/helpers-apps.sh
+
 # Source repo-specific environment-variables script
 repo_specific_environment_variables="${GENOMAC_SYSTEM_SCRIPTS}/assign_system_environment_variables.sh"
 
