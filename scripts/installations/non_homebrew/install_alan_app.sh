@@ -28,7 +28,7 @@ function install_alan_app() {
     "$bundle_id"
 
   # Relaunch Alan if it had already been running, just in case it got upgraded (which would
-  # would have quit Alan)
+  # have quit Alan)
   if [[ "$alan_was_running" == true ]]; then
     report_action_taken "Alan was running before potential upgrade; relaunching ${bundle_id}"
     # Launch in background; fall back without -j if needed.
