@@ -7,7 +7,8 @@ After you finish configuring this account, you will return to GenoMac-system to 
 ## Use GenoMac-user to configure this user account
 The Hypervisor of GenoMac-system has already cloned GenoMac-user to your home directory at `~/.genomac-user`, so GenoMac-user is ready for you to use.
 
-- [Open GenoMac-user’s README in a browser](https://github.com/jimratliff/GenoMac-user/blob/main/README.md)
+- Open GenoMac-user’s README in a browser
+  - https://github.com/jimratliff/GenoMac-user/blob/main/README.md
 - Open a new terminal tab or window
 - In the terminal, navigate to the local clone of GenoMac-user:
   - `cd ~/.genomac-user`
