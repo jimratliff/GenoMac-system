@@ -152,6 +152,12 @@ git clone --recurse-submodules https://github.com/jimratliff/GenoMac-system.git 
 (The `--recurse-submodules` flag exists because this repo has a submodule (viz., [GenoMac-shared](https://github.com/jimratliff/GenoMac-shared)). The `--recurse-submodules` ensures that the submodule’s code is also cloned, not just a pointer to it.)
 
 #### Iteratively run the Hypervisor until completion
+> [!WARNING]
+> If there’s another macOS startup volume mounted, use Disk Utility to dismount it before executing the next step.[^WHY_DISMOUNT]
+
+[^WHY_DISMOUNT]: I had the experience of Homebrew looking for Xcode, and finding it on the other startup volume! I want Hypervisor and Homebrew to mind its own business and look only at the startup volume being configured.
+
+
 The Hypervisor is a scripting system that manages the system-scoped configuration of the Mac, both (a) for the initial bootstrap and (b) for periodic maintenance.[^Hypervisor_scripts]
 
 [^Hypervisor_scripts]: The entry point to the Hypervisor script is `GenoMac-system/scripts/hypervisor/hypervisor.sh`, which calls, for most of the detailed work, `GenoMac-system/scripts/hypervisor/subdermis.sh`
