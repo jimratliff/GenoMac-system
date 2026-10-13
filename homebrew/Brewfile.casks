@@ -65,7 +65,10 @@ cask "notion"                   # Knowledge base using proprietary files
 cask "obsidian"                 # Knowledge base using local folder of Markdown files
 cask "opencode-desktop"         # AI coding agent desktop client
 # cask "orion"                    # WebKit-based web browser
-cask "proton-drive"             # Client for Proton Drive
+
+# cask "proton-drive"             # Client for Proton Drive
+                                  # 10/13/2026 Installing v.3.1.0 manually until Homebrew (and Proton’s own site!) catches up
+
 cask "raindropio"               # Bookmarking manager
 cask "spacejump"                     # Menubar utility to name and switch desktop Spaces
 # cask "sync"                     # Canadian zero-knowledge cloud-syncing service
