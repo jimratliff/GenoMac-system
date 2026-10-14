@@ -69,6 +69,8 @@ cask "opencode-desktop"         # AI coding agent desktop client
 # cask "proton-drive"             # Client for Proton Drive
                                   # 10/13/2026 Installing v.3.1.0 manually until Homebrew (and Proton’s own site!) catches up
 
+cask "proton-mail-bridge"       # Bridges Proton Mail to email clients supporting IMAP and SMTP protocols
+
 cask "raindropio"               # Bookmarking manager
 cask "spacejump"                     # Menubar utility to name and switch desktop Spaces
 # cask "sync"                     # Canadian zero-knowledge cloud-syncing service
