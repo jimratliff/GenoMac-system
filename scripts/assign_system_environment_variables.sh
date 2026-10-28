@@ -51,7 +51,7 @@ GMS_SCRIPTS="${GENOMAC_SYSTEM_LOCAL_DIRECTORY}/scripts"
 
 # ~/.genomac-system/scripts/hypervisor
 # - Local subdirectory of GMS_SCRIPTS that holds scripts specific to Hypervisor
-GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor" 
+GMS_HYPERVISOR_SCRIPTS="${GMS_SCRIPTS}/hypervisor"
 
 # ~/.genomac-system/scripts/installations
 GMS_INSTALL_SCRIPTS="${GMS_SCRIPTS}/installations"
@@ -121,7 +121,7 @@ GMS_STATE_VOLUME_IS_CREATED_PREFIX="VOLUME_CREATION_is_completed"
 ###
 
 # report_action_taken "Export environment variables to be available in all subsequent shells."
-# 
+#
 # export_and_report DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES
 # export_and_report GMS_DOCS_TO_DISPLAY
 # export_and_report GMS_HOMEBREW_INSTALL_SCRIPTS
@@ -146,4 +146,3 @@ GMS_STATE_VOLUME_IS_CREATED_PREFIX="VOLUME_CREATION_is_completed"
 # export_and_report OP_VAULT_FOR_GENOMAC_USER_CREATION
 # export_and_report STARTUP_VOLUME_SIGNIFIER
 # export_and_report CUSTOM_USER_PICTURE_DIRECTORY
-

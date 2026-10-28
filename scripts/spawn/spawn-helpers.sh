@@ -132,7 +132,7 @@ function set_user_picture() {
 function does_user_name_exist() {
   # Returns success (exit status 0) iff user with the given short name $1 exists;
   # otherwise returns exit status 1.
-  
+
   report_start_phase_standard
   local user_name_to_test="$1"
 
@@ -188,10 +188,10 @@ function confirm_secure_token_was_enabled_for_user() {
   # Normal exit (exit status 0) implies that Secure Token is enabled for user with short name $1
   # Otherwise, either the check for Secure Token status failed or gave a result not
   # expected when Secure Token is enabled.
-  
+
   report_start_phase_standard
   local short_name="${1:?MISSING short_name}"
-  
+
   local output
   local return_value
 
@@ -207,17 +207,17 @@ function confirm_secure_token_was_enabled_for_user() {
     report_to_log "Secure Token does not appear to be enabled for user ${short_name}. Output was: ${output}"
     return_value=1
   fi
-  
+
   report_end_phase_standard
   return "$return_value"
-  
+
 }
 
 function parent_of_users_home_directories() {
   # Constructs the path of the parent of users’ home directories given the volume name
-  # 
+  #
   # The one argument must be either
-  # - the volume name, if the volume is *not* the startup volume, 
+  # - the volume name, if the volume is *not* the startup volume,
   #   - resulting in "/Volumes/volume_name/Users"
   # - '::startup_volume::' (environment variable: STARTUP_VOLUME_SIGNIFIER) if the volume *is* the startup volume
   #   - resulting in "/Users"
@@ -232,7 +232,7 @@ function parent_of_users_home_directories() {
   else
     path_of_parent_of_home_directories="/Volumes/${volume_name}${DIRECTORY_CONTAINING_USER_HOME_DIRECTORIES}"
   fi
-  
+
   print -r -- "$path_of_parent_of_home_directories"
 }
 
@@ -296,7 +296,7 @@ function get_users_to_create_from_GenoMac_private() {
   local users_to_create_json
 
   github_pat="$(get_GitHub_PAT_for_GenoMac_private_from_1Password_vault)"
-    
+
   if ! users_to_create_json="$(
     read_github_repo_file_raw \
       --private \
@@ -354,7 +354,7 @@ function populate_user_spawn_associative_arrays_from_json() {
   #
   # Usage:
   #   populate_user_spawn_associative_arrays_from_json <<<"$user_spawn_config_json"
-  
+
   report_start_phase_standard
 
   local json_input
@@ -399,14 +399,14 @@ function populate_user_spawn_associative_arrays_from_json() {
 # function get_users_to_create_from_1password() {
 #   report_start_phase_standard
 #   local users_to_create_json
-# 
+#
 #   if ! users_to_create_json="$(
 #     read_1password_item_notes_plain "$OP_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_SPECS_OF_USERS_TO_CREATE"
 #     )"; then
 #     report_fail "Failed to read users-to-create JSON from 1Password."
 #     return 1
 #   fi
-# 
+#
 #   report_end_phase_standard
 #   print -r -- "$users_to_create_json"
 # }
@@ -417,17 +417,17 @@ function populate_user_spawn_associative_arrays_from_json() {
 #   #
 #   # Hint: OP_VAULT_FOR_GENOMAC_USER_CREATION
 #   # Hint: OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config"
-# 
+#
 #   report_start_phase_standard
 #   local user_spawn_config_json
-# 
+#
 #   if ! user_spawn_config_json="$(
 #     read_1password_item_notes_plain "$OP_VAULT_FOR_GENOMAC_USER_CREATION" "$OP_ITEM_NAME_USER_SPAWN_CONFIG"
 #   )"; then
 #     report_fail "Failed to read user spawn config from 1Password."
 #     return 1
 #   fi
-# 
+#
 #   report_end_phase_standard
 #   print -r -- "$user_spawn_config_json"
 # }
