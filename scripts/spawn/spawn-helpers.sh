@@ -321,6 +321,7 @@ function get_user_spawn_config_from_GenoMac_private() {
   local github_pat
   local user_spawn_config_json
 
+  # get_GitHub_PAT_for_GenoMac_private_from_1Password_vault is defined in GenoMac-shared/scripts/helpers-git.sh
   github_pat="$(get_GitHub_PAT_for_GenoMac_private_from_1Password_vault)"
 
   # read_github_repo_file_raw is defined in GitHub-shared/scripts/helpers-git.sh
