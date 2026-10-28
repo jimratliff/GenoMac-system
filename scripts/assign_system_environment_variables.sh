@@ -111,11 +111,6 @@ OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_NAME="authorizing-admin-user-name"
 # Name of 1Password password item that stores the password of the admin user with Secure Token authority
 OP_ITEM_NAME_AUTHORIZING_ADMIN_USER_PASSWORD="SUPERINTENDENT_PASSWORD"
 
-# Name of 1Password vault that stores the GitHub PAT for GenoMac-private
-OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT="$OP_VAULT_FOR_GENOMAC_USER_CREATION"
-# Name of 1Password password item that stores the GitHub PAT for GenoMac-private
-OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT="GitHub_PAT_GenoMac-private_read-only"
-
 # Name of 1Password password item that stores a fake password for testing purposes
 OP_ITEM_NAME_FAKE_TEST_PASSWORD="TEST_PASSWORD"
 
