@@ -66,6 +66,11 @@ cask "obsidian"                 # Knowledge base using local folder of Markdown 
 cask "opencode-desktop"         # AI coding agent desktop client
 # cask "orion"                    # WebKit-based web browser
 
+###############					  # DO NOT INSTALL PROTON DRIVE via HOMEBREW
+# See email from Proton Support 10/29/2026: “Please note that we’re aware of this behavior, which can occur on some
+#                                           systems. At the moment, the issue appears to be related to Homebrew, but
+#                                           we’re looking into resolving it. … please install Proton Drive through the
+#                                           normal means: https://protonapps.com/.
 # cask "proton-drive"             # Client for Proton Drive
 								  # 10/28/2026: Still having reliability issues when not manually installed
 
