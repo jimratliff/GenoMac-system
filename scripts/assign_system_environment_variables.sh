@@ -95,10 +95,6 @@ GENOMAC_PRIVATE_SPAWN_COMMIT_ID="main"
 GENOMAC_PRIVATE_PATH_OF_USER_SPAWN_CONFIG="spawn/user-spawn-config.json"
 GENOMAC_PRIVATE_PATH_OF_SPECS_OF_USERS_TO_CREATE="spawn/specs-of-users-to-create.json"
 
-############### 1Password-related
-# Name of 1Password vault that stores items related to user creation
-OP_VAULT_FOR_GENOMAC_USER_CREATION="GenoMac-user-creation"
-
 # Name of 1Password plain-text item that stores the JSON configuration mapping user-class to (a) passwords and (b) volumes
 OP_ITEM_NAME_USER_SPAWN_CONFIG="user-spawn-config"
 
