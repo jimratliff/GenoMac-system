@@ -18,6 +18,7 @@ brew "fresh-editor"            # Rust-based text editor
 brew "fzf"                     # Command-line fuzzy finder
 brew "gh"                      # GitHub command-line tool
 brew "git"                     # Distributed revision-control systemtool
+brew "handbrake"               # Open-source video transcoder
 brew "lazygit"                 # Simple terminal UI for git commands
 brew "lolcat"                  # Adds rainbow colors to output when piped through lolcat
 brew "jq"                      # Lightweight and flexible command-line JSON processor
