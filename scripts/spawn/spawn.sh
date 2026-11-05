@@ -92,11 +92,17 @@ function conditionally_create_user_accounts_for_this_Mac() {
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
   users_to_create_json="$(get_users_to_create_from_GenoMac_private)"
 
+  local user_specs
+  if ! user_specs="$(jq -c '.users_to_create[]' <<<"$users_to_create_json")"; then
+    report_fail "Failed to parse specifications of users to create."
+    return 1
+  fi
+
   # Iterate through users_to_create_json, user by user
   keep_sudo_alive
   while IFS= read -r user_spec_json; do
     conditionally_create_user_account "$user_spec_json" "$op_vault" "$admin_user_name" "$op_admin_password_item_name"
-  done < <(jq -c '.users_to_create[]' <<<"$users_to_create_json")
+  done <<<"$user_specs"
 
   report_end_phase_standard
 }
