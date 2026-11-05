@@ -20,8 +20,11 @@ mas "Microsoft Word",                 id: 462054704
 mas "Mini Stopwatch - Minimal Timer", id: 6739762059
 mas "Name Mangler 3",                 id: 603637384
 mas "Numbers",                        id: 361304891
-mas "OmniOutliner 6",                 id: 6474965689
-mas "OmniGraffle 7",                  id: 1142578753
+
+# Remove OmniGroup apps from MAS installation
+# mas "OmniOutliner 6",                 id: 6474965689
+# mas "OmniGraffle 7",                  id: 1142578753
+
 mas "Pages",                          id: 361309726
 mas "Photos Takeout for iCloud, Mac", id: 1500714691
 mas "Pixelmator Pro",                 id: 1289583905
