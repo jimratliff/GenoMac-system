@@ -18,7 +18,7 @@ mas "Microsoft Excel",                id: 462058435
 
 # Failing due to “Redownload Unavailable with This Apple Account: This redownload is not available for this
 # Apple Account either because it was bought by a different user or the item was refunded or cancelled.”
-# mas "Microsoft PowerPoint",           id: 462062816
+mas "Microsoft PowerPoint",           id: 462062816
 
 mas "Microsoft Word",                 id: 462054704
 mas "Mini Stopwatch - Minimal Timer", id: 6739762059
@@ -38,7 +38,7 @@ mas "Simple Menu Bar Stopwatch",      id: 6477624717
 
 # Failing due to “Redownload Unavailable with This Apple Account: This redownload is not available for this
 # Apple Account either because it was bought by a different user or the item was refunded or cancelled.”
-# mas "Slack for Desktop",              id: 803453959
+mas "Slack for Desktop",              id: 803453959
 
 mas "Smart Converter",                id: 447513724
 mas "Soulver 3",                      id: 1508732804
