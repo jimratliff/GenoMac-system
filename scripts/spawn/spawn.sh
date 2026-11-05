@@ -56,7 +56,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   #   - OP_VAULT_FOR_GENOMAC_USER_CREATION           ("GenoMac-user-creation")
   #   - OP_VAULT_FOR_GENOMAC_PRIVATE_GITHUB_PAT      ("GenoMac-user-creation")
   #   - OP_ITEM_NAME_GENOMAC_PRIVATE_GITHUB_PAT      ("GitHub_PAT_GenoMac-private_read-only")
-  
+
   report_start_phase_standard
 
   local admin_user_name
@@ -64,7 +64,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
   local op_vault
   local user_spec_json
   local users_to_create_json
-  
+
   print_banner_text "BEGIN USER CREATION"
   report_action_taken "Beginning process to create users"
 
@@ -87,7 +87,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
     report_fail "Designated authorizing admin user “$admin_user_name” doesn’t exist as a user."
     return 1
   fi
-  
+
   # Get JSON object specifying users to create from GenoMac-private/spawn/specs-of-users-to-create.json
   # This JSON object is *not* local, because it is referenced by functions called later within this shell
   users_to_create_json="$(get_users_to_create_from_GenoMac_private)"
@@ -110,7 +110,7 @@ function conditionally_create_user_accounts_for_this_Mac() {
 function conditionally_create_user_account(){
   # Conditionally creates a single user account, specified by user_spec_json, which is passed
   # as the first of four arguments.
-  # 
+  #
   # If the user’s short name already exists, creation is skipped and returns normally. Thus,
   # conditionally_create_user_account can be run idempotently in the sense that only newly
   # added users will be created. (This isn’t purely declarative: A user removed from the
@@ -118,7 +118,7 @@ function conditionally_create_user_account(){
   #
   # If the new user’s uid collides with an existing uid, creation is skipped and a warning is
   # issued that the uid must be changed and “resubmitted” (i.e., rerun Hypervisor-system).
-  # 
+  #
   # Sets system-scoped states to record:
   # - that the user has been created
   # - that the user is in need of initial configuration
@@ -157,7 +157,7 @@ function conditionally_create_user_account(){
   # attributes every time GenoMac-system’s Hypervisor is run, even if the user has already
   # been created.
   set_system_states_for_user_attributes_of_user "$user_spec_json" # scripts/spawn/spawn-state-helpers.sh
-  
+
   short_name="$(get_short_name_from_user_spec_json "$user_spec_json")"
   if does_user_name_exist "$short_name"; then
     report_warning "User “$short_name” already exists; skipping creation of this user."
@@ -166,7 +166,7 @@ function conditionally_create_user_account(){
   fi
 
   full_name="$(get_full_name_from_user_spec_json "$user_spec_json")"
-  
+
   uid="$(get_uid_from_user_spec_json "$user_spec_json")"
   if does_user_uid_exist $uid; then
     conflicting_short_names="$(string_of_short_names_with_uid $uid)"
@@ -179,13 +179,13 @@ function conditionally_create_user_account(){
   fi
 
   avatar="$(get_avatar_subpath_from_user_spec_json "$user_spec_json")"
-  
+
   if [[ -n "$avatar" ]]; then
     avatar_path="${CUSTOM_USER_PICTURE_DIRECTORY}/${avatar}"
   else
     avatar_path=""
   fi
-  
+
   user_class="$(get_user_class_from_user_spec_json "$user_spec_json")"
   op_item_user_password="${onepassword_key_from_user_class[$user_class]}"
 
@@ -200,7 +200,7 @@ function conditionally_create_user_account(){
     report_warning "$warning_message"
     return 0
   fi
-  
+
   ############### BEGIN: Interactively confirm that this user should be created at this time
 
   local user_creation_mode
@@ -217,19 +217,19 @@ function conditionally_create_user_account(){
       # Create this user now
       # Fall through the case switch
       ;;
-    
+
     PUNT)
       #  Leave it pending for now, move on, and I’ll deal with it later
       report_warning "You have deferred the creation of user “$short_name”."
       report_end_phase_standard
       return 0
       ;;
-    
+
     ABORT)
       # Abort now; don’t show me any other pending users to create at this time
       leave_genomac_hypervisor "At your direction, I am aborting."
       ;;
-    
+
     *)
       report_fail "Unrecognized user-creation choice: “${user_creation_mode}”"
       return 1
@@ -239,9 +239,9 @@ function conditionally_create_user_account(){
   ############### END: Interactively confirm that this user should be created at this time
 
   # Prepare arguments for, and then execute, sysadminctl_adduser
-  
+
   local -a sysadminctl_adduser_args
-  
+
   sysadminctl_adduser_args=(
     --short-name             "$short_name"
     --full-name              "$full_name"
@@ -252,7 +252,7 @@ function conditionally_create_user_account(){
     --op-vault               "$op_vault"
     --op-item-user-password  "$op_item_user_password"
   )
-  
+
   # Give a Secure Token only when user’s home directory resides on startup volume
   if volume_name_is_startup_volume_signifier "$volume_name"; then
     report_to_log "Adding Secure Token for this user (“${short_name}”) residing on startup volume."
@@ -264,7 +264,7 @@ function conditionally_create_user_account(){
   else
     report_to_log "No Secure Token for this user (“${short_name}”) residing on non-startup volume."
   fi
-  
+
   sysadminctl_adduser "${sysadminctl_adduser_args[@]}"
 
   # Post–user-creation bookkeeping
@@ -272,7 +272,7 @@ function conditionally_create_user_account(){
   mark_user_as_created "$short_name" "$volume_name"                                # scripts/spawn/spawn-state-helpers.sh
   mark_user_as_in_need_of_initial_config "$short_name"                             # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
   conditionally_mark_volume_is_necessary "$volume_name" "$op_item_user_password"   # scripts/spawn/spawn-volume-state-helpers.sh
-  
+
   report_end_phase_standard
 }
 
