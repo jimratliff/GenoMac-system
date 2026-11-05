@@ -14,7 +14,10 @@ mas "GraphicConverter 12",            id: 1671632937
 mas "Key Codes",                      id: 414568915
 mas "Keynote",                        id: 361285480
 mas "Elmedia:universal video player", id: 937759555
-mas "Microsoft Excel",                id: 462058435
+
+# Failing due to “Redownload Unavailable with This Apple Account: This redownload is not available for this
+# Apple Account either because it was bought by a different user or the item was refunded or cancelled.”
+# mas "Microsoft Excel",                id: 462058435
 
 # Failing due to “Redownload Unavailable with This Apple Account: This redownload is not available for this
 # Apple Account either because it was bought by a different user or the item was refunded or cancelled.”
