@@ -15,7 +15,11 @@ mas "Key Codes",                      id: 414568915
 mas "Keynote",                        id: 361285480
 mas "Elmedia:universal video player", id: 937759555
 mas "Microsoft Excel",                id: 462058435
-mas "Microsoft PowerPoint",           id: 462062816
+
+# Failing due to “Redownload Unavailable with This Apple Account: This redownload is not available for this
+# Apple Account either because it was bought by a different user or the item was refunded or cancelled.”
+# mas "Microsoft PowerPoint",           id: 462062816
+
 mas "Microsoft Word",                 id: 462054704
 mas "Mini Stopwatch - Minimal Timer", id: 6739762059
 mas "Name Mangler 3",                 id: 603637384
@@ -31,7 +35,11 @@ mas "Pixelmator Pro",                 id: 1289583905
 mas "Plain Text Editor",              id: 1572202501
 mas "ReadKit - Reading Hub",          id: 1615798039
 mas "Simple Menu Bar Stopwatch",      id: 6477624717
-mas "Slack for Desktop",              id: 803453959
+
+# Failing due to “Redownload Unavailable with This Apple Account: This redownload is not available for this
+# Apple Account either because it was bought by a different user or the item was refunded or cancelled.”
+# mas "Slack for Desktop",              id: 803453959
+
 mas "Smart Converter",                id: 447513724
 mas "Soulver 3",                      id: 1508732804
 mas "The Unarchiver",                 id: 425424353
