@@ -78,17 +78,17 @@ logging command:
 
 # Show latest GenoMac-system log file
 [group('Log file utilities')]
-logging-show-latest:
+show-log-latest:
     just logging show-latest
 
 # Show directory holding GenoMac-system log files
 [group('Log file utilities')]
-logging-show-directory:
+show-logs:
     just logging show-directory
 
 ############### Remaining repository-management utility
 
-# Configure remote for HTTPS fetch and SSH push 
+# Configure remote for HTTPS fetch and SSH push
 [group('Repo management WITH GitHub authentication')]
 dev-configure-remote-for-https-fetch-and-ssh-push:
     # Sets the fetch URL to HTTPS
@@ -105,12 +105,12 @@ system-states command:
 
 # Show directory containing state files
 [group('State utilities')]
-system-states-show:
+show-states:
     just system-states show
 
 # Clear SESH state files
 [group('State utilities')]
-system-states-clear-session-states:
+clear-session-states:
     just system-states clear-session
 
 # DEPRECATED BELOW COMMAND because too easy/dangerous to trigger accidentally
