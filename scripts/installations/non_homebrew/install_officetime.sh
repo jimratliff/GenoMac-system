@@ -3,12 +3,12 @@
 function conditionally_install_officetime() {
   # Installs OfficeTime unless if has already been installed.
   report_start_phase_standard
-  
+
   run_if_system_has_not_done \
     "$PERM_OFFICETIME_HAS_BEEN_INSTALLED" \
     install_officetime \
     "Skipping installing OfficeTime, because this was done in the past."
-  
+
   report_end_phase_standard
 }
 

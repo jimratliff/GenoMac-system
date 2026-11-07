@@ -41,17 +41,17 @@ function subdermis() {
   mark_current_user_as_user_configger                        # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
 
   conditionally_set_user_pictures_for_vanilla_and_configurer # scripts/settings/set_user_pictures_for_vanilla_configurer.sh
-  
+
   conditionally_adjust_path_for_homebrew                     # scripts/installations/homebrew/adjust_path_for_homebrew.sh
-  
+
   conditionally_interactive_get_Mac_names_and_login_window_message # scripts/settings/interactive_get_Mac_names_and_login_window_message.sh
-  
+
   conditionally_interactive_sign_into_MAS                    # scripts/installations/homebrew/interactive_sign_into_MAS.sh
   conditionally_install_rosetta                              # scripts/installations/install_rosetta.sh
   conditionally_install_via_homebrew                         # scripts/installations/homebrew/install_via_homebrew.sh
   conditionally_install_non_homebrew_apps_sans_Dropbox       # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
   conditionally_install_resources_systemwide                 # scripts/installations/of_resources/install_resources.sh
-  
+
   conditionally_implement_systemwide_settings                # scripts/settings/implement_systemwide_settings.sh
 
   ############### ↓↓↓ INITIALLY CONFIGURE THE USER_CONFIGURER ACCOUNT ↓↓↓ ###############
@@ -77,7 +77,6 @@ function subdermis() {
   conditionally_interactive_create_volumes_for_user_home_directories    # scripts/spawn/spawn-volume-creation.sh
   display_users_to_be_initially_configured                              # GenoMac-shared/scripts/helpers-state-xfer-btw-system-user.sh
   list_FileVault_enabled_users                                         # scripts/user_scope/helpers.sh
-  
+
   report_end_phase_standard
 }
-
