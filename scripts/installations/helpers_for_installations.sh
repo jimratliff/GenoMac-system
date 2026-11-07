@@ -170,10 +170,16 @@ function install_bundle_from_local_zip() {
     return 1
   fi
 
-  if [[ "$force_replace" == false && -d "$destination_path" ]]; then
-    report_to_log "${destination_path} already exists; skipping installation"
-    report_end_phase_standard
-    return 0
+  if [[ -d "$destination_path" ]]; then
+    if [[ "$force_replace" == false ]]; then
+      report_to_log "${destination_path} already exists (and --force-replace not set); skipping installation"
+      report_end_phase_standard
+      return 0
+    else
+      report_to_log "${destination_path} already exists but --force-replace; continuing installation"
+    fi
+  else
+    report_to_log "${destination_path} doesn’t exist; continuing installation"
   fi
 
   ############### BEGIN: TEMPORARY GUARDRAIL UNTIL FURTHER TESTING OBVIATES THE NEED
