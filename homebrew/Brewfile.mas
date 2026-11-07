@@ -17,7 +17,7 @@ mas "Elmedia:universal video player", id: 937759555
 
 # Failing due to “Redownload Unavailable with This Apple Account: This redownload is not available for this
 # Apple Account either because it was bought by a different user or the item was refunded or cancelled.”
-# mas "Microsoft Excel",                id: 462058435
+mas "Microsoft Excel",                id: 462058435
 
 # Failing due to “Redownload Unavailable with This Apple Account: This redownload is not available for this
 # Apple Account either because it was bought by a different user or the item was refunded or cancelled.”
@@ -30,7 +30,7 @@ mas "Numbers",                        id: 361304891
 
 # mas "OmniOutliner 6",                 id: 6474965689
 # mas "OmniGraffle 7",                  id: 1142578753
-mas "OmniOutliner 5",                 id: 1142578772
+# mas "OmniOutliner 5",                 id: 1142578772
 
 mas "Pages",                          id: 361309726
 mas "Photos Takeout for iCloud, Mac", id: 1500714691
