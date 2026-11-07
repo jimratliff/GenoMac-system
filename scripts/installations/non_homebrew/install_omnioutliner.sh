@@ -13,6 +13,7 @@ function install_omnioutliner() {
   conditionally_force_install_bundle_from_local_zip \
     "$SESH_OMNIOUTLINER_FORCE_REPLACE_INSTALL" \
     "$OMNIOUTLINER_5_BINARY" \
+    "$OMNIOUTLINER_5_APP_FILENAME" \
     "$BUNDLE_ID_OMNIOUTLINER_5"
 
   report_end_phase_standard

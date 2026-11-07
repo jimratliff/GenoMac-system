@@ -14,6 +14,7 @@ function install_proton_drive() {
   conditionally_force_install_bundle_from_local_zip \
     "$SESH_PROTON_DRIVE_FORCE_REPLACE_INSTALL" \
     "$PROTON_DRIVE_BINARY" \
+    "$PROTON_DRIVE_APP_FILENAME" \
     "$BUNDLE_ID_PROTON_DRIVE"
 
   report_end_phase_standard

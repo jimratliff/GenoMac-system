@@ -121,13 +121,14 @@ function install_bundle_from_github_zip() {
 function install_bundle_from_local_zip() {
   # Installs a locally sourced, zipped macOS app into /Applications (by default).
   # Usage:
-  #   install_bundle_from_local_zip [--force-replace] ZIP BUNDLE_ID [DESTINATION]
+  #   install_bundle_from_local_zip [--force-replace] ZIP BUNDLE_NAME BUNDLE_ID [DESTINATION]
   #
   # - --force-replace may appear anywhere among the arguments.
   # - DESTINATION defaults to /Applications.
-  # - An existing bundle with the same ID anywhere under DESTINATION is left alone
-  #   unless --force-replace is supplied.
-  # #
+  # - BUNDLE_NAME is the bundle filename, e.g. "OmniOutliner.app".
+  # - An existing DESTINATION/BUNDLE_NAME is left alone unless --force-replace
+  #   is supplied. The extracted bundle must match both name and bundle ID.
+  #
   # No version checks or permanent-state tracking. Requires an existing ZIP parent
   # directory; a missing or unreadable ZIP is an error when installation is needed.
   # Relies on the caller's set -euo pipefail; call directly, not in an if/|| test.
@@ -146,33 +147,33 @@ function install_bundle_from_local_zip() {
   set -- "${positional_arguments[@]}"
 
   local path_of_local_zip="${1:-}"
-  local bundle_id="${2:-}"
-  local destination_dir="${3:-/Applications}"
+  local bundle_name="${2:-}"
+  local bundle_id="${3:-}"
+  local destination_dir="${4:-/Applications}"
 
   local temp_dir=""
   local candidate
   local candidate_id
   local source_bundle
-  local destination_path
+  local destination_path="${destination_dir}/${bundle_name}"
 
   local -a matching_bundles=()
 
-  if (( $# < 2 || $# > 3 )) || [[ -z "$path_of_local_zip" || -z "$bundle_id" ]]; then
-    report_fail "Expected ZIP path, bundle ID, and optional destination directory."
+  if (( $# < 3 || $# > 4 )) || [[ -z "$path_of_local_zip" || -z "$bundle_name" || -z "$bundle_id" ]]; then
+    report_fail "Expected ZIP path, bundle filename, bundle ID, and optional destination directory."
     report_end_phase_standard
     return 1
   fi
 
-  if [[ "$force_replace" == false ]]; then
-    for candidate in "$destination_dir"/**/Contents/Info.plist(N); do
-      candidate_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$candidate" 2>/dev/null)" || continue
-      if [[ "$candidate_id" == "$bundle_id" ]]; then
-        report_to_log "Bundle ${bundle_id} is already installed at ${candidate:h:h}; skipping installation"
-        report_end_phase_standard
-        return 0
-      fi
-      report_to_log "Bundle ${bundle_id} is NOT already installed at ${candidate:h:h}. Moving forward with installation."
-    done
+  if [[ "$bundle_name" == */* || "$bundle_name" == . || "$bundle_name" == .. ]]; then
+    report_fail "Expected a bundle filename without directory components: ${bundle_name}"
+    return 1
+  fi
+
+  if [[ "$force_replace" == false && -d "$destination_path" ]]; then
+    report_to_log "${destination_path} already exists; skipping installation"
+    report_end_phase_standard
+    return 0
   fi
 
   ############### BEGIN: TEMPORARY GUARDRAIL UNTIL FURTHER TESTING OBVIATES THE NEED
@@ -204,7 +205,9 @@ function install_bundle_from_local_zip() {
     report_action_taken "Extracting ${path_of_local_zip}"
     /usr/bin/ditto -x -k "$path_of_local_zip" "$temp_dir"
 
-    # Search Info.plist files, including bundles inside a containing directory.
+    # Locate the bundle to install within the extracted ZIP by matching its bundle ID.
+    # Search recursively because the ZIP may place the bundle inside a containing folder.
+    # Require exactly one match, then verify its filename matches bundle_name.
     while IFS= read -r -d '' candidate; do
       candidate_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$candidate" 2>/dev/null)" || continue
       if [[ "$candidate_id" == "$bundle_id" ]]; then
@@ -218,7 +221,10 @@ function install_bundle_from_local_zip() {
     fi
 
     source_bundle="${matching_bundles[1]}"
-    destination_path="${destination_dir}/${source_bundle:t}"
+    if [[ "${source_bundle:t}" != "$bundle_name" ]]; then
+      report_fail "Expected bundle filename ${bundle_name}; found ${source_bundle:t}."
+      return 1
+    fi
 
     report_action_taken_to_log "If running, I will quit bundle ${bundle_id}"
     quit_app_by_bundle_id_if_running "$bundle_id"
@@ -233,6 +239,30 @@ function install_bundle_from_local_zip() {
     report_end_phase_standard
   }
   return 0
+}
+
+function conditionally_force_install_bundle_from_local_zip() {
+  # Takes a state followed by arguments for install_bundle_from_local_zip. If state is present,
+  # execute install_bundle_from_local_zip with --force-replace option; otherwise, execute
+  # install_bundle_from_local_zip without --force-replace
+
+  report_start_phase_standard
+
+  local state_for_force_installation="${1:?MISSING state_for_force_installation}"
+  shift
+
+  if test_genomac_system_state "$state_for_force_installation"; then
+    install_bundle_from_local_zip --force-replace "$@"
+  else
+    install_bundle_from_local_zip "$@"
+  fi
+
+  # Relies on set -euo pipefail: a failed install must not reach state deletion.
+  # Call this wrapper directly, not in an if/|| test.
+  # A successful skip also counts as success.
+  delete_genomac_system_state "$state_for_force_installation"
+
+  report_end_phase_standard
 }
 
 function is_semantic_version_arg1_greater_than_arg2() {
@@ -278,28 +308,4 @@ function is_semantic_version_arg1_at_least_arg2() {
   arg2="${arg2%%[-+]*}"
 
   is-at-least "$arg2" "$arg1"
-}
-
-function conditionally_force_install_bundle_from_local_zip() {
-  # Takes a state followed by arguments for install_bundle_from_local_zip. If state is present,
-  # execute install_bundle_from_local_zip with --force-replace option; otherwise, execute
-  # install_bundle_from_local_zip without --force-replace
-
-  report_start_phase_standard
-
-  local state_for_force_installation="${1:?MISSING state_for_force_installation}"
-  shift
-
-  if test_genomac_system_state "$state_for_force_installation"; then
-    install_bundle_from_local_zip --force-replace "$@"
-  else
-    install_bundle_from_local_zip "$@"
-  fi
-
-  # Relies on set -euo pipefail: a failed install must not reach state deletion.
-  # Call this wrapper directly, not in an if/|| test.
-  # A successful skip also counts as success.
-  delete_genomac_system_state "$state_for_force_installation"
-
-  report_end_phase_standard
 }
