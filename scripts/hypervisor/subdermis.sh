@@ -49,7 +49,7 @@ function subdermis() {
   conditionally_interactive_sign_into_MAS                    # scripts/installations/homebrew/interactive_sign_into_MAS.sh
   conditionally_install_rosetta                              # scripts/installations/install_rosetta.sh
   conditionally_install_via_homebrew                         # scripts/installations/homebrew/install_via_homebrew.sh
-  conditionally_install_non_homebrew_apps                    # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
+  conditionally_install_non_homebrew_apps_sans_Dropbox       # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
   conditionally_install_resources_systemwide                 # scripts/installations/of_resources/install_resources.sh
   
   conditionally_implement_systemwide_settings                # scripts/settings/implement_systemwide_settings.sh
@@ -67,6 +67,10 @@ function subdermis() {
 
   # Exit this shell if USER_CONFIGURER hasn’t already used GenoMac-user to configure this user account
   conditionally_exit_for_user_configurer_to_configure_itself # scripts/user_scope/configure_user_configurer_account.sh
+
+  ############### Actions requiring that USER_CONFIGURER has Dropbox configured
+
+  conditionally_install_non_homebrew_apps_with_Dropbox       # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
 
   ############### ↓↓↓ SPAWNING NEW USERS ↓↓↓ ###############
   conditionally_create_user_accounts_for_this_Mac                       # scripts/spawn/spawn.sh

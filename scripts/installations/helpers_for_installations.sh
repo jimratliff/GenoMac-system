@@ -175,6 +175,15 @@ function install_bundle_from_local_zip() {
     done
   fi
 
+  ############### BEGIN: TEMPORARY GUARDRAIL UNTIL FURTHER TESTING OBVIATES THE NEED
+  local confirmation_question
+  confirmation_question="I’m about to install bundle ${bundle_id}${NEWLINE}Do you want to continue?"
+  if ! get_yes_no_answer_to_question "$confirmation_question"; then
+    report_fail "I thought that bundle ${bundle_id} needed to be installed, but you disagreed. One of us is wrong."
+    return 1
+  fi
+  ############### END: TEMPORARY GUARDRAIL UNTIL FURTHER TESTING OBVIATES THE NEED
+
   if [[ ! -d "${path_of_local_zip:h}" ]]; then
     report_fail "ZIP parent directory does not exist: ${path_of_local_zip:h}"
     return 1
@@ -269,4 +278,28 @@ function is_semantic_version_arg1_at_least_arg2() {
   arg2="${arg2%%[-+]*}"
 
   is-at-least "$arg2" "$arg1"
+}
+
+function conditionally_force_install_bundle_from_local_zip() {
+  # Takes a state followed by arguments for install_bundle_from_local_zip. If state is present,
+  # execute install_bundle_from_local_zip with --force-replace option; otherwise, execute
+  # install_bundle_from_local_zip without --force-replace
+
+  report_start_phase_standard
+
+  local state_for_force_installation="${1:?MISSING state_for_force_installation}"
+  shift
+
+  if test_genomac_system_state "$state_for_force_installation"; then
+    install_bundle_from_local_zip --force-replace "$@"
+  else
+    install_bundle_from_local_zip "$@"
+  fi
+
+  # Relies on set -euo pipefail: a failed install must not reach state deletion.
+  # Call this wrapper directly, not in an if/|| test.
+  # A successful skip also counts as success.
+  delete_genomac_system_state "$state_for_force_installation"
+
+  report_end_phase_standard
 }
