@@ -51,7 +51,7 @@ function subdermis() {
 
   conditionally_install_rosetta                              # scripts/installations/install_rosetta.sh
 
-  conditionally_install_via_homebrew                         # scripts/installations/homebrew/install_via_homebrew.sh
+  # conditionally_install_via_homebrew                         # scripts/installations/homebrew/install_via_homebrew.sh
 
   conditionally_install_non_homebrew_apps_sans_Dropbox       # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
 
