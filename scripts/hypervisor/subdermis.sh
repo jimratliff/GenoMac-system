@@ -6,6 +6,7 @@ function subdermis() {
 
   # Source required files
   safe_source "${GMS_HOMEBREW_INSTALL_SCRIPTS}/adjust_path_for_homebrew.sh"
+  safe_source "${GMS_INSTALL_SCRIPTS}/create_python_venvs.sh"
   safe_source "${GMS_HOMEBREW_INSTALL_SCRIPTS}/install_via_homebrew.sh"
   safe_source "${GMS_HOMEBREW_INSTALL_SCRIPTS}/interactive_sign_into_MAS.sh"
   safe_source "${GMS_INSTALL_SCRIPTS}/helpers_for_installations.sh"
@@ -47,9 +48,15 @@ function subdermis() {
   conditionally_interactive_get_Mac_names_and_login_window_message # scripts/settings/interactive_get_Mac_names_and_login_window_message.sh
 
   conditionally_interactive_sign_into_MAS                    # scripts/installations/homebrew/interactive_sign_into_MAS.sh
+
   conditionally_install_rosetta                              # scripts/installations/install_rosetta.sh
+
   conditionally_install_via_homebrew                         # scripts/installations/homebrew/install_via_homebrew.sh
+
   conditionally_install_non_homebrew_apps_sans_Dropbox       # scripts/installations/non_homebrew/install_non_homebrew_apps.sh
+
+  conditionally_create_virtual_environment_for_setting_ChatGPT_preferences # scripts/installations/create_python_venvs.sh
+
   conditionally_install_resources_systemwide                 # scripts/installations/of_resources/install_resources.sh
 
   conditionally_implement_systemwide_settings                # scripts/settings/implement_systemwide_settings.sh
