@@ -176,7 +176,7 @@ function install_bundle_from_local_zip() {
       report_end_phase_standard
       return 0
     else
-      report_to_log "${destination_path} already exists but --force-replace; continuing installation"
+      report_highlight "${destination_path} already exists but --force-replace; continuing installation"
     fi
   else
     report_to_log "${destination_path} doesn’t exist; continuing installation"
