@@ -43,6 +43,8 @@ function hypervisor() {
   # Example:
   #   migrate_system_states "MIGRATION_ID_2026_03_11" --delete "$PERM_PREVIEW_BASE_TOOLBAR_HAS_BEEN_SPECIFIED"
 
+  migrate_system_states "MIGRATION_ID_2026_11_14_1627" --set "$SESH_PROTON_DRIVE_FORCE_REPLACE_INSTALL"
+
   ############### END MIGRATIONS
 
   # Run the subdermal layer of the hypervisor, which supervises the remainder of the process.
