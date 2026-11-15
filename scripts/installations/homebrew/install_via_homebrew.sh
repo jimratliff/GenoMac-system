@@ -28,8 +28,8 @@ function install_via_homebrew() {
   report_action_taken "Trusts any necessary formulae, casks, taps"
   apply_homebrew_trust "$HOMEBREW_TRUST_FILE" ; success_or_not
 
-  # NOTE re the GENOMAC_BUNDLE_CLEANUP=1 prefixes
-  # See Brewfile.mas, which has a conditional statement for OmniOutliner 5 such that, if GENOMAC_BUNDLE_CLEANUP=1,
+  # NOTE re the HOMEBREW_GENOMAC_BUNDLE_CLEANUP=1 prefixes
+  # See Brewfile.mas, which has a conditional statement for OmniOutliner 5 such that, if HOMEBREW_GENOMAC_BUNDLE_CLEANUP=1,
   # OmniOutliner is included for the purposes of clean up only (to prevent the MAS version of OmniOutliner 5) from
   # being deleted because it’s not listed for installations.
   # Back story: OmniOutliner v5 is no longer available via Mac App Store, so I separately install
@@ -37,12 +37,12 @@ function install_via_homebrew() {
   # Therefore:
   # - OmniOutliner 5 is NOT read in this Brewfile.mas file for installation but
   # - OmniOutliner 5 IS read in this Brewfile.mas file for clean up purposes.
-  # This requires prefixing both the pre and post cleanup calls with GENOMAC_BUNDLE_CLEANUP=1
+  # This requires prefixing both the pre and post cleanup calls with HOMEBREW_GENOMAC_BUNDLE_CLEANUP=1
 
   # Remove installed Homebrew items that are not declared in the aggregate Brewfile.
   # This is the replacement for the old `brew bundle install --cleanup`.
   report_action_taken "Removing Homebrew items not declared in Brewfile"
-  GENOMAC_BUNDLE_CLEANUP=1 brew bundle cleanup --file="${brewfile_path}" --force ; success_or_not
+  HOMEBREW_GENOMAC_BUNDLE_CLEANUP=1 brew bundle cleanup --file="${brewfile_path}" --force ; success_or_not
 
   # Installs packages, etc. from Brewfile
   report_action_taken "Install and upgrading Homebrew items declared in Brewfile (and its children)"
@@ -52,7 +52,7 @@ function install_via_homebrew() {
 
   # Reconcile again after install. This catches anything made removable by dependency changes.
   report_action_taken "Removing Homebrew items not declared in Brewfile after install"
-  GENOMAC_BUNDLE_CLEANUP=1 brew bundle cleanup --file="${brewfile_path}" --force ; success_or_not
+  HOMEBREW_GENOMAC_BUNDLE_CLEANUP=1 brew bundle cleanup --file="${brewfile_path}" --force ; success_or_not
 
   # Removes stale lock files, outdated downloads, and old versions/caches
   report_action_taken "Cleans up Homebrew caches and old versions"

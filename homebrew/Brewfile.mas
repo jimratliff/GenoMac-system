@@ -55,5 +55,5 @@ mas "Xcode",                          id: 497799835
 # Therefore:
 # - OmniOutliner 5 is NOT read in this Brewfile.mas file for installation but
 # - OmniOutliner 5 IS read in this Brewfile.mas file for clean up purposes.
-# This requires prefixing both the pre and post cleanup calls with GENOMAC_BUNDLE_CLEANUP=1
-mas "OmniOutliner 5", id: 1142578772 if ENV["GENOMAC_BUNDLE_CLEANUP"] == "1"
+# This requires prefixing both the pre and post cleanup calls with HOMEBREW_GENOMAC_BUNDLE_CLEANUP=1
+mas "OmniOutliner 5", id: 1142578772 if ENV["HOMEBREW_GENOMAC_BUNDLE_CLEANUP"] == "1"
