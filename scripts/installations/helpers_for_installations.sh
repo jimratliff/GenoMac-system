@@ -118,12 +118,47 @@ function install_bundle_from_github_zip() {
   return 0
 }
 
+function download_app_installer() {
+  local download_url="$1"
+  local output_path="$2"
+
+  report_action_taken_to_log "Download installer from: ${download_url}"
+  curl --fail --location --silent --show-error \
+       --retry 3 \
+       --connect-timeout 15 \
+       --output "$output_path" \
+       "$download_url"
+}
+
+function install_bundle_from_downloaded_zip() {
+  local download_url="$1"
+  local bundle_name="$2"
+  local bundle_id="$3"
+
+  if [[ -d "/Applications/${bundle_name}" ]]; then
+    report_to_log "/Applications/${bundle_name} already exists; skipping installation."
+    return 0
+  fi
+
+  local temporary_directory
+  temporary_directory="$(mktemp -d)" || return 1
+  local zip_path="${temporary_directory}/installer.zip"
+
+  {
+    download_app_installer "$download_url" "$zip_path" || return 1
+    install_bundle_from_local_zip --non-interactive "$zip_path" "$bundle_name" "$bundle_id"
+  } always {
+    rm -rf -- "$temporary_directory"
+  }
+}
+
 function install_bundle_from_local_zip() {
   # Installs a locally sourced, zipped macOS app into /Applications (by default).
   # Usage:
-  #   install_bundle_from_local_zip [--force-replace] ZIP BUNDLE_NAME BUNDLE_ID [DESTINATION]
+  #   install_bundle_from_local_zip [--force-replace] [--non-interactive] ZIP BUNDLE_NAME BUNDLE_ID [DESTINATION]
   #
-  # - --force-replace may appear anywhere among the arguments.
+  # - Options may appear anywhere among the arguments.
+  # - --non-interactive skips the installation confirmation.
   # - DESTINATION defaults to /Applications.
   # - BUNDLE_NAME is the bundle filename, e.g. "OmniOutliner.app".
   # - An existing DESTINATION/BUNDLE_NAME is left alone unless --force-replace
@@ -135,12 +170,14 @@ function install_bundle_from_local_zip() {
   report_start_phase_standard
 
   local force_replace=false
+  local confirm_installation=true
   local argument
   local -a positional_arguments=()
 
   for argument in "$@"; do
     case "$argument" in
       --force-replace) force_replace=true ;;
+      --non-interactive) confirm_installation=false ;;
       *) positional_arguments+=("$argument") ;;
     esac
   done
@@ -183,11 +220,13 @@ function install_bundle_from_local_zip() {
   fi
 
   ############### BEGIN: TEMPORARY GUARDRAIL UNTIL FURTHER TESTING OBVIATES THE NEED
-  local confirmation_question
-  confirmation_question="I’m about to install bundle ${bundle_id}${NEWLINE}Do you want to continue?"
-  if ! get_yes_no_answer_to_question "$confirmation_question"; then
-    report_fail "I thought that bundle ${bundle_id} needed to be installed, but you disagreed. One of us is wrong."
-    return 1
+  if [[ "$confirm_installation" == true ]]; then
+    local confirmation_question
+    confirmation_question="I’m about to install bundle ${bundle_id}${NEWLINE}Do you want to continue?"
+    if ! get_yes_no_answer_to_question "$confirmation_question"; then
+      report_fail "I thought that bundle ${bundle_id} needed to be installed, but you disagreed. One of us is wrong."
+      return 1
+    fi
   fi
   ############### END: TEMPORARY GUARDRAIL UNTIL FURTHER TESTING OBVIATES THE NEED
 
@@ -251,6 +290,9 @@ function conditionally_force_install_bundle_from_local_zip() {
   # Takes a state followed by arguments for install_bundle_from_local_zip. If state is present,
   # execute install_bundle_from_local_zip with --force-replace option; otherwise, execute
   # install_bundle_from_local_zip without --force-replace
+  #
+  # Designed to be used with a migration of the following form:
+  #   migrate_system_states "MIGRATION_ID_2026_11_14_1627" --set "$SESH_PROTON_DRIVE_FORCE_REPLACE_INSTALL"
 
   report_start_phase_standard
 
@@ -261,6 +303,30 @@ function conditionally_force_install_bundle_from_local_zip() {
     install_bundle_from_local_zip --force-replace "$@"
   else
     install_bundle_from_local_zip "$@"
+  fi
+
+  # Relies on set -euo pipefail: a failed install must not reach state deletion.
+  # Call this wrapper directly, not in an if/|| test.
+  # A successful skip also counts as success.
+  delete_genomac_system_state "$state_for_force_installation"
+
+  report_end_phase_standard
+}
+
+function conditionally_force_install_bundle_from_downloaded_zip() {
+  # Takes a state followed by arguments for install_bundle_from_downloaded_zip. If state is present,
+  # execute install_bundle_from_downloaded_zip with --force-replace option; otherwise, execute
+  # install_bundle_from_downloaded_zip without --force-replace
+
+  report_start_phase_standard
+
+  local state_for_force_installation="${1:?MISSING state_for_force_installation}"
+  shift
+
+  if test_genomac_system_state "$state_for_force_installation"; then
+    install_bundle_install_bundle_from_downloaded_zipfrom_local_zip --force-replace "$@"
+  else
+    install_bundle_from_downloaded_zip "$@"
   fi
 
   # Relies on set -euo pipefail: a failed install must not reach state deletion.

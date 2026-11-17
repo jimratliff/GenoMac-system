@@ -11,7 +11,10 @@ cask "1password"                # Password manager that keeps all passwords secu
 cask "airtable"                 # Spreadsheet-database hybrid cloud collaboration
 cask "alfred"                   # User-interface utility: app launcher, hotkeys, etc.
 cask "bbedit"                   # Text editor
-cask "bettertouchtool"          # UI utility to customize behavior of input devices, etc.
+
+# cask "bettertouchtool"          # UI utility to customize behavior of input devices, etc.
+								  # Now installed directly from BTT's site rather than via Homebrew.
+
 # cask "brave-browser"            # Web browser
 cask "calibre"                  # E-book management software
 cask "chatgpt"                  # Official OpenAI ChatGPT client desktop app

@@ -16,7 +16,7 @@ function install_officetime() {
   # Installs OfficeTime from its website. No version checking.
   report_start_phase_standard
 
-  local download_url="https://officetime.net/downloads/v3/OfficeTime.dmg"
+  local download_url="$OFFICETIME_APP_DOWNLOAD_LINK"
   local temporary_directory
   local dmg_path
   local mount_point
@@ -28,13 +28,7 @@ function install_officetime() {
   mount_point="${temporary_directory}/mount"
 
   {
-    report_action_taken_to_log "Download OfficeTime from: ${download_url}"
-
-    curl --fail --location --silent --show-error \
-         --retry 3 \
-         --connect-timeout 15 \
-         --output "$dmg_path" \
-         "$download_url" || return 1
+    download_app_installer "$download_url" "$dmg_path" || return 1
 
     mkdir "$mount_point" || return 1
 

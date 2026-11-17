@@ -3,6 +3,7 @@
 # Source the function file(s)
 # source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/helpers_for_non_homebrew_installations.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_alan_app.sh"
+source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_bettertouchtool.sh"
 # source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_app_from_github_zip.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_hiarcs_chess_explorer_pro.sh"
 source "${GMS_NON_HOMEBREW_INSTALL_SCRIPTS}/install_officetime.sh"
@@ -51,6 +52,9 @@ function install_non_homebrew_apps_sans_Dropbox() {
 
   report_action_taken "Conditionally install HIARCS Chess Explorer Pro"
   conditionally_install_hiarcs_chess_explorer_pro  # scripts/installations/non_homebrew/install_hiarcs_chess_explorer_pro.sh
+
+  report_action_taken "Install BetterTouchTool if missing"
+  install_bettertouchtool
 
   report_action_taken "Conditionally install OfficeTime"
   conditionally_install_officetime                 # scripts/installations/non_homebrew/install_officetime.sh
